@@ -1,0 +1,3 @@
+from src.runner.python_runner import python_testsuite_run
+from src.runner.java_runner import java_testsuite_run
+from src.runner.java_fatjar_runner import fatjar_testsuite_run
