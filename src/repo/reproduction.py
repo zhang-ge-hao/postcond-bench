@@ -3,11 +3,8 @@ from openai import OpenAI
 from dataclasses import dataclass
 import subprocess
 import logging
-from src.runner import (
-    python_testsuite_run, 
-    java_testsuite_run
-)
-from src.runner.python_runner import (
+from src.runner import testsuite_run
+from src.runner.python import (
     _ensure_poetry_virtualenv_in_project,
     _get_env
 )
@@ -172,7 +169,7 @@ class PoetryReproduction(Reproduction):
         except subprocess.TimeoutExpired:
             return Result(False, "Timeout.", timeout=True)
         # Determine success based on return code
-        test_result = python_testsuite_run(timeout=200)
+        test_result = testsuite_run(lang="python", timeout=200)
         success = test_result.to_flag() in ["passed", "local_crash", "failed"]
         logging.info(f"\n{'=' * 30}\n flag\n{'=' * 30}\n{test_result.to_flag()}")
         # TODO use result.stdout here for now
@@ -230,7 +227,7 @@ class MavenReproduction(Reproduction):
         # Determine success based on return code
         if result.returncode != 0:
             return Result(False, result.stdout, flag="Your script failed!")
-        test_result = java_testsuite_run(timeout=200)
+        test_result = testsuite_run(lang="java", fatjar_mode=False, timeout=200)
         success = test_result.to_flag() in ["passed", "local_crash", "failed"]
         logging.info(f"\n{'=' * 30}\n flag\n{'=' * 30}\n{test_result.to_flag()}")
         feedback = f"```\n{test_result.test_summary}\n```"

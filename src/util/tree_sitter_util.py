@@ -19,7 +19,7 @@ def get_language_and_parser(lang: str):
     return language, parser
 
 
-def read_code_bytes(file_path):
+def read_code(file_path):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
         code_str = file.read()
         code_bytes = bytes(code_str, encoding="utf-8")
@@ -27,6 +27,6 @@ def read_code_bytes(file_path):
 
 
 def parse_file(file_path: str, parser):
-    code_str, code_bytes = read_code_bytes(file_path)
+    code_str, code_bytes = read_code(file_path)
     tree = parser.parse(code_bytes)
     return tree, code_str, code_bytes

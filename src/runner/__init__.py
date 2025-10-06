@@ -1,3 +1,12 @@
-from src.runner.python_runner import python_testsuite_run
-from src.runner.java_runner import java_testsuite_run
-from src.runner.java_fatjar_runner import fatjar_testsuite_run
+
+
+def testsuite_run(lang: str, **kwargs):
+    from src.runner.python import python_testsuite_run
+    from src.runner.java import java_testsuite_run
+
+    if lang == "python":
+        return python_testsuite_run(**kwargs)
+    elif lang == "java":
+        return java_testsuite_run(**kwargs)
+    else:
+        raise NotImplementedError()

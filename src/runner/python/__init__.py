@@ -15,7 +15,6 @@ import toml
 @dataclass
 class PythonTestResult:
     failed_tests: List[str]
-    covered_files: List[str]
     running_time: float
     interrupted: bool
     timeout: bool
@@ -55,7 +54,6 @@ class PythonTestResult:
         parts = []
         parts.append("=== Python Test Result ===")
         parts.append(format_list("Failed tests ", self.failed_tests))
-        parts.append(format_list("Covered files", self.covered_files))
         parts.append(f"Running time : {self.running_time:.2f}s" if self.running_time is not None else "Running time : None")
         parts.append(f"Interrupted  : {self.interrupted if self.interrupted is not None else 'None'}")
         parts.append(f"Timeout      : {self.timeout if self.timeout is not None else 'None'}")
@@ -205,7 +203,7 @@ def python_testsuite_run(included_tests=None,
 
         if not os.path.exists(venv_python):
             return PythonTestResult(
-                failed_tests=None, covered_files=None, running_time=None, 
+                failed_tests=None, running_time=None, 
                 interrupted=True, timeout=None, reports_exist=False,
                 local_crash=None, icontract_fail=None,
                 cmd="pytest (no env)", test_summary=None, 
@@ -270,10 +268,6 @@ def python_testsuite_run(included_tests=None,
         else:
             interrupted, failed_tests = True, None
 
-        covered_files = None
-        if need_coverage and os.path.exists("coverage.xml"):
-            covered_files = extract_well_covered_filenames("coverage.xml")
-
         local_crash = None if not require_local_crash else False
         icontract_fail = False
         for line in lines:
@@ -295,7 +289,7 @@ def python_testsuite_run(included_tests=None,
         cmd_str_for_log = " ".join(cmd)
 
         test_result = PythonTestResult(
-            failed_tests=failed_tests, covered_files=covered_files,
+            failed_tests=failed_tests,
             running_time=running_time, interrupted=interrupted, 
             timeout=False, reports_exist=reports_exist, 
             local_crash=local_crash, icontract_fail=icontract_fail,
@@ -303,7 +297,7 @@ def python_testsuite_run(included_tests=None,
 
     except subprocess.TimeoutExpired:
         test_result = PythonTestResult(
-            failed_tests=None, covered_files=None, running_time=None, 
+            failed_tests=None, running_time=None, 
             interrupted=True, timeout=True, reports_exist=False,
             local_crash=None, icontract_fail=None,
             cmd="pytest (timeout)", test_summary=None, stdout=None)
@@ -324,53 +318,6 @@ def python_testsuite_run(included_tests=None,
             raise RuntimeError(msg)
 
     return test_result
-
-
-def extract_well_covered_filenames(file_path) -> List[str]:
-    tree = ET.parse(file_path)
-    root = tree.getroot()
-    filenames: List[str] = []
-
-    for cls in root.findall(".//class"):
-        # 1) 同时满足行覆盖率和分支覆盖率都为 1
-        try:
-            line_rate = float(cls.get("line-rate", "0"))
-            branch_rate = float(cls.get("branch-rate", "0"))
-        except ValueError:
-            continue
-        if not (line_rate == 1.0 and branch_rate == 1.0):
-            continue
-
-        # 2) 必须有文件名
-        filename: Optional[str] = cls.get("filename")
-        if not filename:
-            continue
-
-        # 3) 必须且仅有一个 <lines> 子节点，且只包含 <line> 元素
-        lines_elems = cls.findall("lines")
-        if len(lines_elems) != 1:
-            continue
-        lines_elem = lines_elems[0]
-        if not all(child.tag == "line" for child in list(lines_elem)):
-            continue
-
-        # 4) 至少有一行记录（避免空文件被计入）
-        line_elems = lines_elem.findall("line")
-        if not line_elems:
-            continue
-
-        # 5) 若你希望确保确实有分支信息（而不是工具未报告分支），可以保留这一条：
-        #    至少存在一行带有 branch="true" 的节点
-        if not any(line.get("branch") == "true" for line in line_elems):
-            continue
-
-        # 6) 过滤掉测试文件
-        if "test" in filename:
-            continue
-
-        filenames.append(filename)
-
-    return filenames
 
 
 def parse_pytest_reportlog(jsonl_path: str | Path) -> Tuple[bool, List[str]]:

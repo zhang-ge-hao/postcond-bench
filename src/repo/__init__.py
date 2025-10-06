@@ -5,10 +5,7 @@ from src.repo.reproduction import (
     PoetryReproduction,
     MavenReproduction
 )
-from src.runner import (
-    python_testsuite_run,
-    fatjar_testsuite_run
-)
+from src.runner import testsuite_run
 import random
 import shutil
 import os
@@ -75,10 +72,8 @@ def reproduce(repo: Repo) -> Repo:
 
     if repo.language == "python":
         reproduction_cls = PoetryReproduction
-        testsuite_run = python_testsuite_run
     elif repo.language == "java":
         reproduction_cls = MavenReproduction
-        testsuite_run = fatjar_testsuite_run
     else:
         raise NotImplementedError()
 
@@ -97,7 +92,10 @@ def reproduce(repo: Repo) -> Repo:
                 with open(reproduction.config_path) as file:
                     repo.env_config = "".join(file.readlines())
                 with repository_reproduct(repo, require_clone=True) as (repo_dir, clone):
-                    test_res = testsuite_run(timeout=200, require_not_interrupted=True)
+                    test_res = testsuite_run(
+                        lang=repo.language, 
+                        timeout=200, 
+                        require_not_interrupted=True)
                     repo.failed_tests = test_res.failed_tests
                     clone.resnapshot(repo_dir)
                 return repo
@@ -137,16 +135,11 @@ def reuse_pool(input_dir=None, output_dir=None):
 
 
 def reuse(repo: Repo) -> Repo:
-    if repo.language == "python":
-        testsuite_run = python_testsuite_run
-    elif repo.language == "java":
-        testsuite_run = fatjar_testsuite_run
-    else:
-        raise NotImplementedError()
-
     with repository_reproduct(repo, require_clone=True) as (repo_dir, clone):
         clone.remove_cache()
-        test_res = testsuite_run(timeout=200, require_not_interrupted=True)
+        test_res = testsuite_run(
+            lang=repo.language,
+            timeout=200, require_not_interrupted=True)
         repo.failed_tests = test_res.failed_tests
         clone.resnapshot(repo_dir)
     

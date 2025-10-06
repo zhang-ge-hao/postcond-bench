@@ -53,3 +53,10 @@ class StaticMethod:
     def from_dict(cls, data: dict) -> 'Repo':
         data["repo"] = Repo(**data["repo"])
         return cls(**data)
+
+
+# @dataclass
+class DynamicMethod(StaticMethod):
+    cover_tests: List[str]
+
+    line_cov: float
