@@ -97,6 +97,7 @@ def reproduce(repo: Repo) -> Repo:
                         timeout=200, 
                         require_not_interrupted=True)
                     repo.failed_tests = test_res.failed_tests
+                    repo.test_time = test_res.running_time
                     clone.resnapshot(repo_dir)
                 return repo
             else:
@@ -141,6 +142,7 @@ def reuse(repo: Repo) -> Repo:
             lang=repo.language,
             timeout=200, require_not_interrupted=True)
         repo.failed_tests = test_res.failed_tests
+        repo.test_time = test_res.running_time
         clone.resnapshot(repo_dir)
     
     return repo

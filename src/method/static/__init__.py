@@ -1,5 +1,5 @@
 import os
-from src.ds import Repo, StaticMethod
+from src.ds import *
 from typing import *
 from src.util import get_language_and_parser
 from src.clone import repository_reproduct
@@ -27,10 +27,13 @@ class METHOD_RESTRICTION:
 
 def get_method(method_ts_node, code_str, 
                code_bytes, code_path, 
-               repo: Repo) -> StaticMethod:
+               repo: Repo) -> Method:
     github_path = repo.github_path
     commit = repo.commit
     lang = repo.language
+
+    if "test/" in code_path or "tests/" in code_path:
+        return None
 
     # has body
     body_ts_node = get_method_body(method_ts_node, lang)
@@ -44,9 +47,9 @@ def get_method(method_ts_node, code_str,
     if not is_good_comment(comment, lang, METHOD_RESTRICTION.comment):
         return None
 
-    # has return
-    if not has_return(method_ts_node, lang):
-        return None
+    # # has return
+    # if not has_return(method_ts_node, lang):
+    #     return None
 
     # stat number and cc
     stat_number = get_stat_number(body_ts_node, lang)
@@ -71,30 +74,33 @@ def get_method(method_ts_node, code_str,
     # method name
     name = get_method_name(method_ts_node, code_bytes, lang)
 
-    ret = StaticMethod(
+    ret = Method(
         rlid=None, # NOTE: will be assigned afterward
         github_url=github_url,
         name=name,
+        line_cov=None,
+        lines=end_line - start_line + 1,
+        stats=stat_number,
+        cc=cc,
         content=content,
         header=header,
         file=code_path,
         start_line=start_line,
         end_line=end_line,
         body_start_line=body_start_line,
-        lines=end_line - start_line + 1,
-        stats=stat_number,
-        cc=cc,
         comment=comment,
+        test_time=None,
+        cover_tests=None,
         repo=repo)
     return ret
 
 
-def method_collection(repo: Repo) -> List[StaticMethod]:
+def method_collection(repo: Repo) -> List[Method]:
     language = repo.language
 
     _, parser = get_language_and_parser(language)
 
-    ret: List[StaticMethod] = []
+    ret: List[Method] = []
     with repository_reproduct(repo) as repo_dir:
         __generator = iter_tree_and_code_bytes(language, parser)
         for tree, code_str, code_bytes, code_path in __generator:
@@ -145,6 +151,5 @@ def method_collection_pool(input_dir=None, output_dir=None):
     )
     for tn, method_list in zip(task_names, method_lists):
         if method_list:
-            with open(f"{output_dir}/{tn}.jsonl", "w") as file:
-                for m in method_list:
-                    file.write(json.dumps(m.to_dict()) + "\n")
+            file_path = f"{output_dir}/{tn}.jsonl"
+            Method.save_li(method_list, file_path)

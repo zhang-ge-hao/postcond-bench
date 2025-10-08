@@ -1,5 +1,4 @@
 import os
-from src.ds import Repo, StaticMethod
 from typing import *
 from src.util import parse_file, get_language_and_parser
 from src.clone import repository_reproduct

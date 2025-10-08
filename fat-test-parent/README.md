@@ -13,3 +13,7 @@ jar xf target/*-fat-tests.jar META-INF/fattest/jacoco-agent.jar
 
 java -javaagent:META-INF/fattest/jacoco-agent.jar=destfile=jacoco.exec,output=file,append=false,dumponexit=true -jar target/*-fat-tests.jar --append --src-roots src/main/java,src/test/java
 ```
+
+```
+javac -encoding UTF-8 -cp [] -d [] []
+```
