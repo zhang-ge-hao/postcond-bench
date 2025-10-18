@@ -3,7 +3,7 @@ from src.ds import *
 from typing import *
 from src.util import get_language_and_parser
 from src.clone import repository_reproduct
-from uuid6 import uuid7
+from src.util import get_uuid7
 import json
 from src.pool import run_with_pool_file_monitor
 from src.method.static.analysis import (
@@ -127,7 +127,7 @@ def method_collection(repo: Repo) -> List[Method]:
 
 def method_collection_pool(input_dir=None, output_dir=None):
     task_name = "static"
-    log_dir = f"data/__log/{task_name}--{uuid7()}"
+    log_dir = f"data/__log/{task_name}--{get_uuid7()}"
     os.makedirs(log_dir, exist_ok=True)
 
     repos: List[Repo] = []

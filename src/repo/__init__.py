@@ -14,7 +14,7 @@ from src.pool import run_with_pool_file_monitor
 
 from src.ds import Repo
 
-from uuid6 import uuid7
+from src.util import get_uuid7
 import logging
 
 
@@ -24,7 +24,7 @@ def reproduce_pool(input_dir=None, repos: List[Repo]=None,
     assert input_dir is not None or repos is not None
 
     task_name = "reproduce"
-    log_dir = f"data/__log/{task_name}--{uuid7()}"
+    log_dir = f"data/__log/{task_name}--{get_uuid7()}"
     os.makedirs(log_dir, exist_ok=True)
 
     if repos is None:

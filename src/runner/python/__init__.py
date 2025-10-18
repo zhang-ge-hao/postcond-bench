@@ -166,15 +166,19 @@ def _get_poetry_venv_path() -> str:
     return vpath
 
 
-def python_testsuite_run(included_tests=None, 
-                         excluded_tests=None, timeout=None,
-                         require_not_interrupted=False,
-                         replace_file_path=None,
-                         replace_file_content=None,
-                         require_local_crash=False,
-                         local_crash_line_range=None,
-                         target_method=None,
-                         need_coverage=True) -> PythonTestResult:
+def python_testsuite_run(
+        included_tests=None, 
+        excluded_tests=None, 
+        timeout=None,
+        require_not_interrupted=False,
+        replace_file_path=None,
+        replace_file_content=None,
+        require_local_crash=False,
+        local_crash_line_range=None,
+        target_method=None,
+        need_coverage=True,
+        need_print=False,
+        **kwargs) -> PythonTestResult:
 
     _ensure_poetry_virtualenv_in_project()
 
@@ -217,6 +221,8 @@ def python_testsuite_run(included_tests=None,
             "-p", "pytest_reportlog",
             "--report-log=reportlog.jsonl",
         ]
+        if need_print:
+            cmd.append("--capture=no")
         if need_coverage:
             cmd.extend([
                 "-p", "pytest_cov",

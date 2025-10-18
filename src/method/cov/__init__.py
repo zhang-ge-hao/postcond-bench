@@ -5,10 +5,10 @@ from src.inject import must_fail_inj
 from src.runner import testsuite_run
 from src.cov import compute_method_line_coverage
 from src.pool import run_with_pool_file_monitor
-from uuid6 import uuid7
+from src.util import get_uuid7
 import os
 
-def cov_filter(repo: Repo, methods: List[Method]) -> List[Method]:
+def cov_filter(repo: Repo, methods: List[Method]):
     lang = repo.language
     excluded_tests = repo.failed_tests
 
@@ -26,7 +26,7 @@ def cov_filter(repo: Repo, methods: List[Method]) -> List[Method]:
 
 def cov_filter_pool(input_dir=None, output_dir=None):
     task_name = "cov"
-    log_dir = f"data/__log/{task_name}--{uuid7()}"
+    log_dir = f"data/__log/{task_name}--{get_uuid7()}"
     os.makedirs(log_dir, exist_ok=True)
 
     repo_map: Dict[Tuple, Repo] = {}

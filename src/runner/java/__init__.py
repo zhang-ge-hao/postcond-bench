@@ -34,7 +34,8 @@ def java_testsuite_run(
     require_not_interrupted: bool = False,
     replace_file_path: Optional[str] = None,
     replace_file_content: Optional[str] = None,
-    fatjar_mode: bool = True
+    fatjar_mode: bool = True,
+    **kwargs
 ) -> JavaTestResult:
 
     extra_cmds: List[str] = []

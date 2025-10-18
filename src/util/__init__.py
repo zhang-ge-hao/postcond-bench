@@ -5,3 +5,7 @@ from .tree_sitter_util import (
     read_code, 
     parse_file
 )
+
+def get_uuid7():
+    from uuid6 import uuid7
+    return uuid7()
