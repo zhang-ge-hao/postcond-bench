@@ -75,6 +75,7 @@ def check_postcond_exec_inj(method: Method, code_str: str) -> str:
         injected.extend([f"{indent_unit}{l}" for l in body_lines])  # 原体整体深一层
         injected.append(f"{base_indent}except BaseException as __inj_ex:\n")
         injected.append(f"{deeper_indent}print(\"Exception within current method!\")\n")
+        injected.append(f"{deeper_indent}assert False\n")
         injected.append(f"{deeper_indent}raise __inj_ex\n")
 
         new_lines = lines[:body_lo] + injected + lines[body_hi + 1:]
@@ -126,6 +127,7 @@ def check_postcond_exec_inj(method: Method, code_str: str) -> str:
         injected.extend([f"{indent_unit}{l}" for l in inner_lines])
         injected.append(f"{base_indent}}} catch (Throwable __inj_ex) {{\n")
         injected.append(f"{deeper_indent}System.out.println(\"Exception within current method!\");\n")
+        injected.append(f"{deeper_indent}assert false;\n")
         injected.append(f"{deeper_indent}throw __inj_ex;\n")
         injected.append(f"{base_indent}}}\n")
 

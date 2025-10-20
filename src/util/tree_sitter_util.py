@@ -30,3 +30,8 @@ def parse_file(file_path: str, parser):
     code_str, code_bytes = read_code(file_path)
     tree = parser.parse(code_bytes)
     return tree, code_str, code_bytes
+
+def parse_code(code_str: str, parser):
+    code_bytes = code_str.encode("utf-8")
+    tree = parser.parse(code_bytes)
+    return tree, code_str, code_bytes

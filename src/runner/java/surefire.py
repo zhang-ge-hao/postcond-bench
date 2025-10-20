@@ -32,6 +32,7 @@ def _collect_maven_summary_from_xml(surefire_dir: Path) -> Tuple[str, List[str]]
         for case in root.findall(".//testcase"):
             classname = case.get("classname", "")
             name = case.get("name", "")
+            name = name.split("(")[0] # negativeExclusiveInteger() -> negativeExclusiveInteger
             nodeid = f"{classname}#{name}" if classname else name
             if case.find("failure") is not None or case.find("error") is not None:
                 failed.append(nodeid)
