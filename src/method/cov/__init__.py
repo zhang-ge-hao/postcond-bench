@@ -57,8 +57,10 @@ def cov_filter_pool(input_dir=None, output_dir=None):
         summary_path=summary_path,
         refresh_interval=1,
     )
-    for r, ms in ret:
-        rn = r.github_path.replace("/", "--")
-        if ms:
-            file_path = f"{output_dir}/{rn}.jsonl"
-            Method.save_li(ms, file_path)
+    for __ret in ret:
+        if __ret:
+            r, ms = __ret
+            rn = r.github_path.replace("/", "--")
+            if ms:
+                file_path = f"{output_dir}/{rn}.jsonl"
+                Method.save_li(ms, file_path)

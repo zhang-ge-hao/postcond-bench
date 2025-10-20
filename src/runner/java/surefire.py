@@ -33,9 +33,12 @@ def _collect_maven_summary_from_xml(surefire_dir: Path) -> Tuple[str, List[str]]
             classname = case.get("classname", "")
             name = case.get("name", "")
             name = name.split("(")[0] # negativeExclusiveInteger() -> negativeExclusiveInteger
+            name = name.split("[")[0] # testUsesClassLookup[TEXT] -> testUsesClassLookup
             nodeid = f"{classname}#{name}" if classname else name
             if case.find("failure") is not None or case.find("error") is not None:
                 failed.append(nodeid)
 
     summary = f"Tests run: {total_tests}, Failures: {total_failures}, Errors: {total_errors}, Skipped: {total_skipped}"
+    failed = list(set(failed))
+    failed.sort()
     return (summary, failed)

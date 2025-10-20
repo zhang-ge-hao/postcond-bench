@@ -36,8 +36,7 @@ def exec_check(method: Method) -> Method:
             require_not_interrupted=True,
             replace_file_path=method.file,
             replace_file_content=check_pc_exec_code_src,
-            timeout=20,
-            need_print=True)
+            timeout=20)
 
         if run_result.to_flag() != "passed" \
                 or "Exception within current method!" in run_result.stdout:
@@ -60,11 +59,13 @@ def exec_check_pool(input_dir=None, output_dir=None):
                 methods.append(m)
     
     import random
-    random.seed(42)
+    random.seed(52)
     methods = random.sample(methods, 100)
     # print(len([m for m in methods if m.repo.language == "java"]))
     # print(len([m for m in methods if m.repo.language == "python"]))
     # exit()
+
+    methods.sort(key=lambda m: -m.repo.test_time)
 
     task_names = []
     log_paths = []

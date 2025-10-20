@@ -109,7 +109,7 @@ def reproduce(repo: Repo) -> Repo:
 
 def reuse_pool(input_dir=None, output_dir=None):
     task_name = "reuse"
-    log_dir = f"data/__log/{task_name}--{uuid7()}"
+    log_dir = f"data/__log/{task_name}--{get_uuid7()}"
     os.makedirs(log_dir, exist_ok=True)
 
     repos: List[Repo] = []

@@ -51,8 +51,8 @@ public class Main {
     rb.filters(org.junit.platform.engine.discovery.ClassNameFilter
         .includeClassNamePatterns(".*(Test|Tests|TestCase|IT)$"));
 
-    // 3) explicit selectors for -Dtest includes (even if not matching naming)
-    addExplicitSelectorsForIncludes(rb, exact);
+    // // 3) explicit selectors for -Dtest includes (even if not matching naming)
+    // addExplicitSelectorsForIncludes(rb, exact);
 
     // 4) tag filters (from CLI)
     for (String inc : opts.getOrDefault("include-tag", Collections.emptyList()))
