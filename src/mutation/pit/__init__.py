@@ -15,7 +15,7 @@ def generate_mutants_for_method(method: str) -> List[str]:
     # --- 用固定外壳包裹，保证 parser 能识别 method_declaration ---
     prefix = "class __W__ {\n"
     suffix = "\n}\n"
-    wrapped = prefix + method.strip("\n") + "\n" + suffix
+    wrapped = prefix + method.strip("\n") + suffix
 
     lang, parser = get_language_and_parser("java")
     tree, code_str, code_bytes = parse_code(wrapped, parser)

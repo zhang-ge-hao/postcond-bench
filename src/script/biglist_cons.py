@@ -297,6 +297,8 @@ class GitHubTopicRepoSelector:
 
             for raw in cached_list:
                 full_name, stars = _coerce_item(raw)
+                if stars < self.min_stars:
+                    continue
                 if not full_name or full_name in selected_set:
                     continue
                 per_selected.append((full_name, stars))
@@ -353,12 +355,10 @@ def main():
         return
 
     # Parameters
-    min_stars = 200          # threshold for tag searches
-    num_tags = 200           # how many most frequent tags to use in Step 3/4
-    per_tag_count = 25       # how many repos per tag to retrieve/select
-    # # for Java
-    # num_tags = 400           # how many most frequent tags to use in Step 3/4
-    # per_tag_count = 100      # how many repos per tag to retrieve/select
+    min_stars = 56          # threshold for tag searches
+    num_tags = 200          # how many most frequent tags to use in Step 3/4
+    per_tag_count = 10000   # how many repos per tag to retrieve/select
+
     max_pages_for_count = 10 # pages for step 1
     max_pages_per_tag = 10   # pages for step 3
     sleep_between_requests = 3.0
@@ -371,8 +371,8 @@ def main():
         sleep_between_requests=sleep_between_requests
     )
 
-    languages = ["Python", "Java"]
-    out_dir = "data"
+    languages = ["Java"]
+    out_dir = "data/step/1.biglist"
     final_results: Dict[str, Result] = {}
 
     for lang in languages:

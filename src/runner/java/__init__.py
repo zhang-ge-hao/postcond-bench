@@ -172,7 +172,7 @@ def java_testsuite_run(
         else:
             test_summary = test_summary_stackless
 
-        jml_fail = "JML Post-condtion Failed" in combined_stdout
+        jml_fail = "JML Post-condition Failed" in combined_stdout
         compile_failure = _is_java_compile_failure(combined_stdout)
 
         result = JavaTestResult(

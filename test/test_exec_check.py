@@ -22,4 +22,5 @@ if __name__ == "__main__":
 
     # exec_check(method)
 
-    exec_check_pool("data/step/4.cov", "data/step/5.exec_check")
+    exec_check_pool("data/step/4.cov", "data/step/5.exec_check",
+                    debug_mode=True)

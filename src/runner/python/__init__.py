@@ -138,6 +138,12 @@ def _get_env():
     env.pop("VIRTUAL_ENV", None)
     env.pop("CONDA_PREFIX", None)
 
+    # 子进程不能是debug模式启动的
+    for k in list(env):
+        if k.startswith(("DEBUGPY_", "PYDEVD_")):
+            env.pop(k, None)
+    env["PYTHONBREAKPOINT"] = "0"
+
     extra_paths = [
         "/root/.cargo/bin",
         "/opt/maven/bin",

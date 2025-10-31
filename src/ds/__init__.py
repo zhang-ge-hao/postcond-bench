@@ -53,6 +53,17 @@ class Method:
 
     repo: Repo
 
+    mutants: List[str] = None
+    mutant_tags: List[List[str]] = None
+
+    ref_postcond: str = None
+    ref_mutant_kill: List[str] = None
+
+    postconds: List[str] = None
+
+    postcond_corr: List[str] = None
+    mutant_kill: List[List[str]] = None
+
     def to_dict(self):
         return asdict(self)
 

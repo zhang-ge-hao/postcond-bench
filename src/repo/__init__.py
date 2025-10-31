@@ -19,7 +19,7 @@ import logging
 
 
 def reproduce_pool(input_dir=None, repos: List[Repo]=None, 
-                   output_dir=None):
+                   output_dir=None, task_num=None, task_idx=None):
     assert output_dir is not None
     assert input_dir is not None or repos is not None
 
@@ -43,25 +43,58 @@ def reproduce_pool(input_dir=None, repos: List[Repo]=None,
                     repos.append(Repo(
                         github_path=github_path, 
                         commit=None, language=lang,
-                        env_config=None, failed_tests=None))
+                        env_config=None, failed_tests=None, test_time=None))
+    
+    if task_num is not None and task_idx is not None:
+        github_paths = [r.github_path for r in repos]
+        github_paths.sort()
+        selected_paths = [p for i, p in enumerate(github_paths) 
+                          if i % task_num == task_idx]
+        repos = [r for r in repos if r.github_path in selected_paths]
+        # ban huggingface repos
+        repos = [r for r in repos if "huggingface" not in r.github_path]
+        # ban swe repos
+        repos = [r for r in repos if "swe-" not in r.github_path.lower()]
+
+    print(len(repos))
+    # # ===== debug =====
+    # import random
+    # repos = random.sample(repos, 100)
+    # print(len([r for r in repos if r.language == "python"]))
+    # print(len([r for r in repos if r.language == "java"]))
+    # exit()
+    # # ===== debug =====
+
     summary_path = f"{log_dir}/__summary.md"
-    task_names = [r.github_path.replace("/", "--") for r in repos]
-    log_paths = [f"{log_dir}/{tn}.log" for tn in task_names]
+    
+    params_list = []
+    task_names = []
+    log_paths = []
+
+    for repo in repos:
+        tn = repo.github_path.replace("/", "--")
+        lp = f"{log_dir}/{tn}.log"
+        output_path = f"{output_dir}/{tn}.json"
+        output_path = os.path.abspath(output_path)
+        if os.path.exists(output_path):
+            continue
+        params_list.append((repo, output_path))
+        task_names.append(tn)
+        log_paths.append(lp)
+
     _, repos = run_with_pool_file_monitor(
         func=reproduce,
         task_names=task_names,
         log_paths=log_paths,
-        params_list=repos,
+        params_list=params_list,
         processes=30,
         summary_path=summary_path,
         refresh_interval=1,
     )
-    for tn, repo in zip(task_names, repos):
-        if repo:
-            repo.save(f"{output_dir}/{tn}.json")
 
 
-def reproduce(repo: Repo) -> Repo:
+def reproduce(repo: Repo, output_path: str) -> Repo:
+    """output_path need to be absolute"""
     assert repo.github_path is not None
     # assert repo.commit is not None
     assert repo.language is not None
@@ -99,6 +132,7 @@ def reproduce(repo: Repo) -> Repo:
                     repo.failed_tests = test_res.failed_tests
                     repo.test_time = test_res.running_time
                     clone.resnapshot(repo_dir)
+                repo.save(output_path)
                 return repo
             else:
                 raise RuntimeError(f"reproduction run failed: {result.log}")

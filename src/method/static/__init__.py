@@ -27,7 +27,8 @@ class METHOD_RESTRICTION:
 
 def get_method(method_ts_node, code_str, 
                code_bytes, code_path, 
-               repo: Repo) -> Method:
+               repo: Repo,
+               apply_restriction=True) -> Method:
     github_path = repo.github_path
     commit = repo.commit
     lang = repo.language
@@ -42,9 +43,9 @@ def get_method(method_ts_node, code_str,
 
     # comment
     comment = get_comment(method_ts_node, body_ts_node, code_bytes, lang)
-    if comment is None:
+    if apply_restriction and comment is None:
         return None
-    if not is_good_comment(comment, lang, METHOD_RESTRICTION.comment):
+    if apply_restriction and not is_good_comment(comment, lang, METHOD_RESTRICTION.comment):
         return None
 
     # # has return
@@ -55,7 +56,7 @@ def get_method(method_ts_node, code_str,
     stat_number = get_stat_number(body_ts_node, lang)
     cc_dict = get_cc(body_ts_node, code_bytes, lang)
     cc = cc_dict["total"]
-    if cc < METHOD_RESTRICTION.cc and stat_number < METHOD_RESTRICTION.stat:
+    if apply_restriction and cc < METHOD_RESTRICTION.cc and stat_number < METHOD_RESTRICTION.stat:
         return None
 
     # parse line-wise positions

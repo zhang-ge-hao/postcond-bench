@@ -25,6 +25,7 @@ def exec_check(method: Method) -> Method:
             require_not_interrupted=True,
             replace_file_path=method.file,
             replace_file_content=must_fail_code_src,
+            need_coverage=False,
             timeout=200)
         method.cover_tests = run_result.failed_tests
 
@@ -36,7 +37,10 @@ def exec_check(method: Method) -> Method:
             require_not_interrupted=True,
             replace_file_path=method.file,
             replace_file_content=check_pc_exec_code_src,
+            need_coverage=False,
             timeout=20)
+        
+        method.test_time = run_result.running_time
 
         if run_result.to_flag() != "passed" \
                 or "Exception within current method!" in run_result.stdout:
@@ -47,7 +51,11 @@ def exec_check(method: Method) -> Method:
         return method
 
 
-def exec_check_pool(input_dir=None, output_dir=None):
+def exec_check_pool(
+        input_dir=None, 
+        output_dir=None, 
+        debug_mode=False,
+        task_num=None, task_idx=None):
     task_name = "exec_check"
     log_dir = f"data/__log/{task_name}--{get_uuid7()}"
     os.makedirs(log_dir, exist_ok=True)
@@ -58,14 +66,64 @@ def exec_check_pool(input_dir=None, output_dir=None):
             for m in Method.load_li(f"{input_dir}/{file_name}"):
                 methods.append(m)
     
-    import random
-    random.seed(52)
-    methods = random.sample(methods, 100)
-    # print(len([m for m in methods if m.repo.language == "java"]))
-    # print(len([m for m in methods if m.repo.language == "python"]))
-    # exit()
+    if task_num is not None and task_idx is not None:
+        github_paths = [m.repo.github_path for m in methods]
+        github_paths = list(set(github_paths))
+        github_paths.sort()
+        selected_paths = [p for i, p in enumerate(github_paths) 
+                          if i % task_num == task_idx]
 
-    methods.sort(key=lambda m: -m.repo.test_time)
+        # ban_paths = [
+        #     "lemon24/reader",
+        #     "Password4j/password4j",
+        #     "falconry/falcon",
+        #     "yzhao062/combo",
+        #     "wangguanquan/eec/writeTo-2",
+        #     "sanic-org/sanic",
+        #     "lemon24/reader",
+        #     "sanic-org/sanic",
+        #     "lemon24/reader",
+        #     "lemon24/reader",
+        #     "falconry/falcon",
+        #     "yzhao062/combo/fit-4",
+        #     "KittehOrg/KittehIRCClientLib",
+        #     "Password4j/password4j",
+        #     "cdown/srt",
+        #     "falconry/falcon",
+        #     "falconry/falcon",
+        #     "wangguanquan/eec/find-2",
+        #     "Password4j/password4j",
+        #     "falconry/falcon",
+        #     "deedy5/ddgs",
+        #     "bramp/ffmpeg-cli-wrapper",
+        #     "mojohaus/extra-enforcer-rules",
+        #     "sanic-org/sanic",
+        #     "falconry/falcon",
+        #     "wangguanquan/eec/put-2",
+        #     "sanic-org/sanic",
+        #     "nbedos/termtosvg",
+        #     "falconry/falcon",
+        #     "pndurette/gTTS",
+        # ]
+
+        # selected_paths = [p for p in selected_paths if p not in ban_paths]
+
+        methods = [m for m in methods if m.repo.github_path in selected_paths]
+        print(len(selected_paths))
+        print(len(methods))
+
+    if debug_mode:
+        import random
+        random.seed(42)
+        python_methods = [m for m in methods if m.repo.language == "python"]
+        java_methods = [m for m in methods if m.repo.language == "java"]
+        python_methods = random.sample(python_methods, 100)
+        java_methods = random.sample(java_methods, 100)
+        methods = python_methods + java_methods
+
+    # methods.sort(key=lambda m: -m.repo.test_time)
+    import random
+    random.shuffle(methods)
 
     task_names = []
     log_paths = []

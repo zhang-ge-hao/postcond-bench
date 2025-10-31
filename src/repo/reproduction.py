@@ -100,9 +100,10 @@ class Reproduction:
 
     def run(self) -> Result:
         with change_dir(self.repo_dir):
-            _ensure_poetry_virtualenv_in_project()
             if not self.check_prerequisites():
                 return Result(False, "Prerequisites failed.")
+            if self.config_file_name == "pyproject.toml":
+                _ensure_poetry_virtualenv_in_project()
             messages = []
             cli_result: Result = None
             for idx in range(self.chat_rounds):
@@ -147,6 +148,8 @@ class PoetryReproduction(Reproduction):
 
     def check_prerequisites(self) -> bool:
         if not os.path.exists(self.config_path):
+            return False
+        if not (os.path.isdir("test") or os.path.isdir("tests")):
             return False
         with open(self.config_path) as file:
             for line in file:
