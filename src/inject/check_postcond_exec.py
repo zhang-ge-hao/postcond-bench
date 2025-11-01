@@ -33,9 +33,6 @@ def check_postcond_exec_mutant_inj(method: Method, mutant: str, code_str: str) -
     rep_method, rep_code_str = mutant_replace(method, mutant, code_str)
     ret = check_postcond_exec_inj(rep_method, rep_code_str)
 
-    # print("=" * 30)
-    # print(ret)
-
     return ret
 
 

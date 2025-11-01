@@ -1,5 +1,4 @@
 # single_def_mutator_demo_compat.py
-import difflib
 import textwrap
 from typing import List, Optional
 import re

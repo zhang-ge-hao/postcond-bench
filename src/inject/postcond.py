@@ -72,26 +72,11 @@ def postcond_inj(
     # 组合为插入后的文件
     inj_code_lines = prefix_lines + inj_method_lines + suffix_lines
 
-    # 对于python来说 需要获取插入后的方法的起止行作为local crash的判断依据
-    if lang == "python":
-        inj_code = "\n".join(inj_code_lines)
-        hot_line_start = len(prefix_lines) + 1
-        hot_line_end = len(prefix_lines) + len(inj_method_lines)
-        local_crash_line_range = (hot_line_start, hot_line_end)
-
-        # ===== Debug =====
-        print("===== Debug =====")
-        print(inj_code)
-        print(local_crash_line_range)
-        pass
-        # ===== Debug End =====
-
-        return inj_code, local_crash_line_range
-    # 对于python来说 不需要起止行 但需要进行JML翻译
-    elif lang == "java":
-        inj_code = "\n".join(inj_code_lines)
+    inj_code = "\n".join(inj_code_lines)
+    # 对于 java 来说 需要进行JML翻译
+    if lang == "java":
         try:
             inj_code = rewrite_java_source(inj_code)
         except:
-            return None, None
-        return inj_code, None
+            return None
+    return inj_code

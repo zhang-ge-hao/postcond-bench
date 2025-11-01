@@ -20,7 +20,7 @@ def eval_postcond(method: Method, postcond):
 
         code_str, code_bytes = read_code(method.file)
 
-        postcond_code_src, local_crash_line_range = postcond_inj(
+        postcond_code_src = postcond_inj(
             method=method,
             code_str=code_str,
             postcond=postcond
@@ -36,7 +36,6 @@ def eval_postcond(method: Method, postcond):
                 replace_file_path=method.file,
                 replace_file_content=postcond_code_src,
                 need_coverage=False,
-                local_crash_line_range=local_crash_line_range,
                 timeout=30)
             corr_flag = run_result.to_flag()
             if corr_flag != "passed":
@@ -50,7 +49,7 @@ def eval_postcond(method: Method, postcond):
         mutant_results = []
 
         for mut_idx, mutant in enumerate(method.mutants):
-            postcond_code_src, local_crash_line_range = postcond_inj(
+            postcond_code_src = postcond_inj(
                 method=method,
                 code_str=code_str,
                 postcond=postcond,
@@ -66,7 +65,6 @@ def eval_postcond(method: Method, postcond):
                     replace_file_path=method.file,
                     replace_file_content=postcond_code_src,
                     need_coverage=False,
-                    local_crash_line_range=local_crash_line_range,
                     timeout=30)
                 comp_flag = run_result.to_flag()
             mutant_results.append(comp_flag)

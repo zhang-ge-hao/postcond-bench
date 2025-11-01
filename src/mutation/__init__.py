@@ -1,6 +1,7 @@
 
 import os
 from src.ds import *
+from src.util import get_diff
 
 from src.runner import testsuite_run
 from src.mutation.mutmut import (
@@ -18,7 +19,7 @@ from src.inject import check_postcond_exec_mutant_inj
 from src.clone import repository_reproduct
 from src.pool import run_with_pool_file_monitor
 
-def mutant_generation(method: Method, output_path: str=None) -> Method:
+def mutant_candidate_generation(method: Method) -> Method:
     lang = method.repo.language
     if lang == "python":
         rule_muts = python_mut_gen(method.content)
@@ -63,6 +64,13 @@ def mutant_generation(method: Method, output_path: str=None) -> Method:
     method.mutants = [m for m, _, _ in triples]
     method.mutant_tags = [tags for _, tags, _ in triples]
 
+    return method
+
+
+def mutant_generation(method: Method, output_path: str=None) -> Method:
+    if method.mutants is None and method.mutant_tags is None:
+        method = mutant_candidate_generation(method)
+
     import logging
 
     logging.info(f"for {method.rlid}, {len(method.mutants)} mutants generated.")
@@ -103,20 +111,21 @@ def mutant_generation(method: Method, output_path: str=None) -> Method:
 
 
 def mutant_generation_pool(input_dir=None, output_dir=None,
-                           task_num=None, task_idx=None):
+                           task_num=None, task_idx=None, methods=None):
     task_name = "mut_gen"
     log_dir = f"data/__log/{task_name}--{get_uuid7()}"
     output_dir = os.path.abspath(output_dir)
     os.makedirs(log_dir, exist_ok=True)
 
-    methods: List[Method] = []
-    for file_name in os.listdir(input_dir):
-        if file_name.endswith(".jsonl"):
-            for m in Method.load_li(f"{input_dir}/{file_name}"):
-                methods.append(m)
-    
-    methods.sort(key=lambda m: (-m.lines, m.repo.github_path, m.rlid))
-    
+    if methods is None:
+        methods: List[Method] = []
+        for file_name in os.listdir(input_dir):
+            if file_name.endswith(".jsonl"):
+                for m in Method.load_li(f"{input_dir}/{file_name}"):
+                    methods.append(m)
+        
+        methods.sort(key=lambda m: (-m.lines, m.repo.github_path, m.rlid))
+        
     if task_num is not None and task_idx is not None:
         methods = [m for i, m in enumerate(methods) 
                    if i % task_num == task_idx]

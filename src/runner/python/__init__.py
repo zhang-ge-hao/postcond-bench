@@ -19,7 +19,7 @@ class PythonTestResult:
     interrupted: bool
     timeout: bool
     reports_exist: bool
-    local_crash: bool
+    syntax_error: bool
     icontract_fail: bool
     cmd: str
     test_summary: str
@@ -28,8 +28,8 @@ class PythonTestResult:
     def to_flag(self):
         if self.timeout:
             return "timeout"
-        if self.local_crash:
-            return "local_crash"
+        if self.syntax_error:
+            return "syntax_error"
         if self.icontract_fail:
             return "icontract_fail"
         if not self.reports_exist:
@@ -179,9 +179,6 @@ def python_testsuite_run(
         require_not_interrupted=False,
         replace_file_path=None,
         replace_file_content=None,
-        require_local_crash=False,
-        local_crash_line_range=None,
-        target_method=None,
         need_coverage=True,
         need_print=False,
         **kwargs) -> PythonTestResult:
@@ -215,7 +212,7 @@ def python_testsuite_run(
             return PythonTestResult(
                 failed_tests=None, running_time=None, 
                 interrupted=True, timeout=None, reports_exist=False,
-                local_crash=None, icontract_fail=None,
+                syntax_error=None, icontract_fail=None,
                 cmd="pytest (no env)", test_summary=None, 
                 stdout=stdout_install)
 
@@ -280,23 +277,16 @@ def python_testsuite_run(
         else:
             interrupted, failed_tests = True, None
 
-        local_crash = None if not require_local_crash else False
+        syntax_error = False
         icontract_fail = False
         for line in lines:
-            if require_local_crash and target_method:
-                if "SyntaxError: invalid syntax" in line:
-                    local_crash = True
-                assert local_crash_line_range is not None
-                hot_line_start, hot_line_end = local_crash_line_range
-                pattern = rf"{re.escape(target_method.file)}:(\d+)"
-                match = re.search(pattern, line)
-                if match:
-                    crash_line_number = int(match.group(1))
-                    if hot_line_start <= crash_line_number <= hot_line_end:
-                        local_crash = True
             if "icontract.errors.ViolationError" in line or \
                     "RuntimeError: Failed to recompute the values of the contract condition" in line:
                 icontract_fail = True
+            if "SyntaxError:" in line:
+                syntax_error = True
+            if "IndentationError:" in line:
+                syntax_error = True
 
         cmd_str_for_log = " ".join(cmd)
 
@@ -304,14 +294,14 @@ def python_testsuite_run(
             failed_tests=failed_tests,
             running_time=running_time, interrupted=interrupted, 
             timeout=False, reports_exist=reports_exist, 
-            local_crash=local_crash, icontract_fail=icontract_fail,
+            syntax_error=syntax_error, icontract_fail=icontract_fail,
             cmd=cmd_str_for_log, test_summary=test_summary, stdout=stdout)
 
     except subprocess.TimeoutExpired:
         test_result = PythonTestResult(
             failed_tests=None, running_time=None, 
             interrupted=True, timeout=True, reports_exist=False,
-            local_crash=None, icontract_fail=None,
+            syntax_error=None, icontract_fail=None,
             cmd="pytest (timeout)", test_summary=None, stdout=None)
 
     finally:

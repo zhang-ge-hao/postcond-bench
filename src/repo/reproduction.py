@@ -173,7 +173,7 @@ class PoetryReproduction(Reproduction):
             return Result(False, "Timeout.", timeout=True)
         # Determine success based on return code
         test_result = testsuite_run(lang="python", timeout=200)
-        success = test_result.to_flag() in ["passed", "local_crash", "failed"]
+        success = test_result.to_flag() in ["passed", "failed"]
         logging.info(f"\n{'=' * 30}\n flag\n{'=' * 30}\n{test_result.to_flag()}")
         # TODO use result.stdout here for now
         with open(self.config_path) as file:
@@ -231,7 +231,7 @@ class MavenReproduction(Reproduction):
         if result.returncode != 0:
             return Result(False, result.stdout, flag="Your script failed!")
         test_result = testsuite_run(lang="java", fatjar_mode=False, timeout=200)
-        success = test_result.to_flag() in ["passed", "local_crash", "failed"]
+        success = test_result.to_flag() in ["passed", "failed"]
         logging.info(f"\n{'=' * 30}\n flag\n{'=' * 30}\n{test_result.to_flag()}")
         feedback = f"```\n{test_result.test_summary}\n```"
         # NOTE use summary here

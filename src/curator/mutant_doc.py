@@ -1,6 +1,5 @@
 import json
-import difflib
-
+from src.util import get_diff
 from src.ds import *
 
 def get_mutant_doc(
@@ -26,13 +25,7 @@ def get_mutant_doc(
     for m_idx, mutant in zip(survived_mutant_idxs, mutants):
         lines = []
         
-        diff_lines = difflib.unified_diff(
-            original_method.splitlines(keepends=True),
-            mutant.splitlines(keepends=True),
-            lineterm=""
-        )
-        diff_str = "".join(list(diff_lines)[3: ])
-        diff_str = diff_str.rstrip()
+        diff_str = get_diff(original_method, mutant)
 
         lines.append(f"# Mutant {m_idx}")
         lines.append("## Mutant Code")

@@ -29,7 +29,7 @@ def exec_check(method: Method) -> Method:
             timeout=200)
         method.cover_tests = run_result.failed_tests
 
-        check_pc_exec_code_src = check_postcond_exec_inj(method, code_str)
+        check_pc_exec_code_src, _ = check_postcond_exec_inj(method, code_str)
         run_result = testsuite_run(
             lang=lang,
             included_tests=method.cover_tests,

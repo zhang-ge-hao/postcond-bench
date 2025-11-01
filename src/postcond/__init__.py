@@ -68,7 +68,7 @@ def postcond_generation(method: Method) -> Method:
         method.postcond_corr = []
         method.mutant_kill = []
         for postcond in method.postconds:
-            postcond_code_src, local_crash_line_range = postcond_inj(
+            postcond_code_src = postcond_inj(
                 method=method,
                 code_str=code_str,
                 postcond=postcond
@@ -83,7 +83,6 @@ def postcond_generation(method: Method) -> Method:
                     replace_file_path=method.file,
                     replace_file_content=postcond_code_src,
                     need_coverage=False,
-                    local_crash_line_range=local_crash_line_range,
                     timeout=30)
                 corr_flag = run_result.to_flag()
             method.postcond_corr.append(corr_flag)
@@ -98,7 +97,7 @@ def postcond_generation(method: Method) -> Method:
             if corr_flag != "passed":
                 continue
             for mut_idx, mutant in enumerate(method.mutants):
-                postcond_code_src, local_crash_line_range = postcond_inj(
+                postcond_code_src = postcond_inj(
                     method=method,
                     code_str=code_str,
                     postcond=postcond,
@@ -114,7 +113,6 @@ def postcond_generation(method: Method) -> Method:
                         replace_file_path=method.file,
                         replace_file_content=postcond_code_src,
                         need_coverage=False,
-                        local_crash_line_range=local_crash_line_range,
                         timeout=30)
                     comp_flag = run_result.to_flag()
 
