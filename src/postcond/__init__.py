@@ -1,6 +1,7 @@
 
 
 import os
+import re
 from src.ds import *
 
 from src.runner import testsuite_run
@@ -28,6 +29,28 @@ def response_post_process(response: str):
         elif met_quote_mark:
             lines.append(line)
     return "\n".join(lines)
+
+
+def is_local_crash(
+        stdout: str, 
+        hot_range: Tuple[int, int], 
+        file_path: str) -> bool:
+    if not stdout or hot_range is None:
+        return False
+
+    file_path = file_path.strip()
+    if file_path.startswith("./"):
+        file_path = file_path[2: ]
+    hot_line_start, hot_line_end = hot_range
+
+    for line in stdout.split():
+        pattern = rf"{re.escape(file_path)}:(\d+)"
+        match = re.search(pattern, line)
+        if match:
+            crash_line_number = int(match.group(1))
+            if hot_line_start <= crash_line_number <= hot_line_end:
+                return True
+    return False
 
 
 def postcond_generation(method: Method, output_path: str=None) -> Method:
@@ -69,10 +92,11 @@ def postcond_generation(method: Method, output_path: str=None) -> Method:
         method.postcond_corr = []
         method.mutant_kill = []
         for postcond in method.postconds:
-            postcond_code_src = postcond_inj(
+            postcond_code_src, hot_range = postcond_inj(
                 method=method,
                 code_str=code_str,
-                postcond=postcond
+                postcond=postcond,
+                need_hot_range=True
             )
             if not postcond_code_src: # 目前应该只有在java的情况下会出现为None
                 corr_flag = "compile_failure"
@@ -86,23 +110,25 @@ def postcond_generation(method: Method, output_path: str=None) -> Method:
                     need_coverage=False,
                     timeout=30)
                 corr_flag = run_result.to_flag()
+                # 判断是否 local_crash
+                if corr_flag == "failed" and hot_range is not None:
+                    local_crash = is_local_crash(
+                        run_result.stdout, hot_range, method.file)
+                    if local_crash:
+                        corr_flag = "local_crash"
             method.postcond_corr.append(corr_flag)
-
-            # # ===== Debug =====
-            # print("===== Debug =====")
-            # print(run_result.stdout)
-            # # ===== Debug End =====
 
             mutant_kill = []
             method.mutant_kill.append(mutant_kill)
             if corr_flag != "passed":
                 continue
             for mut_idx, mutant in enumerate(method.mutants):
-                postcond_code_src = postcond_inj(
+                postcond_code_src, hot_range = postcond_inj(
                     method=method,
                     code_str=code_str,
                     postcond=postcond,
                     mutant=mutant,
+                    need_hot_range=True
                 )
                 if not postcond_code_src: # 目前应该只有在java的情况下会出现为None
                     comp_flag = "compile_failure"
@@ -116,11 +142,12 @@ def postcond_generation(method: Method, output_path: str=None) -> Method:
                         need_coverage=False,
                         timeout=30)
                     comp_flag = run_result.to_flag()
-
-                # ===== Debug =====
-                print("===== Debug =====")
-                print(run_result.stdout)
-                # ===== Debug End =====
+                    # 判断是否 local_crash
+                    if comp_flag == "failed" and hot_range is not None:
+                        local_crash = is_local_crash(
+                            run_result.stdout, hot_range, method.file)
+                        if local_crash:
+                            comp_flag = "local_crash"
 
                 mutant_kill.append(comp_flag)
             pass
@@ -133,7 +160,7 @@ def postcond_generation(method: Method, output_path: str=None) -> Method:
 def postcond_generation_pool(
         input_dir=None, output_dir=None, 
         model_name=None, generate_num=None, w_code=None,
-        task_num=None, task_idx=None):
+        task_num=None, task_idx=None, lang=None):
     task_name = "postcond_gen"
     log_dir = f"data/__log/{task_name}--{get_uuid7()}"
     output_dir = os.path.abspath(output_dir)
@@ -156,6 +183,8 @@ def postcond_generation_pool(
     if task_num is not None and task_idx is not None:
         methods = [m for i, m in enumerate(methods) 
                    if i % task_num == task_idx]
+    if lang is not None:
+        methods = [m for m in methods if m.repo.language == lang]
 
     params_list = []
     task_names = []
@@ -169,6 +198,8 @@ def postcond_generation_pool(
         params_list.append((m, out_path))
         task_names.append(tn)
         log_paths.append(f"{log_dir}/{rn}.log")
+    
+    print(len(params_list))
 
     summary_path = f"{log_dir}/__summary.md"
     _, ret = run_with_pool_file_monitor(

@@ -161,7 +161,38 @@ def update_ref():
         with open(f"data/step/7.reference_update/{file_name}", "w") as file:
             json.dump(method.to_dict(), file)
 
+
+def exp_res():
+    methods = read_benchmark("data/step/9.gpt-4.1--w_code")
+
+    py_ms = [m for m in methods if m.repo.language == "python"]
+    java_ms = [m for m in methods if m.repo.language == "java"]
+
+    py_res_list = []
+    for method in py_ms:
+        for corr_res, comp_res in zip(method.postcond_corr, method.mutant_kill):
+            py_res_list.append((corr_res, comp_res))
+    java_res_list = []
+    for method in java_ms:
+        for corr_res, comp_res in zip(method.postcond_corr, method.mutant_kill):
+            java_res_list.append((corr_res, comp_res))
+    
+    print("Count Python: ", len(py_res_list))
+    print("Count Java: ", len(java_res_list))
+
+    print("Python corr postconds: ", 
+        len([corr_res for corr_res, comp_res in py_res_list if corr_res == "passed"]))
+    print("Java corr postconds: ", 
+        len([corr_res for corr_res, comp_res in java_res_list if corr_res == "passed"]))
+
+    print("Python comp postconds: ", 
+        len([corr_res for corr_res, comp_res in py_res_list if corr_res == "passed" \
+             and all(f in KFS for f in comp_res)]))
+    print("Java comp postconds: ", 
+        len([corr_res for corr_res, comp_res in java_res_list if corr_res == "passed" \
+             and all(f in KFS for f in comp_res)]))
+
 if __name__ == "__main__":
-    overall()
+    exp_res()
     # update_ref()
     # sample_suv_mutants()

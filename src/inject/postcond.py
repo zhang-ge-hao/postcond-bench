@@ -7,7 +7,8 @@ def postcond_inj(
         method: Method, 
         code_str: str, 
         postcond: str,
-        mutant: str = None):
+        mutant: str = None,
+        need_hot_range = False):
     lang = method.repo.language
 
     code_lines = code_str.split("\n")
@@ -73,10 +74,22 @@ def postcond_inj(
     inj_code_lines = prefix_lines + inj_method_lines + suffix_lines
 
     inj_code = "\n".join(inj_code_lines)
+    hot_range = None
+
+    # 对于 python 来说 需要计算hot range
+    if lang == "python":
+        hot_line_start = len(prefix_lines) + 1
+        hot_line_end = len(prefix_lines) + len(inj_method_lines)
+        hot_range = (hot_line_start, hot_line_end)
+
     # 对于 java 来说 需要进行JML翻译
     if lang == "java":
         try:
             inj_code = rewrite_java_source(inj_code)
         except:
-            return None
-    return inj_code
+            inj_code = None
+
+    if need_hot_range:
+        return inj_code, hot_range
+    else:
+        return inj_code
