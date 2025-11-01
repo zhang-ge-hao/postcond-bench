@@ -59,6 +59,12 @@ class Method:
     ref_postcond: str = None
     ref_mutant_kill: List[str] = None
 
+    model_name: str = None
+    generate_num: int = None
+    w_code: bool = None
+
+    prompt: str = None
+
     postconds: List[str] = None
 
     postcond_corr: List[str] = None

@@ -17,7 +17,7 @@ def read_benchmark(p="data/step/7.reference") -> List[Method]:
 
 
 def overall():
-    methods = read_benchmark("data/step/7.reference_update")
+    methods = read_benchmark("data/step/8.benchmark")
 
     py_ms = [m for m in methods if m.repo.language == "python"]
     java_ms = [m for m in methods if m.repo.language == "java"]
