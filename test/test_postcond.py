@@ -6,17 +6,27 @@ from src.postcond import (
 from src.ds import *
 from src.clone import repository_reproduct
 import json
+import os
 
 if __name__ == "__main__":
+    methods = []
+    input_dir = "data/step/8.benchmark/"
+    for fn in os.listdir(input_dir):
+        file_path = f"{input_dir}/{fn}"
+        with open(file_path) as file:
+            methods.append(Method.from_dict(json.load(file)))
+
     input_path = "data/step/8.benchmark/bottlepy--bottle--remote_route.json"
     with open(input_path) as file:
         method = Method.from_dict(json.load(file))
 
-    method.model_name = "gpt-4o-mini"
+    method.model_name = "Qwen3-8B"
     method.generate_num = 5
-    method.w_code = False
+    method.w_code = True
+    method.prompting = "fsl_3"
+    method.port = "19990"
 
-    method = postcond_generation(method)
+    method = postcond_generation(method, methods=methods)
 
     pass
 

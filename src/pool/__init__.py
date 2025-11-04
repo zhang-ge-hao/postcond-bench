@@ -8,7 +8,7 @@ import logging
 from datetime import datetime
 from multiprocessing import current_process, get_context
 from multiprocessing.managers import SyncManager
-from typing import Callable, List, Any, Dict, Tuple
+from typing import Callable, List, Any, Dict, Tuple, Optional
 from threading import Thread, Event
 
 from src.util import setup_child_io_logging
@@ -39,24 +39,33 @@ def fmt_duration(seconds: float) -> str:
 # Worker
 # -------------------------------
 
-def _worker(index: int, func: Callable, task_name: str, params: Any, log_path: str,
+def _worker(index: int, func: Callable, task_name: str, params: Any, log_path: Optional[str],
             running_proxy, completed_proxy) -> Tuple[int, str, int, Any]:
     """
-    Execute a task inside a process. Update running/completed stores and write logs.
+    Execute a task inside a process. Update running/completed stores and write logs (if log_path is provided).
     Return (index, task_name, return_code, return_value).
     """
     pid = os.getpid()
     start_ts = time.time()
     start_dt = fmt_ts(start_ts)
 
-    setup_child_io_logging(log_path)
+    # If a log_path is provided, set up file logging; otherwise disable logging for this child
+    if log_path:
+        setup_child_io_logging(log_path)
+        effective_log_path = os.path.abspath(log_path)
+        logging.getLogger().disabled = False
+    else:
+        # Disable all logging in this child process
+        logging.getLogger().handlers.clear()
+        logging.getLogger().disabled = True
+        effective_log_path = ""
 
     # mark running
     running_proxy[pid] = {
         "task": task_name,
         "start_ts": start_ts,
         "start_dt": start_dt,
-        "log_path": os.path.abspath(log_path)
+        "log_path": effective_log_path
     }
 
     ret_val: Any = None
@@ -73,7 +82,11 @@ def _worker(index: int, func: Callable, task_name: str, params: Any, log_path: s
             logging.error(f"Task failed: {task_name} rc={rc}")
     except Exception:
         rc = -1
-        logging.error(f"Task raised exception: {task_name}\n{traceback.format_exc()}")
+        # 仍然记录到 summary，但不写日志文件（因为被禁用或没有文件）
+        try:
+            logging.error(f"Task raised exception: {task_name}\n{traceback.format_exc()}")
+        except Exception:
+            pass
         ret_val = None
     finally:
         end_ts = time.time()
@@ -90,7 +103,7 @@ def _worker(index: int, func: Callable, task_name: str, params: Any, log_path: s
             "start_dt": start_dt,
             "end_dt": end_dt,
             "elapsed": elapsed,
-            "log_path": os.path.abspath(log_path),
+            "log_path": effective_log_path,
         })
 
     return index, task_name, rc, ret_val
@@ -113,7 +126,8 @@ def _render_summary_md(running: Dict[int, dict], completed: List[dict]) -> str:
         lines.append("|---:|---|---|---:|---|")
         for pid, info in running.items():
             elapsed = fmt_duration(now - info.get("start_ts", now))
-            lines.append(f"| PID {pid} | {info.get('task','')} | {info.get('start_dt','')} | {elapsed} | `{info.get('log_path','')}` |")
+            lp = info.get("log_path") or ""
+            lines.append(f"| PID {pid} | {info.get('task','')} | {info.get('start_dt','')} | {elapsed} | `{lp}` |")
     else:
         lines.append("_(none)_")
     lines.append("")
@@ -125,9 +139,10 @@ def _render_summary_md(running: Dict[int, dict], completed: List[dict]) -> str:
         lines.append("|---:|---|---:|---:|---|---|---:|---|")
         for i, it in enumerate(list(completed), start=1):
             rc = it.get("return_code", 1)
+            lp = it.get("log_path") or ""
             lines.append(
                 f"| {i} | {it.get('task','')} | {rc} | PID {it.get('pid','')} | "
-                f"{it.get('start_dt','')} | {it.get('end_dt','')} | {it.get('elapsed','')} | `{it.get('log_path','')}` |"
+                f"{it.get('start_dt','')} | {it.get('end_dt','')} | {it.get('elapsed','')} | `{lp}` |"
             )
     else:
         lines.append("_(none)_")
@@ -170,7 +185,7 @@ def _summary_writer_loop(status_store, summary_path: str, refresh_interval: floa
 def run_with_pool_file_monitor(
     func: Callable,
     task_names: List[str],
-    log_paths: List[str],
+    log_paths: List[Optional[str]],
     params_list: List[Any],
     processes: int = None,
     summary_path: str = "./monitor_summary.md",
@@ -253,14 +268,22 @@ if __name__ == "__main__":
     func = example_task
 
     task_names = [f"task_{i}" for i in range(1, 7)]
-    log_paths = [f"./data/__tmp/{name}.log" for name in task_names]
+    # 这里演示第 3 和第 6 个任务不写日志文件
+    log_paths = [
+        "./data/__tmp/task_1.log",
+        "./data/__tmp/task_2.log",
+        None,
+        "./data/__tmp/task_4.log",
+        "./data/__tmp/task_5.log",
+        None,
+    ]
     params_list = [
         (1, 1, 0.8),
         (2, 2, 1.2),
         (3, 3, 0.5),
         (4, 5, 0.9),
         (10, 1, 0.4),
-        (6, 7, 15),
+        (6, 7, 1.5),
     ]
 
     rc_map, ordered_vals = run_with_pool_file_monitor(

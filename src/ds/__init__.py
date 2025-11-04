@@ -60,12 +60,15 @@ class Method:
     ref_mutant_kill: List[str] = None
 
     model_name: str = None
+    port: str = None
     generate_num: int = None
     w_code: bool = None
 
     prompt: str = None
+    prompting: str = None
 
     postconds: List[str] = None
+    responses: List[str] = None
 
     postcond_corr: List[str] = None
     mutant_kill: List[List[str]] = None

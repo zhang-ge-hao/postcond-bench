@@ -163,7 +163,8 @@ def update_ref():
 
 
 def exp_res():
-    methods = read_benchmark("data/step/9.gpt-4.1--w_code")
+    result_dir = "data/step/9.gpt-4.1--w_code"
+    methods = read_benchmark(result_dir)
 
     py_ms = [m for m in methods if m.repo.language == "python"]
     java_ms = [m for m in methods if m.repo.language == "java"]
@@ -177,20 +178,21 @@ def exp_res():
         for corr_res, comp_res in zip(method.postcond_corr, method.mutant_kill):
             java_res_list.append((corr_res, comp_res))
     
-    print("Count Python: ", len(py_res_list))
-    print("Count Java: ", len(java_res_list))
+    count_py = len(py_res_list)
+    count_java = len(java_res_list)
 
-    print("Python corr postconds: ", 
-        len([corr_res for corr_res, comp_res in py_res_list if corr_res == "passed"]))
-    print("Java corr postconds: ", 
-        len([corr_res for corr_res, comp_res in java_res_list if corr_res == "passed"]))
+    corr_py = len([corr_res for corr_res, comp_res in py_res_list if corr_res == "passed"])
+    corr_java = len([corr_res for corr_res, comp_res in java_res_list if corr_res == "passed"])
 
-    print("Python comp postconds: ", 
-        len([corr_res for corr_res, comp_res in py_res_list if corr_res == "passed" \
-             and all(f in KFS for f in comp_res)]))
-    print("Java comp postconds: ", 
-        len([corr_res for corr_res, comp_res in java_res_list if corr_res == "passed" \
-             and all(f in KFS for f in comp_res)]))
+    comp_py = len([corr_res for corr_res, comp_res in py_res_list if corr_res == "passed" \
+             and all(f in KFS for f in comp_res)])
+    comp_java = len([corr_res for corr_res, comp_res in java_res_list if corr_res == "passed" \
+             and all(f in KFS for f in comp_res)])
+
+    print(result_dir)
+
+    print(f"Python corr: {corr_py:4d} / {count_py:4d} = {corr_py / count_py:.2f} comp: {comp_py:4d} / {count_py:4d} = {comp_py / count_py:.2f}")
+    print(f"  Java corr: {corr_java:4d} / {count_java:4d} = {corr_java / count_java:.2f} comp: {comp_java:4d} / {count_java:4d} = {comp_java / count_java:.2f}")
 
 if __name__ == "__main__":
     exp_res()

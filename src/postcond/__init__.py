@@ -6,6 +6,9 @@ from src.ds import *
 
 from src.runner import testsuite_run
 from src.postcond.prompt.infile import prompt_infile
+from src.postcond.prompt.cot import prompt_cot
+from src.postcond.prompt.fsl import prompt_fsl
+from src.postcond.prompt.no_gram import prompt_no_gram
 from src.util import get_uuid7, read_code
 from src.inject import postcond_inj
 from src.clone import repository_reproduct
@@ -21,13 +24,13 @@ def response_post_process(response: str):
         return response
     met_quote_mark = False
     lines = []
-    for line in response.split("\n"):
+    for line in reversed(response.split("\n")):
         if not met_quote_mark and line.strip().startswith("```"):
             met_quote_mark = True
         elif met_quote_mark and line.strip().startswith("```"):
             break
         elif met_quote_mark:
-            lines.append(line)
+            lines.insert(0, line)
     return "\n".join(lines)
 
 
@@ -53,12 +56,15 @@ def is_local_crash(
     return False
 
 
-def postcond_generation(method: Method, output_path: str=None) -> Method:
+def postcond_generation(
+        method: Method, 
+        output_path: str=None,
+        methods: List[Method]=None) -> Method:
     assert method.model_name is not None
     assert method.generate_num is not None
     assert method.w_code is not None
 
-    model = LLM_MAP[method.model_name]()
+    model = LLM_MAP[method.model_name](port=method.port)
 
     lang = method.repo.language
 
@@ -69,26 +75,37 @@ def postcond_generation(method: Method, output_path: str=None) -> Method:
     lang = method.repo.language
     excluded_tests = method.repo.failed_tests
     with repository_reproduct(method.repo) as repo_dir:
-        prompt = prompt_infile(method, w_code=method.w_code)
+        if method.prompting is None:
+            prompt = prompt_infile(method, w_code=method.w_code)
+        elif method.prompting.lower() == "cot":
+            prompt = prompt_cot(method, w_code=method.w_code)
+        elif method.prompting.lower().startswith("fsl"):
+            shot_num = int(method.prompting.split("_")[1])
+            prompt = prompt_fsl(
+                method, 
+                w_code=method.w_code, 
+                methods=methods,
+                shot_num=shot_num)
+        elif method.prompting.lower() == "no_gram":
+            prompt = prompt_no_gram(method, w_code=method.w_code)
+        else:
+            raise NotImplementedError()
 
         method.prompt = prompt
 
-        code_str, code_bytes = read_code(method.file)
-
-        postconditions = model.generate(
+        responses = model.generate(
             prompt=prompt, 
             n=method.generate_num)
 
         postconditions = [
-            response_post_process(m) for m in postconditions]
-        
-        # # ===== Debug =====
-        # print("===== Debug =====")
-        # print("\n=====\n".join(postconditions))
-        # pass
-        # # ===== Debug End =====
+            response_post_process(r) for r in responses]
+
+        code_str, code_bytes = read_code(method.file)
 
         method.postconds = postconditions
+        # 目前只需要 CoT 的时候记录一下 reasoning 就行了
+        if method.prompting is not None and method.prompting.lower() == "cot":
+            method.responses = responses
         method.postcond_corr = []
         method.mutant_kill = []
         for postcond in method.postconds:
@@ -159,10 +176,15 @@ def postcond_generation(method: Method, output_path: str=None) -> Method:
 
 def postcond_generation_pool(
         input_dir=None, output_dir=None, 
-        model_name=None, generate_num=None, w_code=None,
-        task_num=None, task_idx=None, lang=None):
+        model_name=None, port=None, generate_num=None, w_code=None,
+        task_num=None, task_idx=None, lang=None,
+        prompting=None):
     task_name = "postcond_gen"
-    log_dir = f"data/__log/{task_name}--{get_uuid7()}"
+
+    pi_workdir = os.getenv("PI_WORKDIR")
+    log_base = os.path.join(pi_workdir, "sb_tmp__log")
+
+    log_dir = f"{log_base}/{task_name}--{get_uuid7()}"
     output_dir = os.path.abspath(output_dir)
     os.makedirs(log_dir, exist_ok=True)
 
@@ -171,11 +193,14 @@ def postcond_generation_pool(
         if file_name.endswith(".json"):
             with open(f"{input_dir}/{file_name}") as file:
                 methods.append(Method.from_dict(json.load(file)))
+    all_methods = [m for m in methods]
 
     for m in methods:
         m.model_name = model_name
+        m.port = port
         m.generate_num = generate_num
         m.w_code = w_code
+        m.prompting = prompting
 
     methods.sort(key=lambda m: (-m.test_time * len(m.mutants), 
                                 m.repo.github_path, 
@@ -195,9 +220,10 @@ def postcond_generation_pool(
         out_path = f"{output_dir}/{tn}.json"
         if os.path.exists(out_path):
             continue
-        params_list.append((m, out_path))
+        params_list.append((m, out_path, all_methods))
         task_names.append(tn)
-        log_paths.append(f"{log_dir}/{rn}.log")
+        log_paths.append(None)
+        # log_paths.append(f"{log_dir}/{rn}.log")
     
     print(len(params_list))
 
