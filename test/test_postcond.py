@@ -16,15 +16,14 @@ if __name__ == "__main__":
         with open(file_path) as file:
             methods.append(Method.from_dict(json.load(file)))
 
-    input_path = "data/step/8.benchmark/bottlepy--bottle--remote_route.json"
+    input_path = "data/step/8.benchmark/beanshell--beanshell--getVariableImpl.json"
     with open(input_path) as file:
         method = Method.from_dict(json.load(file))
 
-    method.model_name = "Qwen3-8B"
+    method.model_name = "claude-sonnet-4"
     method.generate_num = 5
     method.w_code = True
-    method.prompting = "fsl_3"
-    method.port = "19990"
+    method.prompting = None
 
     method = postcond_generation(method, methods=methods)
 

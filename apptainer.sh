@@ -21,6 +21,8 @@ apptainer shell --cleanenv \
   --env PATH="$PATH_STR" \
   --env PI_WORKDIR="$PI_WORKDIR" \
   --env OPENAI_API_KEY="$OPENAI_API_KEY" \
+  --env ANTHROPIC_API_KEY="$ANTHROPIC_API_KEY" \
+  --env DASHSCOPE_API_KEY="$DASHSCOPE_API_KEY" \
   --env GITHUB_TOKEN="$GITHUB_TOKEN" \
   --env HF_HOME="$HF_HOME" \
   --env HF_TOKEN="$HF_TOKEN" \

@@ -13,7 +13,7 @@ from src.util import get_uuid7, read_code
 from src.inject import postcond_inj
 from src.clone import repository_reproduct
 from src.pool import run_with_pool_file_monitor
-from src.postcond.model import LLM_MAP
+from src.postcond.model import model_generate
 
 def response_post_process(response: str):
     quote_mark_count = 0
@@ -64,8 +64,6 @@ def postcond_generation(
     assert method.generate_num is not None
     assert method.w_code is not None
 
-    model = LLM_MAP[method.model_name](port=method.port)
-
     lang = method.repo.language
 
     import logging
@@ -93,12 +91,18 @@ def postcond_generation(
 
         method.prompt = prompt
 
-        responses = model.generate(
+        logging.info(f"{method.rlid} generation start.")
+        
+        responses = model_generate(
+            model_name=method.model_name,
             prompt=prompt, 
-            n=method.generate_num)
+            n=method.generate_num,
+            port=method.port)
 
         postconditions = [
             response_post_process(r) for r in responses]
+
+        logging.info(f"{method.rlid} generated.")
 
         code_str, code_bytes = read_code(method.file)
 
@@ -108,13 +112,17 @@ def postcond_generation(
             method.responses = responses
         method.postcond_corr = []
         method.mutant_kill = []
-        for postcond in method.postconds:
-            postcond_code_src, hot_range = postcond_inj(
-                method=method,
-                code_str=code_str,
-                postcond=postcond,
-                need_hot_range=True
-            )
+        for p_idx, postcond in enumerate(method.postconds):
+            logging.info(f"{method.rlid} postcond {p_idx} eval start.")
+            if not postcond.strip():
+                postcond_code_src, hot_range = None, None
+            else:
+                postcond_code_src, hot_range = postcond_inj(
+                    method=method,
+                    code_str=code_str,
+                    postcond=postcond,
+                    need_hot_range=True
+                )
             if not postcond_code_src: # 目前应该只有在java的情况下会出现为None
                 corr_flag = "compile_failure"
             else:
@@ -133,6 +141,9 @@ def postcond_generation(
                         run_result.stdout, hot_range, method.file)
                     if local_crash:
                         corr_flag = "local_crash"
+            
+            logging.info(f"{method.rlid} postcond {p_idx} is {corr_flag}.")
+
             method.postcond_corr.append(corr_flag)
 
             mutant_kill = []
@@ -140,6 +151,8 @@ def postcond_generation(
             if corr_flag != "passed":
                 continue
             for mut_idx, mutant in enumerate(method.mutants):
+                logging.info(f"{method.rlid} postcond {p_idx} mutant {mut_idx} eval start.")
+
                 postcond_code_src, hot_range = postcond_inj(
                     method=method,
                     code_str=code_str,
@@ -166,6 +179,8 @@ def postcond_generation(
                         if local_crash:
                             comp_flag = "local_crash"
 
+                logging.info(f"{method.rlid} postcond {p_idx} mutant {mut_idx} is {comp_flag}.")
+
                 mutant_kill.append(comp_flag)
             pass
     if output_path is not None:
@@ -176,8 +191,8 @@ def postcond_generation(
 
 def postcond_generation_pool(
         input_dir=None, output_dir=None, 
-        model_name=None, port=None, generate_num=None, w_code=None,
-        task_num=None, task_idx=None, lang=None,
+        model_name=None, generate_num=None, w_code=None,
+        task_num=None, task_idx=None, lang=None, port=None,
         prompting=None):
     task_name = "postcond_gen"
 
@@ -197,10 +212,13 @@ def postcond_generation_pool(
 
     for m in methods:
         m.model_name = model_name
-        m.port = port
         m.generate_num = generate_num
         m.w_code = w_code
         m.prompting = prompting
+        if port is not None:
+            m.port = port
+        else:
+            m.port = f"1999{task_idx}"
 
     methods.sort(key=lambda m: (-m.test_time * len(m.mutants), 
                                 m.repo.github_path, 
@@ -222,8 +240,8 @@ def postcond_generation_pool(
             continue
         params_list.append((m, out_path, all_methods))
         task_names.append(tn)
-        log_paths.append(None)
-        # log_paths.append(f"{log_dir}/{rn}.log")
+        # log_paths.append(None)
+        log_paths.append(f"{log_dir}/{rn}.log")
     
     print(len(params_list))
 

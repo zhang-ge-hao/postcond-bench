@@ -70,7 +70,7 @@ def _worker(index: int, func: Callable, task_name: str, params: Any, log_path: O
 
     ret_val: Any = None
     try:
-        logging.info(f"Start task[{index}]: {task_name} (PID={pid}) params={params!r}")
+        logging.info(f"Start task[{index}]: {task_name} (PID={pid})")
         if isinstance(params, (list, tuple)):
             ret_val = func(*params)
         else:

@@ -160,7 +160,7 @@ def java_testsuite_run(
             ).strip()
             reports_exist = surefire_dir.exists() and any(surefire_dir.glob("*.xml")) and jacoco_xml_path.exists()
             interrupted = _infer_interrupted_fat(cp_java.returncode, reports_exist, java_stdout)
-        logging.info(f"\n{combined_stdout}")
+        # logging.info(f"\n{combined_stdout}")
 
         # 解析 surefire
         summary_by_xml, failed = _collect_maven_summary_from_xml(surefire_dir)        

@@ -2,13 +2,11 @@
 
 TASK_NUM=$1
 TASK_IDX=$2
-PORT=$3
 
 # MODELS=("gpt-4.1" "gpt-4o-mini")
 # MODELS=("claude-sonnet-4" "claude-3-5-haiku")
 # MODELS=("claude-3-5-haiku")
-# MODELS=("Qwen3-8B")
-MODELS=("gemma-3-4b")
+MODELS=("Qwen3-32B")
 WCODES=("True" "False")
 
 PROMPTS=("")
@@ -22,8 +20,7 @@ for model in "${MODELS[@]}"; do
            --generate_num 5
            --w_code "$wcode"
            --task_num $TASK_NUM
-           --task_idx $TASK_IDX
-           --port $PORT)
+           --task_idx $TASK_IDX)
 
       if [[ -n "$prompt" ]]; then
         cmd+=(--prompting "$prompt")
@@ -49,8 +46,7 @@ for model in "${MODELS[@]}"; do
            --generate_num 1
            --w_code "$wcode"
            --task_num $TASK_NUM
-           --task_idx $TASK_IDX
-           --port $PORT)
+           --task_idx $TASK_IDX)
 
       if [[ -n "$prompt" ]]; then
         cmd+=(--prompting "$prompt")
