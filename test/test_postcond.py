@@ -16,14 +16,15 @@ if __name__ == "__main__":
         with open(file_path) as file:
             methods.append(Method.from_dict(json.load(file)))
 
-    input_path = "data/step/8.benchmark/beanshell--beanshell--getVariableImpl.json"
+    input_path = "data/step/8.benchmark/americanexpress--unify-jdocs--getDifferences.json"
     with open(input_path) as file:
         method = Method.from_dict(json.load(file))
 
-    method.model_name = "claude-sonnet-4"
-    method.generate_num = 5
+    method.model_name = "phi-4"
+    method.generate_num = 1
     method.w_code = True
     method.prompting = None
+    method.port = "19990"
 
     method = postcond_generation(method, methods=methods)
 

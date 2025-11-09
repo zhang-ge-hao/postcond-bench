@@ -3,6 +3,8 @@ from src.clone import repository_reproduct
 from src.util import parse_file, read_code
 from src.postcond.prompt.util import remove_method_bodies
 
+from src.postcond.prompt.infile import cut_context
+
 ICONTRACT_EXAMPLES = """
 ## icontract Grammar Examples
 
@@ -165,7 +167,8 @@ PROMPT_TEMPLATE = (
     "```\n"
 )
 
-def prompt_cot(method: Method, w_code: bool) -> str:
+def prompt_cot(method: Method, w_code: bool,
+               context_ratio: float) -> str:
     """cwd need to be the repo path"""
 
     lang = method.repo.language
@@ -193,6 +196,8 @@ def prompt_cot(method: Method, w_code: bool) -> str:
             lang=lang
         )
         target_method = method.header
+
+    code_context = cut_context(code_context, target_method, context_ratio)
 
     prompt = PROMPT_TEMPLATE.format(
         code_context=code_context,

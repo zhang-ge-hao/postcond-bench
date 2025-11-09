@@ -22,14 +22,14 @@ if __name__ == "__main__":
 
     methods = read_benchmark(output_path)
 
-    headers = [m.header for m in methods]
-    header_count = {h: 0 for h in headers}
-    for h in headers:
-        header_count[h] += 1
-    counts = list(header_count.values())
-    counts.sort()
-    print(counts)
-    exit()
+    # headers = [m.header for m in methods]
+    # header_count = {h: 0 for h in headers}
+    # for h in headers:
+    #     header_count[h] += 1
+    # counts = list(header_count.values())
+    # counts.sort()
+    # print(counts)
+    # exit()
 
     # rn_2_lang = {m.repo.github_path: m.repo.language for m in methods}
     # repo_names = [m.repo.github_path for m in methods]
@@ -57,37 +57,41 @@ if __name__ == "__main__":
     # print(java_ori_count)
     # exit()
 
-    with open("data/step/0.append/dep_anno_python.json") as file:
-        dep_anno_python: Dict[str, int] = json.load(file)
-    with open("data/step/0.append/dep_anno_java.json") as file:
-        dep_anno_java: Dict[str, int] = json.load(file)
+    # with open("data/step/0.append/dep_anno_python.json") as file:
+    #     dep_anno_python: Dict[str, int] = json.load(file)
+    with open("data/step/0.append/dep_anno_java.txt") as file:
+        dep_anno_java: Dict[str, int] = {}
+        for line in file:
+            line = line.strip()
+            github_path, anno = line.split("\t")
+            dep_anno_java[github_path] = anno
 
-    select_count = 150
+    select_count = 250
 
-    github_urls_py = [m.github_url for m in methods if m.repo.language == "python"]
+    # github_urls_py = [m.github_url for m in methods if m.repo.language == "python"]
     github_urls_java = [m.github_url for m in methods if m.repo.language == "java"]
 
-    dep_anno_python = {k: v for k, v in dep_anno_python.items() if k in github_urls_py}
+    # dep_anno_python = {k: v for k, v in dep_anno_python.items() if k in github_urls_py}
     dep_anno_java = {k: v for k, v in dep_anno_java.items() if k in github_urls_java}
 
-    selected_py = [m for m in methods if m.repo.language == "python" and m.github_url not in dep_anno_python]
+    # selected_py = [m for m in methods if m.repo.language == "python" and m.github_url not in dep_anno_python]
     selected_java = [m for m in methods if m.repo.language == "java" and m.github_url not in dep_anno_java]
 
-    selected_py = random.sample(selected_py, select_count - len(dep_anno_python))
+    # selected_py = random.sample(selected_py, select_count - len(dep_anno_python))
     selected_java = random.sample(selected_java, select_count - len(dep_anno_java))
 
-    for github_url, anno in dep_anno_python.items():
-        if github_url in github_urls_py:
-            print(github_url)
-            # print(anno)
-    for py_method in selected_py:
-        print(py_method.github_url)
-        # print()
+    # for github_url, anno in dep_anno_python.items():
+    #     if github_url in github_urls_py:
+    #         print(github_url)
+    #         # print(anno)
+    # for py_method in selected_py:
+    #     print(py_method.github_url)
+    #     # print()
     
 
-    for github_url, anno in dep_anno_java.items():
-        if github_url in github_urls_java:
-            print(github_url)
+    # for github_url, anno in dep_anno_java.items():
+    #     if github_url in github_urls_java:
+    #         print(github_url)
             # print(anno)
     for py_method in selected_java:
         print(py_method.github_url)

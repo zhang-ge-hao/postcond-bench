@@ -158,7 +158,49 @@ PROMPT_TEMPLATE = (
     "Note that your response should only contain {target_desc}."
 )
 
-def prompt_infile(method: Method, w_code: bool) -> str:
+def cut_context(code_context: str, target_method: str, context_ratio: float):
+    if context_ratio >= 1:
+        return code_context
+    if context_ratio == 0:
+        return ""
+    lines = code_context.split("\n")
+    assert target_method in code_context
+    line_count = int(len(lines) * context_ratio)
+    if line_count == 0:
+        return ""
+    # 1. 找到 target_method 在 code_context 中第一次出现的字符位置
+    start_pos = code_context.index(target_method)
+    end_pos = start_pos + len(target_method)
+
+    # 2. 计算起止行号（0-based）
+    #    行号 = 该字符之前出现的 '\n' 的次数
+    start_line = code_context[:start_pos].count("\n")
+    end_line = code_context[:end_pos].count("\n")
+
+    # 3. 计算中间行
+    mid_line = (start_line + end_line) // 2
+
+    n = len(lines)
+    included = set()
+    included.add(mid_line)
+
+    # 4. 从中间行开始，按 “上、下、上、下…” 的顺序扩展，直到达到 line_count
+    up = mid_line - 1
+    down = mid_line + 1
+
+    while len(included) < line_count and (up >= 0 or down < n):
+        if up >= 0 and len(included) < line_count:
+            included.add(up)
+            up -= 1
+        if down < n and len(included) < line_count:
+            included.add(down)
+            down += 1
+
+    # 5. 按原始顺序还原成字符串
+    chosen_lines = [lines[i] for i in sorted(included)]
+    return "\n".join(chosen_lines)
+
+def prompt_infile(method: Method, w_code: bool, context_ratio: float) -> str:
     """cwd need to be the repo path"""
 
     lang = method.repo.language
@@ -186,6 +228,8 @@ def prompt_infile(method: Method, w_code: bool) -> str:
             lang=lang
         )
         target_method = method.header
+    
+    code_context = cut_context(code_context, target_method, context_ratio)
 
     prompt = PROMPT_TEMPLATE.format(
         code_context=code_context,

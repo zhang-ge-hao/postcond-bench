@@ -9,6 +9,7 @@ from src.postcond.prompt.infile import (
     JML_EXAMPLES,
     ICONTRACT_TARGET_DESC,
     JML_TARGET_DESC,
+    cut_context
 )
 
 SHOT_PROMPT_TEMPLATE = (
@@ -45,7 +46,8 @@ PROMPT_TEMPLATE = (
     "Note that your response should only contain {target_desc}."
 )
 
-def prompt_fsl(method: Method, w_code: bool, methods: List[Method], shot_num) -> str:
+def prompt_fsl(method: Method, w_code: bool, methods: List[Method], shot_num, 
+               context_ratio: float) -> str:
     """cwd need to be the repo path"""
 
     lang = method.repo.language
@@ -60,9 +62,10 @@ def prompt_fsl(method: Method, w_code: bool, methods: List[Method], shot_num) ->
     else:
         raise NotImplementedError()
     
+    # only exclude itself
     candidate_methods = [
         m for m in methods 
-        if m.repo.github_path != method.repo.github_path and \
+        if m.github_url != method.github_url and \
             m.repo.language == method.repo.language]
     header_2_method: Dict[str, Method] = {m.header: m for m in candidate_methods}
 
@@ -103,6 +106,8 @@ def prompt_fsl(method: Method, w_code: bool, methods: List[Method], shot_num) ->
             lang=lang
         )
         target_method = method.header
+
+    code_context = cut_context(code_context, target_method, context_ratio)
 
     prompt = PROMPT_TEMPLATE.format(
         code_context=code_context,

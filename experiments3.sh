@@ -5,14 +5,14 @@ TASK_IDX=$2
 PORT=$3
 
 # MODELS=("gpt-4.1" "gpt-4o-mini")
-MODELS=("claude-sonnet-4")
+# MODELS=("claude-sonnet-4")
 # MODELS=("claude-3-5-haiku")
 # MODELS=("Qwen3-8B")
 # MODELS=("Qwen3-32B")
+MODELS=("Llama-3.1-8B")
 # MODELS=("deepseek-coder-v2")
 # MODELS=("gemma-3-4b")
 # MODELS=("gemma-3-27b")
-# MODELS=("phi-4-mini")
 WCODES=("True" "False")
 
 PROMPTS=("")

@@ -56,6 +56,19 @@ def is_local_crash(
     return False
 
 
+def postcond_checking(method: Method, postcond: str) -> bool:
+    """
+    小模型的 instruction following 较差
+    在 python 生成了一些 icontract 行 + def 一个方法
+    插入后相当于插入一段死代码 反而能 pass 测试用例
+    """
+    if method.repo.language == "python":
+        for line in postcond.split("\n"):
+            if line.strip().startswith("def "):
+                return False
+    return True
+
+
 def postcond_generation(
         method: Method, 
         output_path: str=None,
@@ -73,31 +86,50 @@ def postcond_generation(
     lang = method.repo.language
     excluded_tests = method.repo.failed_tests
     with repository_reproduct(method.repo) as repo_dir:
-        if method.prompting is None:
-            prompt = prompt_infile(method, w_code=method.w_code)
-        elif method.prompting.lower() == "cot":
-            prompt = prompt_cot(method, w_code=method.w_code)
-        elif method.prompting.lower().startswith("fsl"):
-            shot_num = int(method.prompting.split("_")[1])
-            prompt = prompt_fsl(
-                method, 
-                w_code=method.w_code, 
-                methods=methods,
-                shot_num=shot_num)
-        elif method.prompting.lower() == "no_gram":
-            prompt = prompt_no_gram(method, w_code=method.w_code)
-        else:
-            raise NotImplementedError()
+        context_ratio = 1
+        while True:
+            try:
+                if method.prompting is None:
+                    prompt = prompt_infile(
+                        method, w_code=method.w_code,
+                        context_ratio=context_ratio)
+                elif method.prompting.lower() == "cot":
+                    prompt = prompt_cot(
+                        method, w_code=method.w_code,
+                        context_ratio=context_ratio)
+                elif method.prompting.lower().startswith("fsl"):
+                    shot_num = int(method.prompting.split("_")[1])
+                    prompt = prompt_fsl(
+                        method, 
+                        w_code=method.w_code, 
+                        methods=methods,
+                        shot_num=shot_num,
+                        context_ratio=context_ratio)
+                elif method.prompting.lower() == "no_gram":
+                    prompt = prompt_no_gram(
+                        method, w_code=method.w_code,
+                        context_ratio=context_ratio)
+                else:
+                    raise NotImplementedError()
 
-        method.prompt = prompt
+                method.prompt = prompt
 
-        logging.info(f"{method.rlid} generation start.")
-        
-        responses = model_generate(
-            model_name=method.model_name,
-            prompt=prompt, 
-            n=method.generate_num,
-            port=method.port)
+                logging.info(f"{method.rlid} generation start.")
+                
+                responses = model_generate(
+                    model_name=method.model_name,
+                    prompt=prompt, 
+                    n=method.generate_num,
+                    port=method.port)
+
+                break
+            except BaseException as e:
+                if "Please reduce the length of the messages or completion." in str(e):
+                    context_ratio -= 0.1
+                    if context_ratio < 0:
+                        raise RuntimeError("The prompt is still too long.")
+                else:
+                    raise e
 
         postconditions = [
             response_post_process(r) for r in responses]
@@ -114,7 +146,9 @@ def postcond_generation(
         method.mutant_kill = []
         for p_idx, postcond in enumerate(method.postconds):
             logging.info(f"{method.rlid} postcond {p_idx} eval start.")
-            if not postcond.strip():
+            if not postcond_checking(method, postcond):
+                postcond_code_src, hot_range = None, None
+            elif not postcond.strip():
                 postcond_code_src, hot_range = None, None
             else:
                 postcond_code_src, hot_range = postcond_inj(
@@ -123,7 +157,8 @@ def postcond_generation(
                     postcond=postcond,
                     need_hot_range=True
                 )
-            if not postcond_code_src: # 目前应该只有在java的情况下会出现为None
+            # 会为 None 的情况 1) JML 翻译失败 2) 空生成结果 3) 后置校验没通过
+            if not postcond_code_src:
                 corr_flag = "compile_failure"
             else:
                 run_result = testsuite_run(

@@ -212,14 +212,46 @@ def mutator_precision(methods: List[Method]):
             {t: sum(l) / len(l) for t, l in exist_list.items()}
 
 
+def update_postcond_check():
+    from src.postcond import postcond_checking
+    for folder_name in os.listdir("data/step"):
+        folder_path = f"data/step/{folder_name}"
+        if os.path.isdir(folder_path) and folder_name.startswith("9."):
+            methods = read_benchmark(folder_path)
+            for method in methods:
+                has_update = False
+                for postcond_idx, postcond in enumerate(method.postconds):
+                    if not postcond_checking(method, postcond):
+                        method.postcond_corr[postcond_idx] = "compile_failure"
+                        method.mutant_kill[postcond_idx] = []
+                        has_update = True
+                if has_update:
+                    method_path = f"{folder_path}/{method.repo.github_path.replace('/', '--')}--{method.rlid}.json"
+                    pass
+                    with open(method_path, "w") as file:
+                        json.dump(method.to_dict(), file, indent=2)
+
 def exp_res():
     dir_prefix = "data/step/9."
     # model_names = ["gpt-4.1", "gpt-4o-mini"]
-    # model_names = ["gpt-4.1", "gpt-4o-mini", "claude-3-5-haiku", "Qwen3-8B"]
-    model_names = ["Qwen3-32B"]
-    # model_names = ["gemma-3-4b"]
+    model_names = [
+        # "gpt-4.1", 
+        # "gpt-4o-mini", 
+        # "claude-sonnet-4", 
+        # "claude-3-5-haiku", 
+        # "Qwen3-32B", 
+        # "Qwen3-8B",
+        # "gemma-3-27b", 
+        # "gemma-3-4b",
+        # "phi-4", 
+        "phi-4-mini",
+        # "deepseek-coder-v2",
+        "Llama-3.1-70B",
+        "Llama-3.1-8B",
+    ]
     task_names = ["w_code", "wo_code"]
     promptings = [None, "no_gram", "fsl_1", "fsl_3", "fsl_5"]
+    # promptings = [None]
 
     tn_map = {"w_code": "[code to postcond]", "wo_code": "[nl to postcond]"}
     p_map = {
@@ -284,26 +316,27 @@ def exp_res():
                             dep_anno.get(m.github_url, None) == "1"]
                     py_wo_dep_count, _, _, py_corr_rate_wo_dep, py_comp_rate_wo_dep = cal_metrics(py_ms_wo_dep)
                     py_w_dep_count, _, _, py_corr_rate_w_dep, py_comp_rate_w_dep = cal_metrics(py_ms_w_dep)
-                    print(f"    With dep count: {py_w_dep_count}; Wo dep count: {py_wo_dep_count}")
-                    print(f"    With dep:    Python corr: {py_corr_rate_w_dep:.4f} comp: {py_comp_rate_w_dep:.4f}")
-                    print(f"    Without dep: Python corr: {py_corr_rate_wo_dep:.4f} comp: {py_comp_rate_wo_dep:.4f}")
-
+                    # print(f"    With dep count: {py_w_dep_count}; Wo dep count: {py_wo_dep_count}")
+                    
                     java_wo_dep_count, _, _, java_corr_rate_wo_dep, java_comp_rate_wo_dep = cal_metrics(java_ms_wo_dep)
                     java_w_dep_count, _, _, java_corr_rate_w_dep, java_comp_rate_w_dep = cal_metrics(java_ms_w_dep)
-                    print(f"    With dep count: {java_w_dep_count}; Wo dep count: {java_wo_dep_count}")
-                    print(f"    With dep:    Java corr: {java_corr_rate_w_dep:.4f} comp: {java_comp_rate_w_dep:.4f}")
-                    print(f"    Without dep: Java corr: {java_corr_rate_wo_dep:.4f} comp: {java_comp_rate_wo_dep:.4f}")
+                    # print(f"    With dep count: {java_w_dep_count}; Wo dep count: {java_wo_dep_count}")
+                    
+                    print(f"With dep: \nPython corr: {py_corr_rate_w_dep:.4f} comp: {py_comp_rate_w_dep:.4f}  "
+                          f"Java corr: {java_corr_rate_w_dep:.4f} comp: {java_comp_rate_w_dep:.4f}")
+                    print(f"Without dep: \nPython corr: {py_corr_rate_wo_dep:.4f} comp: {py_comp_rate_wo_dep:.4f}  "
+                          f"Java corr: {java_corr_rate_wo_dep:.4f} comp: {java_comp_rate_wo_dep:.4f}")
                     
                     if py_comp_count > 0:
                         py_mut_prec, py_mut_exi = mutator_precision(py_ms)
-                        print(f"    Python mutator "
+                        print(f"  Python mutator "
                             #   f"exist: rule: {py_mut_exi['rule']:.4f} "
                             #   f"llm: {py_mut_exi['llm']:.4f} "
                             f"precision: rule: {py_mut_prec['rule']:.4f} "
                             f"llm: {py_mut_prec['llm']:.4f} ")
                     if java_comp_count > 0:
                         java_mut_prec, java_mut_exi = mutator_precision(java_ms)
-                        print(f"    Java mutator "
+                        print(f"  Java mutator "
                             #   f"exist: rule: {java_mut_exi['rule']:.4f} "
                             #   f"llm: {java_mut_exi['llm']:.4f} "
                             f"precision: rule: {java_mut_prec['rule']:.4f} "

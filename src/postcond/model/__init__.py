@@ -2,14 +2,47 @@ from openai import OpenAI
 import anthropic
 import os
 import time
+import boto3
 
-def model_generate(model_name, prompt, n, port=None):
+def model_generate(model_name: str, prompt, n, port=None):
     if "gpt" in model_name:
         client = OpenAI()
         response = client.chat.completions.create(
             model=model_name,
             messages=[{"role": "user", "content": prompt}],
             n=n,
+        )
+        postconditions = [choice.message.content for choice in response.choices]
+    elif "llama" in model_name.lower():
+        assert port is not None
+        model_name = f"meta-llama/{model_name}-Instruct"
+        openai_api_key = "EMPTY"
+        openai_api_base = f"http://localhost:{port}/v1"
+        client = OpenAI(
+            api_key=openai_api_key,
+            base_url=openai_api_base,
+        )
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[{"role": "user", "content": prompt},],
+            n=n, 
+            max_tokens=2048,
+        )
+        postconditions = [choice.message.content for choice in response.choices]
+    elif "deepseek-coder-v2" in model_name.lower():
+        assert port is not None
+        model_name = f"deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct"
+        openai_api_key = "EMPTY"
+        openai_api_base = f"http://localhost:{port}/v1"
+        client = OpenAI(
+            api_key=openai_api_key,
+            base_url=openai_api_base,
+        )
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[{"role": "user", "content": prompt},],
+            n=n, 
+            max_tokens=2048,
         )
         postconditions = [choice.message.content for choice in response.choices]
     elif "Qwen3" in model_name:
@@ -45,6 +78,25 @@ def model_generate(model_name, prompt, n, port=None):
             max_tokens=2048,
         )
         postconditions = [choice.message.content for choice in response.choices]
+    elif "phi-4" in model_name.lower():
+        assert port is not None
+        if "mini" in model_name:
+            model_name = "microsoft/Phi-4-mini-instruct"
+        else:
+            model_name = "microsoft/phi-4"
+        openai_api_key = "EMPTY"
+        openai_api_base = f"http://localhost:{port}/v1"
+        client = OpenAI(
+            api_key=openai_api_key,
+            base_url=openai_api_base,
+        )
+        response = client.chat.completions.create(
+            model=model_name,
+            messages=[{"role": "user", "content": prompt},],
+            n=n, temperature=0.5, # from phi-4 tech report
+            max_tokens=2048,
+        )
+        postconditions = [choice.message.content for choice in response.choices]
     elif model_name == "qwen3-coder":
         client = OpenAI(
             api_key=os.getenv("DASHSCOPE_API_KEY"),
@@ -77,6 +129,39 @@ def model_generate(model_name, prompt, n, port=None):
                 except:
                     time.sleep(20)
             postconditions.append(message.content[0].text)
+        # # 1. 选择你开通 Bedrock 的 region
+        # REGION = "us-east-1"  # 按你的实际 region 改
+        # # 2. 选择 Claude 模型 ID（按你在 Bedrock 里开的模型改）
+        # MODEL_ID = "us.anthropic.claude-sonnet-4-20250514-v1:0"
+        # # 3. 创建 Bedrock Runtime 客户端
+        # client = boto3.client(service_name="bedrock-runtime", region_name=REGION,)
+        # postconditions = []
+        # for _ in range(n):
+        #     message_text = None
+        #     while message_text is None:
+        #         try:
+        #             response = client.converse(
+        #                 modelId=MODEL_ID,
+        #                 messages=[{"role": "user","content": [{"text": prompt}],}],
+        #                 inferenceConfig={"maxTokens": 2048},
+        #             )
+        #             # 从 Bedrock 返回结构里拿出文本
+        #             out_msg = response["output"]["message"]
+        #             # Claude 返回的 content 是一个 list，每个元素可能包含 text / 其它类型
+        #             for item in out_msg["content"]:
+        #                 if "text" in item:
+        #                     message_text = item["text"]
+        #                     break
+        #         except Exception as e:
+        #             # 你原来的代码是直接 except: 然后 sleep
+        #             import logging, random
+        #             error_str = str(e)
+        #             if "ThrottlingException" in error_str and "Too many requests" in error_str:
+        #                 logging.error("Too many requests.")
+        #             else:
+        #                 logging.error(error_str)
+        #             time.sleep(20)
+        #     postconditions.append(message_text)
     elif model_name == "claude-3-5-haiku":
         client = anthropic.Anthropic()
         postconditions = []
