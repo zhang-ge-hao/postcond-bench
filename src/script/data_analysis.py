@@ -235,19 +235,21 @@ def exp_res():
     dir_prefix = "data/step/9."
     # model_names = ["gpt-4.1", "gpt-4o-mini"]
     model_names = [
+        "gpt-5", 
         # "gpt-4.1", 
         # "gpt-4o-mini", 
         # "claude-sonnet-4", 
+        "claude-sonnet-4-5", 
         # "claude-3-5-haiku", 
         # "Qwen3-32B", 
         # "Qwen3-8B",
         # "gemma-3-27b", 
         # "gemma-3-4b",
         # "phi-4", 
-        "phi-4-mini",
+        # "phi-4-mini",
         # "deepseek-coder-v2",
-        "Llama-3.1-70B",
-        "Llama-3.1-8B",
+        # "Llama-3.1-70B",
+        # "Llama-3.1-8B",
     ]
     task_names = ["w_code", "wo_code"]
     promptings = [None, "no_gram", "fsl_1", "fsl_3", "fsl_5"]
@@ -343,7 +345,112 @@ def exp_res():
                             f"llm: {java_mut_prec['llm']:.4f} ")
                     pass
 
+
+def select_suv_mutants(k=20):
+    step_dir = "data/step/7.reference"
+    random.seed(42)
+    methods = read_benchmark(step_dir)
+    suv_mutants = []
+    all_mutants = []
+    for method in methods:
+        for mut_idx, mutant in enumerate(method.mutants):
+            all_mutants.append((mut_idx, mutant, method, None))
+        if method.ref_postcond is None:
+            for mut_idx, mutant in enumerate(method.mutants):
+                suv_mutants.append((mut_idx, mutant, method, None))
+        else:
+            for mut_idx, (mutant, flag) in enumerate(zip(method.mutants, method.ref_mutant_kill)):
+                if flag not in KFS:
+                    suv_mutants.append((mut_idx, mutant, method, flag))
+    # print(len(suv_mutants))
+    # print(len(all_mutants))
+    # exit()
+    sampled_suv_mutants = random.sample(suv_mutants, k=k)
+    for mut_idx, mutant, method, flag in sampled_suv_mutants:
+        rn = method.repo.github_path.replace("/", "--")
+        fn = f"{rn}--{method.rlid}"
+        file_path = f"{step_dir}/{fn}.json"
+        print("=" * 30)
+        print(file_path)
+        print("-" * 30)
+        print(method.github_url)
+        print("-" * 30)
+        print(mut_idx)
+        print("-" * 30)
+        print(get_diff(method.content, mutant))
+        print("-" * 30)
+        print(mutant)
+        print("-" * 30)
+        print(flag)
+        print("-" * 30)
+        print(method.ref_postcond)
+        print("-" * 30)
+        print(f"lang: {method.repo.language}")
+    
+    sampled_suv_mutant_keys = [(i, m.github_url) for i, _, m, _ in sampled_suv_mutants]
+    suv_mutants = [(i, mu, me, f) for i, mu, me, f in suv_mutants if (i, me.github_url) not in sampled_suv_mutant_keys]
+    java_suv_mutants = [(i, mu, me, f) for i, mu, me, f in suv_mutants if me.repo.language == "java"]
+    py_suv_mutants = [(i, mu, me, f) for i, mu, me, f in suv_mutants if me.repo.language == "python"]
+    java_sampled_suv_mutants = random.sample(java_suv_mutants, 6)
+    py_sampled_suv_mutants = random.sample(py_suv_mutants, 4)
+
+    for mut_idx, mutant, method, flag in java_sampled_suv_mutants + py_sampled_suv_mutants:
+        rn = method.repo.github_path.replace("/", "--")
+        fn = f"{rn}--{method.rlid}"
+        file_path = f"{step_dir}/{fn}.json"
+        print("=" * 30)
+        print(file_path)
+        print("-" * 30)
+        print(method.github_url)
+        print("-" * 30)
+        print(mut_idx)
+        print("-" * 30)
+        print(get_diff(method.content, mutant))
+        print("-" * 30)
+        print(mutant)
+        print("-" * 30)
+        print(flag)
+        print("-" * 30)
+        print(method.ref_postcond)
+        print("-" * 30)
+        print(f"lang: {method.repo.language}")
+    
+    sampled_suv_mutant_keys.extend([(i, m.github_url) for i, _, m, _ in java_sampled_suv_mutants])
+    sampled_suv_mutant_keys.extend([(i, m.github_url) for i, _, m, _ in py_sampled_suv_mutants])
+
+    java_suv_mutants = [(i, mu, me, f) for i, mu, me, f in java_suv_mutants if (i, me.github_url) not in sampled_suv_mutant_keys]
+    py_suv_mutants = [(i, mu, me, f) for i, mu, me, f in py_suv_mutants if (i, me.github_url) not in sampled_suv_mutant_keys]
+
+    random.shuffle(java_suv_mutants)
+    random.shuffle(py_suv_mutants)
+
+    java_sampled_suv_mutants = java_suv_mutants[: 10]
+    py_sampled_suv_mutants = py_suv_mutants[: 10]
+
+    for mut_idx, mutant, method, flag in java_sampled_suv_mutants + py_sampled_suv_mutants:
+        rn = method.repo.github_path.replace("/", "--")
+        fn = f"{rn}--{method.rlid}"
+        file_path = f"{step_dir}/{fn}.json"
+        print("=" * 30)
+        print(file_path)
+        print("-" * 30)
+        print(method.github_url)
+        print("-" * 30)
+        print(mut_idx)
+        print("-" * 30)
+        print(get_diff(method.content, mutant))
+        print("-" * 30)
+        print(mutant)
+        print("-" * 30)
+        print(flag)
+        print("-" * 30)
+        print(method.ref_postcond)
+        print("-" * 30)
+        print(f"lang: {method.repo.language}")
+
+
 if __name__ == "__main__":
-    exp_res()
+    # exp_res()
     # update_ref()
     # sample_suv_mutants()
+    select_suv_mutants()

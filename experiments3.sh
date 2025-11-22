@@ -2,14 +2,14 @@
 
 TASK_NUM=$1
 TASK_IDX=$2
-PORT=$3
 
 # MODELS=("gpt-4.1" "gpt-4o-mini")
+MODELS=("claude-sonnet-4-5")
 # MODELS=("claude-sonnet-4")
 # MODELS=("claude-3-5-haiku")
 # MODELS=("Qwen3-8B")
 # MODELS=("Qwen3-32B")
-MODELS=("Llama-3.1-8B")
+# MODELS=("Llama-3.1-8B")
 # MODELS=("deepseek-coder-v2")
 # MODELS=("gemma-3-4b")
 # MODELS=("gemma-3-27b")
@@ -27,7 +27,7 @@ for model in "${MODELS[@]}"; do
            --w_code "$wcode"
            --task_num $TASK_NUM
            --task_idx $TASK_IDX
-           --port $PORT)
+           --custom_root data/step_tmp)
 
       if [[ -n "$prompt" ]]; then
         cmd+=(--prompting "$prompt")
@@ -54,7 +54,7 @@ for prompt in "${PROMPTS[@]}"; do
            --w_code "$wcode"
            --task_num $TASK_NUM
            --task_idx $TASK_IDX
-           --port $PORT)
+           --custom_root data/step_tmp)
 
       if [[ -n "$prompt" ]]; then
         cmd+=(--prompting "$prompt")

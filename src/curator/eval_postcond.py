@@ -13,7 +13,10 @@ from src.clone import repository_reproduct
 from src.pool import run_with_pool_file_monitor
 
 
-def eval_postcond(method: Method, postcond):
+KFS = ["jml_fail", "icontract_fail"]
+
+def eval_postcond(method: Method, postcond, 
+                  mutant_idx=None, early_stop=False):
     with repository_reproduct(method.repo) as repo_dir:
         lang = method.repo.language
         excluded_tests = method.repo.failed_tests
@@ -49,6 +52,8 @@ def eval_postcond(method: Method, postcond):
         mutant_results = []
 
         for mut_idx, mutant in enumerate(method.mutants):
+            if mutant_idx is not None and mut_idx != mutant_idx:
+                continue
             postcond_code_src = postcond_inj(
                 method=method,
                 code_str=code_str,
@@ -67,6 +72,8 @@ def eval_postcond(method: Method, postcond):
                     need_coverage=False,
                     timeout=30)
                 comp_flag = run_result.to_flag()
+                if early_stop and comp_flag not in KFS:
+                    return run_result.stdout
             mutant_results.append(comp_flag)
             pass
         return mutant_results
@@ -80,8 +87,11 @@ if __name__ == "__main__":
 #     methods = Method.load_li("data/step/6.mutation/adyliu--jafka.jsonl")
 #     method = methods[1]
 
-    postcond = '@icontract.ensure(lambda result, items: result == {k: (vs if len(vs) > 1 else vs[0]) for k, vs in ((k, [v for kk, v in items if kk == k]) for k in {k for k, _ in items})})'
-    methods = Method.load_li("data/step/6.mutation/abersheeran--kui.jsonl")
-    method = methods[0]
-
-    eval_postcond(method, postcond)
+    postcond = """"""
+    mut_idx = 32
+    with open("data/step/7.reference/fast-pack--JavaFastPFOR--uncompress.json") as file:
+        method = Method.from_dict(json.load(file))
+    # results = eval_postcond(method, postcond, mutant_idx=mut_idx)
+    results = eval_postcond(method, postcond, mutant_idx=mut_idx)
+    print(results)
+    pass

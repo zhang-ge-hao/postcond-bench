@@ -18,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument("--w_code", type=str)
     parser.add_argument("--lang", type=str, default=None)
     parser.add_argument("--prompting", type=str, default=None)
+    parser.add_argument("--custom_root", type=str, default=None)
     args = parser.parse_args()
 
     assert args.task_num is not None and isinstance(args.task_num, int)
@@ -35,6 +36,7 @@ if __name__ == "__main__":
     lang = args.lang
     w_code = args.w_code == "True"
     prompting = args.prompting
+    custom_root = args.custom_root
 
     folder_name = model_name + "--" + ("w_code" if w_code else "wo_code")
     if prompting is not None:
@@ -44,8 +46,13 @@ if __name__ == "__main__":
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
+    if custom_root is None:
+        input_dir = "data/step/8.benchmark"
+    else:
+        input_dir = f"{custom_root}/9.{folder_name}"
+
     postcond_generation_pool(
-        input_dir="data/step/8.benchmark",
+        input_dir=input_dir,
         output_dir=output_dir,
         model_name=model_name,
         port=port,

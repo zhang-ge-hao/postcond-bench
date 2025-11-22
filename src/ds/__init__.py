@@ -73,6 +73,8 @@ class Method:
     postcond_corr: List[str] = None
     mutant_kill: List[List[str]] = None
 
+    traversal_rank: int = None
+
     def to_dict(self):
         return asdict(self)
 

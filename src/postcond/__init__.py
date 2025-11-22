@@ -86,62 +86,63 @@ def postcond_generation(
     lang = method.repo.language
     excluded_tests = method.repo.failed_tests
     with repository_reproduct(method.repo) as repo_dir:
-        context_ratio = 1
-        while True:
-            try:
-                if method.prompting is None:
-                    prompt = prompt_infile(
-                        method, w_code=method.w_code,
-                        context_ratio=context_ratio)
-                elif method.prompting.lower() == "cot":
-                    prompt = prompt_cot(
-                        method, w_code=method.w_code,
-                        context_ratio=context_ratio)
-                elif method.prompting.lower().startswith("fsl"):
-                    shot_num = int(method.prompting.split("_")[1])
-                    prompt = prompt_fsl(
-                        method, 
-                        w_code=method.w_code, 
-                        methods=methods,
-                        shot_num=shot_num,
-                        context_ratio=context_ratio)
-                elif method.prompting.lower() == "no_gram":
-                    prompt = prompt_no_gram(
-                        method, w_code=method.w_code,
-                        context_ratio=context_ratio)
-                else:
-                    raise NotImplementedError()
+        if method.postconds is None:
+            context_ratio = 1
+            while True:
+                try:
+                    if method.prompting is None:
+                        prompt = prompt_infile(
+                            method, w_code=method.w_code,
+                            context_ratio=context_ratio)
+                    elif method.prompting.lower() == "cot":
+                        prompt = prompt_cot(
+                            method, w_code=method.w_code,
+                            context_ratio=context_ratio)
+                    elif method.prompting.lower().startswith("fsl"):
+                        shot_num = int(method.prompting.split("_")[1])
+                        prompt = prompt_fsl(
+                            method, 
+                            w_code=method.w_code, 
+                            methods=methods,
+                            shot_num=shot_num,
+                            context_ratio=context_ratio)
+                    elif method.prompting.lower() == "no_gram":
+                        prompt = prompt_no_gram(
+                            method, w_code=method.w_code,
+                            context_ratio=context_ratio)
+                    else:
+                        raise NotImplementedError()
 
-                method.prompt = prompt
+                    method.prompt = prompt
 
-                logging.info(f"{method.rlid} generation start.")
-                
-                responses = model_generate(
-                    model_name=method.model_name,
-                    prompt=prompt, 
-                    n=method.generate_num,
-                    port=method.port)
+                    logging.info(f"{method.rlid} generation start.")
+                    
+                    responses = model_generate(
+                        model_name=method.model_name,
+                        prompt=prompt, 
+                        n=method.generate_num,
+                        port=method.port)
 
-                break
-            except BaseException as e:
-                if "Please reduce the length of the messages or completion." in str(e):
-                    context_ratio -= 0.1
-                    if context_ratio < 0:
-                        raise RuntimeError("The prompt is still too long.")
-                else:
-                    raise e
+                    break
+                except BaseException as e:
+                    if "Please reduce the length of the messages or completion." in str(e):
+                        context_ratio -= 0.1
+                        if context_ratio < 0:
+                            raise RuntimeError("The prompt is still too long.")
+                    else:
+                        raise e
 
-        postconditions = [
-            response_post_process(r) for r in responses]
+            postconditions = [
+                response_post_process(r) for r in responses]
 
-        logging.info(f"{method.rlid} generated.")
+            logging.info(f"{method.rlid} generated.")
+
+            method.postconds = postconditions
+            # 目前只需要 CoT 的时候记录一下 reasoning 就行了
+            if method.prompting is not None and method.prompting.lower() == "cot":
+                method.responses = responses
 
         code_str, code_bytes = read_code(method.file)
-
-        method.postconds = postconditions
-        # 目前只需要 CoT 的时候记录一下 reasoning 就行了
-        if method.prompting is not None and method.prompting.lower() == "cot":
-            method.responses = responses
         method.postcond_corr = []
         method.mutant_kill = []
         for p_idx, postcond in enumerate(method.postconds):

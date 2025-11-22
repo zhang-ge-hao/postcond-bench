@@ -48,6 +48,7 @@ with open("data/step/0.append/dep_anno_java.txt") as file:
 DEP_ANNO = {**dep_anno_python, **dep_anno_java}
 
 ORDERED_MODELS = [
+    "claude-sonnet-4-5", 
     "claude-sonnet-4", 
     "claude-3-5-haiku",
     "gpt-4.1", 
@@ -64,6 +65,7 @@ MODEL_NAME_MAP = {
     "gpt-4o-mini": "gpt-4o-mini", 
     "claude-sonnet-4": "Claude 4", 
     "claude-3-5-haiku": "Claude 3.5", 
+    "claude-sonnet-4-5": "Claude 4.5", 
     "Qwen3-32B": "Qwen3-32B", 
     "Qwen3-8B": "Qwen3-8B",
     "phi-4": "phi-4", 
@@ -330,6 +332,7 @@ def get_exp_res():
     all_model_names = [
         "gpt-4.1", 
         "gpt-4o-mini", 
+        "claude-sonnet-4-5",
         "claude-sonnet-4", 
         "claude-3-5-haiku", 
         "Qwen3-32B", 
@@ -1103,10 +1106,105 @@ def fsl_line_chart():
     plt.savefig("data/fsl.pdf", bbox_inches="tight")
 
 
+def no_gram():
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [
+        r for r in exp_res_list 
+        if r.method_range is None and r.prompting is None]
+    model_names = list(set([r.model_name for r in exp_res_list]))
+    model_names = [m for m in ORDERED_MODELS if m in model_names]
+
+
+    @dataclass
+    class _number:
+        model_name: str
+        language: str
+        w_code: bool
+        metric: str
+        number: float
+        should_bold: bool
+
+    numbers: List[_number] = []
+
+    def _find(numbers: List[_number], 
+              model_name, language, w_code, metric) -> _number:
+        for number in numbers:
+            if model_name != number.model_name:
+                continue
+            if language != number.language:
+                continue
+            if w_code != number.w_code:
+                continue
+            if metric != number.metric:
+                continue
+            return number
+        return None
+
+    metric_field_names = [
+        "rule_precision", "llm_precision"]
+    
+    __iter = product(model_names, LANGUAGES, [True, False])
+    for model_name, lang, w_code in __iter:
+        __exp_res_list = [
+            r for r in exp_res_list if 
+            lang == r.language and w_code == r.w_code and model_name == r.model_name]
+        assert len(__exp_res_list) == 1
+        exp_res = __exp_res_list[0]
+        for field_name in metric_field_names:
+            n = getattr(exp_res, field_name)
+            should_bold = all(n > getattr(exp_res, field_name) 
+                              for field_name in metric_field_names)
+            numbers.append(_number(
+                model_name=exp_res.model_name,
+                language=exp_res.language,
+                w_code=exp_res.w_code,
+                metric=field_name,
+                number=n,
+                should_bold=should_bold
+            ))
+
+    width = 10
+
+    for lang_idx, lang in enumerate(LANGUAGES):
+        print("\\midrule")
+        print(f"\\multicolumn{{{width+1}}}{{c}}{{{_bold(lang.capitalize())}}} \\\\")
+        print("\\midrule")
+        for row_idx, model_name in enumerate(model_names):
+            number_str_list = []
+            ___iter = product([True, False], metric_field_names)
+            for col_idx, (w_code, field_name) in enumerate(___iter):
+                number = _find(numbers, model_name, lang, w_code, field_name)
+                number_str = _f2s(number.number)
+                if number.should_bold:
+                    number_str = _bold(number_str)
+                number_str_list.append(number_str)
+            assert len(number_str_list) == width
+
+            la_model_name = MODEL_NAME_MAP[model_name]
+
+            print(f"{la_model_name} & ", end="")
+            print(" & ".join(number_str_list) + f" \\\\")
+
+
 if __name__ == "__main__":
-    # get_exp_res()
+    data = []
+    for file_name in os.listdir("data/batch--gpt-5--out--1st-run"):
+        with open(f"data/batch--gpt-5--out--1st-run/{file_name}") as file:
+            data.extend([json.loads(l) for l in file])
+    lengths = [i["response"]["body"]["usage"]["input_tokens"] for i in data]
+    token_sum = sum(lengths)
+    print(token_sum / len(data))
+    print(token_sum)
+    print(len([l for l in lengths if l > 8000]))
+    print(len(data))
+    exit()
+
+    get_exp_res()
     # main_res()
     # analyze_dep()
-    code_line_line_chart()
+    # code_line_line_chart()
     # fsl_line_chart()
     print("done")

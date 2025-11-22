@@ -42,8 +42,10 @@ def postcond_inj(
     # def push(...
     if lang == "python":
         inj_method_lines = []
+        injected = False
         for l in method_lines:
-            if l.strip().startswith("def "):
+            if l.strip().startswith("def ") and not injected:
+                injected = True
                 inj_method_lines.extend(postcond_lines)
             inj_method_lines.append(l)
     elif lang == "java":
