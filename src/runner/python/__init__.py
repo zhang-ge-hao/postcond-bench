@@ -28,10 +28,10 @@ class PythonTestResult:
     def to_flag(self):
         if self.timeout:
             return "timeout"
-        if self.syntax_error:
-            return "syntax_error"
         if self.icontract_fail:
             return "icontract_fail"
+        if self.syntax_error:
+            return "syntax_error"
         if not self.reports_exist:
             return "reports_not_exist"
         if self.interrupted:

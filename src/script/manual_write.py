@@ -2,6 +2,7 @@
 from src.ds import *
 import os
 from src.util import get_diff
+from multiprocessing import Pool
 
 KFS = ["jml_fail", "icontract_fail"]
 
@@ -54,6 +55,7 @@ def write_doc():
         rn = method.repo.github_path.replace("/", "--")
         fn = f"{method.traversal_rank:04d}--{rn}--{method.rlid}"
         output_path = f"data/ground_truth/{lang}/{fn}.md"
+        assert not os.path.exists(output_path), output_path
         with open(output_path, "w") as file:
             file.write(f"{method.github_url}\n")
             file.write("```\n```\n")
@@ -70,10 +72,14 @@ def write_doc():
                 file.write(f"```\n{mutant}\n```\n")
 
     langs = ["python", "java"]
-    amount = 200
+    SAMPLE_RNAGE = {
+        "python": (200, 340),
+        "java": (0, 200),
+    }
     mut_theo = 5
     methods = read_benchmark("data/step/8.benchmark_m")
     for lang in langs:
+        sample_range = SAMPLE_RNAGE[lang]
         print(lang)
         lang_methods = [m for m in methods if m.repo.language == lang]
         lang_methods.sort(key=lambda m: m.traversal_rank)
@@ -82,6 +88,10 @@ def write_doc():
         mutant_count = 0
         for method in lang_methods:
             if len(method.mutants) < mut_theo:
+                continue
+
+            count += 1
+            if count - 1 < sample_range[0] or count - 1 >= sample_range[1]:
                 continue
 
             if method.ref_postcond is None:
@@ -95,18 +105,38 @@ def write_doc():
                 mutant_count += mut_count
                 _write(method)
 
-            count += 1
-            if count >= amount:
+            if count >= sample_range[1]:
                 print(f"rank: {method.traversal_rank}")
                 break
         print(f"method need attention: {method_count}")
         print(f"mutant need attention: {mutant_count}")
 
 
-def eval():
+def cal_methods():
+    lang = "python"
+    idx_theo = 389
+    mut_theo = 5
+    
+    methods = read_benchmark("data/step/8.benchmark_m")
+    lang_methods = [m for m in methods if m.repo.language == lang and m.traversal_rank < idx_theo]
+    lang_methods.sort(key=lambda m: m.traversal_rank)
+    count = 0
+    mutant_count = 0
+    for method in lang_methods:
+        if len(method.mutants) < mut_theo:
+            continue
+        if method.ref_postcond and all(f in KFS for f in method.ref_mutant_kill):
+            count += 1
+            mutant_count += len(method.ref_mutant_kill)
+
+    print(count)
+    print(mutant_count)
+
+
+def eval(method_fn, mut_idxs = None, ban_mut_idxs = None, early_stop = False):
+    print(f"{method_fn} start")
+
     from src.curator.eval_postcond import eval_postcond
-    method_fn = "pypyr--pypyr--keys_of_type_exist"
-    mut_idx = None
 
     method_dir = "data/step/8.benchmark_m"
     with open(f"{method_dir}/{method_fn}.json") as file:
@@ -130,9 +160,50 @@ def eval():
         
         # results = eval_postcond(method, postcond, mutant_idx=mut_idx)
         results = eval_postcond(method, postcond, 
-                                mutant_idx=mut_idx, early_stop=True)
-        print(results)
+                                mutant_idxs=mut_idxs, 
+                                ban_mutant_idxs=ban_mut_idxs, 
+                                early_stop=early_stop)
+
+    print(f"{method_fn} done")
+
+    return method_fn, results
 
 
 if __name__ == "__main__":
-    eval()
+    # cal_methods()
+    # exit()
+
+    method_fn = "frostming--marko--partition_by_spaces"
+    mut_idxs = [7]
+    ban_mut_idxs = None
+    early_stop = True
+    method_fn, results = eval(
+        method_fn=method_fn,
+        mut_idxs=mut_idxs,
+        ban_mut_idxs=ban_mut_idxs,
+        early_stop=early_stop
+    )
+    print(results)
+
+    # method_fns = os.listdir("data/ground_truth/python")
+    # method_fns = [fn for fn in method_fns if fn.endswith(".md")]
+    # method_fns = [fn[6: -3] for fn in method_fns]
+
+    # print("\n".join(method_fns))
+    # print(len(method_fns))
+
+    # pool_size = 30
+
+    # with Pool(processes=pool_size) as pool:
+    #     # map 会把 method_fns 逐个传给 eval_one
+    #     outputs = pool.map(eval, method_fns)
+
+    # # 收集成 dict: method_fn -> results
+    # result_dict = {method_fn: results for method_fn, results in outputs}
+
+    # # 存成 json 文件
+    # out_path = "eval_results.json"
+    # with open(out_path, "w", encoding="utf-8") as f:
+    #     json.dump(result_dict, f, ensure_ascii=False, indent=2)
+
+    # print(f"Saved results to {out_path}")

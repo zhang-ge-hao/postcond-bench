@@ -16,7 +16,8 @@ from src.pool import run_with_pool_file_monitor
 KFS = ["jml_fail", "icontract_fail"]
 
 def eval_postcond(method: Method, postcond, 
-                  mutant_idx=None, early_stop=False):
+                  mutant_idxs=None, ban_mutant_idxs=None, 
+                  early_stop=False):
     with repository_reproduct(method.repo) as repo_dir:
         lang = method.repo.language
         excluded_tests = method.repo.failed_tests
@@ -52,7 +53,9 @@ def eval_postcond(method: Method, postcond,
         mutant_results = []
 
         for mut_idx, mutant in enumerate(method.mutants):
-            if mutant_idx is not None and mut_idx != mutant_idx:
+            if mutant_idxs is not None and mut_idx not in mutant_idxs:
+                continue
+            if ban_mutant_idxs is not None and mut_idx in ban_mutant_idxs:
                 continue
             postcond_code_src = postcond_inj(
                 method=method,
