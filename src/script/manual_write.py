@@ -71,10 +71,13 @@ def write_doc():
                 file.write(f"```\n{get_diff(method.content, mutant)}\n```\n")
                 file.write(f"```\n{mutant}\n```\n")
 
-    langs = ["python", "java"]
+    langs = [
+        # "python", 
+        "java"
+    ]
     SAMPLE_RNAGE = {
         "python": (200, 340),
-        "java": (0, 200),
+        "java": (270, 276),
     }
     mut_theo = 5
     methods = read_benchmark("data/step/8.benchmark_m")
@@ -113,8 +116,8 @@ def write_doc():
 
 
 def cal_methods():
-    lang = "python"
-    idx_theo = 389
+    lang = "java"
+    idx_theo = 324
     mut_theo = 5
     
     methods = read_benchmark("data/step/8.benchmark_m")
@@ -128,6 +131,8 @@ def cal_methods():
         if method.ref_postcond and all(f in KFS for f in method.ref_mutant_kill):
             count += 1
             mutant_count += len(method.ref_mutant_kill)
+            print(method.traversal_rank, end=", ")
+    print()
 
     print(count)
     print(mutant_count)
@@ -173,37 +178,40 @@ if __name__ == "__main__":
     # cal_methods()
     # exit()
 
-    method_fn = "frostming--marko--partition_by_spaces"
-    mut_idxs = [7]
-    ban_mut_idxs = None
-    early_stop = True
-    method_fn, results = eval(
-        method_fn=method_fn,
-        mut_idxs=mut_idxs,
-        ban_mut_idxs=ban_mut_idxs,
-        early_stop=early_stop
-    )
-    print(results)
+    # write_doc()
+    # exit()
 
-    # method_fns = os.listdir("data/ground_truth/python")
-    # method_fns = [fn for fn in method_fns if fn.endswith(".md")]
-    # method_fns = [fn[6: -3] for fn in method_fns]
+    # method_fn = "dyn4j--dyn4j--accumulate"
+    # mut_idxs = [17,33]
+    # ban_mut_idxs = None
+    # early_stop = True
+    # method_fn, results = eval(
+    #     method_fn=method_fn,
+    #     mut_idxs=mut_idxs,
+    #     ban_mut_idxs=ban_mut_idxs,
+    #     early_stop=early_stop
+    # )
+    # print(results)
 
-    # print("\n".join(method_fns))
-    # print(len(method_fns))
+    method_fns = os.listdir("data/ground_truth/java")
+    method_fns = [fn for fn in method_fns if fn.endswith(".md")]
+    method_fns = [fn[6: -3] for fn in method_fns]
 
-    # pool_size = 30
+    print("\n".join(method_fns))
+    print(len(method_fns))
 
-    # with Pool(processes=pool_size) as pool:
-    #     # map 会把 method_fns 逐个传给 eval_one
-    #     outputs = pool.map(eval, method_fns)
+    pool_size = 30
 
-    # # 收集成 dict: method_fn -> results
-    # result_dict = {method_fn: results for method_fn, results in outputs}
+    with Pool(processes=pool_size) as pool:
+        # map 会把 method_fns 逐个传给 eval_one
+        outputs = pool.map(eval, method_fns)
 
-    # # 存成 json 文件
-    # out_path = "eval_results.json"
-    # with open(out_path, "w", encoding="utf-8") as f:
-    #     json.dump(result_dict, f, ensure_ascii=False, indent=2)
+    # 收集成 dict: method_fn -> results
+    result_dict = {method_fn: results for method_fn, results in outputs}
 
-    # print(f"Saved results to {out_path}")
+    # 存成 json 文件
+    out_path = "eval_results.json"
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(result_dict, f, ensure_ascii=False, indent=2)
+
+    print(f"Saved results to {out_path}")
