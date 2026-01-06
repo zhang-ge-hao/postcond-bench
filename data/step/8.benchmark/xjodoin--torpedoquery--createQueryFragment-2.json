@@ -1,0 +1,157 @@
+{
+  "rlid": "createQueryFragment-2",
+  "github_url": "https://github.com/xjodoin/torpedoquery/blob/09a3357b34f1e68b3715142c421507c2a38bdd96/./src/main/java/org/torpedoquery/jpa/internal/query/OrderBy.java#L43-L68",
+  "name": "createQueryFragment",
+  "line_cov": 0.9,
+  "lines": 26,
+  "stats": 9,
+  "cc": 4,
+  "content": "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+  "header": "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {",
+  "file": "./src/main/java/org/torpedoquery/jpa/internal/query/OrderBy.java",
+  "start_line": 43,
+  "end_line": 68,
+  "body_start_line": 52,
+  "comment": "/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */",
+  "test_time": 2.599151372909546,
+  "cover_tests": [
+    "org.torpedoquery.jpa.OrderByTest#shouldKeepOrderingWithInnerJoin",
+    "org.torpedoquery.jpa.OrderByTest#test_OrderByOnJoin",
+    "org.torpedoquery.jpa.OrderByTest#test_OrderByTwoLevel",
+    "org.torpedoquery.jpa.OrderByTest#test_multipleOrderBy",
+    "org.torpedoquery.jpa.OrderByTest#test_simpleOrderBy",
+    "org.torpedoquery.jpa.OrderByTest#test_simpleOrderBy_asc",
+    "org.torpedoquery.jpa.OrderByTest#test_simpleOrderBy_asc_and_default",
+    "org.torpedoquery.jpa.OrderByTest#test_simpleOrderBy_desc"
+  ],
+  "repo": {
+    "github_path": "xjodoin/torpedoquery",
+    "commit": "09a3357b34f1e68b3715142c421507c2a38bdd96",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>org.torpedoquery</groupId>\n  <artifactId>org.torpedoquery</artifactId>\n  <version>2.6.1-SNAPSHOT</version>\n  <inceptionYear>2011</inceptionYear>\n  <name>TorpedoQuery</name>\n  <url>http://torpedoquery.org</url>\n  <description>Type safe Hibernate query builder</description>\n  <licenses>\n    <license>\n      <name>The Apache Software License, Version 2.0</name>\n      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n      <distribution>repo</distribution>\n    </license>\n  </licenses>\n  <developers>\n    <developer>\n      <id>xjodoin</id>\n      <name>Xavier Jodoin</name>\n    </developer>\n  </developers>\n  <packaging>jar</packaging>\n  <scm>\n    <url>https://github.com/xjodoin/torpedoquery</url>\n    <connection>scm:git:git://github.com/xjodoin/torpedoquery.git</connection>\n    <developerConnection>scm:git:git@github.com:xjodoin/torpedoquery.git</developerConnection>\n    <tag>HEAD</tag>\n  </scm>\n  <properties>\n    <maven.compiler.source>10</maven.compiler.source>\n    <maven.compiler.target>10</maven.compiler.target>\n  </properties>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-release-plugin</artifactId>\n        <version>2.5.3</version>\n        <configuration>\n          <goals>deploy nexus-staging:release</goals>\n          <tagNameFormat>v@{project.version}</tagNameFormat>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>2.10.4</version>\n        <configuration>\n          <aggregate>true</aggregate>\n          <show>public</show>\n          <nohelp>true</nohelp>\n          <header>TorpedoQuery, ${project.version}</header>\n          <footer>TorpedoQuery, ${project.version}</footer>\n          <doctitle>TorpedoQuery, ${project.version}</doctitle>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.8</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <formats>\n                <format>xml</format>\n                <format>xml</format>\n              </formats>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n    </plugins>\n  </build>\n  <dependencies>\n    <dependency>\n      <groupId>org.javassist</groupId>\n      <artifactId>javassist</artifactId>\n      <version>3.24.1-GA</version>\n    </dependency>\n    <dependency>\n      <groupId>javax.persistence</groupId>\n      <artifactId>javax.persistence-api</artifactId>\n      <version>2.2</version>\n      <scope>provided</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.objenesis</groupId>\n      <artifactId>objenesis</artifactId>\n      <version>3.0.1</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.5</version>\n    </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>2.24.0</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n  </distributionManagement>\n  <profiles>\n    <profile>\n      <id>release-sign-artifacts</id>\n      <activation>\n        <property>\n          <name>performRelease</name>\n          <value>true</value>\n        </property>\n      </activation>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-source-plugin</artifactId>\n            <version>2.2.1</version>\n            <executions>\n              <execution>\n                <id>attach-sources</id>\n                <goals>\n                  <goal>jar-no-fork</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-javadoc-plugin</artifactId>\n            <version>2.9.1</version>\n            <executions>\n              <execution>\n                <id>attach-javadocs</id>\n                <goals>\n                  <goal>jar</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>1.6</version>\n            <configuration>\n              <useAgent>true</useAgent>\n            </configuration>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n  </profiles>\n</project>",
+    "failed_tests": [
+      "org.torpedoquery.jpa.TorpedoTest#test_resultList",
+      "org.torpedoquery.jpa.TorpedoTest#test_singleResult"
+    ],
+    "test_time": 2.1802773475646973
+  },
+  "mutants": [
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (builder.length() > 0) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (orders.contains(null)) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (orders.size() == 0) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (orders.size() > 1) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() != 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() > 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (incrementor.get() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (orders.isEmpty() && builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (orders.size() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (orders.size() > 1) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\t\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(\"unknown_column\");\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor)).append(\" DESC\");\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor)).append(\", \");\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\t\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(' ').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor)).append(\" ORDER BY\");\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(';').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * <p>createQueryFragment.</p>\n\t *\n\t * @param builder a {@link java.lang.StringBuilder} object.\n\t * @param queryBuilder a {@link org.torpedoquery.core.QueryBuilder} object.\n\t * @param incrementor a {@link java.util.concurrent.atomic.AtomicInteger} object.\n\t * @return a {@link java.lang.String} object.\n\t */\n\tpublic String createQueryFragment(StringBuilder builder, QueryBuilder queryBuilder, AtomicInteger incrementor) {\n\n\t\tif (!orders.isEmpty()) {\n\t\t\tIterator<Selector> iterator = orders.iterator();\n\n\t\t\tif (builder.length() == 0) {\n\t\t\t\tbuilder.append(\" order by \").append(iterator.next().createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\twhile (iterator.hasNext()) {\n\t\t\t\tSelector selector = iterator.next();\n\t\t\t\tbuilder.append(',').append(selector.createQueryFragment(incrementor));\n\t\t\t}\n\n\t\t\treturn builder.append(\";\").toString(); // This will append a semicolon to the output string, which may not be valid in SQL.\n\t\t}\n\t\treturn \"\";\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\old(orders.isEmpty()) ==> \\result.equals(\"\");\n//@ ensures !\\old(orders.isEmpty()) ==> \\result.length() > 0;\n//@ ensures !\\old(orders.isEmpty()) && \\old(builder.length()) == 0 ==> \\result.startsWith(\" order by \");\n//@ ensures !\\old(orders.isEmpty()) && \\old(orders.size()) > 1 ==> \\result.indexOf(',') >= 0;\n//@ ensures !\\old(orders.isEmpty()) ==> \\result.equals(builder.toString());\n//@ ensures !\\old(orders.isEmpty()) ==> !\\result.endsWith(\";\");\n//@ ensures !\\old(orders.isEmpty()) && \\old(builder.length()) == 0 ==> \\result.contains(\\old(orders.get(0).createQueryFragment(incrementor)));\n//@ ensures !\\old(orders.isEmpty()) ==> \\result.indexOf(\"ORDER BY\") < 0;\n//@ ensures !\\old(orders.isEmpty()) ==> !\\result.contains(\",,\");\n//@ ensures !\\old(orders.isEmpty()) ==> !\\result.contains(\", ,\");\n//@ ensures !\\old(orders.isEmpty()) && \\old(builder.length()) == 0 ==> (\\result.length() == (\" order by \".length() + \\old(orders.get(0).createQueryFragment(incrementor)).length()) || \\result.charAt(\" order by \".length() + \\old(orders.get(0).createQueryFragment(incrementor)).length()) == ',');",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 40
+}

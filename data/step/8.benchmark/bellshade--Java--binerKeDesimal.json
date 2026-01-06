@@ -1,0 +1,103 @@
+{
+  "rlid": "binerKeDesimal",
+  "github_url": "https://github.com/bellshade/Java/blob/d5387355d572170808e7ef5d014ec4343e6c3471/./src/main/java/algorithm/conversions/BinaryToDecimal.java#L10-L31",
+  "name": "binerKeDesimal",
+  "line_cov": 0.9,
+  "lines": 22,
+  "stats": 9,
+  "cc": 3,
+  "content": "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat++));\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+  "header": "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {",
+  "file": "./src/main/java/algorithm/conversions/BinaryToDecimal.java",
+  "start_line": 10,
+  "end_line": 31,
+  "body_start_line": 19,
+  "comment": "/**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */",
+  "test_time": 2.760268449783325,
+  "cover_tests": [
+    "algorithm.conversion.BinaryToDecimalTest#testAngkaNegatif",
+    "algorithm.conversion.BinaryToDecimalTest#testBinaryToDecimal"
+  ],
+  "repo": {
+    "github_path": "bellshade/Java",
+    "commit": "d5387355d572170808e7ef5d014ec4343e6c3471",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n    <groupId>bellshade</groupId>\n    <artifactId>bellshade</artifactId>\n    <version>1.0-SNAPSHOT</version>\n\n    <name>bellshade</name>\n    <url>https://github.com/bellshade</url>\n\n    <properties>\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n        <maven.compiler.source>21</maven.compiler.source>\n        <maven.compiler.target>21</maven.compiler.target>\n    <maven.compiler.release>21</maven.compiler.release></properties>\n\n    <dependencyManagement>\n        <dependencies>\n            <dependency>\n                <groupId>org.junit</groupId>\n                <artifactId>junit-bom</artifactId>\n                <version>5.8.2</version>\n                <type>pom</type>\n                <scope>import</scope>\n            </dependency>\n        </dependencies>\n    </dependencyManagement>\n\n    <dependencies>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter</artifactId>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>com.fasterxml.jackson.core</groupId>\n            <artifactId>jackson-databind</artifactId>\n            <version>2.13.4.2</version>\n          </dependency>\n        <dependency>\n          <groupId>org.assertj</groupId>\n          <artifactId>assertj-core</artifactId>\n          <version>3.11.1</version>\n          <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.projectlombok</groupId>\n            <artifactId>lombok</artifactId>\n            <version>1.18.30</version>\n        </dependency>\n\n        <dependency>\n            <groupId>mysql</groupId>\n            <artifactId>mysql-connector-java</artifactId>\n            <version>8.0.32</version>\n        </dependency>\n\n\n    </dependencies>\n\n    <build>\n        <plugins>\n            <plugin>\n                <artifactId>maven-compiler-plugin</artifactId>\n                <version>3.10.1</version>\n            <configuration><release>21</release><fork>true</fork><executable>${java.home}/bin/javac</executable></configuration></plugin>\n            <plugin>\n                <artifactId>maven-surefire-plugin</artifactId>\n                <version>3.1.2</version>\n            <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n        <plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.10</version><executions><execution><id>prepare-agent</id><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>test</phase><goals><goal>report</goal></goals><configuration><outputDirectory>${project.build.directory}/site/jacoco</outputDirectory><formats><format>xml</format></formats></configuration></execution></executions></plugin></plugins>\n    </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 3.1328701972961426
+  },
+  "mutants": [
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    if (angkaBiner > 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat++));\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner > 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat++));\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat + 1)); // Incorrectly using pangkat + 1\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat) + 1); // Incorrectly adding 1 to the result\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat) / 2); // Incorrectly dividing the result by 2\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat)); // Missing increment of pangkat\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat--));\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat--)); // Decrementing pangkat instead of incrementing\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit / Math.pow(BASE_BINER, pangkat++));\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal -= (long) (digit * Math.pow(BASE_BINER, pangkat++));\n      angkaBiner /= 10;\n    }\n    return valueDesimal;\n   }",
+    "  /**\n   * fungsi mengubah angka biner ke angka desimal\n   * \n   * @param angkaBiner angka biner yang akan dikonversikan\n   * @return hasil dari konversi angka biner ke angka desimal\n   * @throws IllegalArgumentException ini terjadi jika angka biner tidak terdapat angka 0 atau 1\n   */\n\n   public static long binerKeDesimal(long angkaBiner) {\n    long valueDesimal = 0;\n    long pangkat = 0;\n    \n    while (angkaBiner != 0) {\n      long digit = angkaBiner % 10;\n      if (digit > 1) {\n        throw new IllegalArgumentException(\"angka biner tidak benar: \" + digit);\n      }\n      valueDesimal += (long) (digit * Math.pow(BASE_BINER, pangkat++));\n      angkaBiner /= 10;\n    }\n    return 0;\n   }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures \\old(angkaBiner) >= 0 ==> (((\\old(angkaBiner) / 1L) % 10L == 0L) || ((\\old(angkaBiner) / 1L) % 10L == 1L)) && (((\\old(angkaBiner) / 10L) % 10L == 0L) || ((\\old(angkaBiner) / 10L) % 10L == 1L)) && (((\\old(angkaBiner) / 100L) % 10L == 0L) || ((\\old(angkaBiner) / 100L) % 10L == 1L)) && (((\\old(angkaBiner) / 1000L) % 10L == 0L) || ((\\old(angkaBiner) / 1000L) % 10L == 1L)) && (((\\old(angkaBiner) / 10000L) % 10L == 0L) || ((\\old(angkaBiner) / 10000L) % 10L == 1L)) && (((\\old(angkaBiner) / 100000L) % 10L == 0L) || ((\\old(angkaBiner) / 100000L) % 10L == 1L)) && (((\\old(angkaBiner) / 1000000L) % 10L == 0L) || ((\\old(angkaBiner) / 1000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 10000000L) % 10L == 0L) || ((\\old(angkaBiner) / 10000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 100000000L) % 10L == 0L) || ((\\old(angkaBiner) / 100000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 1000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 1000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 10000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 10000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 100000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 100000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 1000000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 1000000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 10000000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 10000000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 100000000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 100000000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 1000000000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 1000000000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 10000000000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 10000000000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 100000000000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 100000000000000000L) % 10L == 1L)) && (((\\old(angkaBiner) / 1000000000000000000L) % 10L == 0L) || ((\\old(angkaBiner) / 1000000000000000000L) % 10L == 1L));\n//@ ensures \\old(angkaBiner) >= 0 ==> \\result == (((\\old(angkaBiner) / 1L) % 10L) * 1L) + (((\\old(angkaBiner) / 10L) % 10L) * 2L) + (((\\old(angkaBiner) / 100L) % 10L) * 4L) + (((\\old(angkaBiner) / 1000L) % 10L) * 8L) + (((\\old(angkaBiner) / 10000L) % 10L) * 16L) + (((\\old(angkaBiner) / 100000L) % 10L) * 32L) + (((\\old(angkaBiner) / 1000000L) % 10L) * 64L) + (((\\old(angkaBiner) / 10000000L) % 10L) * 128L) + (((\\old(angkaBiner) / 100000000L) % 10L) * 256L) + (((\\old(angkaBiner) / 1000000000L) % 10L) * 512L) + (((\\old(angkaBiner) / 10000000000L) % 10L) * 1024L) + (((\\old(angkaBiner) / 100000000000L) % 10L) * 2048L) + (((\\old(angkaBiner) / 1000000000000L) % 10L) * 4096L) + (((\\old(angkaBiner) / 10000000000000L) % 10L) * 8192L) + (((\\old(angkaBiner) / 100000000000000L) % 10L) * 16384L) + (((\\old(angkaBiner) / 1000000000000000L) % 10L) * 32768L) + (((\\old(angkaBiner) / 10000000000000000L) % 10L) * 65536L) + (((\\old(angkaBiner) / 100000000000000000L) % 10L) * 131072L) + (((\\old(angkaBiner) / 1000000000000000000L) % 10L) * 262144L);\n//@ ensures \\old(angkaBiner) < 0L ==> \\result < 0L;\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 15
+}

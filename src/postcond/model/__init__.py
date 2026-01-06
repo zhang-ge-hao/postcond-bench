@@ -5,6 +5,21 @@ import time
 import boto3
 
 def model_generate(model_name: str, prompt, n, port=None):
+    if model_name == "gpt-5":
+        client = OpenAI()
+        postconditions = []
+        for _ in range(n):
+            response = None
+            while response is None:
+                try:
+                    response = client.responses.create(
+                        model="gpt-5",
+                        input=prompt,
+                        reasoning={"effort": "medium"},
+                    )
+                except:
+                    time.sleep(20)
+            postconditions.append(response.output_text)
     if "gpt" in model_name:
         client = OpenAI()
         response = client.chat.completions.create(

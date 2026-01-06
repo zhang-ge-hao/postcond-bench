@@ -1,0 +1,85 @@
+{
+  "rlid": "parse_path",
+  "github_url": "https://github.com/dbcli/litecli/blob/c072661298bc52b10c11e6571cc741a6d41360a7/./litecli/packages/filepaths.py#L39-L52",
+  "name": "parse_path",
+  "line_cov": 1.0,
+  "lines": 14,
+  "stats": 5,
+  "cc": 3,
+  "content": "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"\n    base_dir, last_dir, position = \"\", \"\", 0\n    if root_dir:\n        base_dir, last_dir = os.path.split(root_dir)\n        position = -len(last_dir) if last_dir else 0\n    return base_dir, last_dir, position",
+  "header": "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"",
+  "file": "./litecli/packages/filepaths.py",
+  "start_line": 39,
+  "end_line": 52,
+  "body_start_line": 48,
+  "comment": "\"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"",
+  "test_time": 0.985863208770752,
+  "cover_tests": [
+    "tests/test_smart_completion_public_schema_only.py::test_file_name_completion[source -expected0]",
+    "tests/test_smart_completion_public_schema_only.py::test_file_name_completion[source /-expected1]",
+    "tests/test_smart_completion_public_schema_only.py::test_file_name_completion[source /dir1/-expected2]",
+    "tests/test_smart_completion_public_schema_only.py::test_file_name_completion[source /dir1/subdir1/-expected3]"
+  ],
+  "repo": {
+    "github_path": "dbcli/litecli",
+    "commit": "c072661298bc52b10c11e6571cc741a6d41360a7",
+    "language": "python",
+    "env_config": "[project]\nname = \"litecli\"\ndynamic = [ \"version\",]\ndescription = \"CLI for SQLite Databases with auto-completion and syntax highlighting.\"\nreadme = \"README.md\"\nrequires-python = \">=3.9\"\ndependencies = [ \"cli-helpers[styles] (>=2.2.1)\", \"click (>=4.1,!=8.1.*)\", \"configobj (>=5.0.5)\", \"prompt-toolkit (>=3.0.3,<4.0.0)\", \"pygments (>=1.6)\", \"sqlparse (>=0.4.4)\", \"llm (>=0.25.0)\", \"pytest (>=8.4.2,<9.0.0)\", \"pytest-cov (>=7.0.0,<8.0.0)\", \"pytest-reportlog (>=0.4.0,<0.5.0)\", \"icontract (>=2.7.1,<3.0.0)\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"dbcli\"\nemail = \"litecli-users@googlegroups.com\"\n\n[build-system]\nrequires = [ \"setuptools>=64.0\", \"setuptools-scm>=8;python_version>='3.8'\", \"setuptools-scm<8;python_version<'3.8'\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project.license]\ntext = \"BSD\"\n\n[project.urls]\nhomepage = \"https://github.com/dbcli/litecli\"\n\n[project.scripts]\nlitecli = \"litecli.main:cli\"\n\n[project.optional-dependencies]\nai = [ \"llm\",]\nsqlean = [ \"sqlean-py>=3.47.0\",]\ndev = [ \"behave>=1.2.6\", \"coverage>=7.2.7\", \"pexpect>=4.9.0\", \"pytest>=7.4.4\", \"pytest-cov>=4.1.0\", \"tox>=4.8.0\", \"pdbpp>=0.10.3\", \"llm>=0.19.0\",]\n\n[tool.setuptools_scm]\n\n[tool.ruff]\nline-length = 140\n\n[tool.setuptools.package-data]\nlitecli = [ \"liteclirc\", \"AUTHORS\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"screenshots\", \"tests*\",]\n",
+    "failed_tests": [],
+    "test_time": 59.65015625953674
+  },
+  "mutants": [
+    "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"\n    base_dir, last_dir, position = \"\", \"\", 1\n    if root_dir:\n        base_dir, last_dir = os.path.split(root_dir)\n        position = -len(last_dir) if last_dir else 0\n    return base_dir, last_dir, position\n",
+    "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"\n    base_dir, last_dir, position = \"\", \"XXXX\", 0\n    if root_dir:\n        base_dir, last_dir = os.path.split(root_dir)\n        position = -len(last_dir) if last_dir else 0\n    return base_dir, last_dir, position\n",
+    "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"\n    base_dir, last_dir, position = \"\", \"\", 0\n    if root_dir:\n        base_dir, last_dir = os.path.split(root_dir + \"extra_component\")\n        position = -len(last_dir) if last_dir else 0\n    return base_dir, last_dir, position",
+    "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"\n    base_dir, last_dir, position = \"\", \"\", 0\n    if root_dir:\n        base_dir, last_dir = os.path.split(root_dir[:-1])\n        position = -len(last_dir) if last_dir else 0\n    return base_dir, last_dir, position",
+    "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"\n    base_dir, last_dir, position = \"\", \"\", 0\n    if root_dir:\n        base_dir, last_dir = os.path.split(root_dir)\n        position = -len(last_dir) if last_dir else 1\n    return base_dir, last_dir, position\n",
+    "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"\n    base_dir, last_dir, position = \"\", \"\", 0\n    if root_dir:\n        base_dir, last_dir = os.path.split(root_dir)\n        position = 0 if last_dir else -1\n    return base_dir, last_dir, position",
+    "def parse_path(root_dir):\n    \"\"\"Split path into head and last component for the completer.\n\n    Also return position where last component starts.\n\n    :param root_dir: str path\n    :return: tuple of (string, string, int)\n\n    \"\"\"\n    base_dir, last_dir, position = \"\", \"\", 0\n    if root_dir:\n        base_dir, last_dir = os.path.split(root_dir)\n        position = None\n    return base_dir, last_dir, position\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 3)\n@icontract.ensure(lambda result: isinstance(result[0], str) and isinstance(result[1], str) and isinstance(result[2], int))\n@icontract.ensure(lambda result: result[2] == (-len(result[1]) if result[1] else 0))\n@icontract.ensure(lambda result, root_dir: (not root_dir and result == (\"\", \"\", 0)) or (root_dir and (result[0] == __import__(\"os\").path.split(root_dir)[0] and result[1] == __import__(\"os\").path.split(root_dir)[1])))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 315
+}

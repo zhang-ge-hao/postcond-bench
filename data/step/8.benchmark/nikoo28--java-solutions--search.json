@@ -1,0 +1,188 @@
+{
+  "rlid": "search",
+  "github_url": "https://github.com/nikoo28/java-solutions/blob/a7f282d36a96a486af2259f5fd15deb96b00667a/./src/main/java/leetcode/medium/SearchInRotatedSortedArray.java#L78-L93",
+  "name": "search",
+  "line_cov": 1.0,
+  "lines": 16,
+  "stats": 6,
+  "cc": 4,
+  "content": "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+  "header": "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {",
+  "file": "./src/main/java/leetcode/medium/SearchInRotatedSortedArray.java",
+  "start_line": 78,
+  "end_line": 93,
+  "body_start_line": 83,
+  "comment": "/**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */",
+  "test_time": 5.166316747665405,
+  "cover_tests": [
+    "leetcode.medium.SearchInRotatedSortedArrayTest#testSearchFound"
+  ],
+  "repo": {
+    "github_path": "nikoo28/java-solutions",
+    "commit": "a7f282d36a96a486af2259f5fd15deb96b00667a",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.studyalgorithms.javasolutions</groupId>\n  <artifactId>java-solutions</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <name>java-solutions</name>\n  <url>http://www.studyalgorithms.com</url>\n  <dependencies>\n    <dependency>\n      <groupId>com.google.guava</groupId>\n      <artifactId>guava</artifactId>\n      <version>32.0.0-jre</version>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-engine</artifactId>\n      <version>5.1.0</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>11</maven.compiler.source>\n    <maven.compiler.target>11</maven.compiler.target>\n  </properties>\n  <build>\n    <pluginManagement>\n      <plugins>\n        <plugin>\n          <artifactId>maven-clean-plugin</artifactId>\n          <version>3.1.0</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-resources-plugin</artifactId>\n          <version>3.0.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-compiler-plugin</artifactId>\n          <version>3.8.0</version>\n          <configuration>\n            <source>11</source>\n            <target>11</target>\n          </configuration>\n        </plugin>\n        <plugin>\n          <artifactId>maven-surefire-plugin</artifactId>\n          <version>2.22.1</version>\n        <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n        <plugin>\n          <artifactId>maven-jar-plugin</artifactId>\n          <version>3.0.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-install-plugin</artifactId>\n          <version>2.5.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-deploy-plugin</artifactId>\n          <version>2.8.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-site-plugin</artifactId>\n          <version>3.7.1</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-project-info-reports-plugin</artifactId>\n          <version>3.0.0</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-assembly-plugin</artifactId>\n          <configuration>\n            <descriptorRefs>\n              <descriptorRef>jar-with-dependencies</descriptorRef>\n            </descriptorRefs>\n          </configuration>\n        </plugin>\n      </plugins>\n    </pluginManagement>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <configuration>\n          <source>11</source>\n          <target>11</target>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>2.22.1</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.10</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <xml>true</xml>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 2.7155823707580566
+  },
+  "mutants": [
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = -1; // Hardcoding the rotation index\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(new int[0]);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums) * 2; // Incorrectly scaling the index\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums) + 1;\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums) - 1;\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex != -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex != nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == 0)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == 0 || rotationIndex == nums.length - 2)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, rotationIndex - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, rotationIndex, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, rotationIndex, rotationIndex, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] < target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] > target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] >= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[rotationIndex] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (target < nums[rotationIndex]) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (target == nums[0]) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return 0;\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, nums.length - 1, target); // Ignores the rotation index and searches the entire array\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex - 1, target); // Off by one error in the right boundary\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target); // Searches the wrong sub-array\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, rotationIndex, nums.length - 1, target); // Starts searching from the rotation index instead of 0\n    } else\n      return binarySearch(nums, rotationIndex + 1, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return 0;\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, 0, rotationIndex, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex + 2, nums.length - 1, target);\n  }",
+    "  /**\n   * Search by first finding the rotation index. The index about which the array has been rotated.\n   * Then compare the target value to do a simple binary search in the left sub-array or right sub-array.\n   */\n  public int search(int[] nums, int target) {\n\n    int rotationIndex = findRotationIndex(nums);\n\n    if (rotationIndex == -1 || rotationIndex == nums.length - 1)\n      return binarySearch(nums, 0, nums.length - 1, target);\n\n    if (nums[0] <= target) {\n      return binarySearch(nums, 0, rotationIndex, target);\n    } else\n      return binarySearch(nums, rotationIndex, nums.length - 1, target);\n  }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures (\\result == -1) <==> java.util.Arrays.stream(nums).noneMatch(x -> x == target);\n//@ ensures (\\result != -1) ==> (0 <= \\result && \\result < nums.length && nums[\\result] == target);\n//@ ensures (\\old(findRotationIndex(nums)) != -1 && \\old(findRotationIndex(nums)) != nums.length - 1 && nums[0] <= target) ==> (\\result == -1 || (0 <= \\result && \\result <= \\old(findRotationIndex(nums))));\n//@ ensures (\\old(findRotationIndex(nums)) != -1 && \\old(findRotationIndex(nums)) != nums.length - 1 && !(nums[0] <= target)) ==> (\\result == -1 || (\\result >= \\old(findRotationIndex(nums)) + 1 && \\result < nums.length));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 144
+}

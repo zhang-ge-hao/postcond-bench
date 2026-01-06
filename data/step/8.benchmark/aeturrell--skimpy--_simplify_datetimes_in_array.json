@@ -1,0 +1,158 @@
+{
+  "rlid": "_simplify_datetimes_in_array",
+  "github_url": "https://github.com/aeturrell/skimpy/blob/9cd3ed61e0d7e6d36cada4c6807ea7452a8c14df/./src/skimpy/__init__.py#L183-L207",
+  "name": "_simplify_datetimes_in_array",
+  "line_cov": 1.0,
+  "lines": 25,
+  "stats": 8,
+  "cc": 9,
+  "content": "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows",
+  "header": "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"",
+  "file": "./src/skimpy/__init__.py",
+  "start_line": 183,
+  "end_line": 207,
+  "body_start_line": 193,
+  "comment": "\"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"",
+  "test_time": 5.996262073516846,
+  "cover_tests": [
+    "tests/test_main.py::test_main_succeeds",
+    "tests/test_main.py::test_000_basic_functionality",
+    "tests/test_main.py::test_003_not_enough_datetimes",
+    "tests/test_main.py::test_004_when_df_is_named",
+    "tests/test_main.py::test_007_simplify_datetimes_in_array",
+    "tests/test_main.py::test_016_long_col_names",
+    "tests/test_main.py::test_25_column_with_mixed_type",
+    "tests/test_main.py::test_29_json_return_data",
+    "tests/test_main.py::test_exporting_to_svg",
+    "tests/test_main.py::test_exporting_to_html",
+    "tests/test_main.py::test_exporting_to_text",
+    "tests/test_main.py::test_having_a_df_with_a_name"
+  ],
+  "repo": {
+    "github_path": "aeturrell/skimpy",
+    "commit": "9cd3ed61e0d7e6d36cada4c6807ea7452a8c14df",
+    "language": "python",
+    "env_config": "[project]\nname = \"skimpy\"\nversion = \"0.0.18\"\ndescription = \"skimpy\"\nreadme = \"README.md\"\nlicense = \"MIT\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\",]\nrequires-python = \">=3.9\"\ndependencies = [ \"click>=8.1.7\", \"ipykernel>=6.29.5\", \"numpy>=2.0.2\", \"pandas-stubs>=2.2.2.240807\", \"pandas>=2.2.3\", \"polars>=1.17.1\", \"pygments>=2.18.0\", \"rich>=13.9.4\", \"typeguard>=4.4.1\", \"pyarrow>=17.0.0\", \"pydoclint>=0.6.0\", \"duckdb>=1.2.2\", \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"Arthur Turrell\"\nemail = \"None@none.com\"\n\n[dependency-groups]\ndev = [ \"autopep8>=2.3.1\", \"coverage[toml]>=7.6.9\", \"jupyter>=1.1.1\", \"matplotlib>=3.9.4\", \"mypy>=1.13.0\", \"nbstripout>=0.8.1\", \"nox>=2024.10.9\", \"pre-commit>=4.0.1\", \"pre-commit-hooks>=5.0.0\", \"pygments>=2.18.0\", \"pytest>=8.3.4\", \"quartodoc>=0.9.1\", \"ruff>=0.8.3\", \"toml>=0.10.2\", \"typing-extensions>=4.12.2\", \"xdoctest[colors]>=1.2.0\",]\n\n[project.scripts]\nskimpy = \"skimpy.__main__:main\"\n\n[tool.uv]\npackage = true\n\n[tool.mypy]\nstrict = false\npretty = true\nshow_column_numbers = true\nshow_error_codes = true\nshow_error_context = true\nignore_missing_imports = true\ndisallow_untyped_calls = false\n\n[tool.pydoclint]\nstyle = \"google\"\nexclude = [ \"noxfile.py\", \"tests/\", \"docs/\",]\n\n[tool.poetry.group.dev.dependencies]\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\n",
+    "failed_tests": [],
+    "test_time": 11.769931554794312
+  },
+  "mutants": [
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(None, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows\n",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = [item for sublist in timestamp_positions for item in sublist if item[0] % 2 == 0]\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = [item for sublist in timestamp_positions for item in sublist if item[1] % 2 != 0]\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour + 1, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second + 1\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour != 0 and min != 0 and sec != 0:  # This condition is the opposite of the intended check, leading to incorrect behavior.\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour != min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows\n",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == 0 and min == 0 and sec != 0:  # This condition will only execute if seconds are not zero, which is incorrect.\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min != sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows\n",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec != 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows\n",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 1:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d\")\n    return rows\n",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = None\n    return rows\n",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].date()  # Converts to date object, losing the datetime information\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%M-%D\")\n    return rows\n",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%d %H:%M:%S\")  # Retains time information, which is not desired\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y-%m-%dT%H:%M:%S\")  # Adds a 'T' for time, which is not needed in the output\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%Y/%m/%d\")  # Uses slashes instead of dashes, which is not the expected format\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%d-%m-%Y\")  # Incorrect date format, should be YYYY-MM-DD\n    return rows",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"%y-%m-%d\")\n    return rows\n",
+    "@typechecked\ndef _simplify_datetimes_in_array(rows: np.ndarray) -> np.ndarray:\n    \"\"\"Simplifies 2001/01/01 00:00:00 to 2001/01/01.\n\n    Args:\n        rows (np.ndarray):  contain summary info, including datetimes\n\n    Returns:\n        np.ndarray: rows with any all zero hours/min/sec stripped out\n    \"\"\"\n    timestamp_positions = [\n        [\n            [idx, i]\n            for i, j in enumerate(item)\n            if isinstance(j, pd._libs.tslibs.timestamps.Timestamp)\n        ]\n        for idx, item in enumerate(rows)\n    ]\n    timestamp_pos_list = list(chain.from_iterable(timestamp_positions))\n    timestamp_pos_tuples = [tuple(entry) for entry in timestamp_pos_list]\n    for entry in timestamp_pos_tuples:\n        hour, min, sec = rows[entry].hour, rows[entry].minute, rows[entry].second\n        if hour == min == sec == 0:\n            rows[entry] = rows[entry].strftime(\"XX%Y-%m-%dXX\")\n    return rows\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda rows: [list(item) for item in rows], name=\"rows_before\")\n@icontract.ensure(lambda OLD, rows: len(rows) == len(OLD.rows_before) and all(len(rows[i]) == len(OLD.rows_before[i]) for i in range(len(rows))))\n@icontract.ensure(\n    lambda OLD, rows: all(\n        (\n            isinstance(OLD.rows_before[i][j], pd._libs.tslibs.timestamps.Timestamp)\n            and OLD.rows_before[i][j].hour == 0\n            and OLD.rows_before[i][j].minute == 0\n            and OLD.rows_before[i][j].second == 0\n            and isinstance(rows[i][j], str)\n            and rows[i][j] == OLD.rows_before[i][j].strftime(\"%Y-%m-%d\")\n        )\n        or (\n            isinstance(OLD.rows_before[i][j], pd._libs.tslibs.timestamps.Timestamp)\n            and not (OLD.rows_before[i][j].hour == 0 and OLD.rows_before[i][j].minute == 0 and OLD.rows_before[i][j].second == 0)\n            and isinstance(rows[i][j], pd._libs.tslibs.timestamps.Timestamp)\n            and rows[i][j] == OLD.rows_before[i][j]\n        )\n        or (\n            not isinstance(OLD.rows_before[i][j], pd._libs.tslibs.timestamps.Timestamp)\n            and rows[i][j] == OLD.rows_before[i][j]\n        )\n        for i in range(len(OLD.rows_before))\n        for j in range(len(OLD.rows_before[i]))\n    )\n)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 297
+}

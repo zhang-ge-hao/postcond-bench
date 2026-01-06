@@ -1,0 +1,139 @@
+{
+  "rlid": "nextSetBit",
+  "github_url": "https://github.com/lemire/javaewah/blob/86f37ab370b74282989e40917b2786ad9fb65f94/./src/main/java/com/googlecode/javaewah/datastructure/BitSet.java#L312-L337",
+  "name": "nextSetBit",
+  "line_cov": 0.9230769230769231,
+  "lines": 26,
+  "stats": 12,
+  "cc": 5,
+  "content": "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+  "header": "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {",
+  "file": "./src/main/java/com/googlecode/javaewah/datastructure/BitSet.java",
+  "start_line": 312,
+  "end_line": 337,
+  "body_start_line": 320,
+  "comment": "/**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */",
+  "test_time": 3.3798766136169434,
+  "cover_tests": [
+    "com.googlecode.javaewah.EWAHCompressedBitmapTest#example",
+    "com.googlecode.javaewah.ThresholdFuncBitmapTest#basictest",
+    "com.googlecode.javaewah.datastructure.BitSetTest#serializationExample",
+    "com.googlecode.javaewah.datastructure.BitSetTest#simpleExample",
+    "com.googlecode.javaewah32.ThresholdFuncBitmap32Test#basictest"
+  ],
+  "repo": {
+    "github_path": "lemire/javaewah",
+    "commit": "86f37ab370b74282989e40917b2786ad9fb65f94",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.googlecode.javaewah</groupId>\n  <artifactId>JavaEWAH</artifactId>\n  <version>1.2.4-SNAPSHOT</version>\n  <packaging>bundle</packaging>\n  <properties>\n    <maven.compiler.release>10</maven.compiler.release>\n    <encoding>UTF-8</encoding>\n  </properties>\n  <licenses>\n    <license>\n      <name>Apache 2</name>\n      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n      <distribution>repo</distribution>\n      <comments>A business-friendly OSS license</comments>\n    </license>\n  </licenses>\n  <scm>\n    <connection>scm:git:git@github.com:lemire/javaewah.git</connection>\n    <url>scm:git:git@github.com:lemire/javaewah.git</url>\n    <developerConnection>scm:git:git@github.com:lemire/javaewah.git</developerConnection>\n  </scm>\n  <developers>\n    <developer>\n      <id>lemire</id>\n      <name>Daniel Lemire</name>\n      <email>lemire@gmail.com</email>\n      <url>http://lemire.me/en/</url>\n      <organization>LICEF Research Center</organization>\n      <organizationUrl>http://licef.ca</organizationUrl>\n      <roles>\n        <role>architect</role>\n        <role>developer</role>\n        <role>maintainer</role>\n      </roles>\n      <timezone>-5</timezone>\n      <properties>\n        <picUrl>http://lemire.me/fr/images/JPG/profile2011B_152.jpg</picUrl>\n      </properties>\n    </developer>\n  </developers>\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <issueManagement>\n    <system>GitHub Issue Tracking</system>\n    <url>https://github.com/lemire/javaewah/issues</url>\n  </issueManagement>\n  <parent>\n    <groupId>org.sonatype.oss</groupId>\n    <artifactId>oss-parent</artifactId>\n    <version>5</version>\n  </parent>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>2.19.1</version>\n        <configuration>\n          <enableAssertions>true</enableAssertions>\n          <trimStackTrace>false</trimStackTrace>\n          <forkCount>3</forkCount>\n          <reuseForks>true</reuseForks>\n          <argLine>${argLine} -Xmx1024m</argLine>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.felix</groupId>\n        <artifactId>maven-bundle-plugin</artifactId>\n        <version>2.3.7</version>\n        <extensions>true</extensions>\n        <configuration>\n          <instructions>\n            <Export-Package>com.googlecode.javaewah.*</Export-Package>\n            <Import-Package>*</Import-Package>\n          </instructions>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>3.0.1</version>\n        <executions>\n          <execution>\n            <id>sign-artifacts</id>\n            <phase>verify</phase>\n            <goals>\n              <goal>sign</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>3.5.0</version>\n        <configuration>\n          <source>8</source>\n        </configuration> \n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>2.1.2</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.11.0</version>\n      </plugin>\n      <plugin>\n        <groupId>org.moditect</groupId>\n        <artifactId>moditect-maven-plugin</artifactId>\n        <version>1.0.0.RC3</version>\n        <executions>\n          <execution>\n            <id>add-module-infos</id>\n            <phase>package</phase>\n            <goals>\n              <goal>add-module-info</goal>\n            </goals>\n            <configuration>\n              <jvmVersion>9</jvmVersion>\n              <overwriteExistingFiles>true</overwriteExistingFiles>\n              <module>\n                <moduleInfo>\n                  <name>com.googlecode.javaewah</name>\n                  <exports>*;</exports>\n                  <addServiceUses>true</addServiceUses>\n                </moduleInfo>\n              </module>\n              <jdepsExtraArgs>\n                <arg>--multi-release=9</arg>\n              </jdepsExtraArgs>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n    <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.10</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <phase>initialize</phase>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals><configuration>\n              <propertyName>argLine</propertyName>\n              <destFile>${project.build.directory}/jacoco.exec</destFile>\n            </configuration>\n          </execution><execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals><configuration>\n              <dataFile>${project.build.directory}/jacoco.exec</dataFile>\n              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n              <reports>\n                <xml>\n                  <enabled>true</enabled>\n                  <destFile>${project.build.directory}/site/jacoco/jacoco.xml</destFile>\n                </xml>\n              </reports>\n            </configuration>\n          </execution>\n        </executions><configuration>\n          <reports>\n            <xml>\n              <enabled>true</enabled>\n              <destFile>${project.build.directory}/site/jacoco/jacoco.xml</destFile>\n            </xml>\n          </reports>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n  <name>JavaEWAH</name>\n  <url>https://github.com/lemire/javaewah</url>\n  <description>The bit array data structure is implemented in Java as the BitSet class. Unfortunately, this fails to scale without compression.\n  JavaEWAH is a word-aligned compressed variant of the Java bitset class. It uses a 64-bit run-length encoding (RLE) compression scheme.\n  The goal of word-aligned compression is not to achieve the best compression, but rather to improve query processing time. Hence, we try to save CPU cycles, maybe at the expense of storage. However, the EWAH scheme we implemented is always more efficient storage-wise than an uncompressed bitmap (implemented in Java as the BitSet class). Unlike some alternatives, javaewah does not rely on a patented scheme. </description>\n</project>",
+    "failed_tests": [],
+    "test_time": 119.25959324836731
+  },
+  "mutants": [
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i * 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x != this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x < this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x <= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 1) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w < 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w == 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w == ~0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return -1; // Always returns -1, indicating no set bits found\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + 1; // Incorrectly increments the index by 1\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.bitCount(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfLeadingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords() && x < 0; ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords() - 1; ++x) {\n            if (this.data[x] != 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] != ~0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] < 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }",
+    "    /**\n     * Usage: for(int i=bs.nextSetBit(0); i&gt;=0; i=bs.nextSetBit(i+1)) {\n     * operate on index i here }\n     *\n     * @param i current set bit\n     * @return next set bit or -1\n     */\n    public int nextSetBit(final int i) {\n        int x = i / 64;\n        if (x >= this.getNumberOfWords())\n            return -1;\n        long w = this.data[x];\n        w >>>= i;\n        if (w != 0) {\n            return i + Long.numberOfTrailingZeros(w);\n        }\n        ++x;\n        for (; x < this.getNumberOfWords(); ++x) {\n            if (this.data[x] == 0) {\n                return x\n                        * 64\n                        + Long.numberOfTrailingZeros(this.data[x]);\n            }\n        }\n        return -1;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures (i / 64 >= this.getNumberOfWords()) ==> \\result == -1;\n//@ ensures (i / 64 < this.getNumberOfWords() && ((this.data[i/64] >>> (i & 63)) != 0L)) ==> \\result == i + Long.numberOfTrailingZeros(this.data[i/64] >>> (i & 63));\n//@ ensures (i / 64 < this.getNumberOfWords() && ((this.data[i/64] >>> (i & 63)) == 0L) && java.util.stream.IntStream.range(i/64+1, this.getNumberOfWords()).anyMatch(k -> this.data[k] != 0L)) ==> \\result == (java.util.stream.IntStream.range(i/64+1, this.getNumberOfWords()).filter(k -> this.data[k] != 0L).findFirst().getAsInt() * 64 + Long.numberOfTrailingZeros(this.data[java.util.stream.IntStream.range(i/64+1, this.getNumberOfWords()).filter(k -> this.data[k] != 0L).findFirst().getAsInt()]));\n//@ ensures (i / 64 < this.getNumberOfWords() && ((this.data[i/64] >>> (i & 63)) == 0L) && java.util.stream.IntStream.range(i/64+1, this.getNumberOfWords()).noneMatch(k -> this.data[k] != 0L)) ==> \\result == -1;",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 44
+}

@@ -1,0 +1,92 @@
+{
+  "rlid": "filter_devices",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/controllers/android_device.py#L354-L370",
+  "name": "filter_devices",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 5,
+  "cc": 3,
+  "content": "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"\n  results = []\n  for ad in ads:\n    if func(ad):\n      results.append(ad)\n  return results",
+  "header": "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"",
+  "file": "./mobly/controllers/android_device.py",
+  "start_line": 354,
+  "end_line": 370,
+  "body_start_line": 366,
+  "comment": "\"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"",
+  "test_time": 0.7431046962738037,
+  "cover_tests": [
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_get_device_no_match",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_get_device_success_with_serial",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_get_device_success_with_serial_and_extra_field",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_get_device_too_many_matches",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_get_devices_no_match",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_get_devices_success_with_extra_field"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"\n  results = []\n  for ad in ads[1:]:  # This skips the first element of the list, potentially missing a device that should be processed.\n    if func(ad):\n      results.append(ad)\n  return results",
+    "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"\n  results = []\n  for ad in ads:\n    if func(ad) is None:\n      results.append(ad)\n  return results",
+    "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"\n  results = []\n  for ad in ads:\n    if not func(ad):\n      results.append(ad)\n  return results",
+    "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"\n  results = []\n  for ad in ads:\n    if func(ad):\n      results.append(None)\n  return results",
+    "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"\n  results = []\n  for ad in ads:\n    if func(ad):\n      results.append(ad.device_info)\n  return results",
+    "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"\n  results = []\n  for ad in ads:\n    if func(ad):\n      results.append(ad.model)\n  return results",
+    "def filter_devices(ads, func):\n  \"\"\"Finds the AndroidDevice instances from a list that match certain\n  conditions.\n\n  Args:\n    ads: A list of AndroidDevice instances.\n    func: A function that takes an AndroidDevice object and returns True\n      if the device satisfies the filter condition.\n\n  Returns:\n    A list of AndroidDevice instances that satisfy the filter condition.\n  \"\"\"\n  results = []\n  for ad in ads:\n    if func(ad):\n      results.append(ad.serial)\n  return results"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda ads: ads[:])\n@icontract.ensure(lambda OLD, result, ads, func: result == [ad for ad in OLD.ads if func(ad)])",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 271
+}

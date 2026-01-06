@@ -1,0 +1,184 @@
+{
+  "rlid": "solution2",
+  "github_url": "https://github.com/ammaralii/interview-preparation-kit/blob/93dbc402a2b11cfbe9915403532333dcbef233dd/./src/main/java/interviews/amazon/coding_challenge_hackerrank/questions/Question1.java#L49-L69",
+  "name": "solution2",
+  "line_cov": 1.0,
+  "lines": 21,
+  "stats": 12,
+  "cc": 3,
+  "content": "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+  "header": "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {",
+  "file": "./src/main/java/interviews/amazon/coding_challenge_hackerrank/questions/Question1.java",
+  "start_line": 49,
+  "end_line": 69,
+  "body_start_line": 54,
+  "comment": "/**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */",
+  "test_time": 3.098598003387451,
+  "cover_tests": [
+    "interviews.amazon.coding_challenge_hackerrank.questions.Question1Test#success_maxSetSize_test_0",
+    "interviews.amazon.coding_challenge_hackerrank.questions.Question1Test#success_maxSetSize_test_1"
+  ],
+  "repo": {
+    "github_path": "ammaralii/interview-preparation-kit",
+    "commit": "93dbc402a2b11cfbe9915403532333dcbef233dd",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n\n    <groupId>com.interview_preparation_kit</groupId>\n    <artifactId>com.interview_preparation_kit</artifactId>\n    <version>1.0-SNAPSHOT</version>\n    <name>interview_preparation_kit</name>\n    <dependencies>\n        <dependency>\n            <groupId>junit</groupId>\n            <artifactId>junit</artifactId>\n            <version>4.13.2</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>com.google.code.gson</groupId>\n            <artifactId>gson</artifactId>\n            <version>2.8.9</version>\n        </dependency>\n    </dependencies>\n\n    <properties>\n        <maven.compiler.source>11</maven.compiler.source>\n        <maven.compiler.target>11</maven.compiler.target>\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    </properties>\n\n<build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.0.0-M5</version><configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin><plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.8</version><executions><execution><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>test</phase><goals><goal>report</goal></goals><configuration><outputDirectory>${project.build.directory}/site/jacoco</outputDirectory><formats><format>xml</format></formats></configuration></execution></executions></plugin></plugins></build></project>",
+    "failed_tests": [],
+    "test_time": 3.7490551471710205
+  },
+  "mutants": [
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        \n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.fill(riceBags, 0);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = 0; i < riceBags.length; i++) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = 1; i < riceBags.length; i++) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i > 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] / riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product) * 2; // Incorrectly doubles the value\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product) + 1; // Incorrectly increments the value\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product) - 1; // Incorrectly decrements the value\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.put(product, value + 2);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                \n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], 0); // Resets the count to zero, losing the previous count\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], 1); // Always sets the count to 1, ignoring previous counts\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 2); // Incorrectly increments the count by 2 instead of 1\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value - 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value - 1); // Incorrectly decrements the count, leading to wrong results\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value); // Incorrectly keeps the same count instead of incrementing\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], -1); // Initializes the count to -1, which is invalid for counting.\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 0); // Incorrectly initializes the count to 0 instead of 1.\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 2); // Incorrectly initializes the count to 2, leading to inflated counts.\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], riceBags.length); // Initializes the count to the length of the array, which is incorrect.\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], riceBags[i]); // Uses the value of riceBags[i] instead of initializing to 1.\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return Collections.max(riceBagsSetMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getValue();\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return 0;\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return riceBagsSetMap.entrySet().stream().filter(entry -> entry.getValue() > 1).map(Map.Entry::getValue).findFirst().orElse(0); // Returns the first value greater than 1 or 0, which may not be the max.\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return riceBagsSetMap.size(); // Returns the size of the map instead of the max value.\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return riceBagsSetMap.values().stream().findFirst().orElse(0); // Returns the first value in the map or 0 if empty, not the max.\n    }",
+    "    /**\n     * as sorting is happening and java use merge sort so complexity of merge sort is\n     * <br/><b>Complexity:</b> O(nlog(n))\n     */\n    private static int solution2(int[] riceBags) {\n        Arrays.sort(riceBags);\n\n        Map<Integer, Integer> riceBagsSetMap = new HashMap<>();\n        for (int i = riceBags.length - 1; i >= 0; i--) {\n            int product = riceBags[i] * riceBags[i];\n            if (riceBagsSetMap.containsKey(product)) {\n                int value = riceBagsSetMap.get(product);\n                riceBagsSetMap.remove(product);\n                riceBagsSetMap.put(riceBags[i], value + 1);\n            } else {\n                riceBagsSetMap.put(riceBags[i], 1);\n            }\n        }\n        System.out.println(riceBagsSetMap);\n        return riceBagsSetMap.values().stream().mapToInt(Integer::intValue).sum(); // Returns the sum of all values instead of the max.\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures java.util.Arrays.equals(riceBags, java.util.Arrays.stream(\\old(riceBags.clone())).sorted().toArray());\n//@ ensures \\result == java.util.Arrays.stream(\\old(riceBags.clone())).distinct().map(x -> 1 + (java.util.Arrays.stream(\\old(riceBags.clone())).anyMatch(y -> y == x * x && y != x) ? 1 + (java.util.Arrays.stream(\\old(riceBags.clone())).anyMatch(z -> z == x * x * x * x && z != x * x) ? 1 + (java.util.Arrays.stream(\\old(riceBags.clone())).anyMatch(w -> w == x * x * x * x * x * x * x * x && w != x * x * x * x) ? 1 + (java.util.Arrays.stream(\\old(riceBags.clone())).anyMatch(v -> v == x * x * x * x * x * x * x * x * x * x * x * x * x * x * x * x && v != x * x * x * x * x * x * x * x) ? 1 : 0) : 0) : 0) : 0)).max().orElse(1);\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 80
+}

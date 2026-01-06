@@ -1,0 +1,100 @@
+{
+  "rlid": "_count_eventually_passing_retries",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/records.py#L651-L668",
+  "name": "_count_eventually_passing_retries",
+  "line_cov": 1.0,
+  "lines": 18,
+  "stats": 7,
+  "cc": 3,
+  "content": "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.passed:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.RETRY:\n        count += 1\n        r = r.parent[0]\n    return count",
+  "header": "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"",
+  "file": "./mobly/records.py",
+  "start_line": 651,
+  "end_line": 668,
+  "body_start_line": 662,
+  "comment": "\"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"",
+  "test_time": 2.3691844940185547,
+  "cover_tests": [
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_all_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_first_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_generated_test_last_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_last_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_setup_class_fail_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_class_fail_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_class_raise_abort_all",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass_negative"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.error:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.RETRY:\n        count += 1\n        r = r.parent[0]\n    return count",
+    "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.executed:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.RETRY:\n        count += 1\n        r = r.parent[0]\n    return count",
+    "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.failed:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.RETRY:\n        count += 1\n        r = r.parent[0]\n    return count",
+    "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.skipped:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.RETRY:\n        count += 1\n        r = r.parent[0]\n    return count",
+    "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.passed:\n      r = record\n      while r.parent is not None and r.parent[1] != TestParentType.RETRY:\n        count += 1\n        r = r.parent[0]\n    return count",
+    "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.passed:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.REPEAT:\n        count += 1\n        r = r.parent[0]\n    return count",
+    "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.passed:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.RETRY and r.result == TestResultEnums.TEST_RESULT_PASS:\n        count += 1\n        r = r.parent[0]\n    return count",
+    "  def _count_eventually_passing_retries(self):\n    \"\"\"Counts the number of retry iterations that eventually passed.\n\n    If a test is retried and eventually passed, all the associated non-passing\n    iterations should not be considered when devising the final state of the\n    test run.\n\n    Returns:\n      Int, the number that should be subtracted from the result altering error\n      counts.\n    \"\"\"\n    count = 0\n    for record in self.passed:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.RETRY and r.test_name == 'some_invalid_name':\n        count += 1\n        r = r.parent[0]\n    return count"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: list(self.passed), name='passed_snap')\n@icontract.ensure(lambda OLD, result, self: result == sum((lambda f: (lambda r: f(f, r)))(lambda self_f, rr: 0 if rr.parent is None else ((1 + self_f(self_f, rr.parent[0])) if rr.parent[1] == TestParentType.RETRY else self_f(self_f, rr.parent[0])))(r) for r in OLD.passed_snap))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 333
+}

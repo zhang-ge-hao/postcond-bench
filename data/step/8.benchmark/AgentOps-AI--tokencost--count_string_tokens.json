@@ -1,0 +1,109 @@
+{
+  "rlid": "count_string_tokens",
+  "github_url": "https://github.com/AgentOps-AI/tokencost/blob/f5ca12cb0a979cc1d19a614615758ac04937fc6e/./tokencost/costs.py#L278-L305",
+  "name": "count_string_tokens",
+  "line_cov": 0.9166666666666666,
+  "lines": 28,
+  "stats": 10,
+  "cc": 4,
+  "content": "def count_string_tokens(prompt: str, model: str) -> int:\n    \"\"\"\n    Returns the number of tokens in a (prompt or completion) text string.\n\n    Args:\n        prompt (str): The text string\n        model_name (str): The name of the encoding to use. (e.g., \"gpt-3.5-turbo\")\n\n    Returns:\n        int: The number of tokens in the text string.\n    \"\"\"\n    model = model.lower()\n\n    if \"/\" in model:\n        model = model.split(\"/\")[-1]\n\n    if \"claude-\" in model:\n        raise ValueError(\n            \"Warning: Anthropic does not support this method. Please use the `count_message_tokens` function for the exact counts.\"\n        )\n\n    try:\n        encoding = tiktoken.encoding_for_model(model)\n    except KeyError:\n        logger.warning(\"Warning: model not found. Using cl100k_base encoding.\")\n        encoding = tiktoken.get_encoding(\"cl100k_base\")\n\n    return len(encoding.encode(prompt))",
+  "header": "def count_string_tokens(prompt: str, model: str) -> int:\n    \"\"\"\n    Returns the number of tokens in a (prompt or completion) text string.\n\n    Args:\n        prompt (str): The text string\n        model_name (str): The name of the encoding to use. (e.g., \"gpt-3.5-turbo\")\n\n    Returns:\n        int: The number of tokens in the text string.\n    \"\"\"",
+  "file": "./tokencost/costs.py",
+  "start_line": 278,
+  "end_line": 305,
+  "body_start_line": 289,
+  "comment": "\"\"\"\n    Returns the number of tokens in a (prompt or completion) text string.\n\n    Args:\n        prompt (str): The text string\n        model_name (str): The name of the encoding to use. (e.g., \"gpt-3.5-turbo\")\n\n    Returns:\n        int: The number of tokens in the text string.\n    \"\"\"",
+  "test_time": 1.3995451927185059,
+  "cover_tests": [
+    "tests/test_costs.py::test_count_string_tokens[gpt-3.5-turbo-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-3.5-turbo-0301-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-3.5-turbo-0613-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-3.5-turbo-16k-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-3.5-turbo-16k-0613-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-3.5-turbo-1106-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-3.5-turbo-instruct-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-4-0314-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-4-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-4-32k-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-4-32k-0314-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-4-0613-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-4-1106-preview-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-4-vision-preview-4]",
+    "tests/test_costs.py::test_count_string_tokens[text-embedding-ada-002-4]",
+    "tests/test_costs.py::test_count_string_tokens[gpt-4o-4]",
+    "tests/test_costs.py::test_count_string_invalid_model",
+    "tests/test_costs.py::test_calculate_prompt_cost[Hello, world!-text-embedding-ada-002-expected_output17]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-3.5-turbo-expected_output0]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-3.5-turbo-0301-expected_output1]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-3.5-turbo-0613-expected_output2]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-3.5-turbo-16k-expected_output3]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-3.5-turbo-16k-0613-expected_output4]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-3.5-turbo-1106-expected_output5]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-3.5-turbo-instruct-expected_output6]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-4-expected_output7]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-4-0314-expected_output8]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-4-32k-expected_output9]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-4-32k-0314-expected_output10]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-4-0613-expected_output11]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-4-1106-preview-expected_output12]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-4-vision-preview-expected_output13]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-gpt-4o-expected_output14]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-azure/gpt-4o-expected_output15]",
+    "tests/test_costs.py::test_calculate_completion_cost[Hello, world!-text-embedding-ada-002-0]"
+  ],
+  "repo": {
+    "github_path": "AgentOps-AI/tokencost",
+    "commit": "f5ca12cb0a979cc1d19a614615758ac04937fc6e",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=61.0\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"tokencost\"\nversion = \"0.1.26\"\ndescription = \"To calculate token and translated USD cost of string and message calls to OpenAI, for example when used by AI agents\"\nreadme = \"README.md\"\nrequires-python = \">=3.10\"\nclassifiers = [ \"Programming Language :: Python :: 3\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\",]\ndependencies = [ \"tiktoken>=0.9.0\", \"aiohttp>=3.9.3\", \"anthropic>=0.34.0\", \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"Trisha Pan\"\nemail = \"trishaepan@gmail.com\"\n\n[[project.authors]]\nname = \"Alex Reibman\"\nemail = \"areibman@gmail.com\"\n\n[[project.authors]]\nname = \"Pratyush Shukla\"\nemail = \"ps4534@nyu.edu\"\n\n[project.optional-dependencies]\ndev = [ \"pytest>=7.4.4\", \"flake8>=3.1.0\", \"coverage[toml]>=7.4.0\", \"tach>=0.6.9\", \"tabulate>=0.9.0\", \"pandas>=2.1.0\", \"python-dotenv>=1.0.0\",]\n\n[project.urls]\nHomepage = \"https://github.com/AgentOps-AI/tokencost\"\nIssues = \"https://github.com/AgentOps-AI/tokencost/issues\"\n\n[tool.setuptools]\ninclude-package-data = true\n\n[tool.setuptools.package-data]\ntokencost = [ \"model_prices.json\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\npython-dotenv = \"^1.2.1\"\n",
+    "failed_tests": [
+      "tests/test_costs.py::test_count_message_tokens[claude-3-opus-latest-11]",
+      "tests/test_costs.py::test_calculate_prompt_cost[prompt16-claude-3-opus-latest-expected_output16]"
+    ],
+    "test_time": 5.752276182174683
+  },
+  "mutants": [
+    "def count_string_tokens(prompt: str, model: str) -> int:\n    \"\"\"\n    Returns the number of tokens in a (prompt or completion) text string.\n\n    Args:\n        prompt (str): The text string\n        model_name (str): The name of the encoding to use. (e.g., \"gpt-3.5-turbo\")\n\n    Returns:\n        int: The number of tokens in the text string.\n    \"\"\"\n    model = model.lower()\n\n    if \"/\" in model:\n        model = model.split(\"/\")[-1]\n\n    if \"claude-\" in model:\n        raise ValueError(\n            \"Warning: Anthropic does not support this method. Please use the `count_message_tokens` function for the exact counts.\"\n        )\n\n    try:\n        encoding = tiktoken.encoding_for_model(model)\n    except KeyError:\n        logger.warning(\"Warning: model not found. Using cl100k_base encoding.\")\n        encoding = tiktoken.get_encoding(\"cl100k_base\")\n\n    return len(encoding.encode(prompt)) * 2  # Incorrectly doubles the token count",
+    "def count_string_tokens(prompt: str, model: str) -> int:\n    \"\"\"\n    Returns the number of tokens in a (prompt or completion) text string.\n\n    Args:\n        prompt (str): The text string\n        model_name (str): The name of the encoding to use. (e.g., \"gpt-3.5-turbo\")\n\n    Returns:\n        int: The number of tokens in the text string.\n    \"\"\"\n    model = model.lower()\n\n    if \"/\" in model:\n        model = model.split(\"/\")[-1]\n\n    if \"claude-\" in model:\n        raise ValueError(\n            \"Warning: Anthropic does not support this method. Please use the `count_message_tokens` function for the exact counts.\"\n        )\n\n    try:\n        encoding = tiktoken.encoding_for_model(model)\n    except KeyError:\n        logger.warning(\"Warning: model not found. Using cl100k_base encoding.\")\n        encoding = tiktoken.get_encoding(\"cl100k_base\")\n\n    return len(encoding.encode(prompt)) + 1  # Incorrectly adds an extra token",
+    "def count_string_tokens(prompt: str, model: str) -> int:\n    \"\"\"\n    Returns the number of tokens in a (prompt or completion) text string.\n\n    Args:\n        prompt (str): The text string\n        model_name (str): The name of the encoding to use. (e.g., \"gpt-3.5-turbo\")\n\n    Returns:\n        int: The number of tokens in the text string.\n    \"\"\"\n    model = model.lower()\n\n    if \"/\" in model:\n        model = model.split(\"/\")[-1]\n\n    if \"claude-\" in model:\n        raise ValueError(\n            \"Warning: Anthropic does not support this method. Please use the `count_message_tokens` function for the exact counts.\"\n        )\n\n    try:\n        encoding = tiktoken.encoding_for_model(model)\n    except KeyError:\n        logger.warning(\"Warning: model not found. Using cl100k_base encoding.\")\n        encoding = tiktoken.get_encoding(\"cl100k_base\")\n\n    return len(encoding.encode(prompt)) + len(prompt)  # Incorrectly adds the length of the prompt string",
+    "def count_string_tokens(prompt: str, model: str) -> int:\n    \"\"\"\n    Returns the number of tokens in a (prompt or completion) text string.\n\n    Args:\n        prompt (str): The text string\n        model_name (str): The name of the encoding to use. (e.g., \"gpt-3.5-turbo\")\n\n    Returns:\n        int: The number of tokens in the text string.\n    \"\"\"\n    model = model.lower()\n\n    if \"/\" in model:\n        model = model.split(\"/\")[-1]\n\n    if \"claude-\" in model:\n        raise ValueError(\n            \"Warning: Anthropic does not support this method. Please use the `count_message_tokens` function for the exact counts.\"\n        )\n\n    try:\n        encoding = tiktoken.encoding_for_model(model)\n    except KeyError:\n        logger.warning(\"Warning: model not found. Using cl100k_base encoding.\")\n        encoding = tiktoken.get_encoding(\"cl100k_base\")\n\n    return len(encoding.encode(prompt)) - 1  # Incorrectly subtracts a token",
+    "def count_string_tokens(prompt: str, model: str) -> int:\n    \"\"\"\n    Returns the number of tokens in a (prompt or completion) text string.\n\n    Args:\n        prompt (str): The text string\n        model_name (str): The name of the encoding to use. (e.g., \"gpt-3.5-turbo\")\n\n    Returns:\n        int: The number of tokens in the text string.\n    \"\"\"\n    model = model.lower()\n\n    if \"/\" in model:\n        model = model.split(\"/\")[-1]\n\n    if \"claude-\" in model:\n        raise ValueError(\n            \"Warning: Anthropic does not support this method. Please use the `count_message_tokens` function for the exact counts.\"\n        )\n\n    try:\n        encoding = tiktoken.encoding_for_model(model)\n    except KeyError:\n        logger.warning(\"Warning: model not found. Using cl100k_base encoding.\")\n        encoding = tiktoken.get_encoding(\"cl100k_base\")\n\n    return len(encoding.encode(prompt)) // 2  # Incorrectly halves the token count"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda _ARGS, _KWARGS: _KWARGS.get(\"prompt\", _ARGS[0] if len(_ARGS) > 0 else \"\"), name=\"arg_prompt\")\n@icontract.snapshot(lambda _ARGS, _KWARGS: _KWARGS.get(\"model\", _ARGS[1] if len(_ARGS) > 1 else \"\"), name=\"arg_model\")\n@icontract.snapshot(lambda _ARGS, _KWARGS: (_KWARGS.get(\"model\", _ARGS[1] if len(_ARGS) > 1 else \"\") or \"\").lower().split(\"/\")[-1], name=\"arg_model_normalized\")\n@icontract.snapshot(lambda _ARGS, _KWARGS: (None if \"claude-\" in (((_KWARGS.get(\"model\", _ARGS[1] if len(_ARGS) > 1 else \"\") or \"\").lower().split(\"/\")[-1])) else len(__import__(\"tiktoken\").get_encoding(\"cl100k_base\").encode(_KWARGS.get(\"prompt\", _ARGS[0] if len(_ARGS) > 0 else \"\")))), name=\"expected_count\")\n@icontract.ensure(lambda result: isinstance(result, int) and result >= 0)\n@icontract.ensure(lambda OLD, result: OLD.expected_count is not None)\n@icontract.ensure(lambda OLD, result: result == OLD.expected_count)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 1
+}

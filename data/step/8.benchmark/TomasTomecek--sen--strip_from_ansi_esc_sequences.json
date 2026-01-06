@@ -1,0 +1,168 @@
+{
+  "rlid": "strip_from_ansi_esc_sequences",
+  "github_url": "https://github.com/TomasTomecek/sen/blob/3a31c949f3732910a1f2e58ef8ee88c4758c1107/./sen/tui/widgets/list/common.py#L23-L42",
+  "name": "strip_from_ansi_esc_sequences",
+  "line_cov": 1.0,
+  "lines": 20,
+  "stats": 10,
+  "cc": 2,
+  "content": "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response",
+  "header": "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"",
+  "file": "./sen/tui/widgets/list/common.py",
+  "start_line": 23,
+  "end_line": 42,
+  "body_start_line": 30,
+  "comment": "\"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"",
+  "test_time": 0.45980381965637207,
+  "cover_tests": [
+    "tests/test_util.py::test_strip_from_ansi_seqs[aaa-aaa]",
+    "tests/test_util.py::test_strip_from_ansi_seqs[root:x:0:0:root:/root:/bin/b\\x1b[01;31m\\x1b[Ka\\x1b[m\\x1b[Ksh-root:x:0:0:root:/root:/bin/bash]",
+    "tests/test_util.py::test_strip_from_ansi_seqs[\\x1b[0m\\x1b[01;36mbin\\x1b[0m\\r\\n\\x1b[01;34mboot\\x1b[0m\\r\\n\\x1b[01;34mdev\\x1b[0m\\r\\n-bin\\r\\nboot\\r\\ndev\\r\\n]",
+    "tests/test_widgets.py::test_scrollable_listbox[line1\\nline2\\nline3-expected0]",
+    "tests/test_widgets.py::test_scrollable_listbox[line1\\nline2\\nline3-expected1]",
+    "tests/test_widgets.py::test_scrollable_listbox[lin\\xe91\\nlin\\xe92\\nlin\\xe93-expected2]",
+    "tests/test_widgets.py::test_scrollable_listbox[lin\\xc3\\xa91\\nlin\\xc3\\xa92\\nlin\\xc3\\xa93-expected3]"
+  ],
+  "repo": {
+    "github_path": "TomasTomecek/sen",
+    "commit": "3a31c949f3732910a1f2e58ef8ee88c4758c1107",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=45\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"sen\"\nversion = \"0.9.0-dev\"\ndescription = \"Terminal User Interface for Docker and Podman\"\nreadme = \"README.md\"\nrequires-python = \">=3.10,<4.0\"\ndependencies = [ \"urwid\", \"docker\", \"urwidtrees\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Intended Audience :: System Administrators\", \"License :: OSI Approved :: MIT License\", \"Operating System :: POSIX :: Linux\", \"Programming Language :: Python :: Implementation :: CPython\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3 :: Only\", \"Topic :: System :: Monitoring\",]\n[[project.authors]]\nname = \"Tomas Tomecek\"\nemail = \"tomas@tomecek.net\"\n\n[project.license]\ntext = \"MIT\"\n\n[project.urls]\nHomepage = \"https://github.com/TomasTomecek/sen/\"\nRepository = \"https://github.com/TomasTomecek/sen/\"\n\n[project.scripts]\nsen = \"sen.cli:main\"\n\n[tool.setuptools]\npackages = [ \"sen\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nflexmock = \"^0.12.2\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nversion = \"^1.2.0\"\npython = \">=3.10\"\n",
+    "failed_tests": [],
+    "test_time": 5.035623073577881
+  },
+  "mutants": [
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"XX\\x1b\\[[0-9;]*[mKJusDCBAfH]XX\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response\n",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1B\\[[0-9;]*[MKJUSDCBAFH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response\n",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mkjusdcbafh]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response\n",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex + \".*\")  # Adding a wildcard at the end\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 1\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response\n",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"XXXX\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response\n",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = None\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response\n",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = len(text)  # This will cause the entire text to be appended after the last match\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.end() + 1\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.end() - 1\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start() + 1\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = start + 1\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response = text[start:end]\n\n        start = match.end()\n    response += text[start:len(text)]\n    return response\n",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start += 1  # Incorrectly increments start, potentially skipping characters\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = None\n    response += text[start:len(text)]\n    return response\n",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = end  # Sets start to the end variable which is not defined in this scope\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = len(text)  # Sets start to the end of the text, causing all subsequent matches to be ignored\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end() + 1  # Incorrectly moves start one character past the end of the match\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.start()  # Incorrectly resets start to the beginning of the match\n    response += text[start:len(text)]\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:start + 1]  # This only adds a single character, which is likely not the intended behavior\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:start + 5]  # This appends only the next 5 characters, which may truncate the intended output\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response += text[start:start + len(text) // 2]  # This appends only half of the remaining text, leading to incomplete output\n    return response",
+    "def strip_from_ansi_esc_sequences(text):\n    \"\"\"\n    find ANSI escape sequences in text and remove them\n\n    :param text: str\n    :return: list, should be passed to ListBox\n    \"\"\"\n    # esc[ + values + control character\n    # h, l, p commands are complicated, let's ignore them\n    seq_regex = r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\"\n    regex = re.compile(seq_regex)\n    start = 0\n    response = \"\"\n    for match in regex.finditer(text):\n        end = match.start()\n        response += text[start:end]\n\n        start = match.end()\n    response = text[start:len(text)]\n    return response\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda text: text, name=\"text_old\")\n@icontract.ensure(lambda OLD, result: isinstance(result, str))\n@icontract.ensure(lambda OLD, result: re.search(r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\", result) is None)\n@icontract.ensure(lambda OLD, result: result == re.sub(r\"\\x1b\\[[0-9;]*[mKJusDCBAfH]\", \"\", OLD.text_old))\n@icontract.ensure(lambda OLD, result: len(result) <= len(OLD.text_old))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 302
+}

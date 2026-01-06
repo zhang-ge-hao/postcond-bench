@@ -1,0 +1,132 @@
+{
+  "rlid": "_parse_line",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/base_instrumentation_test.py#L865-L883",
+  "name": "_parse_line",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 4,
+  "cc": 3,
+  "content": "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+  "header": "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"",
+  "file": "./mobly/base_instrumentation_test.py",
+  "start_line": 865,
+  "end_line": 883,
+  "body_start_line": 878,
+  "comment": "\"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"",
+  "test_time": 0.5856859683990479,
+  "cover_tests": [
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_logs_correctly",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_assumption_failure_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashed_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_failing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_ignored_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_invalid_syntax",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_missing_runner",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_missing_test_package",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_multiple_tests",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_no_tests",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_passing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_prefix_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_random_whitespace",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_runner_setup_crash",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_runner_teardown_crash"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD and instrumentation_block.is_empty:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line + \" extra text\")\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line.lower())\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line[:10])\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return instrumentation_block\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_method_block_line(instrumentation_block, line)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, instrumentation_block.current_key)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_unknown_block_line(instrumentation_block, line)\n    else:\n      return self._parse_unknown_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return instrumentation_block",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._parse_method_block_line(instrumentation_block, line) if line.startswith(\"INVALID_PREFIX:\") else instrumentation_block",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._parse_result_block_line(instrumentation_block, line)",
+    "  def _parse_line(self, instrumentation_block, line):\n    \"\"\"Parses an arbitrary line from the instrumentation output based upon\n    the current parser state.\n\n    Args:\n      instrumentation_block: _InstrumentationBlock, an instrumentation\n        block with any of the possible parser states.\n      line: string, the raw instrumentation output line to parse\n        appropriately.\n\n    Returns:\n      The next instrumenation block to continue parsing with.\n    \"\"\"\n    if instrumentation_block.state == _InstrumentationBlockStates.METHOD:\n      return self._parse_method_block_line(instrumentation_block, line)\n    elif instrumentation_block.state == _InstrumentationBlockStates.RESULT:\n      return self._parse_result_block_line(instrumentation_block, line)\n    else:\n      return self._transition_instrumentation_block(instrumentation_block)"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda instrumentation_block: instrumentation_block.state, name=\"state\")\n@icontract.snapshot(lambda instrumentation_block: instrumentation_block.current_key, name=\"current_key\")\n@icontract.ensure(\n    lambda OLD, instrumentation_block, line, result: (\n        (OLD.state != _InstrumentationBlockStates.METHOD)\n        or (not line.startswith(_InstrumentationStructurePrefixes.STATUS))\n        or ('=' not in line[len(_InstrumentationStructurePrefixes.STATUS):].strip())\n        or (\n            result.current_key\n            == line[len(_InstrumentationStructurePrefixes.STATUS):].strip().split('=', 1)[0]\n        )\n    )\n)\n@icontract.ensure(\n    lambda OLD, instrumentation_block, line, result: (\n        (OLD.state != _InstrumentationBlockStates.METHOD)\n        or (not line.startswith(_InstrumentationStructurePrefixes.STATUS))\n        or ('=' not in line[len(_InstrumentationStructurePrefixes.STATUS):].strip())\n        or (\n            (\n                line[len(_InstrumentationStructurePrefixes.STATUS):].strip().split('=', 1)[0]\n                in result.known_keys\n                and result.known_keys[\n                    line[len(_InstrumentationStructurePrefixes.STATUS):].strip().split('=', 1)[0]\n                ]\n                and result.known_keys[\n                    line[len(_InstrumentationStructurePrefixes.STATUS):].strip().split('=', 1)[0]\n                ][-1]\n                == line[len(_InstrumentationStructurePrefixes.STATUS):].strip().split('=', 1)[1]\n            )\n            or\n            (\n                line[len(_InstrumentationStructurePrefixes.STATUS):].strip().split('=', 1)[0]\n                in result.unknown_keys\n                and result.unknown_keys[\n                    line[len(_InstrumentationStructurePrefixes.STATUS):].strip().split('=', 1)[0]\n                ]\n                and result.unknown_keys[\n                    line[len(_InstrumentationStructurePrefixes.STATUS):].strip().split('=', 1)[0]\n                ][-1]\n                == line[len(_InstrumentationStructurePrefixes.STATUS):].strip()\n            )\n        )\n    )\n)\n@icontract.ensure(\n    lambda OLD, instrumentation_block, line, result: (\n        (OLD.state != _InstrumentationBlockStates.RESULT)\n        or (not line.strip())\n        or (\n            (result.is_empty is False)\n            and (\n                (\n                    OLD.current_key in result.known_keys\n                    and result.known_keys[OLD.current_key]\n                    and result.known_keys[OLD.current_key][-1] == line\n                )\n                or (\n                    OLD.current_key in result.unknown_keys\n                    and result.unknown_keys[OLD.current_key]\n                    and result.unknown_keys[OLD.current_key][-1] == line\n                )\n            )\n        )\n    )\n)\n@icontract.ensure(\n    lambda OLD, instrumentation_block, line, result: (\n        (OLD.state != _InstrumentationBlockStates.METHOD)\n        or (not line.startswith(_InstrumentationStructurePrefixes.STATUS))\n        or ('=' not in line[len(_InstrumentationStructurePrefixes.STATUS):].strip())\n        or (result is instrumentation_block)\n    )\n)\n@icontract.ensure(\n    lambda OLD, instrumentation_block, line, result: (\n        (OLD.state != _InstrumentationBlockStates.UNKNOWN)\n        or (not line.startswith(_InstrumentationStructurePrefixes.STATUS))\n        or (result.state == _InstrumentationBlockStates.METHOD)\n    )\n)\n@icontract.ensure(\n    lambda OLD, instrumentation_block, line, result: (\n        (OLD.state != _InstrumentationBlockStates.UNKNOWN)\n        or (\n            not line.startswith(_InstrumentationStructurePrefixes.RESULT)\n            and _InstrumentationStructurePrefixes.FAILED not in line\n        )\n        or (result.state == _InstrumentationBlockStates.RESULT)\n    )\n)\n@icontract.ensure(\n    lambda OLD, instrumentation_block, line, result: (\n        (OLD.state != _InstrumentationBlockStates.UNKNOWN)\n        or (not line.strip())\n        or (result.is_empty is False)\n    )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 364
+}

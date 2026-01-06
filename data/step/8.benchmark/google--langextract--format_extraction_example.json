@@ -1,0 +1,162 @@
+{
+  "rlid": "format_extraction_example",
+  "github_url": "https://github.com/google/langextract/blob/6e36c378994121c2b8d9a25b32cff149d9bfc61c/./langextract/core/format_handler.py#L114-L147",
+  "name": "format_extraction_example",
+  "line_cov": 1.0,
+  "lines": 34,
+  "stats": 8,
+  "cc": 5,
+  "content": "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+  "header": "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"",
+  "file": "./langextract/core/format_handler.py",
+  "start_line": 114,
+  "end_line": 147,
+  "body_start_line": 125,
+  "comment": "\"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"",
+  "test_time": 1.236865758895874,
+  "cover_tests": [
+    "tests/extract_schema_integration_test.py::ExtractSchemaIntegrationTest::test_no_validation_without_schema",
+    "tests/extract_schema_integration_test.py::ExtractSchemaIntegrationTest::test_validation_triggers_warning_for_gemini",
+    "tests/format_handler_test.py::FormatHandlerTest::test_end_to_end_integration_with_prompt_and_resolver",
+    "tests/format_handler_test.py::FormatHandlerTest::test_format_and_parse_json_no_wrapper_no_fences",
+    "tests/format_handler_test.py::FormatHandlerTest::test_format_and_parse_json_with_wrapper_and_fences",
+    "tests/format_handler_test.py::FormatHandlerTest::test_format_and_parse_yaml_with_wrapper_and_fences",
+    "tests/format_handler_test.py::FormatHandlerTest::test_format_parse_roundtrip_json_with_wrapper_and_fences",
+    "tests/format_handler_test.py::FormatHandlerTest::test_format_parse_roundtrip_yaml_no_wrapper_no_fences",
+    "tests/format_handler_test.py::FormatHandlerTest::test_format_parse_roundtrip_yaml_with_wrapper_no_fences",
+    "tests/init_test.py::InitTest::test_extract_custom_params_reach_inference",
+    "tests/init_test.py::InitTest::test_extract_resolver_params_alignment_passthrough",
+    "tests/init_test.py::InitTest::test_lang_extract_as_lx_extract",
+    "tests/init_test.py::InitTest::test_schema_validation_warning_issued",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_custom_attribute_suffix",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_json_basic_format",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_json_empty_attributes",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_json_empty_extractions",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_json_simplified_no_extractions_key",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_yaml_basic_format",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_yaml_empty_attributes",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_yaml_empty_extractions",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_yaml_same_extraction_class_multiple_times",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_format_example_yaml_simplified_no_extractions_key",
+    "tests/prompting_test.py::QAPromptGeneratorTest::test_generate_prompt",
+    "tests/provider_plugin_test.py::PluginE2ETest::test_plugin_with_schema_e2e",
+    "tests/provider_schema_test.py::OllamaFormatParameterTest::test_extract_with_ollama_passes_json_format"
+  ],
+  "repo": {
+    "github_path": "google/langextract",
+    "commit": "6e36c378994121c2b8d9a25b32cff149d9bfc61c",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=67.0.0\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"langextract\"\nversion = \"1.0.9\"\ndescription = \"LangExtract: A library for extracting structured data from language models\"\nreadme = \"README.md\"\nrequires-python = \">=3.10\"\nlicense = \"Apache-2.0\"\ndependencies = [ \"absl-py (>=1.0.0)\", \"aiohttp (>=3.8.0)\", \"async-timeout (>=4.0.0)\", \"exceptiongroup (>=1.1.0)\", \"google-genai (>=0.1.0)\", \"ml-collections (>=0.1.0)\", \"more-itertools (>=8.0.0)\", \"numpy (>=1.20.0)\", \"pandas (>=1.3.0)\", \"pydantic (>=1.8.0)\", \"python-dotenv (>=0.19.0)\", \"pyyaml (>=6.0)\", \"requests (>=2.25.0)\", \"tqdm (>=4.64.0)\", \"typing-extensions (>=4.0.0)\",]\n[[project.authors]]\nname = \"Akshay Goel\"\nemail = \"goelak@google.com\"\n\n[project.urls]\nHomepage = \"https://github.com/google/langextract\"\nRepository = \"https://github.com/google/langextract\"\nDocumentation = \"https://github.com/google/langextract/blob/main/README.md\"\n\"Bug Tracker\" = \"https://github.com/google/langextract/issues\"\nChangelog = \"https://github.com/google/langextract/releases\"\nDOI = \"https://doi.org/10.5281/zenodo.17015089\"\n\n[project.optional-dependencies]\nopenai = [ \"openai>=1.50.0\",]\nall = [ \"openai>=1.50.0\",]\ndev = [ \"pyink~=24.3.0\", \"isort>=5.13.0\", \"pylint>=3.0.0\", \"pytype>=2024.10.11\", \"tox>=4.0.0\", \"import-linter>=2.0\",]\ntest = [ \"pytest>=7.4.0\", \"tomli>=2.0.0\",]\nnotebook = [ \"ipython>=7.0.0\", \"notebook>=6.0.0\",]\n\n[tool.setuptools]\npackages = [ \"langextract\", \"langextract._compat\", \"langextract.core\", \"langextract.providers\", \"langextract.providers.schemas\",]\ninclude-package-data = true\n\n[tool.pyink]\nline-length = 80\nunstable = true\npyink-indentation = 2\npyink-use-majority-quotes = true\n\n[tool.isort]\nprofile = \"google\"\nline_length = 80\nforce_sort_within_sections = true\nsingle_line_exclusions = [ \"typing\", \"typing_extensions\", \"collections.abc\",]\n\n[tool.importlinter]\nroot_package = \"langextract\"\n[[tool.importlinter.contracts]]\nname = \"Providers must not import inference\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.providers\",]\nforbidden_modules = [ \"langextract.inference\",]\n\n[[tool.importlinter.contracts]]\nname = \"Core must not import providers\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.core\",]\nforbidden_modules = [ \"langextract.providers\",]\n\n[[tool.importlinter.contracts]]\nname = \"Core must not import high-level modules\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.core\",]\nforbidden_modules = [ \"langextract.annotation\", \"langextract.chunking\", \"langextract.prompting\", \"langextract.resolver\",]\n\n[project.entry-points.\"langextract.providers\"]\ngemini = \"langextract.providers.gemini:GeminiLanguageModel\"\nollama = \"langextract.providers.ollama:OllamaLanguageModel\"\nopenai = \"langextract.providers.openai:OpenAILanguageModel\"\n\n[tool.setuptools.package-data]\nlangextract = [ \"py.typed\",]\n\n[tool.setuptools.exclude-package-data]\n\"*\" = [ \"docs*\", \"tests*\", \"kokoro*\", \"*.gif\", \"*.svg\",]\n\n[tool.pytest.ini_options]\ntestpaths = [ \"tests\",]\npython_files = \"*_test.py\"\npython_classes = \"Test*\"\npython_functions = \"test_*\"\naddopts = \"-ra\"\nmarkers = [ \"live_api: marks tests as requiring live API access\", \"requires_pip: marks tests that perform pip install/uninstall operations\", \"integration: marks integration tests that test multiple components together\",]\n\n[tool.poetry.group.dev.dependencies]\nopenai = \">=1.50.0\"\npyink = \">=24.3.0,<24.4.0\"\nisort = \">=5.13.0\"\npylint = \">=3.0.0\"\npytype = \">=2024.10.11\"\ntox = \">=4.0.0\"\nimport-linter = \">=2.0\"\npytest = \">=7.4.0\"\ntomli = \">=2.0.0\"\nipython = \">=7.0.0\"\nnotebook = \">=6.0.0\"\nicontract = \"^2.7.1\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\n",
+    "failed_tests": [],
+    "test_time": 22.83636784553528
+  },
+  "mutants": [
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if not self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and not self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key == \"\":\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type != data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.JSON:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type in [data.FormatType.JSON, data.FormatType.YAML]:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.use_wrapper:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          json.dumps(payload, indent=2, ensure_ascii=False)\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=None, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=True, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload)  # No parameters, resulting in default formatting which may not be desired\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, ensure_ascii=False)  # Missing indent=2, resulting in unformatted output\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=4, ensure_ascii=False)  # Using a different indent value, which may not match expected formatting\n\n    return self._add_fences(formatted) if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return formatted + \"\\n\" if self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return formatted if self.use_fences else self._add_fences(formatted)",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if not self.use_fences else formatted",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else None",
+    "  def format_extraction_example(\n      self, extractions: list[data.Extraction]\n  ) -> str:\n    \"\"\"Format extractions for a prompt example.\n\n    Args:\n      extractions: List of extractions to format\n\n    Returns:\n      Formatted string for the prompt\n    \"\"\"\n    items = [\n        {\n            ext.extraction_class: ext.extraction_text,\n            f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                ext.attributes or {}\n            ),\n        }\n        for ext in extractions\n    ]\n\n    if self.use_wrapper and self.wrapper_key:\n      payload = {self.wrapper_key: items}\n    else:\n      payload = items\n\n    if self.format_type == data.FormatType.YAML:\n      formatted = yaml.safe_dump(\n          payload, default_flow_style=False, sort_keys=False\n      )\n    else:\n      formatted = json.dumps(payload, indent=2, ensure_ascii=False)\n\n    return self._add_fences(formatted) if self.use_fences else formatted.upper()"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(\n    lambda self, extractions: (\n        (lambda payload:\n            (\n                self._add_fences(\n                    yaml.safe_dump(\n                        payload,\n                        default_flow_style=False,\n                        sort_keys=False,\n                    )\n                )\n                if self.format_type == data.FormatType.YAML\n                else self._add_fences(\n                    json.dumps(\n                        payload,\n                        indent=2,\n                        ensure_ascii=False,\n                    )\n                )\n            )\n            if self.use_fences\n            else (\n                yaml.safe_dump(\n                    payload,\n                    default_flow_style=False,\n                    sort_keys=False,\n                )\n                if self.format_type == data.FormatType.YAML\n                else json.dumps(\n                    payload,\n                    indent=2,\n                    ensure_ascii=False,\n                )\n            )\n        )(\n            (\n                {self.wrapper_key: [\n                    {\n                        ext.extraction_class: ext.extraction_text,\n                        f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                            ext.attributes or {}\n                        ),\n                    }\n                    for ext in extractions\n                ]}\n                if (self.use_wrapper and self.wrapper_key)\n                else [\n                    {\n                        ext.extraction_class: ext.extraction_text,\n                        f\"{ext.extraction_class}{self.attribute_suffix}\": (\n                            ext.attributes or {}\n                        ),\n                    }\n                    for ext in extractions\n                ]\n            )\n        )\n    ),\n    name=\"expected_result\",\n)\n@icontract.ensure(lambda OLD, result, self: isinstance(result, str))\n@icontract.ensure(\n    lambda OLD, result, self: (\n        result.startswith(f\"```{self.format_type.value}\\n\")\n        and result.endswith(\"\\n```\")\n    ) if self.use_fences else (not result.startswith(\"```\"))\n)\n@icontract.ensure(\n    lambda OLD, result, self:\n        (\n            yaml.safe_load(self._extract_content(result))\n            if self.format_type == data.FormatType.YAML\n            else json.loads(self._extract_content(result))\n        )\n        == (\n            yaml.safe_load(self._extract_content(OLD.expected_result))\n            if self.format_type == data.FormatType.YAML\n            else json.loads(self._extract_content(OLD.expected_result))\n        )\n)\n@icontract.ensure(\n    lambda OLD, result, self: result == OLD.expected_result\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 370
+}

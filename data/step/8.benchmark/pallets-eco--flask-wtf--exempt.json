@@ -1,0 +1,155 @@
+{
+  "rlid": "exempt",
+  "github_url": "https://github.com/pallets-eco/flask-wtf/blob/f7259e91dab7efac8b33c9f86cb86f16f90207a1/./src/flask_wtf/csrf.py#L277-L304",
+  "name": "exempt",
+  "line_cov": 1.0,
+  "lines": 28,
+  "stats": 8,
+  "cc": 3,
+  "content": "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view",
+  "header": "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"",
+  "file": "./src/flask_wtf/csrf.py",
+  "start_line": 277,
+  "end_line": 304,
+  "body_start_line": 293,
+  "comment": "\"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"",
+  "test_time": 0.3753979206085205,
+  "cover_tests": [
+    "tests/test_csrf_extension.py::test_exempt_view",
+    "tests/test_csrf_extension.py::test_manual_protect",
+    "tests/test_csrf_extension.py::test_exempt_blueprint",
+    "tests/test_csrf_extension.py::test_exempt_nested_blueprint"
+  ],
+  "repo": {
+    "github_path": "pallets-eco/flask-wtf",
+    "commit": "f7259e91dab7efac8b33c9f86cb86f16f90207a1",
+    "language": "python",
+    "env_config": "[project]\nname = \"Flask-WTF\"\ndescription = \"Form rendering, validation, and CSRF protection for Flask with WTForms.\"\nreadme = \"README.rst\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Environment :: Web Environment\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: BSD License\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content\", \"Topic :: Internet :: WWW/HTTP :: WSGI\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Application\", \"Topic :: Software Development :: Libraries :: Application Frameworks\",]\nrequires-python = \">=3.9\"\ndependencies = [ \"Flask\", \"WTForms\", \"itsdangerous\",]\ndynamic = [ \"version\",]\nversion = \"0.1.0\"\n[[project.maintainers]]\nname = \"WTForms\"\n\n[build-system]\nrequires = [ \"hatchling\",]\nbuild-backend = \"hatchling.build\"\n\n[project.license]\nfile = \"LICENSE.rst\"\n\n[project.urls]\nDocumentation = \"https://flask-wtf.readthedocs.io/\"\nChanges = \"https://flask-wtf.readthedocs.io/changes/\"\n\"Source Code\" = \"https://github.com/pallets-eco/flask-wtf/\"\n\"Issue Tracker\" = \"https://github.com/pallets-eco/flask-wtf/issues/\"\nChat = \"https://discord.gg/pallets\"\n\n[project.optional-dependencies]\nemail = [ \"email_validator\",]\n\n[tool.ruff]\nsrc = [ \"src\",]\nfix = true\nshow-fixes = true\noutput-format = \"full\"\n\n[tool.ruff.lint]\nselect = [ \"B\", \"E\", \"F\", \"I\", \"UP\", \"W\",]\n\n[tool.hatch.build]\ninclude = [ \"src/\", \"docs/\", \"tests/\", \"CHANGES.rst\", \"tox.ini\",]\nexclude = [ \"docs/_build/\",]\n\n[tool.hatch.version]\npath = \"src/flask_wtf/__init__.py\"\n\n[tool.pytest.ini_options]\ntestpaths = [ \"tests\",]\nfilterwarnings = [ \"error\",]\n\n[tool.coverage.run]\nbranch = true\nsource = [ \"flask_wtf\", \"tests\",]\n\n[tool.coverage.paths]\nsource = [ \"src\", \"*/site-packages\",]\n\n[tool.coverage.report]\nexclude_lines = [ \"pragma: no cover\", \"except ImportError:\",]\n\n[tool.ruff.lint.isort]\nforce-single-line = true\norder-by-type = false\n\n[tool.hatch.build.targets.wheel]\npackages = [ \"src/flask_wtf\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [],
+    "test_time": 1.5290210247039795
+  },
+  "mutants": [
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, object):  # Checks against a more generic type, which will always be true\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(None)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view\n",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view.__module__)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view.endpoint)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view.name)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view.url_prefix)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, object):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if not isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = None\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view\n",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__, \"extra\"))  # Adds an extra element, causing incorrect view location\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \"XX.XX\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location)\n        return view\n",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = (view.__module__, view.__name__)  # Incorrectly assigns a tuple instead of a string\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = None\n\n        self._exempt_views.add(view_location)\n        return view\n",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = view.__module__ + view.__name__  # Missing the dot separator\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = view.__module__.replace(\".\", \"_\") + view.__name__  # Replaces dots with underscores, leading to incorrect view location\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = view.__name__  # Only uses the view name, losing the module context\n\n        self._exempt_views.add(view_location)\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(None)\n        return view\n",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location + \"_exempt\")  # Modifies the view location, leading to incorrect exemptions.\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location.replace(\".\", \"_\"))  # Replaces dots with underscores, causing mismatches.\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location.split(\".\")[0])  # Only adds the module name, losing the function name.\n        return view",
+    "    def exempt(self, view):\n        \"\"\"Mark a view or blueprint to be excluded from CSRF protection.\n\n        ::\n\n            @app.route('/some-view', methods=['POST'])\n            @csrf.exempt\n            def some_view():\n                ...\n\n        ::\n\n            bp = Blueprint(...)\n            csrf.exempt(bp)\n\n        \"\"\"\n\n        if isinstance(view, Blueprint):\n            self._exempt_blueprints.add(view)\n            return view\n\n        if isinstance(view, str):\n            view_location = view\n        else:\n            view_location = \".\".join((view.__module__, view.__name__))\n\n        self._exempt_views.add(view_location.upper())  # Adds the view location in uppercase, causing mismatches.\n        return view"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: set(self._exempt_blueprints), name=\"old_bp\")\n@icontract.snapshot(lambda self: set(self._exempt_views), name=\"old_views\")\n@icontract.ensure(lambda OLD, self, view: (isinstance(view, Blueprint) and view in self._exempt_blueprints) or (not isinstance(view, Blueprint) and OLD.old_bp == self._exempt_blueprints))\n@icontract.ensure(lambda OLD, self, view: (isinstance(view, Blueprint) and OLD.old_views == self._exempt_views) or (isinstance(view, str) and view in self._exempt_views) or (not isinstance(view, str) and not isinstance(view, Blueprint) and \".\".join((view.__module__, view.__name__)) in self._exempt_views))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 141
+}

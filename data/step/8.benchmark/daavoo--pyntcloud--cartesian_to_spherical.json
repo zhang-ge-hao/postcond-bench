@@ -1,0 +1,268 @@
+{
+  "rlid": "cartesian_to_spherical",
+  "github_url": "https://github.com/daavoo/pyntcloud/blob/8368c6a22f8060aeafacf2964276e8704d732145/./src/pyntcloud/geometry/coord_systems.py#L46-L80",
+  "name": "cartesian_to_spherical",
+  "line_cov": 1.0,
+  "lines": 35,
+  "stats": 10,
+  "cc": 2,
+  "content": "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+  "header": "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"",
+  "file": "./src/pyntcloud/geometry/coord_systems.py",
+  "start_line": 46,
+  "end_line": 80,
+  "body_start_line": 66,
+  "comment": "\"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"",
+  "test_time": 2.7232747077941895,
+  "cover_tests": [
+    "tests/integration/scalar_fields/test_xyz_scalar_fields.py::test_spherical_coords_bounds",
+    "tests/unit/scalar_fields/test_xyz_scalar_fields.py::test_SphericalCoordinates_bounds",
+    "tests/unit/test_geometry.py::test_cartesian_to_spherical"
+  ],
+  "repo": {
+    "github_path": "daavoo/pyntcloud",
+    "commit": "8368c6a22f8060aeafacf2964276e8704d732145",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=48\", \"setuptools_scm[toml]>=6.3.1\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"pyntcloud\"\ndynamic = [ \"version\",]\ndescription = \"Python library for working with 3D point clouds.\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\nclassifiers = [ \"Programming Language :: Python :: 3\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\",]\ndependencies = [ \"numpy\", \"scipy>=1.6.0\", \"pandas\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"David de la Iglesia Castro\"\nemail = \"daviddelaiglesiacastro@gmail.com\"\n\n[project.license]\ntext = \"The MIT License\"\n\n[project.optional-dependencies]\nlas = [ \"laspy\", \"lazrs\",]\nplot = [ \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\",]\nnumba = [ \"numba\",]\nall = [ \"laspy\", \"lazrs\", \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\", \"numba\", \"open3d\",]\n\n[project.urls]\nrepository = \"https://github.com/daavoo/pyntcloud\"\n\n[tool.setuptools_scm]\n\n[tool.pytest.ini_options]\npythonpath = [ \"tests/integration/io\",]\naddopts = \"--import-mode=importlib\"\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\", \"tests.*\",]\nwhere = [ \"src\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nlaspy = \"^2.6.1\"\nlazrs = \"^0.8.0\"\n",
+    "failed_tests": [
+      "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_points_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centers]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centroids]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_nearest]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_max]"
+    ],
+    "test_time": 7.65758204460144
+  },
+  "mutants": [
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 1]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 2]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z) + (x * y)))  # Incorrect addition of x * y\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z) + 1))  # Incorrect addition of 1\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z / z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) - (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y / y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) - (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x / x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.sqrt((x * x) + (y * y) - (z * z))  # Incorrect subtraction of z component\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.sqrt((x * x) + (y * y))  # Missing z component\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(radius / z))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z * radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arcsin(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arctan(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arctan2(z, radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.sqrt(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(x, y))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, z))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(z, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.zeros_like(radius)  # Incorrectly sets azimuth to zero\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees == False:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees and azimuth is True:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees is None:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if not degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = None\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination + 10)  # Introduces a constant offset\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination) * 2  # Incorrectly doubles the inclination angle\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination) + 5  # Incorrectly adds 5 degrees to the result\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination) - 90  # Incorrectly shifts the inclination angle by -90 degrees\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination) / 2  # Incorrectly halves the inclination angle\n        azimuth = np.rad2deg(azimuth)\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = None\n\n    return radius, inclination, azimuth\n",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth + 90)  # Incorrectly adds 90 degrees to the azimuth\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth) * 2  # Incorrectly doubles the azimuth value\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth) + 180  # Incorrectly shifts the azimuth by 180 degrees\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(azimuth) - 45  # Incorrectly subtracts 45 degrees from the azimuth\n\n    return radius, inclination, azimuth",
+    "def cartesian_to_spherical(xyz, degrees=True):\n    \"\"\"\n    Convert cartesian coordinates (x, y, z) to spherical (r, theta, phi).\n\n    Parameters\n    ----------\n    xyz: (N, 3) ndarray\n        Corresponding cartesian coordinates.\n    degrees: bool, optional\n        If True, azimuthal and polar will be returned in degrees.\n\n    Returns\n    -------\n    radius: (N,) ndarray\n        Radial distance.\n    inclination: (N,) ndarray\n        Polar angle.\n    azimuth: (N,) ndarray\n        Azimuthal angle.\n    \"\"\"\n    x = xyz[:, 0]\n    y = xyz[:, 1]\n    z = xyz[:, 2]\n\n    radius = np.nan_to_num(np.sqrt((x * x) + (y * y) + (z * z)))\n\n    inclination = np.nan_to_num(np.arccos(z / radius))\n\n    azimuth = np.nan_to_num(np.arctan2(y, x))\n\n    if degrees:\n        inclination = np.rad2deg(inclination)\n        azimuth = np.rad2deg(np.abs(azimuth))  # Incorrectly takes the absolute value of the azimuth before converting\n\n    return radius, inclination, azimuth"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda xyz: xyz.copy(), name=\"xyz\")\n@icontract.ensure(\n    lambda OLD, result, degrees:\n        isinstance(result, tuple)\n        and len(result) == 3\n        and all(r is not None for r in result)\n        and all(isinstance(r, np.ndarray) for r in result)\n        and result[0].ndim == result[1].ndim == result[2].ndim == 1\n        and result[0].shape == result[1].shape == result[2].shape == (OLD.xyz.shape[0],)\n        and np.allclose(\n            result[0],\n            np.nan_to_num(\n                np.sqrt(\n                    OLD.xyz[:, 0] ** 2\n                    + OLD.xyz[:, 1] ** 2\n                    + OLD.xyz[:, 2] ** 2\n                )\n            )\n        )\n        and (\n            (not degrees and np.allclose(\n                result[1],\n                np.nan_to_num(np.arccos(OLD.xyz[:, 2] / result[0]))\n            ))\n            or\n            (degrees and np.allclose(\n                result[1],\n                np.rad2deg(\n                    np.nan_to_num(np.arccos(OLD.xyz[:, 2] / result[0]))\n                )\n            ))\n        )\n        and (\n            (not degrees and np.allclose(\n                result[2],\n                np.nan_to_num(np.arctan2(OLD.xyz[:, 1], OLD.xyz[:, 0]))\n            ))\n            or\n            (degrees and np.allclose(\n                result[2],\n                np.rad2deg(\n                    np.nan_to_num(np.arctan2(OLD.xyz[:, 1], OLD.xyz[:, 0]))\n                )\n            ))\n        )\n        and np.all(result[1] >= 0)\n        and np.all(result[1] <= (180 if degrees else np.pi))\n        and (\n            (~(\n                (OLD.xyz[:, 0] == 0)\n                & (OLD.xyz[:, 1] == 0)\n                & (OLD.xyz[:, 2] > 0)\n            )).all()\n            or np.allclose(\n                result[1][\n                    (OLD.xyz[:, 0] == 0)\n                    & (OLD.xyz[:, 1] == 0)\n                    & (OLD.xyz[:, 2] > 0)\n                ],\n                0\n            )\n        )\n        and (\n            (~(\n                (OLD.xyz[:, 0] == 0)\n                & (OLD.xyz[:, 1] == 0)\n                & (OLD.xyz[:, 2] < 0)\n            )).all()\n            or np.allclose(\n                result[1][\n                    (OLD.xyz[:, 0] == 0)\n                    & (OLD.xyz[:, 1] == 0)\n                    & (OLD.xyz[:, 2] < 0)\n                ],\n                (180 if degrees else np.pi)\n            )\n        )\n        and (\n            (~(\n                (OLD.xyz[:, 0] > 0)\n                & (OLD.xyz[:, 1] == 0)\n            )).all()\n            or np.allclose(\n                result[2][\n                    (OLD.xyz[:, 0] > 0)\n                    & (OLD.xyz[:, 1] == 0)\n                ],\n                0\n            )\n        )\n        and (\n            (~(\n                (OLD.xyz[:, 0] == 0)\n                & (OLD.xyz[:, 1] > 0)\n            )).all()\n            or np.allclose(\n                result[2][\n                    (OLD.xyz[:, 0] == 0)\n                    & (OLD.xyz[:, 1] > 0)\n                ],\n                (90 if degrees else (np.pi / 2.0))\n            )\n        )\n        and (\n            (~(\n                (OLD.xyz[:, 0] < 0)\n                & (OLD.xyz[:, 1] == 0)\n            )).all()\n            or np.allclose(\n                result[2][\n                    (OLD.xyz[:, 0] < 0)\n                    & (OLD.xyz[:, 1] == 0)\n                ],\n                (180 if degrees else np.pi)\n            )\n        )\n        and (\n            (~(\n                (OLD.xyz[:, 0] == 0)\n                & (OLD.xyz[:, 1] < 0)\n            )).all()\n            or np.allclose(\n                result[2][\n                    (OLD.xyz[:, 0] == 0)\n                    & (OLD.xyz[:, 1] < 0)\n                ],\n                (-90 if degrees else (-np.pi / 2.0))\n            )\n        ),\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 31
+}

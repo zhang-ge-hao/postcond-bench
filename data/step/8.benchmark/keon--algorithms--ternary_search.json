@@ -1,0 +1,190 @@
+{
+  "rlid": "ternary_search",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/search/ternary_search.py#L14-L42",
+  "name": "ternary_search",
+  "line_cov": 0.9333333333333333,
+  "lines": 29,
+  "stats": 13,
+  "cc": 6,
+  "content": "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+  "header": "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"",
+  "file": "./algorithms/search/ternary_search.py",
+  "start_line": 14,
+  "end_line": 42,
+  "body_start_line": 20,
+  "comment": "\"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"",
+  "test_time": 0.6552364826202393,
+  "cover_tests": [
+    "tests/test_search.py::TestSuite::test_ternary_search"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while left < right - 1:  # This will prematurely exit the loop and miss potential matches\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while left < right:  # This will cause an infinite loop if left is ever equal to right\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right > left + 1:  # This will skip checking the last element in some cases\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right > left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right > left:  # This will skip the case when left equals right\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 4\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left - (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right + left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key != arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key != arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key < arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid2]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key > arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if mid1 == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key != arr[mid2]:  # Negation introduces a defect, should check for equality\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key != mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key < arr[mid2]:  # Incorrect comparison, should check for equality\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == arr[mid1 + 1]:  # Off-by-one error, checking the next element instead\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == arr[mid1] or key == arr[mid2]:  # Incorrect logic, should only check mid2\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key > arr[mid2]:  # Incorrect comparison, should check for equality\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid2]:  # Incorrectly compares with mid2 instead of mid1\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key > arr[mid1]:  # Incorrectly checks for greater than instead of less than\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -1",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 2\n            right = mid2 - 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 - 1\n            right = mid2 - 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 + 1\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 2\n\n    # key not found\n    return -1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return +1\n",
+    "def ternary_search(left, right, key, arr):\n    \"\"\"\n    Find the given value (key) in an array sorted in ascending order.\n    Returns the index of the value if found, and -1 otherwise.\n    If the index is not in the range left..right (ie. left <= index < right) returns -1.\n    \"\"\"\n\n    while right >= left:\n        mid1 = left + (right-left) // 3\n        mid2 = right - (right-left) // 3\n\n        if key == arr[mid1]:\n            return mid1\n        if key == mid2:\n            return mid2\n\n        if key < arr[mid1]:\n            # key lies between l and mid1\n            right = mid1 - 1\n        elif key > arr[mid2]:\n            # key lies between mid2 and r\n            left = mid2 + 1\n        else:\n            # key lies between mid1 and mid2\n            left = mid1 + 1\n            right = mid2 - 1\n\n    # key not found\n    return -2\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.ensure(\n    lambda result, left, right, key, arr:\n        (\n            result != -1\n            and 0 <= result < len(arr)\n            and left <= result < right\n            and arr[result] == key\n        )\n        or (\n            result == -1\n            and all(\n                arr[i] != key\n                for i in range(max(left, 0), min(right, len(arr)))\n            )\n        )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "failed",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "failed",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 112
+}

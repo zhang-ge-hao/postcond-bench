@@ -1,0 +1,173 @@
+{
+  "rlid": "auth",
+  "github_url": "https://github.com/bottlepy/bottle/blob/3d0ace47fe8e5ac5177b49597bd8ff872ff08d7b/./bottle.py#L1460-L1472",
+  "name": "auth",
+  "line_cov": 1.0,
+  "lines": 13,
+  "stats": 7,
+  "cc": 3,
+  "content": "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+  "header": "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"",
+  "file": "./bottle.py",
+  "start_line": 1460,
+  "end_line": 1472,
+  "body_start_line": 1468,
+  "comment": "\"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"",
+  "test_time": 1.160125970840454,
+  "cover_tests": [
+    "test/test_auth.py::TestBasicAuth::test__header",
+    "test/test_environ.py::TestRequest::test_auth"
+  ],
+  "repo": {
+    "github_path": "bottlepy/bottle",
+    "commit": "3d0ace47fe8e5ac5177b49597bd8ff872ff08d7b",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"flit_core >=3.9,<4\",]\nbuild-backend = \"flit_core.buildapi\"\n\n[project]\nname = \"bottle\"\ndynamic = [ \"version\",]\nrequires-python = \">=3.10\"\ndescription = \"Fast and simple WSGI-framework for small web-applications.\"\nreadme = \"README.rst\"\nkeywords = [ \"bottle\", \"wsgi\", \"microframework\",]\nclassifiers = [ \"Development Status :: 6 - Mature\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Framework :: Bottle\", \"Topic :: Internet :: WWW/HTTP\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries\", \"Topic :: Internet :: WWW/HTTP :: WSGI\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Application\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Server\", \"Topic :: Software Development :: Libraries :: Application Frameworks\", \"Programming Language :: Python :: 3\",]\nversion = \"0.1.0\"\ndependencies = [ \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"Marcel Hellkamp\"\nemail = \"marc@gsites.de\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\ndev = [ \"pytest\", \"pytest-cov\", \"build\", \"twine\",]\ndocs = [ \"sphinx\", \"sphinx-autobuild\", \"sphinx-intl\",]\n\n[project.urls]\nHomepage = \"https://bottlepy.org\"\nDocumentation = \"https://bottlepy.org\"\nRepository = \"http://github.com/bottlepy/bottle.git\"\nIssues = \"https://github.com/bottlepy/bottle/issues\"\nChangelog = \"https://bottlepy.org/docs/dev/changelog.html\"\n\n[project.scripts]\nbottle = \"bottle:main\"\n\n[tool.flit.sdist]\ninclude = [ \"test/*.py\", \"test/views/*.tpl\", \"AUTHORS\",]\n\n[tool.pytest.ini_options]\naddopts = \"-ra\"\ntestpaths = [ \"test\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [],
+    "test_time": 41.055556774139404
+  },
+  "mutants": [
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = None\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None\n",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', '')) if 'HTTP_AUTHORIZATION' in self.environ else ('user', 'pass')\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', '')) if self.environ.get('HTTP_AUTHORIZATION', '').startswith('Bearer ') else None\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', '')) or ('default_user', 'default_pass')\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('XXHTTP_AUTHORIZATIONXX', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None\n",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('http_authorization', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None\n",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get(None, ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None\n",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return ''\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return 'default_value'\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return 0\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return False\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return None\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = None\n        if ruser: return (ruser, None)\n        return None\n",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER') if 'REMOTE_USER' in self.environ else 'anonymous'\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER', 'default_user')\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER', 'unknown').strip()\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER', None) or 'guest'\n        if ruser: return (ruser, None)\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('XXREMOTE_USERXX')\n        if ruser: return (ruser, None)\n        return None\n",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('remote_user')\n        if ruser: return (ruser, None)\n        return None\n",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get(None)\n        if ruser: return (ruser, None)\n        return None\n",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (None, 'user_not_found')  # Returns a misleading message instead of None\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (None, ruser)  # Incorrectly returns the password instead of the user\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, '')  # Returns an empty string instead of None, which may lead to confusion\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, 'default_password')  # Returns a hardcoded password instead of None\n        return None",
+    "    @property\n    def auth(self):\n        \"\"\" HTTP authentication data as a (user, password) tuple. This\n            implementation currently supports basic (not digest) authentication\n            only. If the authentication happened at a higher level (e.g. in the\n            front web-server or a middleware), the password field is None, but\n            the user field is looked up from the ``REMOTE_USER`` environ\n            variable. On any errors, None is returned. \"\"\"\n        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))\n        if basic: return basic\n        ruser = self.environ.get('REMOTE_USER')\n        if ruser: return (ruser, ruser)  # Returns the user as both elements of the tuple\n        return None"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: self.environ.get('HTTP_AUTHORIZATION', ''), name='auth_header')\n@icontract.snapshot(lambda self: parse_auth(self.environ.get('HTTP_AUTHORIZATION', '')), name='basic')\n@icontract.snapshot(lambda self: self.environ.get('REMOTE_USER'), name='ruser')\n@icontract.ensure(lambda OLD, result, self: (result is None) or (isinstance(result, tuple) and len(result) == 2))\n@icontract.ensure(lambda OLD, result, self: (OLD.basic and result == OLD.basic) or (not OLD.basic and ((OLD.ruser and result == (OLD.ruser, None)) or (not OLD.ruser and result is None))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 330
+}

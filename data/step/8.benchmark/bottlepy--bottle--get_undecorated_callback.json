@@ -1,0 +1,114 @@
+{
+  "rlid": "get_undecorated_callback",
+  "github_url": "https://github.com/bottlepy/bottle/blob/3d0ace47fe8e5ac5177b49597bd8ff872ff08d7b/./bottle.py#L531-L550",
+  "name": "get_undecorated_callback",
+  "line_cov": 0.9230769230769231,
+  "lines": 20,
+  "stats": 10,
+  "cc": 6,
+  "content": "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func",
+  "header": "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"",
+  "file": "./bottle.py",
+  "start_line": 531,
+  "end_line": 550,
+  "body_start_line": 534,
+  "comment": "\"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"",
+  "test_time": 2.1595213413238525,
+  "cover_tests": [
+    "test/test_route.py::TestRoute::test_callback_inspection",
+    "test/test_route.py::TestRoute::test_callback_inspection_multiple_args",
+    "test/test_route.py::TestRoute::test_callback_inspection_newsig",
+    "test/test_route.py::TestRoute::test_unwrap_closure",
+    "test/test_route.py::TestRoute::test_unwrap_closure_callable",
+    "test/test_route.py::TestRoute::test_unwrap_method",
+    "test/test_route.py::TestRoute::test_unwrap_wrapped",
+    "test/test_wsgi.py::TestWsgi::test_303"
+  ],
+  "repo": {
+    "github_path": "bottlepy/bottle",
+    "commit": "3d0ace47fe8e5ac5177b49597bd8ff872ff08d7b",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"flit_core >=3.9,<4\",]\nbuild-backend = \"flit_core.buildapi\"\n\n[project]\nname = \"bottle\"\ndynamic = [ \"version\",]\nrequires-python = \">=3.10\"\ndescription = \"Fast and simple WSGI-framework for small web-applications.\"\nreadme = \"README.rst\"\nkeywords = [ \"bottle\", \"wsgi\", \"microframework\",]\nclassifiers = [ \"Development Status :: 6 - Mature\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Framework :: Bottle\", \"Topic :: Internet :: WWW/HTTP\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries\", \"Topic :: Internet :: WWW/HTTP :: WSGI\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Application\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Server\", \"Topic :: Software Development :: Libraries :: Application Frameworks\", \"Programming Language :: Python :: 3\",]\nversion = \"0.1.0\"\ndependencies = [ \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"Marcel Hellkamp\"\nemail = \"marc@gsites.de\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\ndev = [ \"pytest\", \"pytest-cov\", \"build\", \"twine\",]\ndocs = [ \"sphinx\", \"sphinx-autobuild\", \"sphinx-intl\",]\n\n[project.urls]\nHomepage = \"https://bottlepy.org\"\nDocumentation = \"https://bottlepy.org\"\nRepository = \"http://github.com/bottlepy/bottle.git\"\nIssues = \"https://github.com/bottlepy/bottle/issues\"\nChangelog = \"https://bottlepy.org/docs/dev/changelog.html\"\n\n[project.scripts]\nbottle = \"bottle:main\"\n\n[tool.flit.sdist]\ninclude = [ \"test/*.py\", \"test/views/*.tpl\", \"AUTHORS\",]\n\n[tool.pytest.ini_options]\naddopts = \"-ra\"\ntestpaths = [ \"test\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [],
+    "test_time": 41.055556774139404
+  },
+  "mutants": [
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = None\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func\n",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        for _ in range(1):\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        if True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while False:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while False:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func\n",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = None\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func\n",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(None, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func\n",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, 'XX__closure__XX', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func\n",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__CLOSURE__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func\n",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, 'func_code', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif not hasattr(func, '__closure__'):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = next(filter(isfunc, cells_values), func)\n            else:\n                return func",
+    "    def get_undecorated_callback(self):\n        \"\"\" Return the callback. If the callback is a decorated function, try to\n            recover the original function. \"\"\"\n        func = self.callback\n        while True:\n            if getattr(func, '__wrapped__', False):\n                func = func.__wrapped__\n            elif getattr(func, '__func__', False):\n                func = func.__func__\n            elif getattr(func, '__closure__', False):\n                depr(0, 14, \"Decorated callback without __wrapped__\",\n                     \"When applying decorators to route callbacks, make sure\"\n                     \" the decorator uses @functools.wraps or update_wrapper.\"\n                     \" This warning may also trigger if you reference callables\"\n                     \" from a nonlocal scope.\")\n                cells_values = (cell.cell_contents for cell in func.__closure__)\n                isfunc = lambda x: isinstance(x, FunctionType) or hasattr(x, '__call__')\n                func = None\n            else:\n                return func\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: self.callback, name=\"old_cb\")\n@icontract.snapshot(lambda self: __import__(\"inspect\").getsource(self.__class__.get_undecorated_callback), name=\"src\")\n@icontract.ensure(lambda result: callable(result))\n@icontract.ensure(lambda result: (not getattr(result, \"__wrapped__\", False)) and (not getattr(result, \"__func__\", False)) and (not getattr(result, \"__closure__\", False)))\n@icontract.ensure(lambda result, OLD: (getattr(OLD.old_cb, \"__wrapped__\", False) or getattr(OLD.old_cb, \"__func__\", False) or getattr(OLD.old_cb, \"__closure__\", False)) and (result is not OLD.old_cb) or (not (getattr(OLD.old_cb, \"__wrapped__\", False) or getattr(OLD.old_cb, \"__func__\", False) or getattr(OLD.old_cb, \"__closure__\", False))))\n@icontract.ensure(lambda OLD: \"while True\" in OLD.src)\n@icontract.ensure(lambda OLD: \"func = self.callback\" in OLD.src)\n@icontract.ensure(lambda OLD: \"the decorator uses @functools.wraps or update_wrapper.\" in OLD.src)\n@icontract.ensure(lambda OLD: \"cell.cell_contents for cell in func.__closure__\" in OLD.src)\n@icontract.ensure(lambda OLD: \"isinstance(x, FunctionType) or hasattr(x, '__call__')\" in OLD.src)\n@icontract.ensure(lambda OLD: \"return func\" in OLD.src)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 144
+}

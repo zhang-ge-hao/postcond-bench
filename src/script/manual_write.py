@@ -115,6 +115,71 @@ def write_doc():
         print(f"mutant need attention: {mutant_count}")
 
 
+def write_final_benchmark():
+
+    key_2_postcond = {}
+    eval_results = {}
+    filtered_keys = []
+    for dir in ["data/ground_truth/java", "data/ground_truth/python"]:
+        with open(f"{dir}/eval_results.json") as file:
+            _eval_results = json.load(file)
+        eval_results = {**eval_results, **_eval_results}
+        for fn in os.listdir(f"{dir}/filtered"):
+            filtered_keys.append(fn[6:-3])
+        for fn in os.listdir(dir):
+            if not fn.endswith(".md"):
+                continue
+            with open(f"{dir}/{fn}") as file:
+                lines = []
+                in_block = False
+                for line in file:
+                    if line.startswith("```") and not in_block:
+                        in_block = True
+                    elif line.startswith("```") and in_block:
+                        break
+                    elif in_block:
+                        lines.append(line)
+                postcond = "".join(lines)
+            key_2_postcond[fn[6:-3]] = postcond
+
+    langs = [
+        "python", 
+        "java"
+    ]
+    mut_theo = 5
+    methods = read_benchmark("data/step/7.reference")
+    for lang in langs:
+        print(lang)
+        lang_methods = [m for m in methods if m.repo.language == lang]
+        lang_methods.sort(key=lambda m: m.traversal_rank)
+        auto_written_count = 0
+        human_written_count = 0
+        for method in lang_methods:
+            key = method.repo.github_path.replace("/", "--") + "--" + method.rlid
+
+            if len(method.mutants) < mut_theo:
+                continue
+
+            if method.ref_postcond is not None and all(f in KFS for f in method.ref_mutant_kill):
+                method.ref_source = "auto"
+                auto_written_count += 1
+                with open(f"data/step/8.benchmark/{key}.json", "w") as file:
+                    json.dump(method.to_dict(), file, indent=2)
+            elif key in key_2_postcond and key in eval_results:
+                method.ref_source = "human"
+                human_written_count += 1
+                method.ref_postcond = key_2_postcond[key]
+                method.ref_mutant_kill = eval_results[key]
+                with open(f"data/step/8.benchmark/{key}.json", "w") as file:
+                    json.dump(method.to_dict(), file, indent=2)
+            else:
+                assert key in filtered_keys
+
+            if auto_written_count + human_written_count == 230:
+                break
+        print(lang, auto_written_count, human_written_count)
+
+
 def cal_methods():
     lang = "java"
     idx_theo = 324
@@ -143,7 +208,7 @@ def eval(method_fn, mut_idxs = None, ban_mut_idxs = None, early_stop = False):
 
     from src.curator.eval_postcond import eval_postcond
 
-    method_dir = "data/step/8.benchmark_m"
+    method_dir = "data/step/8.benchmark"
     with open(f"{method_dir}/{method_fn}.json") as file:
         method = Method.from_dict(json.load(file))
     manual_dir = f"data/ground_truth/{method.repo.language}"
@@ -181,37 +246,40 @@ if __name__ == "__main__":
     # write_doc()
     # exit()
 
-    # method_fn = "dyn4j--dyn4j--accumulate"
-    # mut_idxs = [17,33]
-    # ban_mut_idxs = None
-    # early_stop = True
-    # method_fn, results = eval(
-    #     method_fn=method_fn,
-    #     mut_idxs=mut_idxs,
-    #     ban_mut_idxs=ban_mut_idxs,
-    #     early_stop=early_stop
-    # )
-    # print(results)
+    # write_final_benchmark()
+    # exit()
 
-    method_fns = os.listdir("data/ground_truth/java")
-    method_fns = [fn for fn in method_fns if fn.endswith(".md")]
-    method_fns = [fn[6: -3] for fn in method_fns]
+    method_fn = "cojen--Maker--get"
+    mut_idxs = None
+    ban_mut_idxs = None
+    early_stop = True
+    method_fn, results = eval(
+        method_fn=method_fn,
+        mut_idxs=mut_idxs,
+        ban_mut_idxs=ban_mut_idxs,
+        early_stop=early_stop
+    )
+    print(results)
 
-    print("\n".join(method_fns))
-    print(len(method_fns))
+    # method_fns = os.listdir("data/ground_truth/java")
+    # method_fns = [fn for fn in method_fns if fn.endswith(".md")]
+    # method_fns = [fn[6: -3] for fn in method_fns]
 
-    pool_size = 30
+    # print("\n".join(method_fns))
+    # print(len(method_fns))
 
-    with Pool(processes=pool_size) as pool:
-        # map 会把 method_fns 逐个传给 eval_one
-        outputs = pool.map(eval, method_fns)
+    # pool_size = 30
 
-    # 收集成 dict: method_fn -> results
-    result_dict = {method_fn: results for method_fn, results in outputs}
+    # with Pool(processes=pool_size) as pool:
+    #     # map 会把 method_fns 逐个传给 eval_one
+    #     outputs = pool.map(eval, method_fns)
 
-    # 存成 json 文件
-    out_path = "eval_results.json"
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(result_dict, f, ensure_ascii=False, indent=2)
+    # # 收集成 dict: method_fn -> results
+    # result_dict = {method_fn: results for method_fn, results in outputs}
 
-    print(f"Saved results to {out_path}")
+    # # 存成 json 文件
+    # out_path = "eval_results.json"
+    # with open(out_path, "w", encoding="utf-8") as f:
+    #     json.dump(result_dict, f, ensure_ascii=False, indent=2)
+
+    # print(f"Saved results to {out_path}")

@@ -1,0 +1,155 @@
+{
+  "rlid": "_is_symmetric",
+  "github_url": "https://github.com/joowani/binarytree/blob/74e0c0bf204a0a2789c45a07264718f963db37fe/./binarytree/__init__.py#L1783-L1803",
+  "name": "_is_symmetric",
+  "line_cov": 1.0,
+  "lines": 21,
+  "stats": 6,
+  "cc": 3,
+  "content": "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)",
+  "header": "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"",
+  "file": "./binarytree/__init__.py",
+  "start_line": 1783,
+  "end_line": 1803,
+  "body_start_line": 1791,
+  "comment": "\"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"",
+  "test_time": 1.577233076095581,
+  "cover_tests": [
+    "tests/test_tree.py::test_tree_clone_with_numbers",
+    "tests/test_tree.py::test_tree_clone_with_letters",
+    "tests/test_tree.py::test_tree_properties",
+    "tests/test_tree.py::test_heap_float_values_builders"
+  ],
+  "repo": {
+    "github_path": "joowani/binarytree",
+    "commit": "74e0c0bf204a0a2789c45a07264718f963db37fe",
+    "language": "python",
+    "env_config": "[project]\nrequires-python = \">=3.10,<3.12\"\nname = \"binarytree\"\nversion = \"0.1.0\"\n\n[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[tool.isort]\nprofile = \"black\"\n\n[tool.setuptools_scm]\nwrite_to = \"binarytree/version.py\"\n\n[tool.mypy]\nwarn_return_any = true\nwarn_unused_configs = true\nignore_missing_imports = true\nstrict = true\n\n[tool.coverage.run]\nomit = [ \"binarytree/version.py\",]\n\n[tool.pytest.ini_options]\naddopts = \"-s -vv -p no:warnings\"\nminversion = \"6.0\"\ntestpaths = [ \"tests\",]\n\n[tool.poetry.dependencies]\ngraphviz = \"^0.21\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\nmypy = \"^1.18.2\"\nisort = \"^7.0.0\"\nblack = \"^25.9.0\"\ncoverage = \"^7.11.0\"\nsetuptools-scm = \"^9.2.2\"\n",
+    "failed_tests": [],
+    "test_time": 1.890174150466919
+  },
+  "mutants": [
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is not None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is not None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None or right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None or right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is not None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is not None and right is not None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is not None or right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return False\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is not None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is not None and right is not None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is not None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is not None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return True\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val != right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val or symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right) or symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(None, root)",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(None, root)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, None)",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root, None)\n",
+    "def _is_symmetric(root: Optional[Node]) -> bool:\n    \"\"\"Check if the binary tree is symmetric.\n\n    :param root: Root node of the binary tree.\n    :type root: binarytree.Node | None\n    :return: True if the binary tree is symmetric, False otherwise.\n    :rtype: bool\n    \"\"\"\n\n    def symmetric_helper(left: Optional[Node], right: Optional[Node]) -> bool:\n        if left is None and right is None:\n            return True\n        if left is None or right is None:\n            return False\n        return (\n            left.val == right.val\n            and symmetric_helper(left.left, right.right)\n            and symmetric_helper(left.right, right.left)\n        )\n\n    return symmetric_helper(root.left, root.left)"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda root: root.inorder, name=\"inorder\")\n@icontract.ensure(\n    lambda OLD, root, result: \n    result == all(\n        OLD.inorder[i].val == OLD.inorder[len(OLD.inorder) - 1 - i].val for i in range(len(OLD.inorder))\n    )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 89
+}

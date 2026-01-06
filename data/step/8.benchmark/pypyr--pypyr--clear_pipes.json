@@ -1,0 +1,156 @@
+{
+  "rlid": "clear_pipes",
+  "github_url": "https://github.com/pypyr/pypyr/blob/b3e8f8c6063c11e37c1c762b89b4cd8620460c79/./pypyr/cache/loadercache.py#L156-L174",
+  "name": "clear_pipes",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 7,
+  "cc": 4,
+  "content": "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = self._cache.get(loader_name, None)\n            if loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()",
+  "header": "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"",
+  "file": "./pypyr/cache/loadercache.py",
+  "start_line": 156,
+  "end_line": 174,
+  "body_start_line": 164,
+  "comment": "\"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"",
+  "test_time": 0.29288482666015625,
+  "cover_tests": [
+    "tests/unit/pypyr/cache/loadercache_test.py::test_loadercache_clear_pipes",
+    "tests/unit/pypyr/cache/loadercache_test.py::test_loadercache_clear_pipes_all"
+  ],
+  "repo": {
+    "github_path": "pypyr/pypyr",
+    "commit": "b3e8f8c6063c11e37c1c762b89b4cd8620460c79",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"flit_core.buildapi\"\nrequires = [ \"flit_core >=3.2,<4\",]\n\n[project]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Topic :: Software Development :: Build Tools\", \"Topic :: Software Development :: Libraries :: Python Modules\", \"Topic :: Utilities\", \"License :: OSI Approved :: Apache Software License\", \"Programming Language :: Python :: 3.7\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Typing :: Typed\",]\ndependencies = [ \"python-dateutil\", \"ruamel.yaml >= 0.17.32\", \"tomli >= 1.1.0 ; python_version < '3.11'\", \"tomli-w\",]\ndescription = \"task-runner for automation pipelines defined in yaml. cli & api.\"\ndynamic = [ \"version\",]\nkeywords = [ \"task-runner\", \"automation\", \"devops\", \"ci/cd\", \"pipeline runner\",]\nname = \"pypyr\"\nreadme = \"README.md\"\nrequires-python = \">=3.9\"\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Thomas Gaigher\"\nemail = \"info@pypyr.io\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\ndev = [ \"bumpversion\", \"coverage\", \"flake8\", \"flake8-docstrings\", \"flit\", \"pyfakefs\", \"pytest\",]\n\n[project.scripts]\npypyr = \"pypyr.cli:main\"\n\n[project.urls]\nHome = \"https://pypyr.io\"\nDocumentation = \"https://pypyr.io/docs/\"\n\"Release Notes\" = \"https://pypyr.io/updates/releases/\"\nSource = \"https://github.com/pypyr/pypyr/\"\nTracker = \"https://github.com/pypyr/pypyr/issues\"\nTwitter = \"https://twitter.com/pypyrpipes\"\n\n[tool.coverage.report]\nexclude_lines = [ \"pragma: no cover\", \"if 0:\", \"if __name__ == .__main__.:\",]\nfail_under = 100\n\n[tool.coverage.run]\nbranch = true\nsource = [ \"pypyr\",]\n\n[tool.flit.sdist]\nexclude = [ \"docs\",]\n\n[tool.pypyr.vars]\npackage_name = \"pypyr\"\nversion_cmd = \"pypyr pypyrversion\"\nversion_index = 1\n\n[tool.pytest.ini_options]\njunit_family = \"xunit2\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\ndocutils = \"^0.22.2\"\npyfakefs = \"^5.10.1\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nmarkers = \"python_version >= \\\"3.10\\\"\"\nversion = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_pass",
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_pass_with_encoding",
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_parse_not_mapping_at_root",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_yaml_pass",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_yaml_pass_with_encoding",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_list_yaml_fails",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_string",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_path_substitution",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_encoding_from_input",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass_with_string",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass_with_path_substitution",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass_with_substitution",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass_with_substitution_string",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_list_fails",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding_in_to_out",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_to_out_dir",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_with_encoding",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_edit_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding_ut32",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_no_matches",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_with_replacements",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_with_substitutions",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_out_is_dir",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_out_encoding_in_to_out",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_posix",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_windows_slash",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_windows_backslash"
+    ],
+    "test_time": 21.236268997192383
+  },
+  "mutants": [
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name == \"\":  # This checks for an empty string instead of None\n            loader = self._cache.get(loader_name, None)\n            if loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name in self._cache:  # This checks if loader_name is in the cache instead of being non-empty\n            loader = self._cache.get(loader_name, None)\n            if loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if not loader_name:  # This will incorrectly trigger the else block for valid loader names\n            loader = self._cache.get(loader_name, None)\n            if loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = None\n            if loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()\n",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = self._cache.get(None)\n            if loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()\n",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = self._cache.get(None, None)\n            if loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()\n",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = self._cache.get(loader_name, None)\n            if loader == '':\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = self._cache.get(loader_name, None)\n            if loader is None:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = self._cache.get(loader_name, None)\n            if not loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = self._cache.get(loader_name, None)\n            if loader:\n                self.clear()  # This mistakenly calls the clear method on the current instance instead of the loader.\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader.clear()",
+    "    def clear_pipes(self, loader_name=None):\n        \"\"\"Clear the pipeline cache.\n\n        Args:\n            loader_name (str): Clear pipelines for this loader. If not\n                specified, will iterate all loaders in the loaders cache and\n                clear each of their pipelines.\n        \"\"\"\n        if loader_name:\n            loader = self._cache.get(loader_name, None)\n            if loader:\n                loader.clear()\n            else:\n                logger.debug(\n                    \"%s not found in loader cache so there's nothing to clear\",\n                    loader_name)\n        else:\n            for _, loader in self._cache.items():\n                loader_name = None  # This sets loader_name to None, which will not clear any pipelines."
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda self, loader_name=None: {k: dict(v._pipeline_cache._cache) for k, v in self._cache.items()}, name=\"old_pipes\")\n@icontract.snapshot(lambda self, loader_name=None: {k: id(v) for k, v in self._cache.items()}, name=\"old_ids\")\n@icontract.snapshot(lambda self, loader_name=None: {k: id(v._pipeline_cache._cache) for k, v in self._cache.items()}, name=\"old_pipe_ids\")\n@icontract.ensure(lambda OLD, self, loader_name=None: set(self._cache.keys()) == set(OLD.old_pipes.keys()))\n@icontract.ensure(lambda OLD, self, loader_name=None: all(id(self._cache[k]) == OLD.old_ids[k] for k in OLD.old_ids))\n@icontract.ensure(lambda OLD, self, loader_name=None: (\n    (bool(loader_name) and loader_name in OLD.old_pipes and\n        loader_name in self._cache and \n        self._cache[loader_name]._pipeline_cache._cache == {} and\n        id(self._cache[loader_name]._pipeline_cache._cache) == OLD.old_pipe_ids[loader_name] and\n        all((k == loader_name) or (self._cache[k]._pipeline_cache._cache == OLD.old_pipes[k] and id(self._cache[k]._pipeline_cache._cache) == OLD.old_pipe_ids[k]) for k in OLD.old_pipes)\n    )\n    or\n    (bool(loader_name) and loader_name not in OLD.old_pipes and\n        all(self._cache[k]._pipeline_cache._cache == OLD.old_pipes[k] and id(self._cache[k]._pipeline_cache._cache) == OLD.old_pipe_ids[k] for k in OLD.old_pipes)\n    )\n    or\n    (not bool(loader_name) and\n        all(self._cache[k]._pipeline_cache._cache == {} and id(self._cache[k]._pipeline_cache._cache) == OLD.old_pipe_ids[k] for k in OLD.old_pipes)\n    )\n))\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 375
+}

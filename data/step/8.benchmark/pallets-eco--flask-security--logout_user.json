@@ -1,0 +1,125 @@
+{
+  "rlid": "logout_user",
+  "github_url": "https://github.com/pallets-eco/flask-security/blob/06f37fa06ebbb0b9e87cd6819eb44d3aea050f60/./flask_security/utils.py#L260-L293",
+  "name": "logout_user",
+  "line_cov": 1.0,
+  "lines": 34,
+  "stats": 9,
+  "cc": 3,
+  "content": "def logout_user() -> None:\n    \"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"\n\n    for key in (\n        \"identity.name\",\n        \"identity.auth_type\",\n        \"fs_paa\",\n        \"fs_gexp\",\n        \"fs_oauth_next\",\n    ):\n        session.pop(key, None)\n\n    # Clear csrf token between sessions.\n    # Ideally this would be handled by Flask-WTF but...\n    # We don't clear entire session since Flask-Login seems to like having it.\n    csrf_field_name = find_csrf_field_name()\n    if csrf_field_name:\n        session.pop(csrf_field_name, None)\n        # Flask-WTF 'caches' csrf_token - and only set the session if not already\n        # in 'g'. Be sure to clear both. This affects at least /confirm\n        g.pop(csrf_field_name, None)\n    session[\"fs_cc\"] = \"clear\"\n    identity_changed.send(\n        current_app._get_current_object(),  # type: ignore\n        _async_wrapper=current_app.ensure_sync,\n        identity=AnonymousIdentity(),\n    )\n    _logout_user()",
+  "header": "def logout_user() -> None:\n    \"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"",
+  "file": "./flask_security/utils.py",
+  "start_line": 260,
+  "end_line": 293,
+  "body_start_line": 268,
+  "comment": "\"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"",
+  "test_time": 1.883193016052246,
+  "cover_tests": [
+    "tests/test_basic.py::test_roles_accepted[cl-sqla-session]",
+    "tests/test_basic.py::test_permissions_accepted[cl-sqla-session]",
+    "tests/test_basic.py::test_permissions_required[cl-sqla-session]",
+    "tests/test_basic.py::test_multiple_role_required[cl-sqla-session]",
+    "tests/test_change_email.py::test_ce[cl-sqla-session]",
+    "tests/test_confirmable.py::test_confirmable_flag[cl-sqla-session]",
+    "tests/test_recoverable.py::test_recoverable_flag[cl-sqla-session]",
+    "tests/test_registerable.py::test_registerable_flag[cl-sqla-session-use_register_v2-True]",
+    "tests/test_registerable.py::test_registerable_flag[cl-sqla-session-use_register_v2-False]"
+  ],
+  "repo": {
+    "github_path": "pallets-eco/flask-security",
+    "commit": "06f37fa06ebbb0b9e87cd6819eb44d3aea050f60",
+    "language": "python",
+    "env_config": "[project]\nname = \"Flask-Security\"\ndescription = \"Quickly add security features to your Flask application.\"\nkeywords = [ \"flask security\",]\nrequires-python = \">=3.10,<4.0\"\nclassifiers = [ \"Environment :: Web Environment\", \"Framework :: Flask\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content\", \"Topic :: Software Development :: Libraries :: Python Modules\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: Implementation :: CPython\", \"Programming Language :: Python :: Implementation :: PyPy\", \"Development Status :: 5 - Production/Stable\",]\ndynamic = [ \"version\",]\ndependencies = [ \"flask (>=3.0.0,<4.0.0)\", \"flask-login (>=0.6.3,<0.7.0)\", \"flask-principal (>=0.4.0,<0.5.0)\", \"flask-wtf (>=1.1.2,<2.0.0)\", \"email-validator (>=2.0.0,<3.0.0)\", \"markupsafe (>=2.1.0,<3.0.0)\", \"passlib (>=1.7.4) ; python_version < \\\"3.12\\\"\", \"libpass (>=1.9.0) ; python_version >= \\\"3.12\\\"\", \"wtforms (>=3.0.0,<4.0.0)\",]\nversion = \"0.1.0\"\n[[project.maintainers]]\nname = \"Chris Wagner\"\nemail = \"jwag.wagner+github@gmail.com\"\n\n[[project.authors]]\nname = \"Matt Wright\"\n\n[[project.authors]]\nname = \"Chris Wagner\"\nemail = \"jwag.wagner+github@gmail.com\"\n\n[build-system]\nrequires = [ \"flit_core >=3.8,<4\",]\nbuild-backend = \"flit_core.buildapi\"\n\n[project.readme]\ncontent-type = \"text/x-rst\"\nfile = \"README.rst\"\n\n[project.license]\nfile = \"LICENSE.txt\"\n\n[project.urls]\nDocumentation = \"https://flask-security.readthedocs.io\"\nHomepage = \"https://github.com/pallets-eco/flask-security\"\nSource = \"https://github.com/pallets-eco/flask-security\"\nTracker = \"https://github.com/pallets-eco/flask-security/issues\"\nReleases = \"https://pypi.org/project/Flask-Security/\"\n\n[project.optional-dependencies]\nbabel = [ \"babel>=2.12.1\", \"flask_babel>=4.0.0\",]\nfsqla = [ \"flask_sqlalchemy>=3.1.0\", \"sqlalchemy>=2.0.18\", \"sqlalchemy-utils>=0.41.1\",]\ncommon = [ \"argon2_cffi>=21.3.0\", \"bcrypt>=4.0.1,<5.0\", \"flask_mail>=0.10.0\", \"bleach>=6.0.0\",]\nmfa = [ \"cryptography>=40.0.2\", \"qrcode>=7.4.2\", \"phonenumberslite>=8.13.11\", \"webauthn>=2.0.0\",]\nlow = [ \"Flask==3.0.0\", \"Flask-SQLAlchemy==3.1.0\", \"Flask-SQLAlchemy-Lite==0.1.0;python_version>='3.10'\", \"Flask-Babel==4.0.0\", \"Flask-Mail==0.10.0\", \"Flask-Login==0.6.3\", \"Flask-WTF==1.1.2\", \"peewee==3.17.9\", \"argon2_cffi==21.3.0\", \"authlib==1.2.0\", \"babel==2.12.1\", \"bcrypt==4.0.1\", \"bleach==6.0.0\", \"freezegun\", \"jinja2==3.1.2\", \"itsdangerous==2.1.2\", \"markupsafe==2.1.2\", \"mongoengine==0.29.1\", \"mongomock==4.3.0\", \"pony==0.7.16;python_version<'3.11'\", \"phonenumberslite==8.13.11\", \"qrcode==7.4.2\", \"requests\", \"sqlalchemy==2.0.18\", \"sqlalchemy-utils==0.41.1\", \"webauthn==2.0.0\", \"werkzeug==3.0.1\", \"zxcvbn==4.4.28\",]\n\n[tool.djlint]\nignore = \"H005,H006\"\n\n[tool.pyright]\ninclude = [ \"flask_security\", \"tests/view_scaffold.py\",]\nanalyzeUnannotatedFunctions = \"none\"\nreportMissingImports = false\n\n[tool.flit.module]\nname = \"flask_security\"\n\n[tool.flit.sdist]\ninclude = [ \"AUTHORS\", \"CHANGES.rst\", \"CONTRIBUTING.rst\", \"LICENSE.txt\", \".djlintrc\", \".git-blame-ignore-revs\", \".gitignore\", \".pre-commit-config.yaml\", \".readthedocs.yml\", \"pyproject-too.toml\", \"babel.ini\", \"codecov.yml\", \"mypy.ini\", \"pytest.ini\", \"tox.ini\", \"docs/\", \"examples/\", \"requirements\", \"tests/\",]\nexclude = [ \"docs/_build/\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\nflask-mail = \"^0.10.0\"\nsetuptools = \"^80.9.0\"\nfreezegun = \"^1.5.5\"\nrequests = \"^2.32.5\"\nsqlalchemy = \"2.0.18\"\n",
+    "failed_tests": [
+      "tests/test_basic.py::test_roles_accepted[cl-mongo]",
+      "tests/test_basic.py::test_permissions_accepted[cl-mongo]",
+      "tests/test_basic.py::test_permissions_required[cl-mongo]",
+      "tests/test_basic.py::test_multiple_role_required[cl-mongo]",
+      "tests/test_change_email.py::test_ce[cl-mongo]",
+      "tests/test_change_username.py::test_cu[cl-sqla-session]",
+      "tests/test_change_username.py::test_cu[cl-mongo]",
+      "tests/test_change_username.py::test_cu_json[cl-sqla-session]",
+      "tests/test_change_username.py::test_cu_json[cl-mongo]",
+      "tests/test_changeable.py::test_changeable_flag[cl-sqla-session]",
+      "tests/test_changeable.py::test_changeable_flag[cl-mongo]",
+      "tests/test_confirmable.py::test_confirmable_flag[cl-mongo]",
+      "tests/test_confirmable.py::test_requires_confirmation_error_redirect[cl-mongo]",
+      "tests/test_datastore.py::test_find_role[mongoengine]",
+      "tests/test_datastore.py::test_add_role_to_user[mongoengine]",
+      "tests/test_datastore.py::test_create_user_no_side_effects[mongoengine]",
+      "tests/test_datastore.py::test_delete_user[mongoengine]",
+      "tests/test_datastore.py::test_access_datastore_from_factory[mongoengine]",
+      "tests/test_datastore.py::test_access_datastore_from_app_factory_pattern[mongoengine]",
+      "tests/test_datastore.py::test_init_app_kwargs_override_constructor_kwargs[mongoengine]",
+      "tests/test_datastore.py::test_create_user_with_roles_and_permissions[mongoengine]",
+      "tests/test_datastore.py::test_permissions_types[mongoengine]",
+      "tests/test_datastore.py::test_modify_permissions[mongoengine]",
+      "tests/test_datastore.py::test_get_permissions[mongoengine]",
+      "tests/test_datastore.py::test_modify_permissions_multi[mongoengine]",
+      "tests/test_datastore.py::test_webauthn[mongoengine]",
+      "tests/test_datastore.py::test_webauthn_cascade[mongoengine]",
+      "tests/test_datastore.py::test_mf_recovery_codes[mongoengine]",
+      "tests/test_phone_util.py::test_invalid_phone_numbers_return_none[123456]",
+      "tests/test_phone_util.py::test_invalid_phone_numbers_return_none[bad-number-%%%]",
+      "tests/test_phone_util.py::test_invalid_phone_numbers_return_none[+999]",
+      "tests/test_phone_util.py::test_invalid_phone_numbers_return_none[abcdefgh]",
+      "tests/test_recoverable.py::test_recoverable_flag[cl-mongo]",
+      "tests/test_recoverable.py::test_requires_confirmation_error_redirect[cl-mongo]",
+      "tests/test_recoverable.py::test_username_recovery_valid_email[cl-mongo]",
+      "tests/test_recoverable.py::test_username_recovery_invalid_email[cl-mongo]",
+      "tests/test_recoverable.py::test_username_recovery_generic_responses[cl-mongo]",
+      "tests/test_registerable.py::test_registerable_flag[cl-mongo-use_register_v2-True]",
+      "tests/test_registerable.py::test_registerable_flag[cl-mongo-use_register_v2-False]"
+    ],
+    "test_time": 40.2728226184845
+  },
+  "mutants": [
+    "def logout_user() -> None:\n    \"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"\n\n    for key in (\n        \"identity.name\",\n        \"identity.auth_type\",\n        \"fs_paa\",\n        \"fs_gexp\",\n        \"fs_oauth_next\",\n    ):\n        session[key] = \"some_value\"\n\n    # Clear csrf token between sessions.\n    # Ideally this would be handled by Flask-WTF but...\n    # We don't clear entire session since Flask-Login seems to like having it.\n    csrf_field_name = find_csrf_field_name()\n    if csrf_field_name:\n        session.pop(csrf_field_name, None)\n        # Flask-WTF 'caches' csrf_token - and only set the session if not already\n        # in 'g'. Be sure to clear both. This affects at least /confirm\n        g.pop(csrf_field_name, None)\n    session[\"fs_cc\"] = \"clear\"\n    identity_changed.send(\n        current_app._get_current_object(),  # type: ignore\n        _async_wrapper=current_app.ensure_sync,\n        identity=AnonymousIdentity(),\n    )\n    _logout_user()",
+    "def logout_user() -> None:\n    \"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"\n\n    for key in (\n        \"identity.name\",\n        \"identity.auth_type\",\n        \"fs_paa\",\n        \"fs_gexp\",\n        \"fs_oauth_next\",\n    ):\n        session.pop(key, None)\n\n    # Clear csrf token between sessions.\n    # Ideally this would be handled by Flask-WTF but...\n    # We don't clear entire session since Flask-Login seems to like having it.\n    csrf_field_name = find_csrf_field_name()\n    if csrf_field_name:\n        session.pop(csrf_field_name, None)\n        # Flask-WTF 'caches' csrf_token - and only set the session if not already\n        # in 'g'. Be sure to clear both. This affects at least /confirm\n        g.pop(csrf_field_name, None)\n    session[\"fs_cc\"] = \"clear\"\n    identity_changed.send(\n        current_app._get_current_object(),  # type: ignore\n        _async_wrapper=current_app.ensure_sync,\n        identity=AnonymousIdentity(),\n    )\n    g.pop(\"user\", None)  # This attempts to remove a user attribute from the application context instead of logging out.",
+    "def logout_user() -> None:\n    \"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"\n\n    for key in (\n        \"identity.name\",\n        \"identity.auth_type\",\n        \"fs_paa\",\n        \"fs_gexp\",\n        \"fs_oauth_next\",\n    ):\n        session.pop(key, None)\n\n    # Clear csrf token between sessions.\n    # Ideally this would be handled by Flask-WTF but...\n    # We don't clear entire session since Flask-Login seems to like having it.\n    csrf_field_name = find_csrf_field_name()\n    if csrf_field_name:\n        session.pop(csrf_field_name, None)\n        # Flask-WTF 'caches' csrf_token - and only set the session if not already\n        # in 'g'. Be sure to clear both. This affects at least /confirm\n        g.pop(csrf_field_name, None)\n    session[\"fs_cc\"] = \"clear\"\n    identity_changed.send(\n        current_app._get_current_object(),  # type: ignore\n        _async_wrapper=current_app.ensure_sync,\n        identity=AnonymousIdentity(),\n    )\n    identity_changed.send(current_app._get_current_object(), identity=AnonymousIdentity())  # This sends a signal but does not log out the user.",
+    "def logout_user() -> None:\n    \"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"\n\n    for key in (\n        \"identity.name\",\n        \"identity.auth_type\",\n        \"fs_paa\",\n        \"fs_gexp\",\n        \"fs_oauth_next\",\n    ):\n        session.pop(key, None)\n\n    # Clear csrf token between sessions.\n    # Ideally this would be handled by Flask-WTF but...\n    # We don't clear entire session since Flask-Login seems to like having it.\n    csrf_field_name = find_csrf_field_name()\n    if csrf_field_name:\n        session.pop(csrf_field_name, None)\n        # Flask-WTF 'caches' csrf_token - and only set the session if not already\n        # in 'g'. Be sure to clear both. This affects at least /confirm\n        g.pop(csrf_field_name, None)\n    session[\"fs_cc\"] = \"clear\"\n    identity_changed.send(\n        current_app._get_current_object(),  # type: ignore\n        _async_wrapper=current_app.ensure_sync,\n        identity=AnonymousIdentity(),\n    )\n    session.clear()  # This will clear the entire session instead of just logging out the user.",
+    "def logout_user() -> None:\n    \"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"\n\n    for key in (\n        \"identity.name\",\n        \"identity.auth_type\",\n        \"fs_paa\",\n        \"fs_gexp\",\n        \"fs_oauth_next\",\n    ):\n        session.pop(key, None)\n\n    # Clear csrf token between sessions.\n    # Ideally this would be handled by Flask-WTF but...\n    # We don't clear entire session since Flask-Login seems to like having it.\n    csrf_field_name = find_csrf_field_name()\n    if csrf_field_name:\n        session.pop(csrf_field_name, None)\n        # Flask-WTF 'caches' csrf_token - and only set the session if not already\n        # in 'g'. Be sure to clear both. This affects at least /confirm\n        g.pop(csrf_field_name, None)\n    session[\"fs_cc\"] = \"clear\"\n    identity_changed.send(\n        current_app._get_current_object(),  # type: ignore\n        _async_wrapper=current_app.ensure_sync,\n        identity=AnonymousIdentity(),\n    )\n    session[\"fs_cc\"] = \"invalid\"  # This sets an invalid state for the CSRF cookie instead of logging out the user.",
+    "def logout_user() -> None:\n    \"\"\"Logs out the current user.\n\n    This will also clean up the remember me cookie if it exists.\n\n    This sends an ``identity_changed`` signal to note that the current\n    identity is now the `AnonymousIdentity`\n    \"\"\"\n\n    for key in (\n        \"identity.name\",\n        \"identity.auth_type\",\n        \"fs_paa\",\n        \"fs_gexp\",\n        \"fs_oauth_next\",\n    ):\n        session.pop(key, None)\n\n    # Clear csrf token between sessions.\n    # Ideally this would be handled by Flask-WTF but...\n    # We don't clear entire session since Flask-Login seems to like having it.\n    csrf_field_name = find_csrf_field_name()\n    if csrf_field_name:\n        session.pop(csrf_field_name, None)\n        # Flask-WTF 'caches' csrf_token - and only set the session if not already\n        # in 'g'. Be sure to clear both. This affects at least /confirm\n        g.pop(csrf_field_name, None)\n    session[\"fs_cc\"] = \"clear\"\n    identity_changed.send(\n        current_app._get_current_object(),  # type: ignore\n        _async_wrapper=current_app.ensure_sync,\n        identity=AnonymousIdentity(),\n    )\n    session[\"user_logged_in\"] = False  # This sets a flag indicating the user is not logged in, but does not actually log them out."
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda: find_csrf_field_name(), name=\"csrf_name\")\n@icontract.ensure(lambda OLD: all(k not in session for k in (\"identity.name\", \"identity.auth_type\", \"fs_paa\", \"fs_gexp\", \"fs_oauth_next\")))\n@icontract.ensure(lambda OLD: session.get(\"fs_cc\") == \"clear\")\n@icontract.ensure(lambda OLD: (OLD.csrf_name is None) or (OLD.csrf_name not in session and getattr(g, OLD.csrf_name, None) is None))\n@icontract.ensure(lambda OLD: not current_user.is_authenticated)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 135
+}

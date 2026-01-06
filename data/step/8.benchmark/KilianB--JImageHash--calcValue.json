@@ -1,0 +1,229 @@
+{
+  "rlid": "calcValue",
+  "github_url": "https://github.com/KilianB/JImageHash/blob/c41bd3daca951e9397dff10a6143cfa981069cab/./src/main/java/dev/brachtendorf/jimagehash/hashAlgorithms/filter/Kernel.java#L644-L680",
+  "name": "calcValue",
+  "line_cov": 1.0,
+  "lines": 37,
+  "stats": 20,
+  "cc": 8,
+  "content": "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+  "header": "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {",
+  "file": "./src/main/java/dev/brachtendorf/jimagehash/hashAlgorithms/filter/Kernel.java",
+  "start_line": 644,
+  "end_line": 680,
+  "body_start_line": 652,
+  "comment": "/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */",
+  "test_time": 5.58748459815979,
+  "cover_tests": [
+    "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$AlgorithmId#uniquely",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$Filter#filterAddInvalidHash",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$Filter#filterRemoveInvalidHash",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest#identity",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest#sameDimension1D",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest#sameDimension2D",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest#sameDimension2D1",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest#sameDimension2DSquared",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testExpandHeight",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testExpandSquare",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testExpandWidth",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testMirrorHeight",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testMirrorSquare",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testMirrorWidth",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testNoOpHeight",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testNoOpSquare",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testNoOpWidth",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testWrapHeight",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testWrapSquare",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.filter.KernelTest$EdgeHandling$Double#testWrapWidth"
+  ],
+  "repo": {
+    "github_path": "KilianB/JImageHash",
+    "commit": "c41bd3daca951e9397dff10a6143cfa981069cab",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>dev.brachtendorf</groupId>\n  <artifactId>JImageHash</artifactId>\n  <version>1.0.0</version>\n  <name>Java Image Hash</name>\n  <description>A performant perceptual image fingerprinting library </description>\n  <url>https://github.com/KilianB/JImageHash</url>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <javac.target>11</javac.target>\n  </properties>\n  <licenses>\n    <license>\n      <name>MIT</name>\n      <url>https://opensource.org/licenses/MIT</url>\n      <distribution>repo</distribution>\n    </license>\n  </licenses>\n  <scm>\n    <connection>scm:git:git://github.com/KilianB/JImageHash.git</connection>\n    <developerConnection>scm:git:ssh://github.com/KilianB/JImageHash.git</developerConnection>\n    <url>https://github.com/KilianB/JImageHash</url>\n  </scm>\n  <developers>\n    <developer>\n      <name>Kilian Brachtendorf</name>\n      <email>Kilian@brachtendorf.dev</email>\n      <roles>\n        <role>developer</role>\n      </roles>\n      <timezone>Europe/Berlin</timezone>\n      <organization>Brachtendorf Apps</organization>\n      <organizationUrl>https://brachtendorf.dev</organizationUrl>\n    </developer>\n  </developers>\n  <dependencies>\n    <dependency>\n      <groupId>dev.brachtendorf</groupId>\n      <artifactId>UtilityCode</artifactId>\n      <version>2.0.1</version>\n    </dependency>\n    <dependency>\n      <groupId>com.github.wendykierp</groupId>\n      <artifactId>JTransforms</artifactId>\n      <version>3.1</version>\n      <classifier>with-dependencies</classifier>\n    </dependency>\n    <dependency>\n      <groupId>com.h2database</groupId>\n      <artifactId>h2</artifactId>\n      <version>1.4.200</version>\n      <optional>true</optional>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-api</artifactId>\n      <version>5.7.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-engine</artifactId>\n      <version>5.7.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-params</artifactId>\n      <version>5.7.2</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.8.1</version>\n        <configuration>\n          <source>11</source>\n          <target>11</target>\n        </configuration>\n      </plugin>\n      <plugin>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>3.3.0</version>\n        <configuration>\n          <additionalOptions>-html5</additionalOptions>\n        </configuration>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.2.0</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.7</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>1.5</version>\n        <executions>\n          <execution>\n            <id>sign-artifacts</id>\n            <phase>verify</phase>\n            <goals>\n              <goal>sign</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M5</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <useFile>true</useFile>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n              <formats>\n                <format>XML</format>\n              </formats>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n    </plugins>\n  </build>\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n    <repository>\n      <id>ossrh</id>\n      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n    </repository>\n  </distributionManagement>\n</project>",
+    "failed_tests": [
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#addedHashCount",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#ensureHashConsistencyAdd",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#ensureHashConsistencySearch",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchDistanceExact",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchDistantItem",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchDistantItemFail",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchDistantItemZero",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchExactItem",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchExactItemZero",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchItemMultipleValues",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchItemMultipleValues2",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchItemMultipleValuesExact",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#equidistant",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#multipleValues",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#nearestItem",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#searchDistantItem",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#searchItemExact",
+      "dev.brachtendorf.jimagehash.datastructures.KMeansTest#testLargerDataSizeAndClusterCount",
+      "dev.brachtendorf.jimagehash.datastructures.KMeansTest#testMatchingDataSizeAndClusterCount",
+      "dev.brachtendorf.jimagehash.datastructures.KMeansTest#testSmallerDataSizeAndClusterCount",
+      "dev.brachtendorf.jimagehash.datastructures.tree.binaryTreeFuzzy.FuzzyBinaryTreeTest#testRuntime",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$Distance#ballonHash",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$Distance#ballonHashAfterReset",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$FuzzyDistance#test",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$WeightedDistance$FuzzyNormal#ballonHash",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$WeightedDistance$FuzzyNormal#ballonHashAfterReset",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.AverageHashTest#toImageTest",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest#keyLength",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest#toImageTest",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest$Serizalization#consistentHash",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$BitResolution#consistentKeyLength",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$LegacyCorectness#consistency",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$Serizalization#consistentHash",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.RotPHashTest#keyLengthExact",
+      "dev.brachtendorf.jimagehash.matcher.SingleImageMatcherTest$CheckDefaultMatcher#imageMatches",
+      "dev.brachtendorf.jimagehash.matcher.cached.ConsecutiveMatcherTest#alterAlgorithmAfterImageHasAlreadyBeenAdded",
+      "dev.brachtendorf.jimagehash.matcher.cached.ConsecutiveMatcherTest$TestDefaultSettings#defaultMatcher",
+      "dev.brachtendorf.jimagehash.matcher.cached.CumulativeMatcherTest#alterAlgorithmAfterImageHasAlreadyBeenAdded",
+      "dev.brachtendorf.jimagehash.matcher.cached.CumulativeMatcherTest#imageMatcheNonNormalizedVersion",
+      "dev.brachtendorf.jimagehash.matcher.cached.CumulativeMatcherTest#imageMatches",
+      "dev.brachtendorf.jimagehash.matcher.cached.CumulativeMatcherTest$TestDefaultSettings#defaultMatcher",
+      "dev.brachtendorf.jimagehash.matcher.categorize.CategoricalMatcherTest#categorizeMultipleImages",
+      "dev.brachtendorf.jimagehash.matcher.categorize.CategoricalMatcherTest#distanceIdentity",
+      "dev.brachtendorf.jimagehash.matcher.categorize.KMeansClassifierTest#categorizeMultipleImages",
+      "dev.brachtendorf.jimagehash.matcher.categorize.KMeansClassifierTest#distanceIdentity",
+      "dev.brachtendorf.jimagehash.matcher.categorize.WeightedCategoricalMatcherTest#categorizeMultipleImages",
+      "dev.brachtendorf.jimagehash.matcher.categorize.WeightedCategoricalMatcherTest#distanceIdentity",
+      "dev.brachtendorf.jimagehash.matcher.persistent.ConsecutiveImageMatcherTest#alterAlgorithmAfterImageHasAlreadyBeenAdded",
+      "dev.brachtendorf.jimagehash.matcher.persistent.ConsecutiveImageMatcherTest#serializeAndDeSeriazlize",
+      "dev.brachtendorf.jimagehash.matcher.persistent.ConsecutiveImageMatcherTest#serializeAndDeSeriazlizeEquality",
+      "dev.brachtendorf.jimagehash.matcher.persistent.ConsecutiveImageMatcherTest$TestDefaultSettings#defaultMatcher",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest#getAllMatchingImages",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest#reconstructHash",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest$EntryExist#doesEntryExistAddAlgoLater",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest$EntryExist#doesEntryExistTrue",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest$TestDefaultSettings#imageMatches"
+    ],
+    "test_time": 2.8477797508239746
+  },
+  "mutants": [
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask < maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask += 2) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask > maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask >= maskH; yMask--) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask < maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask < maskW; xMask++) { // Off by one error\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask += 2) { // Skips every other index\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask > maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask >= maskW; xMask--) { // Infinite loop\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = 0; xMask <= maskW; xMask++) { // Ignores negative indices\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex < width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex < height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex <= 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex <= 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn 0;\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width) / 2; // Incorrect scaling\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] / input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue -= mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn value;\n\t}",
+    "\t/**\n\t * \n\t * @param input array\n\t * @param x     pixelToLookAt\n\t * @param y     pixelToLookAt\n\t * @return convolutedPixel fo this x and y\n\t */\n\tprotected double calcValue(double[][] input, int x, int y) {\n\t\tdouble value = 0;\n\t\tint maskW = mask[0].length / 2;\n\t\tint maskH = mask.length / 2;\n\n\t\tint width = input[0].length;\n\t\tint height = input.length;\n\n\t\tfor (int yMask = -maskH; yMask <= maskH; yMask++) {\n\t\t\tfor (int xMask = -maskW; xMask <= maskW; xMask++) {\n\n\t\t\t\tint xPixelIndex;\n\t\t\t\tint yPixelIndex;\n\n\t\t\t\tif (edgeHandling.equals(EdgeHandlingStrategy.NO_OP)) {\n\t\t\t\t\txPixelIndex = x + xMask;\n\t\t\t\t\tyPixelIndex = y + yMask;\n\n\t\t\t\t\tif (xPixelIndex < 0 || xPixelIndex >= width || yPixelIndex < 0 || yPixelIndex >= height) {\n\t\t\t\t\t\treturn input[y][x];\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\txPixelIndex = edgeHandling.correctPixel(x + xMask, width);\n\t\t\t\t\tyPixelIndex = edgeHandling.correctPixel(y + yMask, height);\n\t\t\t\t}\n\t\t\t\tvalue += mask[yMask + maskH][xMask + maskW] * input[yPixelIndex][xPixelIndex];\n\t\t\t}\n\t\t}\n\t\treturn 0;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures edgeHandling.equals(EdgeHandlingStrategy.NO_OP) && java.util.stream.IntStream.rangeClosed(-(mask.length/2),(mask.length/2)).anyMatch(ym -> java.util.stream.IntStream.rangeClosed(-(mask[0].length/2),(mask[0].length/2)).anyMatch(xm -> x + xm < 0 || x + xm >= input[0].length || y + ym < 0 || y + ym >= input.length)) ==> \\result == input[y][x];\n//@ ensures !(edgeHandling.equals(EdgeHandlingStrategy.NO_OP) && java.util.stream.IntStream.rangeClosed(-(mask.length/2),(mask.length/2)).anyMatch(ym -> java.util.stream.IntStream.rangeClosed(-(mask[0].length/2),(mask[0].length/2)).anyMatch(xm -> x + xm < 0 || x + xm >= input[0].length || y + ym < 0 || y + ym >= input.length))) ==> \\result == java.util.stream.IntStream.rangeClosed(-(mask.length/2),(mask.length/2)).mapToDouble(ym -> java.util.stream.IntStream.rangeClosed(-(mask[0].length/2),(mask[0].length/2)).mapToDouble(xm -> mask[ym + (mask.length/2)][xm + (mask[0].length/2)] * input[(edgeHandling.equals(EdgeHandlingStrategy.NO_OP) ? y + ym : edgeHandling.correctPixel(y + ym, input.length))][(edgeHandling.equals(EdgeHandlingStrategy.NO_OP) ? x + xm : edgeHandling.correctPixel(x + xm, input[0].length))]).sum()).sum();",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 103
+}

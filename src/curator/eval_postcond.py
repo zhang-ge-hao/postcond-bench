@@ -43,12 +43,10 @@ def eval_postcond(method: Method, postcond,
                 timeout=30)
             corr_flag = run_result.to_flag()
             if corr_flag != "passed":
+                print("===== Corr Debug Start =====")
+                print(run_result.stdout)
+                print("===== Corr Debug End =====")
                 return run_result.stdout
-
-        # # ===== Debug =====
-        # print("===== Debug =====")
-        # print(run_result.stdout)
-        # # ===== Debug End =====
 
         mutant_results = []
 
@@ -76,6 +74,10 @@ def eval_postcond(method: Method, postcond,
                     timeout=30)
                 comp_flag = run_result.to_flag()
                 if early_stop and comp_flag not in KFS:
+                    print("===== Comp Debug Start =====")
+                    print(run_result.stdout)
+                    print(comp_flag)
+                    print("===== Comp Debug End =====")
                     return run_result.stdout
             mutant_results.append(comp_flag)
             pass

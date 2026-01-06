@@ -1,0 +1,152 @@
+{
+  "rlid": "get_hooks",
+  "github_url": "https://github.com/dynaconf/dynaconf/blob/09c10d1a91854894986da19fb70f1b54a47cd865/./dynaconf/hooking.py#L149-L162",
+  "name": "get_hooks",
+  "line_cov": 0.9,
+  "lines": 14,
+  "stats": 7,
+  "cc": 5,
+  "content": "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}",
+  "header": "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"",
+  "file": "./dynaconf/hooking.py",
+  "start_line": 149,
+  "end_line": 162,
+  "body_start_line": 154,
+  "comment": "\"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"",
+  "test_time": 1.0741651058197021,
+  "cover_tests": [
+    "tests/test_hooking.py::test_hook_dynaconf_class_get_templated",
+    "tests/test_hooking.py::test_hook_dynaconf_class_after_get",
+    "tests/test_hooking.py::test_hooked_dict",
+    "tests/test_hooking.py::test_hooked_dict_store",
+    "tests/test_hooking.py::test_hook_before_and_after_bypass_method",
+    "tests/test_hooking.py::test_hook_runs_after_method"
+  ],
+  "repo": {
+    "github_path": "dynaconf/dynaconf",
+    "commit": "09c10d1a91854894986da19fb70f1b54a47cd865",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=42\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"dynaconf\"\ndynamic = [ \"version\",]\ndescription = \"The dynamic configurator for your Python Project\"\nreadme = \"README.md\"\nrequires-python = \">=3.9,<3.14\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Framework :: Django\", \"Framework :: Flask\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Topic :: Utilities\", \"Topic :: Software Development :: Libraries\", \"Topic :: Software Development :: Libraries :: Python Modules\",]\ndependencies = []\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Bruno Rocha\"\nemail = \"rochacbruno@gmail.com\"\n\n[project.license]\ntext = \"MIT\"\n\n[project.urls]\nHomepage = \"https://github.com/dynaconf/dynaconf\"\n\n[project.optional-dependencies]\nredis = [ \"redis\",]\nvault = [ \"hvac\",]\nyaml = [ \"ruamel.yaml\",]\ntoml = [ \"toml\",]\nini = [ \"configobj\",]\nconfigobj = [ \"configobj\",]\n\n[tool.pytest.ini_options]\nmarkers = [ \"integration: marks tests as integration (deselect with '-m \\\"not integration\\\"')\",]\ntestpaths = [ \"tests\",]\nnorecursedirs = [ \"tests_functional\",]\naddopts = \"--ignore=tests_functional\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nflask = \"^3.1.2\"\nhvac = \">=1.1.0\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nversion = \">=1.2.0\"\nmarkers = \"python_version >= \\\"3.10\\\"\"\n",
+    "failed_tests": [
+      "tests/test_base.py::test_load_file__validate_on_update_is_false[load-ini]",
+      "tests/test_base.py::test_load_file__validate_on_update_is_true[load-ini]",
+      "tests/test_base.py::test_load_file__validate_on_update_is_str_all[load-ini]",
+      "tests/test_cli.py::test_init_with_path[ini]",
+      "tests/test_cli.py::test_help_dont_require_instance",
+      "tests/test_cli.py::test_write[True-default-ini]",
+      "tests/test_cli.py::test_write[True-development-ini]",
+      "tests/test_cli.py::test_write[False-default-ini]",
+      "tests/test_cli.py::test_write[False-development-ini]",
+      "tests/test_django.py::test_djdt_382",
+      "tests/test_django.py::test_override_settings_596",
+      "tests/test_ini_loader.py::test_load_from_ini",
+      "tests/test_ini_loader.py::test_load_from_multiple_ini",
+      "tests/test_ini_loader.py::test_key_error_on_invalid_env",
+      "tests/test_ini_loader.py::test_load_single_key",
+      "tests/test_ini_loader.py::test_cleaner",
+      "tests/test_ini_loader.py::test_using_env",
+      "tests/test_ini_loader.py::test_load_dunder",
+      "tests/test_ini_loader.py::test_envless",
+      "tests/test_ini_loader.py::test_prefix",
+      "tests/test_loaders.py::test_loaders_raise_on_syntax_error[f.ini-True]",
+      "tests/test_loaders.py::test_loaders_raise_on_syntax_error[f.ini-False]",
+      "tests/test_nested_loading.py::test_load_nested_different_types[ini]",
+      "tests/test_nested_loading.py::test_load_nested_different_types_with_merge",
+      "tests/test_redis.py::test_write_redis_without_data",
+      "tests/test_redis.py::test_write_to_redis",
+      "tests/test_redis.py::test_load_from_redis_with_key",
+      "tests/test_redis.py::test_write_and_load_from_redis_without_key",
+      "tests/test_redis.py::test_delete_from_redis",
+      "tests/test_redis.py::test_delete_all_from_redis",
+      "tests/test_redis.py::test_redis_has_proper_source_metadata",
+      "tests/test_validators.py::test_no_reload_on_single_env",
+      "tests/test_vault.py::test_write_vault_without_data",
+      "tests/test_vault.py::test_list_envs_in_vault",
+      "tests/test_vault.py::test_write_to_vault",
+      "tests/test_vault.py::test_load_from_vault_with_key",
+      "tests/test_vault.py::test_write_and_load_from_vault_without_key",
+      "tests/test_vault.py::test_read_from_vault_kv2_with_different_environments",
+      "tests/test_vault.py::test_vault_has_proper_source_metadata"
+    ],
+    "test_time": 32.326640129089355
+  },
+  "mutants": [
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_REGISTERED_HOOKS\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}\n",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(None, key):\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}\n",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if isinstance(obj, list) and key < len(obj):  # This incorrectly assumes that the object is a list and checks for an index, which is not applicable for all objects.\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return {key: getattr(obj, key)} if hasattr(obj, key) else {}\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(None, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}\n",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, list) and key < len(obj):\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, str) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(None, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}\n",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store and isinstance(obj._store[key], list):\n            return obj._store[key]\n    return {}",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store and not isinstance(obj._store[key], dict):\n            return obj._store[key]\n    return {}",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif hasattr(obj, \"_store\") and key in obj._store and obj._store[key] is None:\n            return obj._store[key]\n    return {}",
+    "def get_hooks(obj):\n    \"\"\"get registered hooks from object\n    must try different casing and accessors because of\n    tests and casing mode set on dynaconf.\n    \"\"\"\n    attr = \"_registered_hooks\"\n    for key in [attr, attr.upper()]:\n        if hasattr(obj, key):\n            return getattr(obj, key)\n        elif isinstance(obj, dict) and key in obj:\n            return obj[key]\n        elif not hasattr(obj, \"_store\") and key in obj._store:\n            return obj._store[key]\n    return {}"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda obj: getattr(obj, \"_registered_hooks\", None), name=\"lower\")\n@icontract.snapshot(lambda obj: getattr(obj, \"_REGISTERED_HOOKS\", None), name=\"upper\")\n@icontract.snapshot(lambda obj: (obj.copy() if isinstance(obj, dict) else None), name=\"as_dict\")\n@icontract.snapshot(lambda obj: getattr(obj, \"_store\", None), name=\"store\")\n@icontract.ensure(\n    lambda OLD, result, obj: (OLD.lower is None) or (result == OLD.lower)\n)\n@icontract.ensure(\n    lambda OLD, result, obj: (OLD.upper is None) or (OLD.lower is not None) or (result == OLD.upper)\n)\n@icontract.ensure(\n    lambda OLD, result, obj: (OLD.as_dict is None)\n    or (\"_registered_hooks\" not in OLD.as_dict)\n    or (OLD.lower is not None)\n    or (OLD.upper is not None)\n    or (result == OLD.as_dict[\"_registered_hooks\"])\n)\n@icontract.ensure(\n    lambda OLD, result, obj: (OLD.as_dict is None)\n    or (\"_REGISTERED_HOOKS\" not in OLD.as_dict)\n    or (OLD.lower is not None)\n    or (OLD.upper is not None)\n    or (result == OLD.as_dict[\"_REGISTERED_HOOKS\"])\n)\n@icontract.ensure(\n    lambda OLD, result, obj: (OLD.store is None)\n    or (\"_registered_hooks\" not in OLD.store)\n    or (OLD.lower is not None)\n    or (OLD.upper is not None)\n    or (OLD.as_dict is not None and \"_registered_hooks\" in OLD.as_dict)\n    or (result == OLD.store[\"_registered_hooks\"])\n)\n@icontract.ensure(\n    lambda OLD, result, obj: (OLD.store is None)\n    or (\"_REGISTERED_HOOKS\" not in OLD.store)\n    or (OLD.lower is not None)\n    or (OLD.upper is not None)\n    or (OLD.as_dict is not None and \"_REGISTERED_HOOKS\" in OLD.as_dict)\n    or (result == OLD.store[\"_REGISTERED_HOOKS\"])\n)\n@icontract.ensure(\n    lambda OLD, result, obj: (\n        (OLD.lower is not None)\n        or (OLD.upper is not None)\n        or (OLD.as_dict is not None and (\"_registered_hooks\" in OLD.as_dict or \"_REGISTERED_HOOKS\" in OLD.as_dict))\n        or (OLD.store is not None and (\"_registered_hooks\" in OLD.store or \"_REGISTERED_HOOKS\" in OLD.store))\n        or (result == {})\n    )\n)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 156
+}

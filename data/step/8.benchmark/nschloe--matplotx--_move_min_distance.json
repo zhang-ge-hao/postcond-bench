@@ -1,0 +1,219 @@
+{
+  "rlid": "_move_min_distance",
+  "github_url": "https://github.com/nschloe/matplotx/blob/4e536bcd05b39a320a5f04e67e5c99a4e4e49f67/./src/matplotx/_labels.py#L13-L37",
+  "name": "_move_min_distance",
+  "line_cov": 1.0,
+  "lines": 25,
+  "stats": 10,
+  "cc": 1,
+  "content": "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+  "header": "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"",
+  "file": "./src/matplotx/_labels.py",
+  "start_line": 13,
+  "end_line": 37,
+  "body_start_line": 19,
+  "comment": "\"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"",
+  "test_time": 1.116013526916504,
+  "cover_tests": [
+    "tests/test_dufte.py::test_plot",
+    "tests/test_dufte.py::test_no_labels",
+    "tests/test_dufte.py::test_nan",
+    "tests/test_dufte.py::test_all_nan",
+    "tests/test_dufte.py::test_logy",
+    "tests/test_dufte.py::test_duftify",
+    "tests/test_move_labels.py::test_move_labels[pos0-2.0-ref0]",
+    "tests/test_move_labels.py::test_move_labels[pos1-2.0-ref1]",
+    "tests/test_move_labels.py::test_move_labels[pos2-2.0-ref2]"
+  ],
+  "repo": {
+    "github_path": "nschloe/matplotx",
+    "commit": "4e536bcd05b39a320a5f04e67e5c99a4e4e49f67",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=61\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"matplotx\"\ndescription = \"Useful styles and extensions for Matplotlib\"\nreadme = \"README.md\"\nclassifiers = [ \"Development Status :: 4 - Beta\", \"Framework :: Matplotlib\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.7\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Topic :: Utilities\",]\ndynamic = [ \"version\",]\nrequires-python = \">=3.11\"\ndependencies = [ \"matplotlib\", \"numpy >= 1.20.0\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Nico Schl\u00f6mer\"\nemail = \"nico.schloemer@gmail.com\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\nall = [ \"networkx\", \"pypng\", \"scipy\",]\ncontour = [ \"networkx\",]\nspy = [ \"pypng\", \"scipy\",]\n\n[project.urls]\nCode = \"https://github.com/nschloe/matplotx\"\nIssues = \"https://github.com/nschloe/matplotx/issues\"\nFunding = \"https://github.com/sponsors/nschloe\"\n\n[project.scripts]\nmatplotx = \"matplotx:cli\"\n\n[tool.isort]\nprofile = \"black\"\n\n[tool.setuptools.dynamic.version]\nattr = \"matplotx.__about__.__version__\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\nimageio = \"^2.37.0\"\nnetworkx = \"^3.5\"\nscipy = \"^1.16.3\"\npypng = \"^0.20220715.0\"\n",
+    "failed_tests": [
+      "tests/test_spy.py::test_png[6875310-kwargs0]",
+      "tests/test_spy.py::test_readme_images",
+      "tests/test_spy.py::test_cli"
+    ],
+    "test_time": 7.338293552398682
+  },
+  "mutants": [
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets[::-1])  # Sorts the targets in reverse order, causing incorrect indexing\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.argsort(targets)  # This will replace targets with their indices instead of sorted values.\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] + n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]\n",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.eye(n)  # This creates an identity matrix, which may not be appropriate for the intended calculations.\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.ones([n, n]) * 2  # This creates a matrix filled with twos, which will distort the results of the nnls function.\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.random.rand(n, n)  # This creates a random matrix, leading to unpredictable behavior in the nnls function.\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.triu(np.ones([n, n]))  # This creates an upper triangular matrix, which is not suitable for the nnls function.\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.zeros([n, n])  # This creates a zero matrix, which will not allow for proper calculations in nnls.\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = np.zeros(n)  # Setting b to a zero array instead of calculating it\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets * (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets + (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets + (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]\n",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) / min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]\n",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min - np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min - np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]\n",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets / (x0_min + np.arange(n) * min_distance + 1)  # Adding 1 to avoid division by zero\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = np.dot(A, b)  # This incorrectly computes the dot product instead of solving the linear system.\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = np.linalg.solve(A, b)  # This will fail if A is not square or singular.\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = np.ones_like(b)  # This will return a solution of ones, which is not based on the input data.\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = np.random.rand(len(b))  # This generates random values instead of solving the system.\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = np.zeros_like(b)  # This will always return a zero solution, which is incorrect.\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * (min_distance + 0.1)  # Introduces an offset in the distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * (min_distance / 2)  # Halves the minimum distance between targets\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance * 2  # Doubles the distance between targets\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance + 5  # Adds a constant offset to all positions\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) / min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]\n",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min - np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]\n",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min - np.arange(n) * min_distance  # Reverses the direction of the distance adjustment\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) - x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(idx)\n    return sol[idx2]\n",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = None\n    return sol[idx2]\n",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.argsort(-targets)  # This will sort the targets in descending order instead of ascending\n    return sol[idx2]",
+    "def _move_min_distance(targets: ArrayLike, min_distance: float) -> np.ndarray:\n    \"\"\"Move the targets such that they are close to their original positions, but keep\n    min_distance apart.\n\n    https://math.stackexchange.com/a/3705240/36678\n    \"\"\"\n    # sort targets\n    idx = np.argsort(targets)\n    targets = np.sort(targets)\n\n    n = len(targets)\n    x0_min = targets[0] - n * min_distance\n    A = np.tril(np.ones([n, n]))\n    b = targets - (x0_min + np.arange(n) * min_distance)\n\n    # import scipy.optimize\n    # out, _ = scipy.optimize.nnls(A, b)\n\n    out = nnls(A, b)\n\n    sol = np.cumsum(out) + x0_min + np.arange(n) * min_distance\n\n    # reorder\n    idx2 = np.random.permutation(len(targets))  # This will introduce random ordering instead of sorted indices\n    return sol[idx2]"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda targets: np.asarray(targets).copy(), name=\"OLD_targets\")\n@icontract.snapshot(lambda min_distance: float(min_distance), name=\"OLD_min_distance\")\n@icontract.ensure(\n    lambda result, OLD: np.allclose(\n        result,\n        (lambda targets, min_d: (\n            lambda idx, t_sorted, n, x0_min, A, b, out, sol, idx2: sol[idx2]\n        )(\n            np.argsort(targets),\n            np.sort(targets),\n            len(targets),\n            np.sort(targets)[0] - len(targets) * min_d,\n            np.tril(np.ones([len(targets), len(targets)])),\n            np.sort(targets) - (np.sort(targets)[0] - len(targets) * min_d + np.arange(len(targets)) * min_d),\n            nnls(np.tril(np.ones([len(targets), len(targets)])), np.sort(targets) - (np.sort(targets)[0] - len(targets) * min_d + np.arange(len(targets)) * min_d)),\n            np.cumsum(nnls(np.tril(np.ones([len(targets), len(targets)])), np.sort(targets) - (np.sort(targets)[0] - len(targets) * min_d + np.arange(len(targets)) * min_d))) + (np.sort(targets)[0] - len(targets) * min_d) + np.arange(len(targets)) * min_d,\n            np.argsort(np.argsort(targets))\n        )\n        )(np.asarray(OLD.OLD_targets), OLD.OLD_min_distance),\n        atol=1e-12,\n    )\n)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 63
+}

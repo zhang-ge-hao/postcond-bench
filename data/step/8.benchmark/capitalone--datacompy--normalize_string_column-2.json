@@ -1,0 +1,219 @@
+{
+  "rlid": "normalize_string_column-2",
+  "github_url": "https://github.com/capitalone/datacompy/blob/2600d7c93f2656de63b108cdb8d37cbec8eb8bbf/./datacompy/polars.py#L1104-L1132",
+  "name": "normalize_string_column",
+  "line_cov": 1.0,
+  "lines": 29,
+  "stats": 6,
+  "cc": 4,
+  "content": "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+  "header": "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"",
+  "file": "./datacompy/polars.py",
+  "start_line": 1104,
+  "end_line": 1132,
+  "body_start_line": 1127,
+  "comment": "\"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"",
+  "test_time": 2.0033183097839355,
+  "cover_tests": [
+    "tests/test_polars.py::test_numeric_columns_equal_abs",
+    "tests/test_polars.py::test_numeric_columns_equal_rel",
+    "tests/test_polars.py::test_string_columns_equal",
+    "tests/test_polars.py::test_string_columns_equal_with_ignore_spaces",
+    "tests/test_polars.py::test_string_columns_equal_with_ignore_spaces_and_case",
+    "tests/test_polars.py::test_date_columns_equal",
+    "tests/test_polars.py::test_date_columns_equal_with_ignore_spaces",
+    "tests/test_polars.py::test_date_columns_equal_with_ignore_spaces_and_case",
+    "tests/test_polars.py::test_date_columns_unequal",
+    "tests/test_polars.py::test_bad_date_columns",
+    "tests/test_polars.py::test_rounded_date_columns",
+    "tests/test_polars.py::test_decimal_float_columns_equal",
+    "tests/test_polars.py::test_decimal_float_columns_equal_rel",
+    "tests/test_polars.py::test_decimal_columns_equal",
+    "tests/test_polars.py::test_decimal_columns_equal_rel",
+    "tests/test_polars.py::test_infinity_and_beyond",
+    "tests/test_polars.py::test_compare_df_setter_good",
+    "tests/test_polars.py::test_compare_df_setter_different_cases",
+    "tests/test_polars.py::test_compare_df_setter_good_index",
+    "tests/test_polars.py::test_columns_overlap",
+    "tests/test_polars.py::test_columns_no_overlap",
+    "tests/test_polars.py::test_columns_maintain_order_through_set_operations",
+    "tests/test_polars.py::test_10k_rows",
+    "tests/test_polars.py::test_subset",
+    "tests/test_polars.py::test_not_subset",
+    "tests/test_polars.py::test_large_subset",
+    "tests/test_polars.py::test_string_joiner",
+    "tests/test_polars.py::test_decimal_with_nulls",
+    "tests/test_polars.py::test_strings_with_joins",
+    "tests/test_polars.py::test_simple_dupes_one_field",
+    "tests/test_polars.py::test_simple_dupes_two_fields",
+    "tests/test_polars.py::test_simple_dupes_one_field_two_vals_1",
+    "tests/test_polars.py::test_simple_dupes_one_field_two_vals_2",
+    "tests/test_polars.py::test_simple_dupes_one_field_three_to_two_vals",
+    "tests/test_polars.py::test_dupes_from_real_data",
+    "tests/test_polars.py::test_strings_with_joins_with_ignore_spaces",
+    "tests/test_polars.py::test_strings_with_joins_with_ignore_case",
+    "tests/test_polars.py::test_decimal_with_joins_with_ignore_spaces",
+    "tests/test_polars.py::test_decimal_with_joins_with_ignore_case",
+    "tests/test_polars.py::test_joins_with_ignore_spaces",
+    "tests/test_polars.py::test_joins_with_ignore_case",
+    "tests/test_polars.py::test_strings_with_ignore_spaces_and_join_columns",
+    "tests/test_polars.py::test_integers_with_ignore_spaces_and_join_columns",
+    "tests/test_polars.py::test_sample_mismatch",
+    "tests/test_polars.py::test_all_mismatch_not_ignore_matching_cols_no_cols_matching",
+    "tests/test_polars.py::test_all_mismatch_not_ignore_matching_cols_some_cols_matching",
+    "tests/test_polars.py::test_all_mismatch_ignore_matching_cols_some_cols_matching_diff_rows",
+    "tests/test_polars.py::test_all_mismatch_ignore_matching_cols_some_cols_matching",
+    "tests/test_polars.py::test_all_mismatch_ignore_matching_cols_no_cols_matching",
+    "tests/test_polars.py::test_lower",
+    "tests/test_polars.py::test_save_html",
+    "tests/test_polars.py::test_categorical_column",
+    "tests/test_polars.py::test_string_as_numeric",
+    "tests/test_polars.py::test_single_date_columns_equal_to_string",
+    "tests/test_polars.py::test_temporal_equal",
+    "tests/test_polars.py::test_columns_equal_arrays",
+    "tests/test_polars.py::test_columns_equal_lists",
+    "tests/test_polars.py::test_normalize_string_column[input_data0-True-True-expected0]",
+    "tests/test_polars.py::test_normalize_string_column[input_data1-True-True-expected1]",
+    "tests/test_polars.py::test_normalize_string_column[input_data2-True-True-expected2]",
+    "tests/test_polars.py::test_normalize_string_column[input_data3-True-False-expected3]",
+    "tests/test_polars.py::test_normalize_string_column[input_data4-False-True-expected4]",
+    "tests/test_polars.py::test_normalize_string_column[input_data5-False-False-expected5]",
+    "tests/test_polars.py::test_normalize_string_column[input_data6-True-True-expected6]",
+    "tests/test_polars.py::test_normalize_string_column[input_data7-True-False-expected7]",
+    "tests/test_polars.py::test_normalize_string_column[input_data8-False-True-expected8]",
+    "tests/test_polars.py::test_normalize_string_column[input_data9-False-False-expected9]",
+    "tests/test_polars.py::test_normalize_string_column[input_data10-True-True-expected10]",
+    "tests/test_polars.py::test_normalize_string_column[input_data11-True-True-expected11]",
+    "tests/test_polars.py::test_normalize_string_column[input_data12-True-True-expected12]",
+    "tests/test_polars.py::test_normalize_string_column[input_data13-True-False-expected13]",
+    "tests/test_polars.py::test_normalize_string_column[input_data14-False-True-expected14]",
+    "tests/test_polars.py::test_normalize_string_column[input_data15-False-False-expected15]",
+    "tests/test_polars.py::test_normalize_string_column[input_data16-True-True-expected16]",
+    "tests/test_polars.py::test_normalize_string_column[input_data17-False-True-expected17]",
+    "tests/test_polars.py::test_custom_template_usage",
+    "tests/test_polars.py::test_template_without_extension",
+    "tests/test_polars.py::test_nonexistent_template",
+    "tests/test_polars.py::test_template_context_variables",
+    "tests/test_polars.py::test_html_report_generation",
+    "tests/test_polars.py::test_per_column_tolerances",
+    "tests/test_polars.py::test_default_tolerance",
+    "tests/test_polars.py::test_mixed_tolerances"
+  ],
+  "repo": {
+    "github_path": "capitalone/datacompy",
+    "commit": "2600d7c93f2656de63b108cdb8d37cbec8eb8bbf",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"setuptools.build_meta\"\nrequires = [ \"setuptools>=64\",]\n\n[project]\nname = \"datacompy\"\ndescription = \"Dataframe comparison in Python\"\nreadme = \"README.md\"\nrequires-python = \">=3.10.0\"\nclassifiers = [ \"Intended Audience :: Developers\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\",]\ndynamic = [ \"version\",]\ndependencies = [ \"jinja2>=3\", \"numpy>=1.22,<=2.2.6; python_version=='3.10'\", \"numpy>=1.22,<=2.3.3; python_version>='3.11'\", \"ordered-set>=4.0.2,<=4.1\", \"pandas>=0.25,<=2.3.3\", \"polars[pandas]>=0.20.4,<=1.33.1\",]\nversion = \"0.1.0\"\n[[project.maintainers]]\nname = \"Faisal Dosani\"\nemail = \"faisal.dosani@capitalone.com\"\n\n[[project.maintainers]]\nname = \"Jacob Dawang\"\nemail = \"jacob.dawang@capitalone.com\"\n\n[[project.maintainers]]\nname = \"Raymond Haffar\"\nemail = \"raymond.haffar@capitalone.com\"\n\n[[project.authors]]\nname = \"Faisal Dosani\"\nemail = \"faisal.dosani@capitalone.com\"\n\n[[project.authors]]\nname = \"Raymond Haffar\"\nemail = \"raymond.haffar@capitalone.com\"\n\n[[project.authors]]\nname = \"Jacob Dawang\"\nemail = \"jacob.dawang@capitalone.com\"\n\n[project.license]\ntext = \"Apache Software License\"\n\n[project.optional-dependencies]\nbuild = [ \"build\", \"twine\", \"wheel\",]\ndev = []\ndev_no_snowflake = []\ndocs = [ \"furo\", \"myst-parser\", \"sphinx\",]\nedgetest = [ \"edgetest\", \"edgetest-conda\",]\nfugue = [ \"duckdb<1.4\", \"fugue[dask,duckdb,ray]>=0.8.7,<=0.9.1\",]\nqa = [ \"mypy\", \"pandas-stubs\", \"pre-commit\", \"ruff==0.5.7\",]\nsnowflake = [ \"snowflake-connector-python\",]\nspark = [ \"pyspark[connect]>=3.4,<=3.5.6\",]\ntests = [ \"pytest\", \"pytest-cov\", \"pytest-reportlog\", \"pytest-env\", \"icontract\",]\ntests-spark = [ \"pytest\", \"pytest-cov\", \"pytest-spark\",]\n\n[project.urls]\n\"Bug Tracker\" = \"https://github.com/capitalone/datacompy/issues\"\nDocumentation = \"https://capitalone.github.io/datacompy/\"\nHomepage = \"https://github.com/capitalone/datacompy\"\nRepository = \"https://github.com/capitalone/datacompy.git\"\n\"Source Code\" = \"https://github.com/capitalone/datacompy\"\n\n[tool.setuptools]\npackages = [ \"datacompy\", \"datacompy.spark\",]\nzip-safe = false\ninclude-package-data = true\n\n[tool.ruff]\ntarget-version = \"py310\"\nsrc = [ \"src\",]\nextend-include = [ \"*.ipynb\",]\n\n[tool.pyproject-fmt]\ncolumn_width = 88\n\n[tool.mypy]\nstrict = true\n[[tool.mypy.overrides]]\nmodule = [ \"fugue.*\", \"triad.*\",]\nimplicit_reexport = true\n\n[[tool.mypy.overrides]]\nmodule = \"pyarrow\"\nignore_missing_imports = true\n\n[tool.setuptools.package-data]\n\"*\" = [ \"templates/*.j2\", \"templates/*.txt\",]\n\n[tool.ruff.lint]\nselect = [ \"B\", \"C4\", \"D\", \"E\", \"F\", \"I\", \"LOG\", \"NPY\", \"RUF\", \"SIM\", \"T20\", \"TID252\", \"UP\", \"W\",]\nignore = [ \"D206\", \"D300\", \"E111\", \"E114\", \"E117\", \"E203\", \"E501\", \"SIM105\", \"SIM108\", \"UP006\", \"UP035\",]\npreview = true\n\n[tool.distutils.bdist_wheel]\npython-tag = \"py3\"\n\n[edgetest.envs.core]\npython_version = \"3.10\"\nconda_install = [ \"openjdk=8\",]\nextras = [ \"dev\",]\ncommand = \"pytest tests/ --ignore=tests/test_snowflake.py\"\nupgrade = [ \"pandas\", \"numpy\", \"ordered-set\", \"polars[pandas]\",]\n\n[tool.setuptools.dynamic.version]\nattr = \"datacompy.__version__\"\n\n[tool.ruff.lint.per-file-ignores]\n\"**/{tests,docs}/*\" = [ \"ARG\", \"D\", \"E402\", \"F841\",]\n\"__init__.py\" = [ \"E402\",]\n\n[tool.ruff.lint.flake8-tidy-imports]\nban-relative-imports = \"all\"\n\n[tool.ruff.lint.pydocstyle]\nconvention = \"numpy\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [],
+    "test_time": 13.431532621383667
+  },
+  "mutants": [
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(None) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column\n",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype) in LIST_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype) in STRING_TYPE and column.is_null().any():\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) == \"Utf8\":\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_case:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces and ignore_case:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces or ignore_case:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if not ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.replace(\" \", \"\")  # Removes all spaces instead of just stripping them\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.to_lowercase()  # Converts to lowercase instead of stripping whitespace\n        if ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case != True:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case is False:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if not ignore_case:\n            column = column.str.to_uppercase()\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = None\n    return column\n",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.replace(\" \", \"\")  # This removes spaces instead of normalizing case\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.slice(0, 1)  # This only keeps the first character, losing the rest of the string\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_lowercase()  # This will convert to lowercase instead of uppercase\n    return column",
+    "def normalize_string_column(\n    column: pl.Series, ignore_spaces: bool, ignore_case: bool\n) -> pl.Series:\n    \"\"\"Normalize a string column by converting to upper case and stripping whitespace.\n\n    Parameters\n    ----------\n    column : pl.Series\n        The column to normalize\n    ignore_spaces : bool\n        Whether to ignore spaces when normalizing\n    ignore_case : bool\n        Whether to ignore case when normalizing\n\n    Returns\n    -------\n    pl.Series\n        The normalized column\n\n    Notes\n    -----\n    Will not operate on categorical columns.\n    \"\"\"\n    if str(column.dtype.base_type()) in STRING_TYPE:\n        if ignore_spaces:\n            column = column.str.strip_chars()\n        if ignore_case:\n            column = column.str.to_uppercase().str.strip_chars()  # This adds an unnecessary operation\n    return column"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda column: column.to_list(), name=\"old_values\")\n@icontract.snapshot(lambda column: str(column.dtype.base_type()), name=\"old_base_type\")\n@icontract.ensure(\n    lambda OLD, result, ignore_spaces, ignore_case: \n        result is not None\n        and\n        len(result) == len(OLD.old_values)\n        and\n        [repr(x) for x in result.to_list()] == [\n            (\n                repr(None)\n                if v is None\n                else (\n                    repr(\n                        ((v.strip() if ignore_spaces else v).upper() if ignore_case\n                        else (v.strip() if ignore_spaces else v))\n                    )\n                    if str(OLD.old_base_type) in STRING_TYPE\n                    else repr(v)\n                )\n            )\n            for v in OLD.old_values\n        ]\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 323
+}

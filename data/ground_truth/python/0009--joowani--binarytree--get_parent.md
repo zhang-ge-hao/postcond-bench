@@ -1,6 +1,14 @@
 https://github.com/joowani/binarytree/blob/74e0c0bf204a0a2789c45a07264718f963db37fe/./binarytree/__init__.py#L2131-L2180
 ```
 @icontract.ensure(
+    lambda result: 
+        result is None or isinstance(result, Node)
+)
+@icontract.ensure(
+    lambda result, child: 
+        not child is None or result is None
+)
+@icontract.ensure(
     lambda result, root, child:
         result is (
             None

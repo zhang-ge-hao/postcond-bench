@@ -1,0 +1,109 @@
+{
+  "rlid": "remove_nsfw_sites",
+  "github_url": "https://github.com/sherlock-project/sherlock/blob/339634f7bc370517b06f960b464b10935bb829fb/./sherlock_project/sites.py#L213-L229",
+  "name": "remove_nsfw_sites",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 7,
+  "cc": 4,
+  "content": "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+  "header": "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"",
+  "file": "./sherlock_project/sites.py",
+  "start_line": 213,
+  "end_line": 229,
+  "body_start_line": 223,
+  "comment": "\"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"",
+  "test_time": 1.3988590240478516,
+  "cover_tests": [
+    "tests/test_ux.py::test_remove_nsfw",
+    "tests/test_ux.py::test_nsfw_explicit_selection[nsfwsites0]",
+    "tests/test_ux.py::test_nsfw_explicit_selection[nsfwsites1]"
+  ],
+  "repo": {
+    "github_path": "sherlock-project/sherlock",
+    "commit": "339634f7bc370517b06f960b464b10935bb829fb",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.2.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"sherlock-project\"\nversion = \"0.1.0\"\n\n[tool.poetry-version-plugin]\nsource = \"init\"\n\n[tool.poetry]\nname = \"sherlock-project\"\nversion = \"0.16.0\"\ndescription = \"Hunt down social media accounts by username across social networks\"\nlicense = \"MIT\"\nauthors = [ \"Siddharth Dushantha <siddharth.dushantha@gmail.com>\",]\nmaintainers = [ \"Paul Pfeister <code@pfeister.dev>\", \"Matheus Felipe <matheusfelipeog@protonmail.com>\", \"Sondre Karlsen Dyrnes <sondre@villdyr.no>\",]\nreadme = \"docs/pyproject/README.md\"\nkeywords = [ \"osint\", \"reconnaissance\", \"information gathering\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Intended Audience :: Information Technology\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Topic :: Security\",]\nhomepage = \"https://sherlockproject.xyz/\"\nrepository = \"https://github.com/sherlock-project/sherlock\"\n[[tool.poetry.packages]]\ninclude = \"sherlock_project\"\n\n[tool.poetry.urls]\n\"Bug Tracker\" = \"https://github.com/sherlock-project/sherlock/issues\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\ncertifi = \">=2019.6.16\"\ncolorama = \"^0.4.1\"\nPySocks = \"^1.7.0\"\nrequests = \"^2.22.0\"\nrequests-futures = \"^1.0.0\"\nstem = \"^1.8.0\"\npandas = \"^2.2.1\"\nopenpyxl = \"^3.0.10\"\ntomli = \"^2.2.1\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.scripts]\nsherlock = \"sherlock_project.sherlock:main\"\n\n[tool.poetry.group.dev.dependencies]\njsonschema = \"^4.0.0\"\nrstr = \"^3.2.2\"\npytest = \"^8.4.2\"\npytest-xdist = \"^3.8.0\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n\n[tool.poetry.group.ci.dependencies]\ndefusedxml = \"^0.7.1\"\n",
+    "failed_tests": [
+      "tests/test_ux.py::test_no_usernames_provided[]",
+      "tests/test_ux.py::test_no_usernames_provided[--site urghrtuight --egiotr]",
+      "tests/test_ux.py::test_no_usernames_provided[--]",
+      "tests/test_version.py::test_versioning"
+    ],
+    "test_time": 5.668840646743774
+  },
+  "mutants": [
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove if site.casefold() in self.sites]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.upper() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if not self.sites[site].is_nsfw and site.casefold() in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites\n",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw or site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw or site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites\n",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                break\n            sites[site] = self.sites[site]\n        self.sites =  sites\n",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = None\n        self.sites =  sites\n",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  None\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda self: dict(self.sites), name=\"old_sites\")\n@icontract.snapshot(lambda do_not_remove: [s.casefold() for s in do_not_remove], name=\"old_do_not_remove\")\n@icontract.ensure(\n    lambda OLD, self: \n        isinstance(self.sites, dict)\n        and\n        all(((site in self.sites and self.sites[site] is OLD.old_sites[site]) if (not OLD.old_sites[site].is_nsfw or site.casefold() in OLD.old_do_not_remove) else (site not in self.sites)) for site in OLD.old_sites)\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 246
+}

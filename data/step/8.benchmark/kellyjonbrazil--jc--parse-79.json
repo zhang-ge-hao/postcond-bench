@@ -1,0 +1,336 @@
+{
+  "rlid": "parse-79",
+  "github_url": "https://github.com/kellyjonbrazil/jc/blob/9fd13e698709da95f5ee505ff1fde10564544d48/./jc/parsers/lsattr.py#L110-L162",
+  "name": "parse",
+  "line_cov": 1.0,
+  "lines": 53,
+  "stats": 21,
+  "cc": 8,
+  "content": "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+  "header": "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"",
+  "file": "./jc/parsers/lsattr.py",
+  "start_line": 110,
+  "end_line": 162,
+  "body_start_line": 127,
+  "comment": "\"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"",
+  "test_time": 0.2656123638153076,
+  "cover_tests": [
+    "tests/test_lsattr.py::MyTests::test_lsattr_R_ubuntu_20_4",
+    "tests/test_lsattr.py::MyTests::test_lsattr_error",
+    "tests/test_lsattr.py::MyTests::test_lsattr_nodata",
+    "tests/test_lsattr.py::MyTests::test_lsattr_ubuntu_20_4"
+  ],
+  "repo": {
+    "github_path": "kellyjonbrazil/jc",
+    "commit": "9fd13e698709da95f5ee505ff1fde10564544d48",
+    "language": "python",
+    "env_config": "[project]\nrequires-python = \">=3.10\"\nname = \"my_project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\npackage-mode = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [
+      "tests/test_cbt.py::MyTests::test_cbt_multiple_rows_raw",
+      "tests/test_cef.py::MyTests::test_cef_sample",
+      "tests/test_cef_s.py::MyTests::test_cef_s_sample",
+      "tests/test_certbot.py::MyTests::test_certbot_certificates",
+      "tests/test_clf.py::MyTests::test_clf",
+      "tests/test_clf_s.py::MyTests::test_clf_s_centos_7_7",
+      "tests/test_date.py::MyTests::test_date",
+      "tests/test_date.py::MyTests::test_date_after_midnight",
+      "tests/test_date.py::MyTests::test_date_am_ubuntu_20_04",
+      "tests/test_date.py::MyTests::test_date_before_midnight",
+      "tests/test_date.py::MyTests::test_date_pm_ubuntu_20_04",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_additional",
+      "tests/test_dig.py::MyTests::test_dig_additional2",
+      "tests/test_dig.py::MyTests::test_dig_additional3",
+      "tests/test_dig.py::MyTests::test_dig_answer_spaces",
+      "tests/test_dig.py::MyTests::test_dig_axfr_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_axfr_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_axfr_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_edns",
+      "tests/test_dig.py::MyTests::test_dig_edns2",
+      "tests/test_dig.py::MyTests::test_dig_edns3",
+      "tests/test_dig.py::MyTests::test_dig_nsid",
+      "tests/test_dig.py::MyTests::test_dig_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_x_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_x_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_x_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_x_ubuntu_18_4",
+      "tests/test_dir.py::MyTests::test_dir_windows_10",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_C",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_ODTC",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_S",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_dirs",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_files",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_mix",
+      "tests/test_git_log.py::MyTests::test_git_log",
+      "tests/test_git_log.py::MyTests::test_git_log_blank_author_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_hash_in_message_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_is_hash_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_shortstat",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_stat",
+      "tests/test_git_log.py::MyTests::test_git_log_medium",
+      "tests/test_git_log.py::MyTests::test_git_log_medium_shortstat",
+      "tests/test_git_log.py::MyTests::test_git_log_medium_stat",
+      "tests/test_git_log_s.py::MyTests::test_git_log_blank_author_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_hash_in_message_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_is_hash_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_shortstat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_stat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_shortstat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_stat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_s_ignore_exceptions_success",
+      "tests/test_ipconfig.py::MyTests::test_windows_ipconfig",
+      "tests/test_jc_cli.py::MyTests::test_cli_yaml_out",
+      "tests/test_jc_utils.py::MyTests::test_utils_timestamp",
+      "tests/test_last.py::MyTests::test_last_F_ubuntu_20_4",
+      "tests/test_last.py::MyTests::test_last_wF_centos_7_7",
+      "tests/test_last.py::MyTests::test_last_wixF_centos_7_7",
+      "tests/test_ls.py::MyTests::test_ls_l_iso_ubuntu_18_4",
+      "tests/test_ls_s.py::MyTests::test_ls_s_l_iso_ubuntu_18_4",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid0_offline",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid0_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_0_90_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_checking",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_faulty1",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_faulty2",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_moreflags",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_replacing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_resync",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_syncing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_homehost",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_meta09",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_detail",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid0_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_failed_and_flags",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty_and_removed",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty_with_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_0_9",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_rebuild_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_spare_writem_rebuild",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_syncing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_homehost",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_meta09",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_ok",
+      "tests/test_openvpn.py::MyTests::test_openvpn",
+      "tests/test_pacman.py::MyTests::test_pacman_all_fixtures",
+      "tests/test_plist.py::MyTests::test_plist_bin_alltypes",
+      "tests/test_plist.py::MyTests::test_plist_xml_alltypes",
+      "tests/test_rpm_qai.py::MyTests::test_rpm_qai_centos_7_7",
+      "tests/test_rpm_qai.py::MyTests::test_rpm_qi_package_centos_7_7",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_v_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vv_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vvv_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vvv_logfile_nochange",
+      "tests/test_rsync.py::MyTests::test_rsync_osx_10_14_6_rsync_i_vvv_logfile_nochange",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_v_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vv_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_nochange_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_nochange_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_centos_7_7",
+      "tests/test_stat.py::MyTests::test_stat_filename_with_spaces_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_freebsd12",
+      "tests/test_stat.py::MyTests::test_stat_missing_data",
+      "tests/test_stat.py::MyTests::test_stat_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_ubuntu_18_4",
+      "tests/test_stat_s.py::MyTests::test_stat_s_centos_7_7",
+      "tests/test_stat_s.py::MyTests::test_stat_s_filename_with_spaces_osx_10_14_6",
+      "tests/test_stat_s.py::MyTests::test_stat_s_freebsd12",
+      "tests/test_stat_s.py::MyTests::test_stat_s_osx_10_14_6",
+      "tests/test_stat_s.py::MyTests::test_stat_s_ubuntu_18_4",
+      "tests/test_syslog.py::MyTests::test_syslog_sample",
+      "tests/test_syslog_s.py::MyTests::test_syslog_s",
+      "tests/test_systeminfo.py::MyTests::test_windows_systeminfo",
+      "tests/test_timestamp.py::MyTests::test_10_digit_timestamp",
+      "tests/test_timestamp.py::MyTests::test_13_digit_timestamp",
+      "tests/test_tune2fs.py::MyTests::test_tune2fs_l",
+      "tests/test_upower.py::MyTests::test_upower_d_clocale_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_d_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_i_c_locale",
+      "tests/test_upower.py::MyTests::test_upower_i_non_utc_generic",
+      "tests/test_upower.py::MyTests::test_upower_i_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_i_utc_generic",
+      "tests/test_vmstat.py::MyTests::test_vmstat_at_5_10",
+      "tests/test_vmstat.py::MyTests::test_vmstat_awt",
+      "tests/test_vmstat.py::MyTests::test_vmstat_dt",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_at_5_10_centos_7_7",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_awt_centos_7_7",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_dt_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_a_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_a_ubuntu_18_4",
+      "tests/test_who.py::MyTests::test_who_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_login_screen",
+      "tests/test_who.py::MyTests::test_who_ubuntu_18_4"
+    ],
+    "test_time": 118.19753551483154
+  },
+  "mutants": [
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if jc.utils.has_data(data):  # This will incorrectly process data when it exists\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(None):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata[1:]:  # Skips the first line, which may contain important information\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata[:-1]:  # Iterates over all but the last line, potentially missing data\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in reversed(cleandata):  # Processes lines in reverse order, which may lead to incorrect parsing\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            break\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        file, attributes = line.split(maxsplit=1)  # Incorrectly splits into two variables\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['FILE'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['XXfileXX'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = None\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in [attributes]:  # Wraps attributes in a list, causing only one iteration with the whole string\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in attributes.split():  # Incorrectly splits attributes, leading to incorrect parsing\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(None)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute.upper())\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = None\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key == '':  # This checks for an empty string instead of None\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key in ATTRIBUTES:  # This checks if the key exists in the dictionary instead of being valid\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if not attribute_key:  # This will skip valid attributes if attribute_key is falsy\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = False\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = None\n\n        if line_output:\n            output.append(line_output)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if 'compressed_file' in line_output and line_output['compressed_file']:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output.get('file') is None:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if not line_output:\n            output.append(line_output)\n\n    return output",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.append(None)\n\n    return output\n",
+    "def parse(\n    data: str,\n    raw: bool = False,\n    quiet: bool = False\n) -> List[JSONDictType]:\n    \"\"\"\n    Main text parsing function\n\n    Parameters:\n\n        data:        (string)  text data to parse\n        quiet:       (boolean) suppress warning messages if True\n\n    Returns:\n\n        List of Dictionaries. Raw or processed structured data.\n    \"\"\"\n    jc.utils.compatibility(__name__, info.compatible, quiet)\n    jc.utils.input_type_check(data)\n\n    output: List = []\n\n    cleandata = list(filter(None, data.splitlines()))\n\n    if not jc.utils.has_data(data):\n        return output\n\n    for line in cleandata:\n        # -R flag returns the output in the format:\n        # Folder:\n        #   attributes file_in_folder\n        if line.endswith(':'):\n            continue\n\n        # lsattr: Operation not supported ....\n        if line.startswith(ERROR_PREFIX):\n            continue\n\n        line_output: Dict = {}\n\n        # attributes file\n        # --------------e----- /etc/passwd\n        attributes, file = line.split()\n        line_output['file'] = file\n        for attribute in list(attributes):\n            attribute_key = ATTRIBUTES.get(attribute)\n            if attribute_key:\n                line_output[attribute_key] = True\n\n        if line_output:\n            output.insert(0, line_output)\n\n    return output"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda data: list(filter(None, data.splitlines())), name=\"cleandata\")\n@icontract.snapshot(lambda data: [line for line in list(filter(None, data.splitlines())) if not line.endswith(':') and not line.startswith(ERROR_PREFIX)], name=\"processable\")\n@icontract.snapshot(lambda data: ATTRIBUTES, name=\"ATTRIBUTES\")\n@icontract.ensure(\n    lambda result, data, OLD: \n        (\n            (not jc.utils.has_data(data) and result == []) or (jc.utils.has_data(data) and len(result) == len(OLD.processable))\n        ) and \n        all(isinstance(r, dict) for r in result)\n        and\n        all(isinstance(k, str) for r in result for k in r.keys())\n        and\n        all(isinstance(r.get('file'), str) and r.get('file') == p.split()[-1] for r, p in zip(result, OLD.processable))\n        and\n        all(all((r.get(OLD.ATTRIBUTES.get(c)) is True) if OLD.ATTRIBUTES.get(c) else True for c in p.split()[0]) for r, p in zip(result, OLD.processable))\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 202
+}

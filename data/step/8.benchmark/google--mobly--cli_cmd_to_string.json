@@ -1,0 +1,104 @@
+{
+  "rlid": "cli_cmd_to_string",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/utils.py#L674-L686",
+  "name": "cli_cmd_to_string",
+  "line_cov": 1.0,
+  "lines": 13,
+  "stats": 3,
+  "cc": 3,
+  "content": "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if isinstance(args, str):\n    # Return directly if it's already a string.\n    return args\n  return ' '.join([shlex.quote(arg) for arg in args])",
+  "header": "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"",
+  "file": "./mobly/utils.py",
+  "start_line": 674,
+  "end_line": 686,
+  "body_start_line": 683,
+  "comment": "\"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"",
+  "test_time": 0.8855502605438232,
+  "cover_tests": [
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_connect_fail",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_construct_adb_cmd_with_shell_true",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_construct_adb_cmd_with_shell_true_with_auto_quotes",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_construct_adb_cmd_with_shell_true_with_list",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_construct_adb_cmd_with_shell_true_with_one_arg_command",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_construct_adb_cmd_with_shell_true_with_one_arg_command_list",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_construct_adb_cmd_with_shell_true_with_one_command",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_construct_adb_cmd_with_shell_true_with_serial",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_construct_adb_cmd_with_shell_true_with_serial_with_list",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_exec_adb_cmd_with_shell_true",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_exec_adb_cmd_with_stderr_pipe",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_exec_cmd_error_with_serial",
+    "tests/mobly/controllers/android_device_lib/adb_test.py::AdbTest::test_exec_cmd_error_without_serial"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if args is None:  # This will only check for None, ignoring valid string inputs.\n    # Return directly if it's already a string.\n    return args\n  return ' '.join([shlex.quote(arg) for arg in args])",
+    "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if args:  # This will always evaluate to True for non-empty strings, leading to incorrect handling.\n    # Return directly if it's already a string.\n    return args\n  return ' '.join([shlex.quote(arg) for arg in args])",
+    "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if isinstance(args, list):  # This will incorrectly treat lists as strings.\n    # Return directly if it's already a string.\n    return args\n  return ' '.join([shlex.quote(arg) for arg in args])",
+    "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if not isinstance(args, str):  # This will skip processing for strings, leading to incorrect behavior.\n    # Return directly if it's already a string.\n    return args\n  return ' '.join([shlex.quote(arg) for arg in args])",
+    "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if isinstance(args, str):\n    # Return directly if it's already a string.\n    return args\n  return ' '.join([arg for arg in args if arg is not None])  # This will remove any None arguments, which could change the intended command.",
+    "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if isinstance(args, str):\n    # Return directly if it's already a string.\n    return args\n  return ' '.join([arg for arg in args if arg])  # This will omit any empty arguments, potentially altering the command structure.",
+    "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if isinstance(args, str):\n    # Return directly if it's already a string.\n    return args\n  return ' '.join([str(arg) for arg in args])  # This will convert all arguments to strings, losing any special handling for shell characters.",
+    "def cli_cmd_to_string(args):\n  \"\"\"Converts a cmd arg list to string.\n\n  Args:\n    args: list of strings, the arguments of a command.\n\n  Returns:\n    String representation of the command.\n  \"\"\"\n  if isinstance(args, str):\n    # Return directly if it's already a string.\n    return args\n  return ' '.join(args)  # This will not quote the arguments, leading to potential command injection issues."
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, args: isinstance(result, str))\n@icontract.ensure(lambda result, args: (isinstance(args, str) and result == args) or (not isinstance(args, str) and result == ' '.join([shlex.quote(arg) for arg in args])))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 47
+}

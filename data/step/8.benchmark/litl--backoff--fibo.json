@@ -1,0 +1,75 @@
+{
+  "rlid": "fibo",
+  "github_url": "https://github.com/litl/backoff/blob/d82b23c42d7a7e2402903e71e7a7f03014a00076/./backoff/_wait_gen.py#L64-L82",
+  "name": "fibo",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 8,
+  "cc": 3,
+  "content": "def fibo(max_value: Optional[int] = None) -> Generator[int, None, None]:\n    \"\"\"Generator for fibonaccial decay.\n\n    Args:\n        max_value: The maximum value to yield. Once the value in the\n             true fibonacci sequence exceeds this, the value\n             of max_value will forever after be yielded.\n    \"\"\"\n    # Advance past initial .send() call\n    yield  # type: ignore[misc]\n\n    a = 1\n    b = 1\n    while True:\n        if max_value is None or a < max_value:\n            yield a\n            a, b = b, a + b\n        else:\n            yield max_value",
+  "header": "def fibo(max_value: Optional[int] = None) -> Generator[int, None, None]:\n    \"\"\"Generator for fibonaccial decay.\n\n    Args:\n        max_value: The maximum value to yield. Once the value in the\n             true fibonacci sequence exceeds this, the value\n             of max_value will forever after be yielded.\n    \"\"\"",
+  "file": "./backoff/_wait_gen.py",
+  "start_line": 64,
+  "end_line": 82,
+  "body_start_line": 72,
+  "comment": "\"\"\"Generator for fibonaccial decay.\n\n    Args:\n        max_value: The maximum value to yield. Once the value in the\n             true fibonacci sequence exceeds this, the value\n             of max_value will forever after be yielded.\n    \"\"\"",
+  "test_time": 0.33429622650146484,
+  "cover_tests": [
+    "tests/test_wait_gen.py::test_fibo",
+    "tests/test_wait_gen.py::test_fibo_max_value"
+  ],
+  "repo": {
+    "github_path": "litl/backoff",
+    "commit": "d82b23c42d7a7e2402903e71e7a7f03014a00076",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"backoff\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"backoff\"\nversion = \"2.2.1\"\ndescription = \"Function decoration for backoff and retry\"\nauthors = [ \"Bob Green <rgreen@aquent.com>\",]\nreadme = \"README.rst\"\nrepository = \"https://github.com/litl/backoff\"\nlicense = \"MIT\"\nkeywords = [ \"retry\", \"backoff\", \"decorators\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Programming Language :: Python\", \"License :: OSI Approved :: MIT License\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.7\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Topic :: Internet :: WWW/HTTP\", \"Topic :: Software Development :: Libraries :: Python Modules\", \"Topic :: Utilities\",]\n[[tool.poetry.packages]]\ninclude = \"backoff\"\n\n[tool.poetry.dependencies]\npython = \"^3.7\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.dev-dependencies]\nflake8 = \"^4.0.1\"\nmypy = \"^0.942\"\npytest = \"^7.1.2\"\npytest-asyncio = \"^0.18.3\"\npytest-cov = \"^3.0.0\"\nrequests = \"^2.26.0\"\nresponses = \"^0.20.0\"\ntypes-requests = \"^2.27.20\"\n\n[tool.poetry.group.dev.dependencies]\npytest-reportlog = \"^0.4.0\"\n",
+    "failed_tests": [
+      "tests/test_backoff_async.py::test_on_exception_coro_cancelling"
+    ],
+    "test_time": 1.089127540588379
+  },
+  "mutants": [
+    "def fibo(max_value: Optional[int] = None) -> Generator[int, None, None]:\n    \"\"\"Generator for fibonaccial decay.\n\n    Args:\n        max_value: The maximum value to yield. Once the value in the\n             true fibonacci sequence exceeds this, the value\n             of max_value will forever after be yielded.\n    \"\"\"\n    # Advance past initial .send() call\n    yield  # type: ignore[misc]\n\n    a = 1\n    b = 1\n    for _ in range(1):\n        if max_value is None or a < max_value:\n            yield a\n            a, b = b, a + b\n        else:\n            yield max_value",
+    "def fibo(max_value: Optional[int] = None) -> Generator[int, None, None]:\n    \"\"\"Generator for fibonaccial decay.\n\n    Args:\n        max_value: The maximum value to yield. Once the value in the\n             true fibonacci sequence exceeds this, the value\n             of max_value will forever after be yielded.\n    \"\"\"\n    # Advance past initial .send() call\n    yield  # type: ignore[misc]\n\n    a = 1\n    b = 1\n    if True:\n        if max_value is None or a < max_value:\n            yield a\n            a, b = b, a + b\n        else:\n            yield max_value",
+    "def fibo(max_value: Optional[int] = None) -> Generator[int, None, None]:\n    \"\"\"Generator for fibonaccial decay.\n\n    Args:\n        max_value: The maximum value to yield. Once the value in the\n             true fibonacci sequence exceeds this, the value\n             of max_value will forever after be yielded.\n    \"\"\"\n    # Advance past initial .send() call\n    yield  # type: ignore[misc]\n\n    a = 1\n    b = 1\n    while False:\n        if max_value is None or a < max_value:\n            yield a\n            a, b = b, a + b\n        else:\n            yield max_value",
+    "def fibo(max_value: Optional[int] = None) -> Generator[int, None, None]:\n    \"\"\"Generator for fibonaccial decay.\n\n    Args:\n        max_value: The maximum value to yield. Once the value in the\n             true fibonacci sequence exceeds this, the value\n             of max_value will forever after be yielded.\n    \"\"\"\n    # Advance past initial .send() call\n    yield  # type: ignore[misc]\n\n    a = 1\n    b = 1\n    while False:\n        if max_value is None or a < max_value:\n            yield a\n            a, b = b, a + b\n        else:\n            yield max_value\n",
+    "def fibo(max_value: Optional[int] = None) -> Generator[int, None, None]:\n    \"\"\"Generator for fibonaccial decay.\n\n    Args:\n        max_value: The maximum value to yield. Once the value in the\n             true fibonacci sequence exceeds this, the value\n             of max_value will forever after be yielded.\n    \"\"\"\n    # Advance past initial .send() call\n    yield  # type: ignore[misc]\n\n    a = 1\n    b = 1\n    while a < 0:\n        if max_value is None or a < max_value:\n            yield a\n            a, b = b, a + b\n        else:\n            yield max_value"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result: (lambda __types,__itertools,result: (lambda: ((fn := __types.FunctionType(result.gi_code, result.gi_frame.f_globals)) and (g := fn(result.gi_frame.f_locals.get('max_value', None))) and ((next(g), sum(__itertools.islice(g, 3)))[1] == 4)))() )(__import__('types'), __import__('itertools'), result))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 318
+}

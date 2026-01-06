@@ -1,0 +1,98 @@
+{
+  "rlid": "parse_align",
+  "github_url": "https://github.com/miyuchina/mistletoe/blob/0860a8662d386b0b9bee2512e8a078715703f980/./mistletoe/block_token.py#L737-L747",
+  "name": "parse_align",
+  "line_cov": 1.0,
+  "lines": 11,
+  "stats": 1,
+  "cc": 3,
+  "content": "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"\n        return (0 if column[0] == ':' else 1) if column[-1] == ':' else None",
+  "header": "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"",
+  "file": "./mistletoe/block_token.py",
+  "start_line": 737,
+  "end_line": 747,
+  "body_start_line": 747,
+  "comment": "\"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"",
+  "test_time": 0.5154213905334473,
+  "cover_tests": [
+    "test/test_ast_renderer.py::TestAstRenderer::test_table",
+    "test/test_block_token.py::TestParagraph::test_parse_interrupting_block_tokens",
+    "test/test_block_token.py::TestTable::test_easy_table",
+    "test/test_block_token.py::TestTable::test_match_0__",
+    "test/test_block_token.py::TestTable::test_match_1__",
+    "test/test_block_token.py::TestTable::test_match_2__",
+    "test/test_block_token.py::TestTable::test_parse_align",
+    "test/test_contrib/test_jira_renderer.py::TestJiraRenderer::test_render__basic_blocks",
+    "test/test_contrib/test_jira_renderer.py::TestJiraRenderer::test_table_empty_cell",
+    "test/test_contrib/test_jira_renderer.py::TestJiraRenderer::test_table_header",
+    "test/test_contrib/test_xwiki20_renderer.py::TestXWiki20Renderer::test_render__basic_blocks",
+    "test/test_line_numbers.py::TestLineNumbers::test_main",
+    "test/test_markdown_renderer.py::TestMarkdownRenderer::test_table",
+    "test/test_markdown_renderer.py::TestMarkdownRenderer::test_table_with_narrow_column",
+    "test/test_markdown_renderer.py::TestMarkdownRenderer::test_table_with_varying_column_counts",
+    "test/test_markdown_renderer.py::TestMarkdownFormatting::test_wordwrap_tables",
+    "test/test_repr.py::TestRepr::test_table"
+  ],
+  "repo": {
+    "github_path": "miyuchina/mistletoe",
+    "commit": "0860a8662d386b0b9bee2512e8a078715703f980",
+    "language": "python",
+    "env_config": "[project]\nrequires-python = \">=3.10,<4.0\"\nname = \"myproject\"\nversion = \"0.1.0\"\n\n[tool.poetry]\npackage-mode = false\n\n[tool.poetry.dependencies]\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nparameterized = \"^0.9.0\"\n",
+    "failed_tests": [],
+    "test_time": 4.7762980461120605
+  },
+  "mutants": [
+    "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"\n        return (0 if column[0] != ':' else 1) if column[-1] == ':' else None\n",
+    "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"\n        return (0 if column[0] == ':' else 1) if column[-1] != ':' else None\n",
+    "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"\n        return (0 if column[0] == ':' else 1) if column[-1] == 'XX:XX' else None\n",
+    "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"\n        return (0 if column[0] == ':' else 2) if column[-1] == ':' else None\n",
+    "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"\n        return (0 if column[0] == 'XX:XX' else 1) if column[-1] == ':' else None\n",
+    "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"\n        return (0 if column[1] == ':' else 1) if column[-1] == ':' else None\n",
+    "    @staticmethod\n    def parse_align(column):\n        \"\"\"\n        Helper function; returns align option from cell content.\n\n        Returns:\n            None if align = left;\n            0    if align = center;\n            1    if align = right.\n        \"\"\"\n        return (1 if column[0] == ':' else 1) if column[-1] == ':' else None\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result: result in (None, 0, 1))\n@icontract.ensure(lambda result, column: (column.endswith(':') and column.startswith(':') and result == 0) or (column.endswith(':') and not column.startswith(':') and result == 1) or (not column.endswith(':') and result is None))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 332
+}

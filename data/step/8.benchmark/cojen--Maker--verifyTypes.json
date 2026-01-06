@@ -1,0 +1,123 @@
+{
+  "rlid": "verifyTypes",
+  "github_url": "https://github.com/cojen/Maker/blob/e2d6d1639ff7abd2d6afce0a63c93bafa076e08a/./src/main/java/org/cojen/maker/BaseType.java#L615-L629",
+  "name": "verifyTypes",
+  "line_cov": 1.0,
+  "lines": 15,
+  "stats": 7,
+  "cc": 5,
+  "content": "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+  "header": "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {",
+  "file": "./src/main/java/org/cojen/maker/BaseType.java",
+  "start_line": 615,
+  "end_line": 629,
+  "body_start_line": 620,
+  "comment": "/**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */",
+  "test_time": 6.3006932735443115,
+  "cover_tests": [
+    "org.cojen.maker.CondyTest#constantVarHandle",
+    "org.cojen.maker.FieldTest#methodHandles",
+    "org.cojen.maker.FieldTest#methodHandlesNonStatic",
+    "org.cojen.maker.FieldTest#varHandles",
+    "org.cojen.maker.FieldTest#varHandlesNonStatic",
+    "org.cojen.maker.HiddenTest#access",
+    "org.cojen.maker.InvokeTest#methodHandleBootstrap",
+    "org.cojen.maker.InvokeTest#methodHandleBootstrapBoxed",
+    "org.cojen.maker.InvokeTest#methodHandleBootstrapInterface",
+    "org.cojen.maker.InvokeTest#methodHandleBootstrapNew",
+    "org.cojen.maker.InvokeTest#methodHandleBootstrapNewSuper",
+    "org.cojen.maker.InvokeTest#methodHandleBootstrapSuper",
+    "org.cojen.maker.InvokeTest#signaturePolymorphic",
+    "org.cojen.maker.InvokeTest#signaturePolymorphic2",
+    "org.cojen.maker.VarHandleTest#meta",
+    "org.cojen.maker.VarHandleTest#signaturePolymorphic",
+    "org.cojen.maker.VarHandleTest#toMethodHandle"
+  ],
+  "repo": {
+    "github_path": "cojen/Maker",
+    "commit": "e2d6d1639ff7abd2d6afce0a63c93bafa076e08a",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>org.cojen</groupId>\n  <artifactId>cojen-maker</artifactId>\n  <packaging>jar</packaging>\n  <name>Maker</name>\n  <version>2.7.0</version>\n  <description>\n    Dynamic Java class file generator.\n  </description>\n  <url>https://github.com/cojen/Maker</url>\n  <inceptionYear>2019</inceptionYear>\n  <organization>\n    <name>Cojen</name>\n    <url>https://github.com/cojen</url>\n  </organization>\n  <licenses>\n    <license>\n      <name>Apache-2.0</name>\n      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>\n    </license>\n  </licenses>\n  <developers>\n    <developer>\n      <name>Brian O'Neill</name>\n      <email>bronee@gmail.com</email>\n      <organization>Cojen</organization>\n      <organizationUrl>https://cojen.org</organizationUrl>\n    </developer>\n  </developers>\n  <scm>\n    <connection>scm:git:https://github.com/cojen/Maker.git</connection>\n    <developerConnection>scm:git:ssh://git@github.com:cojen/Maker.git</developerConnection>\n    <url>https://github.com/cojen/Maker</url>\n  </scm>\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n    <repository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n    </repository>\n  </distributionManagement>\n  <properties>\n    <maven.compiler.source>17</maven.compiler.source>\n    <maven.compiler.target>17</maven.compiler.target>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n  </properties>\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>[4.13,)</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.13</version>\n        <executions>\n          <execution>\n            <id>default-prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>default-report</id>\n            <goals>\n              <goal>report</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>default-check</id>\n            <goals>\n              <goal>check</goal>\n            </goals>\n            <configuration>\n              <rules>\n                <rule>\n                  <element>BUNDLE</element>\n                  <limits>\n                    <limit>\n                      <counter>INSTRUCTION</counter>\n                      <value>COVEREDRATIO</value>\n                      <minimum>0.95</minimum>\n                    </limit>\n                  </limits>\n                </rule>\n              </rules>\n            </configuration>\n          </execution>\n        </executions>\n        <configuration>\n          <excludes>\n            <exclude>**/DebugWriter.class</exclude>\n          </excludes>\n          <reports>\n            <xml>true</xml>\n          </reports>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.8.1</version>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-jar-plugin</artifactId>\n        <version>3.1.2</version>\n        <configuration>\n          <archive>\n            <manifestEntries>\n              <Automatic-Module-Name>org.cojen.maker</Automatic-Module-Name>\n            </manifestEntries>\n          </archive>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>3.0.1</version>\n        <configuration>\n          <detectJavaApiLink>true</detectJavaApiLink>\n          <links>\n            <link>https://docs.oracle.com/en/java/javase/24/docs/api</link>\n          </links>\n          <author>false</author>\n          <nodeprecatedlist>true</nodeprecatedlist>\n          <notimestamp>true</notimestamp>\n          <reportOutputDirectory>${basedir}/docs</reportOutputDirectory>\n          <destDir>javadoc</destDir>\n          <quiet>true</quiet>\n          <additionalOptions>-Xdoclint:accessibility</additionalOptions>\n          <additionalOptions>-Xdoclint:html</additionalOptions>\n          <additionalOptions>-Xdoclint:reference</additionalOptions>\n          <additionalOptions>-Xdoclint:syntax</additionalOptions>\n        </configuration>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <phase>deploy</phase>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.0.1</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <phase>deploy</phase>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>1.6</version>\n        <executions>\n          <execution>\n            <id>sign-artifacts</id>\n            <phase>deploy</phase>\n            <goals>\n              <goal>sign</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.13</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>false</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n      <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory><useFile>true</useFile></configuration></plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 2.8860905170440674
+  },
+  "mutants": [
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length != specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length < specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length + 1) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length - 1) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length > specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length - 1; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length) {\n            for (int i=0; i>=specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length) {\n            for (int i=1; i<specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (!specificParamTypes[i].equals(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (specificParamTypes[i].isAssignableFrom(params[i]) && params[i] != null) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (specificParamTypes[i].isAssignableFrom(params[i]) || params[i] == null) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }",
+    "    /**\n     * Verifies that the param types can be assigned by the specific types (if provided).\n     * Returns null if assignment isn't allowed, or else return the actual param types to use.\n     */\n    private static BaseType[] verifyTypes(BaseType[] params, BaseType[] specificParamTypes) {\n        if (specificParamTypes != null && params.length == specificParamTypes.length) {\n            for (int i=0; i<specificParamTypes.length; i++) {\n                if (specificParamTypes[i].isAssignableFrom(params[i])) {\n                    return null;\n                }\n            }\n            return specificParamTypes;\n        }\n        return params;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures (specificParamTypes == null || params.length != specificParamTypes.length) ==> \\result == params;\n//@ ensures (specificParamTypes != null && params.length == specificParamTypes.length && java.util.stream.IntStream.range(0, specificParamTypes.length).allMatch(i -> specificParamTypes[i].isAssignableFrom(params[i]))) ==> \\result == specificParamTypes;\n//@ ensures (specificParamTypes != null && params.length == specificParamTypes.length && !java.util.stream.IntStream.range(0, specificParamTypes.length).allMatch(i -> specificParamTypes[i].isAssignableFrom(params[i]))) ==> \\result == null",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 259
+}

@@ -1,0 +1,153 @@
+{
+  "rlid": "remote_route",
+  "github_url": "https://github.com/bottlepy/bottle/blob/3d0ace47fe8e5ac5177b49597bd8ff872ff08d7b/./bottle.py#L1474-L1483",
+  "name": "remote_route",
+  "line_cov": 1.0,
+  "lines": 10,
+  "stats": 5,
+  "cc": 4,
+  "content": "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []",
+  "header": "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"",
+  "file": "./bottle.py",
+  "start_line": 1474,
+  "end_line": 1483,
+  "body_start_line": 1480,
+  "comment": "\"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"",
+  "test_time": 0.3828890323638916,
+  "cover_tests": [
+    "test/test_environ.py::TestRequest::test_remote_addr",
+    "test/test_environ.py::TestRequest::test_remote_route"
+  ],
+  "repo": {
+    "github_path": "bottlepy/bottle",
+    "commit": "3d0ace47fe8e5ac5177b49597bd8ff872ff08d7b",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"flit_core >=3.9,<4\",]\nbuild-backend = \"flit_core.buildapi\"\n\n[project]\nname = \"bottle\"\ndynamic = [ \"version\",]\nrequires-python = \">=3.10\"\ndescription = \"Fast and simple WSGI-framework for small web-applications.\"\nreadme = \"README.rst\"\nkeywords = [ \"bottle\", \"wsgi\", \"microframework\",]\nclassifiers = [ \"Development Status :: 6 - Mature\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Framework :: Bottle\", \"Topic :: Internet :: WWW/HTTP\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries\", \"Topic :: Internet :: WWW/HTTP :: WSGI\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Application\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Server\", \"Topic :: Software Development :: Libraries :: Application Frameworks\", \"Programming Language :: Python :: 3\",]\nversion = \"0.1.0\"\ndependencies = [ \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"Marcel Hellkamp\"\nemail = \"marc@gsites.de\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\ndev = [ \"pytest\", \"pytest-cov\", \"build\", \"twine\",]\ndocs = [ \"sphinx\", \"sphinx-autobuild\", \"sphinx-intl\",]\n\n[project.urls]\nHomepage = \"https://bottlepy.org\"\nDocumentation = \"https://bottlepy.org\"\nRepository = \"http://github.com/bottlepy/bottle.git\"\nIssues = \"https://github.com/bottlepy/bottle/issues\"\nChangelog = \"https://bottlepy.org/docs/dev/changelog.html\"\n\n[project.scripts]\nbottle = \"bottle:main\"\n\n[tool.flit.sdist]\ninclude = [ \"test/*.py\", \"test/views/*.tpl\", \"AUTHORS\",]\n\n[tool.pytest.ini_options]\naddopts = \"-ra\"\ntestpaths = [ \"test\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [],
+    "test_time": 41.055556774139404
+  },
+  "mutants": [
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = None\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR', '').split(',')[0]\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR', 'unknown')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR', None) or '0.0.0.0'\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('XXHTTP_X_FORWARDED_FORXX')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('http_x_forwarded_for')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get(None)\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',') if '192.168' in ip]  # Filters IPs incorrectly\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')][:1]  # Only returns the first IP\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')][::-1]  # Reverses the order of IPs\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(';')]  # Incorrect delimiter\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split('XX,XX')]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(None)]\n        remote = self.environ.get('REMOTE_ADDR')\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = None\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('HTTP_X_FORWARDED_FOR')  # Use a potentially spoofed header instead\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR', '0.0.0.0')  # Default to a non-existent IP\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_ADDR', 'unknown')  # Default to a string that may mislead about the actual IP\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('REMOTE_HOST')  # Incorrectly attempt to get the host instead of the IP address\n        return [remote] if remote else []",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('XXREMOTE_ADDRXX')\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get('remote_addr')\n        return [remote] if remote else []\n",
+    "    @property\n    def remote_route(self):\n        \"\"\" A list of all IPs that were involved in this request, starting with\n            the client IP and followed by zero or more proxies. This does only\n            work if all proxies support the ```X-Forwarded-For`` header. Note\n            that this information can be forged by malicious clients. \"\"\"\n        proxy = self.environ.get('HTTP_X_FORWARDED_FOR')\n        if proxy: return [ip.strip() for ip in proxy.split(',')]\n        remote = self.environ.get(None)\n        return [remote] if remote else []\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: dict(self.environ), name=\"ENV\")\n@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(ip, str) for ip in result))\n@icontract.ensure(lambda result, OLD: (\n    [ip.strip() for ip in OLD.ENV['HTTP_X_FORWARDED_FOR'].split(',')]\n    if ('HTTP_X_FORWARDED_FOR' in OLD.ENV and OLD.ENV.get('HTTP_X_FORWARDED_FOR'))\n    else ([OLD.ENV['REMOTE_ADDR']] if ('REMOTE_ADDR' in OLD.ENV and OLD.ENV.get('REMOTE_ADDR')) else [])\n) == result)\n@icontract.ensure(lambda result, OLD: not any(ip in ('unknown', 'invalid_ip', '0.0.0.0') for ip in result))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 304
+}

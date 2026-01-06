@@ -1,0 +1,104 @@
+{
+  "rlid": "find_subclasses_in_module",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/utils.py#L704-L721",
+  "name": "find_subclasses_in_module",
+  "line_cov": 1.0,
+  "lines": 18,
+  "stats": 7,
+  "cc": 5,
+  "content": "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses",
+  "header": "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"",
+  "file": "./mobly/utils.py",
+  "start_line": 704,
+  "end_line": 721,
+  "body_start_line": 715,
+  "comment": "\"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"",
+  "test_time": 1.025017261505127,
+  "cover_tests": [
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test__find_test_class_when_multiple_test_classes",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test__find_test_class_when_no_test_class",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test__find_test_class_when_one_test_class",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclass_in_module_when_indirect_subclass",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclass_in_module_when_multiple_subclasses",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclass_in_module_when_no_subclasses",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclass_in_module_when_one_subclass",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_indirect_subclass",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_multiple_base_classes",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_multiple_subclasses",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_no_subclasses",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_one_subclass",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_only_some_base_classes_present"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for module_member in module.__dict__:\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if isinstance(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(base_class, module_member):\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if module_member in base_class.__subclasses__():\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if module_member is base_class:\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if not issubclass(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member if module_member.__name__ == 'SomeClass' else None)  # Appends None for non-matching classes.\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member.__name__)  # Appends the name of the class instead of the class itself.\n  return subclasses"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda base_classes: tuple(base_classes), name=\"base_classes\")\n@icontract.snapshot(lambda module: tuple(module.__dict__.items()), name=\"module_items\")\n@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(inspect.isclass(c) for c in result))\n@icontract.ensure(lambda OLD, result: all(any(res is val for _, val in OLD.module_items) for res in result))\n@icontract.ensure(lambda OLD, result: all(any(issubclass(res, bc) for bc in OLD.base_classes) for res in result))\n@icontract.ensure(lambda OLD, result: all(((not inspect.isclass(val)) or (not any(issubclass(val, bc) for bc in OLD.base_classes)) or (val in result)) for _, val in OLD.module_items))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 73
+}

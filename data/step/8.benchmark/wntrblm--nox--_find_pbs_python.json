@@ -1,0 +1,185 @@
+{
+  "rlid": "_find_pbs_python",
+  "github_url": "https://github.com/wntrblm/nox/blob/38dea062a14355469fa44170ec64694b2c2d5e7f/./nox/virtualenv.py#L179-L191",
+  "name": "_find_pbs_python",
+  "line_cov": 1.0,
+  "lines": 13,
+  "stats": 8,
+  "cc": 6,
+  "content": "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+  "header": "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"",
+  "file": "./nox/virtualenv.py",
+  "start_line": 179,
+  "end_line": 191,
+  "body_start_line": 183,
+  "comment": "\"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"",
+  "test_time": 4.421807527542114,
+  "cover_tests": [
+    "tests/test_virtualenv.py::test__resolved_interpreter_windows_pyexe_fails",
+    "tests/test_virtualenv.py::test_find_pbs_python[cpython-3.11-cpython@3.11.5-True]",
+    "tests/test_virtualenv.py::test_find_pbs_python[pypy-3.8-pypy@3.8.16-True]",
+    "tests/test_virtualenv.py::test_find_pbs_python[cpython-3.12-cpython@3.11.5-False]",
+    "tests/test_virtualenv.py::test_find_pbs_python[pypy-3.11-cpython@3.11.5-False]",
+    "tests/test_virtualenv.py::test_find_pbs_python_missing_interpreter"
+  ],
+  "repo": {
+    "github_path": "wntrblm/nox",
+    "commit": "38dea062a14355469fa44170ec64694b2c2d5e7f",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"hatchling.build\"\nrequires = [ \"hatchling\",]\n\n[project]\nname = \"nox\"\nversion = \"2025.10.16\"\ndescription = \"Flexible test automation.\"\nreadme = \"README.md\"\nkeywords = [ \"automation\", \"testing\", \"tox\",]\nlicense = \"Apache-2.0\"\nrequires-python = \">=3.8\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Environment :: Console\", \"Intended Audience :: Developers\", \"Operating System :: MacOS\", \"Operating System :: Microsoft :: Windows\", \"Operating System :: POSIX\", \"Operating System :: Unix\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: 3.14\", \"Topic :: Software Development :: Testing\",]\ndependencies = [ \"argcomplete>=1.9.4,<4\", \"attrs>=24.1\", \"colorlog>=2.6.1,<7\", \"dependency-groups>=1.1\", \"humanize>=4\", \"packaging>=20.9; python_version<'3.10'\", \"packaging>=21; python_version>='3.10'\", \"tomli>=1.1; python_version<'3.11'\", \"virtualenv>=20.14.1; python_version<'3.10'\", \"virtualenv>=20.15; python_version>='3.10'\",]\n[[project.authors]]\nname = \"Alethea Katherine Flowers\"\nemail = \"me@thea.codes\"\n\n[dependency-groups]\ntest = [ \"coverage[toml]>=7.2\", \"pytest>=7.4; python_version>='3.12'\", \"pytest>=7; python_version<'3.12'\", \"pytest-cov>=3\",]\ndocs = [ \"myst-parser\", \"sphinx>=3\", \"sphinx-autobuild\", \"sphinx-tabs\", \"witchhazel\",]\n[[dependency-groups.dev]]\ninclude-group = \"test\"\n\n[project.optional-dependencies]\npbs = [ \"pbs-installer[all]>=2025.1.6\",]\ntox_to_nox = [ \"importlib-resources; python_version<'3.9'\", \"jinja2\", \"tox>=4\",]\nuv = [ \"uv>=0.1.6\",]\n\n[project.urls]\nbug-tracker = \"https://github.com/wntrblm/nox/issues\"\ndocumentation = \"https://nox.thea.codes\"\nhomepage = \"https://github.com/wntrblm/nox\"\nrepository = \"https://github.com/wntrblm/nox\"\n\n[project.scripts]\nnox = \"nox.__main__:main\"\ntox-to-nox = \"nox.tox_to_nox:main\"\n\n[tool.pyproject-fmt]\nmax_supported_python = \"3.14\"\n\n[tool.mypy]\npython_version = \"3.9\"\nstrict = true\nwarn_unreachable = true\nenable_error_code = [ \"ignore-without-code\", \"redundant-expr\", \"truthy-bool\",]\nmypy_path = [ \".github\",]\n[[tool.mypy.overrides]]\nmodule = [ \"tox.*\",]\nignore_missing_imports = true\n\n[tool.hatch.metadata]\nallow-ambiguous-features = true\n\n[tool.ruff.lint]\nextend-select = [ \"ARG\", \"B\", \"C4\", \"EM\", \"EXE\", \"FBT\", \"FLY\", \"FURB\", \"I\", \"ICN\", \"ISC\", \"N\", \"PERF\", \"PGH\", \"PIE\", \"PL\", \"PT\", \"PYI\", \"RET\", \"RUF\", \"S\", \"SIM\", \"TC\", \"TRY\", \"UP\", \"YTT\",]\nignore = [ \"N802\", \"N818\", \"PLR09\", \"PLR2004\", \"S101\", \"S603\",]\ntyping-modules = [ \"nox._typing\",]\n\n[tool.pytest.ini_options]\nminversion = \"7.0\"\naddopts = [ \"-ra\", \"--strict-markers\", \"--strict-config\",]\nxfail_strict = true\nfilterwarnings = [ \"error\",]\nlog_cli_level = \"INFO\"\ntestpaths = [ \"tests\",]\npythonpath = [ \".github/\",]\nmarkers = [ \"conda: test requires conda\",]\n\n[tool.coverage.run]\nbranch = true\nrelative_files = true\nsource_pkgs = [ \"nox\",]\ndisable_warnings = [ \"no-ctracer\",]\n\n[tool.coverage.report]\nexclude_also = [ \"@overload\", \"def __dir__()\", \"def __repr__\", \"if TYPE_CHECKING:\",]\nomit = [ \"nox/_typing.py\",]\n\n[tool.ruff.lint.per-file-ignores]\n\"tests/*.py\" = [ \"FBT001\",]\n\"tests/resources/**.py\" = [ \"ARG001\", \"TRY002\",]\n\n[tool.ruff.lint.flake8-unused-arguments]\nignore-variadic-names = true\n\n[tool.poetry.group.dev.dependencies]\npytest = \">=7\"\npytest-cov = \">=3\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies.coverage]\nversion = \">=7.2\"\nextras = [ \"toml\",]\n",
+    "failed_tests": [
+      "tests/test_main.py::test_main_requires[sessions1-expected_order1]",
+      "tests/test_main.py::test_main_requires[sessions2-expected_order2]",
+      "tests/test_main.py::test_noxfile_script_mode_url_req",
+      "tests/test_virtualenv.py::test_download_python_auto_missing_interpreter[uv]",
+      "tests/test_virtualenv.py::test_download_python_always_preexisting_interpreter[uv]",
+      "tests/test_virtualenv.py::test_download_python_failed_install[always-uv]",
+      "tests/test_virtualenv.py::test_download_python_failed_install[auto-uv]"
+    ],
+    "test_time": 160.74314188957214
+  },
+  "mutants": [
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python\"  # Missing the platform check, will always use \"python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python\" if _PLATFORM.startswith(\"win\") else \"bin/python3.8\"  # Hardcoded version for non-Windows\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"linux\") else \"bin/python\"  # Incorrect platform check\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"BIN/PYTHON\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None\n",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"XXbin/pythonXX\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None\n",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"python\"  # Missing \"bin/\" prefix for non-Windows\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python3.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python3\"  # Incorrect version for Windows\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.is_dir() and NOX_PBS_PYTHONS.name == \"pythons\":\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.is_file():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.is_symlink():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and not path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name == f\"{implementation}@{version}\":\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.endswith(f\"{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{version}@{implementation}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() or path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None\n",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_file() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if not python_exe.exists():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.is_dir():\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.name == \"python.exe\":\n                    return str(python_exe)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return python_exe if python_exe.exists() else None\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return python_exe.absolute()\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return python_exe.name\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return python_exe.relative_to(NOX_PBS_PYTHONS)\n    return None",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(None)\n    return None\n",
+    "def _find_pbs_python(implementation: str, version: str) -> str | None:\n    \"\"\"Check for an existing pbs-installer installation\n    by default it creates dirs with this format:\n    \"pypy@3.8.16\", \"cpython@3.13.3\" \"\"\"\n    executable = \"python.exe\" if _PLATFORM.startswith(\"win\") else \"bin/python\"\n\n    if NOX_PBS_PYTHONS.exists():\n        for path in NOX_PBS_PYTHONS.iterdir():\n            if path.is_dir() and path.name.startswith(f\"{implementation}@{version}.\"):\n                python_exe = path / executable\n                if python_exe.exists():\n                    return str(python_exe) + \" (found)\"\n    return None"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda _ARGS, _KWARGS: _PLATFORM, name=\"plat\")\n@icontract.snapshot(lambda _ARGS, _KWARGS: NOX_PBS_PYTHONS.exists(), name=\"pbs_exists\")\n@icontract.snapshot(lambda _ARGS, _KWARGS: [p.name for p in NOX_PBS_PYTHONS.iterdir()] if NOX_PBS_PYTHONS.exists() else [], name=\"pbs_children\")\n@icontract.ensure(lambda OLD, result: result is None or isinstance(result, str))\n@icontract.ensure(lambda OLD, result, implementation, version: result is None or (Path(result).exists() and ((OLD.plat.startswith(\"win\") and Path(result).name == \"python.exe\") or (not OLD.plat.startswith(\"win\") and tuple(Path(result).parts[-2:]) == (\"bin\", \"python\"))) and any(part.startswith(f\"{implementation}@{version}.\") for part in Path(result).parts)))\n@icontract.ensure(lambda OLD, result, implementation, version: result is not None or not any(name.startswith(f\"{implementation}@{version}.\") and (Path(NOX_PBS_PYTHONS) / name / (\"python.exe\" if OLD.plat.startswith(\"win\") else \"bin/python\")).exists() for name in OLD.pbs_children))\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 92
+}

@@ -1,0 +1,87 @@
+{
+  "rlid": "params",
+  "github_url": "https://github.com/bottlepy/bottle/blob/3d0ace47fe8e5ac5177b49597bd8ff872ff08d7b/./bottle.py#L1217-L1226",
+  "name": "params",
+  "line_cov": 1.0,
+  "lines": 10,
+  "stats": 6,
+  "cc": 3,
+  "content": "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict()\n        for key, value in self.query.allitems():\n            params[key] = value\n        for key, value in self.forms.allitems():\n            params[key] = value\n        return params",
+  "header": "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"",
+  "file": "./bottle.py",
+  "start_line": 1217,
+  "end_line": 1226,
+  "body_start_line": 1221,
+  "comment": "\"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"",
+  "test_time": 0.3820202350616455,
+  "cover_tests": [
+    "test/test_environ.py::TestRequest::test_params"
+  ],
+  "repo": {
+    "github_path": "bottlepy/bottle",
+    "commit": "3d0ace47fe8e5ac5177b49597bd8ff872ff08d7b",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"flit_core >=3.9,<4\",]\nbuild-backend = \"flit_core.buildapi\"\n\n[project]\nname = \"bottle\"\ndynamic = [ \"version\",]\nrequires-python = \">=3.10\"\ndescription = \"Fast and simple WSGI-framework for small web-applications.\"\nreadme = \"README.rst\"\nkeywords = [ \"bottle\", \"wsgi\", \"microframework\",]\nclassifiers = [ \"Development Status :: 6 - Mature\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Framework :: Bottle\", \"Topic :: Internet :: WWW/HTTP\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content :: CGI Tools/Libraries\", \"Topic :: Internet :: WWW/HTTP :: WSGI\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Application\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Server\", \"Topic :: Software Development :: Libraries :: Application Frameworks\", \"Programming Language :: Python :: 3\",]\nversion = \"0.1.0\"\ndependencies = [ \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"Marcel Hellkamp\"\nemail = \"marc@gsites.de\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\ndev = [ \"pytest\", \"pytest-cov\", \"build\", \"twine\",]\ndocs = [ \"sphinx\", \"sphinx-autobuild\", \"sphinx-intl\",]\n\n[project.urls]\nHomepage = \"https://bottlepy.org\"\nDocumentation = \"https://bottlepy.org\"\nRepository = \"http://github.com/bottlepy/bottle.git\"\nIssues = \"https://github.com/bottlepy/bottle/issues\"\nChangelog = \"https://bottlepy.org/docs/dev/changelog.html\"\n\n[project.scripts]\nbottle = \"bottle:main\"\n\n[tool.flit.sdist]\ninclude = [ \"test/*.py\", \"test/views/*.tpl\", \"AUTHORS\",]\n\n[tool.pytest.ini_options]\naddopts = \"-ra\"\ntestpaths = [ \"test\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [],
+    "test_time": 41.055556774139404
+  },
+  "mutants": [
+    "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict(key='default_value')  # Incorrectly initializes with a default key-value pair\n        for key, value in self.query.allitems():\n            params[key] = value\n        for key, value in self.forms.allitems():\n            params[key] = value\n        return params",
+    "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict()\n        for key, value in self.forms.allitems():  # Uses forms instead of query, leading to incorrect data\n            params[key] = value\n        for key, value in self.forms.allitems():\n            params[key] = value\n        return params",
+    "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict()\n        for key, value in self.query.allitems():\n            params[key] = value\n        for key in self.forms.keys():  # Only iterates over keys, losing values\n            params[key] = value\n        return params",
+    "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict()\n        for key, value in self.query.allitems():\n            params[key] = value\n        for key, value in self.forms.allitems():\n            params[key] = ''  # This will set the parameter to an empty string, losing the original value.\n        return params",
+    "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict()\n        for key, value in self.query.allitems():\n            params[key] = value\n        for key, value in self.forms.allitems():\n            params[key] = None\n        return params\n",
+    "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict()\n        for key, value in self.query.allitems():\n            params[key] = value\n        for key, value in self.forms.allitems():\n            params[key] = None  # This will set the parameter to None instead of the actual value.\n        return params",
+    "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict()\n        for key, value in self.query.allitems():\n            params[key] = value\n        for key, value in self.forms.allitems():\n            params[key] = value + 'extra'  # This will append 'extra' to the value, altering the intended data.\n        return params",
+    "    @DictProperty('environ', 'bottle.request.params', read_only=True)\n    def params(self):\n        \"\"\" A :class:`FormsDict` with the combined values of :attr:`query` and\n            :attr:`forms`. File uploads are stored in :attr:`files`. \"\"\"\n        params = FormsDict()\n        for key, value in self.query.allitems():\n            params[key] = value\n        for key, value in self.forms.allitems():\n            params[key] = value.upper()  # This will convert the value to uppercase, which may not be the intended format.\n        return params"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, self: isinstance(result, FormsDict))\n@icontract.ensure(lambda result, self: set(result.keys()) == set(self.query.keys()) | set(self.forms.keys()))\n@icontract.ensure(lambda result, self: all((k in self.forms and result.get(k) == self.forms.get(k)) or (k not in self.forms and result.get(k) == self.query.get(k)) for k in result.keys()))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 55
+}

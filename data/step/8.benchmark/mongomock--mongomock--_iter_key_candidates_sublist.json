@@ -1,0 +1,250 @@
+{
+  "rlid": "_iter_key_candidates_sublist",
+  "github_url": "https://github.com/mongomock/mongomock/blob/edd20d32254179c5373b81143a0bc2e7e7fe24a6/./mongomock/filtering.py#L252-L283",
+  "name": "_iter_key_candidates_sublist",
+  "line_cov": 1.0,
+  "lines": 32,
+  "stats": 20,
+  "cc": 8,
+  "content": "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+  "header": "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"",
+  "file": "./mongomock/filtering.py",
+  "start_line": 252,
+  "end_line": 283,
+  "body_start_line": 258,
+  "comment": "\"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"",
+  "test_time": 0.5453798770904541,
+  "cover_tests": [
+    "tests/test__collection_api.py::CollectionAPITest::test__all_size",
+    "tests/test__collection_api.py::CollectionAPITest::test__distinct_array_nested_field",
+    "tests/test__collection_api.py::CollectionAPITest::test__filter_eq_on_array",
+    "tests/test__collection_api.py::CollectionAPITest::test__filter_ne_multiple_keys",
+    "tests/test__collection_api.py::CollectionAPITest::test__filter_ne_on_array",
+    "tests/test__collection_api.py::CollectionAPITest::test__filter_with_ne",
+    "tests/test__collection_api.py::CollectionAPITest::test__find_and_project_positional",
+    "tests/test__collection_api.py::CollectionAPITest::test__find_too_far",
+    "tests/test__collection_api.py::CollectionAPITest::test__set_replace_subdocument",
+    "tests/test__collection_api.py::CollectionAPITest::test__set_replace_subdocument_positional_operator",
+    "tests/test__collection_api.py::CollectionAPITest::test__set_with_positional_operator",
+    "tests/test__collection_api.py::CollectionAPITest::test__update_push_array_of_arrays",
+    "tests/test__collection_api.py::CollectionAPITest::test__update_push_other_clauses",
+    "tests/test__collection_api.py::CollectionAPITest::test__update_push_slice_positional_nested_field"
+  ],
+  "repo": {
+    "github_path": "mongomock/mongomock",
+    "commit": "edd20d32254179c5373b81143a0bc2e7e7fe24a6",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"hatchling\", \"hatch-vcs\",]\nbuild-backend = \"hatchling.build\"\n\n[project]\nname = \"mongomock\"\ndynamic = [ \"version\",]\ndescription = \"Fake pymongo stub for testing simple MongoDB-dependent code\"\nreadme = \"README.rst\"\nrequires-python = \">=3.10\"\nclassifiers = [ \"License :: OSI Approved :: ISC License (ISCL)\", \"Topic :: Database\", \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Operating System :: MacOS :: MacOS X\", \"Operating System :: Microsoft :: Windows\", \"Operating System :: POSIX\", \"Programming Language :: Python :: Implementation :: CPython\", \"Programming Language :: Python :: Implementation :: PyPy\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\",]\ndependencies = [ \"packaging\", \"pytz\", \"sentinels\", \"pytest (>=8.4.2,<9.0.0)\", \"pytest-cov (>=7.0.0,<8.0.0)\", \"pytest-reportlog (>=0.4.0,<0.5.0)\", \"icontract (>=2.7.1,<3.0.0)\", \"pytest-env (>=1.2.0,<2.0.0)\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Rotem Yaari\"\nemail = \"vmalloc@gmail.com\"\n\n[[project.authors]]\nname = \"Martin Domke\"\nemail = \"mail@martindomke.net\"\n\n[[project.authors]]\nname = \"Pascal Corpet\"\nemail = \"pascal@corpet.net\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\npyexecjs = [ \"pyexecjs\",]\npymongo = [ \"pymongo\",]\n\n[project.urls]\nHomepage = \"https://github.com/mongomock/mongomock\"\nChangelog = \"https://github.com/mongomock/mongomock/blob/develop/CHANGELOG.md\"\n\n[tool.ruff]\ntarget-version = \"py39\"\nline-length = 100\n\n[tool.doc8]\nmax-line-length = 100\n\n[tool.ruff.format]\nquote-style = \"single\"\n\n[tool.ruff.lint]\nextend-select = [ \"A\", \"B\", \"C\", \"C4\", \"E\", \"F\", \"I\", \"N\", \"Q\", \"RUF\", \"S\", \"SIM\", \"T10\", \"UP\", \"W\", \"YTT\",]\nextend-fixable = [ \"RUF100\", \"I001\", \"SIM300\", \"UP008\", \"UP003\", \"C403\", \"UP031\", \"UP032\",]\nextend-ignore = [ \"A001\", \"A002\", \"A003\", \"FBT002\", \"N818\", \"UP006\", \"UP007\", \"PYI024\", \"S101\", \"ARG001\", \"ARG002\", \"DTZ001\", \"DTZ003\", \"DTZ004\", \"DTZ005\", \"EM101\", \"EM102\", \"TRY003\", \"PLR2004\",]\nexclude = [ \"mongomock/__init__.pyi\",]\n\n[tool.hatch.version]\nsource = \"vcs\"\n\n[tool.ruff.lint.per-file-ignores]\n\"tests/test__*.py\" = [ \"N802\", \"PT009\", \"PT027\", \"SLF001\", \"DTZ001\",]\n\n[tool.ruff.lint.mccabe]\nmax-complexity = 40\n\n[tool.ruff.lint.isort]\norder-by-type = false\nforce-single-line = true\nlines-after-imports = 2\n\n[tool.ruff.lint.flake8-quotes]\ninline-quotes = \"single\"\n\n[tool.hatch.build.targets.wheel]\npackages = [ \"mongomock\",]\n",
+    "failed_tests": [],
+    "test_time": 8.942307949066162
+  },
+  "mutants": [
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = [key]  # Treats the entire key as a single element, preventing any splitting\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split(',')  # Incorrect delimiter, will not split correctly\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.') + ['extra']  # Adds an extra element, causing incorrect key resolution\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')[:1]  # Only takes the first part, ignoring the rest of the key\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('XX.XX')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]\n",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split(None)\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]\n",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop()  # This will remove the last element instead of the first\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(1) if len(key_parts) > 1 else key_parts[0]  # This can lead to unexpected behavior\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts[0] + \"extra\"  # This modifies the key in an unintended way\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts[0] if key_parts else None\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = key_parts + ['extra']  # Adds an extra part to the key\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = None\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = None\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]\n",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in [None] * len(doc):\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in range(len(doc)):\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(None, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]\n",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, list):  # This will incorrectly treat lists as valid subdocuments.\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if not isinstance(sub_doc, dict):  # This will invert the logic, causing valid dicts to be ignored.\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc and isinstance(sub_doc[sub_key], dict):\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc and isinstance(sub_doc[sub_key], list):\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, None))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]\n",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]) + [NOTHING])\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append('NOTHING')  # appending a string instead of the NOTHING sentinel\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append('missing')\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(0)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append([])  # appending an empty list instead of NOTHING\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int != len(doc) - 1:  # Incorrectly allows access to the last valid index\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int > 0:  # Incorrectly checks for positive index only\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = None\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]\n",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts == ['']:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts == []:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts is None:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if not key_parts:\n        return iter_key_candidates('.'.join(key_parts), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts), None)\n    return [sub_doc]\n",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates('.'.join(key_parts[:-1]), sub_doc)\n    return [sub_doc]",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates(None, sub_doc)\n    return [sub_doc]\n",
+    "def _iter_key_candidates_sublist(key, doc):\n    \"\"\"Iterates of candidates\n\n    :param doc: a list to be searched for candidates for our key\n    :param key: the string key to be matched\n    \"\"\"\n    key_parts = key.split('.')\n    sub_key = key_parts.pop(0)\n    key_remainder = '.'.join(key_parts)\n    try:\n        sub_key_int = int(sub_key)\n    except ValueError:\n        sub_key_int = None\n\n    if sub_key_int is None:\n        # subkey is not an integer...\n        ret = []\n        for sub_doc in doc:\n            if isinstance(sub_doc, dict):\n                if sub_key in sub_doc:\n                    ret.extend(iter_key_candidates(key_remainder, sub_doc[sub_key]))\n                else:\n                    ret.append(NOTHING)\n        return ret\n\n    # subkey is an index\n    if sub_key_int >= len(doc):\n        return ()  # dead end\n    sub_doc = doc[sub_key_int]\n    if key_parts:\n        return iter_key_candidates(sub_key, sub_doc)\n    return [sub_doc]"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda key: key.split('.')[0], name=\"first\")\n@icontract.snapshot(lambda key: int(key.split('.')[0]) if key.split('.')[0].lstrip(\"+-\").isdigit() else None, name=\"first_int\")\n@icontract.snapshot(lambda key: '.'.join(key.split('.')[1:]), name=\"key_remainder\")\n@icontract.ensure(lambda OLD, result, key, doc: (OLD.first_int is None) or (OLD.first_int >= len(doc) and result == ()) or (OLD.first_int is not None and OLD.first_int < len(doc) and result == iter_key_candidates(OLD.key_remainder, doc[OLD.first_int])))\n@icontract.ensure(lambda OLD, result, key, doc: (OLD.first_int is not None) or (sum(1 for x in result if x is NOTHING) == sum(1 for sd in doc if isinstance(sd, dict) and OLD.first not in sd)))\n@icontract.ensure(\n    lambda OLD, result, key, doc:\n        not isinstance(doc, list)\n        or '.' in key\n        or OLD.first_int is not None\n        or result == [\n            (sub_doc[OLD.first] if isinstance(sub_doc, dict) and OLD.first in sub_doc else NOTHING)\n            for sub_doc in doc\n            if isinstance(sub_doc, dict)\n        ]\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 153
+}

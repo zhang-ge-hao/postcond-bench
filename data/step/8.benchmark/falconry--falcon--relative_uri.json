@@ -1,0 +1,145 @@
+{
+  "rlid": "relative_uri",
+  "github_url": "https://github.com/falconry/falcon/blob/34b7d15d602e1b459cc65a1506a49730067938f2/./falcon/request.py#L748-L761",
+  "name": "relative_uri",
+  "line_cov": 1.0,
+  "lines": 14,
+  "stats": 5,
+  "cc": 3,
+  "content": "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if self.query_string:\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+  "header": "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205",
+  "file": "./falcon/request.py",
+  "start_line": 748,
+  "end_line": 761,
+  "body_start_line": 753,
+  "comment": "\"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"",
+  "test_time": 0.4574427604675293,
+  "cover_tests": [
+    "tests/asgi/test_request_body_asgi.py::TestRequestBody::test_request_repr",
+    "tests/asgi/test_request_context_asgi.py::TestRequestContext::test_custom_request_context_request_access",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_reconstruct_url[asgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_reconstruct_url[wsgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_uri[asgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_uri[wsgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_uri_https[asgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_uri_https[wsgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_uri_http_1_0[asgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_uri_http_1_0[wsgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_relative_uri[asgi]",
+    "tests/test_request_attrs.py::TestRequestAttributes::test_relative_uri[wsgi]",
+    "tests/test_request_body.py::TestRequestBody::test_request_repr",
+    "tests/test_request_context.py::TestRequestContext::test_custom_request_context_request_access",
+    "tests/test_request_forwarded.py::test_no_forwarded_headers[asgi]",
+    "tests/test_request_forwarded.py::test_no_forwarded_headers[wsgi]",
+    "tests/test_request_forwarded.py::test_no_forwarded_headers_with_port[asgi]",
+    "tests/test_request_forwarded.py::test_no_forwarded_headers_with_port[wsgi]",
+    "tests/test_request_forwarded.py::test_x_forwarded_host[asgi]",
+    "tests/test_request_forwarded.py::test_x_forwarded_host[wsgi]",
+    "tests/test_request_forwarded.py::test_x_forwarded_host_with_port[asgi]",
+    "tests/test_request_forwarded.py::test_x_forwarded_host_with_port[wsgi]",
+    "tests/test_request_forwarded.py::test_x_forwarded_proto[asgi]",
+    "tests/test_request_forwarded.py::test_x_forwarded_proto[wsgi]",
+    "tests/test_request_forwarded.py::test_forwarded_host[asgi]",
+    "tests/test_request_forwarded.py::test_forwarded_host[wsgi]",
+    "tests/test_request_forwarded.py::test_forwarded_invalid[asgi]",
+    "tests/test_request_forwarded.py::test_forwarded_invalid[wsgi]",
+    "tests/test_request_forwarded.py::test_forwarded_multiple_params[asgi]",
+    "tests/test_request_forwarded.py::test_forwarded_multiple_params[wsgi]",
+    "tests/test_request_forwarded.py::test_forwarded_missing_first_hop_host[asgi]",
+    "tests/test_request_forwarded.py::test_forwarded_missing_first_hop_host[wsgi]",
+    "tests/test_utils.py::TestFalconTestingUtils::test_simulate_hostname[asgi]",
+    "tests/test_utils.py::TestFalconTestingUtils::test_simulate_hostname[wsgi]"
+  ],
+  "repo": {
+    "github_path": "falconry/falcon",
+    "commit": "34b7d15d602e1b459cc65a1506a49730067938f2",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"setuptools.build_meta\"\nrequires = [ \"setuptools>=61\", \"cython>=3.0.8; python_implementation == 'CPython'\",]\n\n[project]\nname = \"falcon\"\ndynamic = [ \"version\",]\ndependencies = [ \"icontract (>=2.7.1,<3.0.0)\",]\nrequires-python = \">=3.10\"\ndescription = \"The ultra-reliable, fast ASGI+WSGI framework for building data plane APIs at scale.\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Environment :: Web Environment\", \"Natural Language :: English\", \"Intended Audience :: Developers\", \"Intended Audience :: System Administrators\", \"License :: OSI Approved :: Apache Software License\", \"Operating System :: MacOS :: MacOS X\", \"Operating System :: Microsoft :: Windows\", \"Operating System :: POSIX\", \"Topic :: Internet :: WWW/HTTP :: WSGI\", \"Topic :: Software Development :: Libraries :: Application Frameworks\", \"Programming Language :: Python\", \"Programming Language :: Python :: Implementation :: CPython\", \"Programming Language :: Python :: Implementation :: PyPy\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: 3.14\", \"Programming Language :: Cython\", \"Typing :: Typed\",]\nkeywords = [ \"asgi\", \"wsgi\", \"web\", \"api\", \"framework\", \"rest\", \"http\", \"cloud\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Kurt Griffiths\"\nemail = \"mail@kgriffs.com\"\n\n[project.readme]\nfile = \"README.rst\"\ncontent-type = \"text/x-rst\"\n\n[project.license]\ntext = \"Apache 2.0\"\n\n[project.optional-dependencies]\ntest = [ \"pytest\",]\n\n[project.scripts]\nfalcon-bench = \"falcon.cmd.bench:main\"\nfalcon-inspect-app = \"falcon.cmd.inspect_app:main\"\nfalcon-print-routes = \"falcon.cmd.inspect_app:route_main\"\n\n[project.urls]\nHomepage = \"https://falconframework.org\"\nDocumentation = \"https://falcon.readthedocs.io/en/stable/\"\n\"Release Notes\" = \"https://falcon.readthedocs.io/en/stable/changes/\"\nSource = \"https://github.com/falconry/falcon\"\n\"Issue Tracker\" = \"https://github.com/falconry/falcon/issues\"\nFunding = \"https://opencollective.com/falcon\"\nChat = \"https://gitter.im/falconry/user\"\n\n[tool.setuptools]\ninclude-package-data = true\nlicense-files = [ \"LICENSE\",]\nzip-safe = false\n\n[tool.mypy]\nexclude = [ \"falcon/bench\", \"falcon/cmd\",]\ndisallow_untyped_defs = true\nwarn_unused_ignores = true\n[[tool.mypy.overrides]]\nmodule = [ \"cbor2\", \"cython\", \"daphne\", \"gunicorn\", \"hypercorn\", \"meinheld\", \"msgpack\", \"mujson\", \"pyximport\", \"testtools\", \"uvicorn\",]\nignore_missing_imports = true\n\n[[tool.mypy.overrides]]\nmodule = [ \"falcon.cyutil.misc\", \"falcon.cyutil.reader\", \"falcon.cyutil.uri\",]\nignore_missing_imports = true\n\n[tool.towncrier]\npackage = \"falcon\"\npackage_dir = \"\"\nfilename = \"docs/changes/4.2.0.rst\"\ndirectory = \"docs/_newsfragments\"\nissue_format = \"`#{issue} <https://github.com/falconry/falcon/issues/{issue}>`__\"\ntitle_format = false\n[[tool.towncrier.type]]\ndirectory = \"breakingchange\"\nname = \"Breaking Changes\"\nshowcontent = true\n\n[[tool.towncrier.type]]\ndirectory = \"newandimproved\"\nname = \"New & Improved\"\nshowcontent = true\n\n[[tool.towncrier.type]]\ndirectory = \"bugfix\"\nname = \"Fixed\"\nshowcontent = true\n\n[[tool.towncrier.type]]\ndirectory = \"misc\"\nname = \"Misc\"\nshowcontent = true\n\n[tool.black]\ntarget-version = [ \"py38\",]\nskip-string-normalization = true\nline-length = 88\n\n[tool.blue]\ntarget-version = [ \"py38\",]\nline-length = 88\n\n[tool.ruff]\ntarget-version = \"py38\"\nline-length = 88\nbuiltins = [ \"ignore\", \"attr\", \"defined\",]\nexclude = [ \".ecosystem\", \".eggs\", \".git\", \".tox\", \".venv\", \"build\", \"dist\", \"falcon/bench/nuts\",]\n\n[tool.cibuildwheel]\nbuild-frontend = \"build\"\ntest-requires = [ \"-r requirements/cibwtest\",]\ntest-command = \"pytest {project}/tests\"\n\n[tool.ruff.format]\nquote-style = \"single\"\n\n[tool.ruff.lint]\nselect = [ \"C9\", \"E\", \"F\", \"W\", \"I\", \"FA\",]\n\n[tool.pytest.ini_options]\nfilterwarnings = [ \"ignore:Unknown REQUEST_METHOD. '(CONNECT|DELETE|GET|HEAD|OPTIONS|PATCH|POST|PUT|TRACE|CHECKIN|CHECKOUT|COPY|LOCK|MKCOL|MOVE|PROPFIND|PROPPATCH|REPORT|UNCHECKIN|UNLOCK|UPDATE|VERSION-CONTROL)':wsgiref.validate.WSGIWarning\", \"ignore:Unknown REQUEST_METHOD. '(FOO|BAR|BREW|SETECASTRONOMY)':wsgiref.validate.WSGIWarning\", \"ignore:\\\"@coroutine\\\" decorator is deprecated:DeprecationWarning\", \"ignore:Using or importing the ABCs:DeprecationWarning\", \"ignore:cannot collect test class 'TestClient':pytest.PytestCollectionWarning\", \"ignore:inspect.getargspec\\\\(\\\\) is deprecated:DeprecationWarning\", \"ignore:path is deprecated\\\\. Use files\\\\(\\\\) instead:DeprecationWarning\", \"ignore:This process \\\\(.+\\\\) is multi-threaded\",]\nmarkers = [ \"slow: mark Falcon tests as slower (potentially taking more than ~500ms).\",]\ntestpaths = [ \"tests\",]\n\n[tool.setuptools.dynamic.version]\nattr = \"falcon.version.__version__\"\n\n[tool.setuptools.packages.find]\ninclude = [ \"falcon*\",]\n\n[tool.ruff.lint.mccabe]\nmax-complexity = 15\n\n[tool.ruff.lint.per-file-ignores]\n\"examples/*\" = [ \"FA\",]\n\n[tool.ruff.lint.isort]\ncase-sensitive = false\nforce-single-line = true\norder-by-type = false\nsingle-line-exclusions = [ \"typing\",]\nforce-sort-within-sections = true\nknown-local-folder = [ \"asgilook\", \"look\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [],
+    "test_time": 95.82496905326843
+  },
+  "mutants": [
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri == '':\n            if self.query_string:\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is False:\n            if self.query_string:\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is not None:\n            if self.query_string:\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is not None:\n            if self.query_string:\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri\n",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri:\n            if self.query_string:\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if len(self.query_string) < 5:  # This will only process if the query string is less than 5 characters long.\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if not self.query_string:  # This will skip processing when the query string is present.\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if self.query_string == '':  # This will only check for an empty string, missing other cases.\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if self.query_string is None:  # This will never be true since self.query_string is initialized as an empty string.\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if self.query_string.startswith('?'):  # This will incorrectly assume that a query string is valid only if it starts with '?'.\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if self.query_string:\n                self._cached_relative_uri = None\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri\n",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if self.query_string:\n                self._cached_relative_uri = (\n                    self.root_path + self.path + 'XX?XX' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = self.root_path + self.path\n\n        return self._cached_relative_uri\n",
+    "    @property\n    def relative_uri(self) -> str:\n        \"\"\"The path and query string portion of the\n        request URI, omitting the scheme and host.\n        \"\"\"  # noqa: D205\n        if self._cached_relative_uri is None:\n            if self.query_string:\n                self._cached_relative_uri = (\n                    self.root_path + self.path + '?' + self.query_string\n                )\n            else:\n                self._cached_relative_uri = None\n\n        return self._cached_relative_uri\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: self._cached_relative_uri, name=\"old_cache\")\n@icontract.snapshot(lambda self: self.query_string, name=\"old_query\")\n@icontract.snapshot(lambda self: self.root_path, name=\"old_root\")\n@icontract.snapshot(lambda self: self.path, name=\"old_path\")\n@icontract.ensure(\n    lambda OLD, self: (\n        (OLD.old_cache is None and self._cached_relative_uri == (OLD.old_root + OLD.old_path + ('?' + OLD.old_query if OLD.old_query else '')))\n        or\n        (OLD.old_cache is not None and self._cached_relative_uri == OLD.old_cache)\n    )\n)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 258
+}

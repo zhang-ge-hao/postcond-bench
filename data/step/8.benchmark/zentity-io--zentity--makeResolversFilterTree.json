@@ -1,0 +1,178 @@
+{
+  "rlid": "makeResolversFilterTree",
+  "github_url": "https://github.com/zentity-io/zentity/blob/ecddfab82b68379d223beac108714a92831a4dba/./src/main/java/io/zentity/resolution/Query.java#L314-L332",
+  "name": "makeResolversFilterTree",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 9,
+  "cc": 4,
+  "content": "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+  "header": "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {",
+  "file": "./src/main/java/io/zentity/resolution/Query.java",
+  "start_line": 314,
+  "end_line": 332,
+  "body_start_line": 321,
+  "comment": "/**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */",
+  "test_time": 6.65236234664917,
+  "cover_tests": [
+    "io.zentity.resolution.JobTest#testMakeResolversClause"
+  ],
+  "repo": {
+    "github_path": "zentity-io/zentity",
+    "commit": "ecddfab82b68379d223beac108714a92831a4dba",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <name>zentity</name>\n  <description>Entity resolution for Elasticsearch.</description>\n  <groupId>io.zentity</groupId>\n  <artifactId>zentity</artifactId>\n  <version>${zentity.version}-elasticsearch-${elasticsearch.version}</version>\n  <url>https://zentity.io</url>\n  <inceptionYear>2018</inceptionYear>\n  <properties>\n    <zentity.author>Dave Moore</zentity.author>\n    <zentity.classname>org.elasticsearch.plugin.zentity.ZentityPlugin</zentity.classname>\n    <zentity.website>${project.url}</zentity.website>\n    <zentity.version>1.8.3</zentity.version>\n    <elasticsearch.version>8.17.0</elasticsearch.version>\n    <jackson.core.version>2.17.0</jackson.core.version>\n    <jackson.databind.version>2.17.0</jackson.databind.version>\n    <jdk.version>1.17</jdk.version>\n    <commons-io.version>2.16.1</commons-io.version>\n    <testcontainers.version>1.16.0</testcontainers.version>\n    <maven.antrun.version>3.0.0</maven.antrun.version>\n    <maven.assembly.version>3.7.1</maven.assembly.version>\n    <maven.build-helper.version>3.5.0</maven.build-helper.version>\n    <maven.compiler.version>3.13.0</maven.compiler.version>\n    <maven.junit.version>2.7.8</maven.junit.version>\n    <maven.license.codehaus.version>2.0.0</maven.license.codehaus.version>\n    <maven.license.mycila.version>3.0</maven.license.mycila.version>\n    <maven.surefire.version>2.22.2</maven.surefire.version>\n    <skipTests>false</skipTests>\n    <skipUnitTests>${skipTests}</skipUnitTests>\n    <skipIntegTests>${skipTests}</skipIntegTests>\n    <integ.http.port>9400</integ.http.port>\n    <integ.transport.port>9500</integ.transport.port>\n    </properties>\n  <dependencies>\n    <dependency>\n      <groupId>org.elasticsearch</groupId>\n      <artifactId>elasticsearch</artifactId>\n      <version>${elasticsearch.version}</version>\n      <scope>provided</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.fasterxml.jackson.core</groupId>\n      <artifactId>jackson-core</artifactId>\n      <version>${jackson.core.version}</version>\n      <scope>provided</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.fasterxml.jackson.core</groupId>\n      <artifactId>jackson-databind</artifactId>\n      <version>${jackson.databind.version}</version>\n      <scope>compile</scope>\n      </dependency>\n    <dependency>\n      <groupId>co.elastic.clients</groupId>\n      <artifactId>elasticsearch-java</artifactId>\n      <version>${elasticsearch.version}</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>commons-io</groupId>\n      <artifactId>commons-io</artifactId>\n      <version>${commons-io.version}</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.testcontainers</groupId>\n      <artifactId>testcontainers</artifactId>\n      <version>${testcontainers.version}</version>\n      <scope>test</scope>\n      </dependency>\n    </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>${maven.compiler.version}</version>\n        <configuration>\n          <source>10</source>\n          <target>10</target>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.codehaus.mojo</groupId>\n        <artifactId>build-helper-maven-plugin</artifactId>\n        <version>${maven.build-helper.version}</version>\n        <executions>\n          <execution>\n            <id>timestamp-property</id>\n            <goals>\n              <goal>timestamp-property</goal>\n              </goals>\n            <phase>validate</phase>\n            <configuration>\n              <name>current.year</name>\n              <pattern>yyyy</pattern>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>com.mycila</groupId>\n        <artifactId>license-maven-plugin</artifactId>\n        <version>${maven.license.mycila.version}</version>\n        <configuration>\n          <header>src/main/resources/license-header.txt</header>\n          <headerDefinitions>src/main/resources/license-header-notice.xml</headerDefinitions>\n          <mapping>\n            <java>SLASHSTAR_STYLE</java>\n            <NOTICE>TEXT</NOTICE>\n            </mapping>\n          <properties>\n            <current.year>${current.year}</current.year>\n            <owner>${zentity.author}</owner>\n            </properties>\n          <includes>\n            <include>NOTICE</include>\n            <include>src/test/java/**</include>\n            <include>src/main/java/**</include>\n            </includes>\n          </configuration>\n        <executions>\n          <execution>\n            <phase>package</phase>\n            <goals>\n              <goal>format</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.codehaus.mojo</groupId>\n        <artifactId>license-maven-plugin</artifactId>\n        <version>${maven.license.codehaus.version}</version>\n        <configuration>\n          <includedScopes>compile,provided</includedScopes>\n          <fileTemplate>${project.basedir}/src/main/resources/notice-template.ftl</fileTemplate>\n          <outputDirectory>${project.build.directory}/generated-sources</outputDirectory>\n          <thirdPartyFilename>THIRD-PARTY</thirdPartyFilename>\n          </configuration>\n        <executions>\n          <execution>\n            <phase>package</phase>\n            <goals>\n              <goal>add-third-party</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <artifactId>maven-antrun-plugin</artifactId>\n        <version>${maven.antrun.version}</version>\n        <executions>\n          <execution>\n            <id>default-cli</id>\n            <phase>package</phase>\n            <goals>\n              <goal>run</goal>\n              </goals>\n            <configuration>\n              <target>\n                <concat destfile=\"${project.build.directory}/generated-sources/NOTICE\" force=\"yes\">\n                  <fileset file=\"${project.basedir}/NOTICE\" />\n                  <fileset file=\"${project.build.directory}/generated-sources/THIRD-PARTY\" />\n                  </concat>\n                </target>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-assembly-plugin</artifactId>\n        <version>${maven.assembly.version}</version>\n        <configuration>\n          <appendAssemblyId>false</appendAssemblyId>\n          <outputDirectory>${project.build.directory}/releases/</outputDirectory>\n          <descriptors>\n            <descriptor>${basedir}/src/main/assemblies/plugin.xml</descriptor>\n            </descriptors>\n          </configuration>\n        <executions>\n          <execution>\n            <phase>package</phase>\n            <goals>\n              <goal>single</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>${maven.surefire.version}</version>\n        <configuration>\n          <skipTests>false</skipTests>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>com.carrotsearch.randomizedtesting</groupId>\n        <artifactId>junit4-maven-plugin</artifactId>\n        <version>${maven.junit.version}</version>\n        <configuration>\n          <environmentVariables>\n            <BUILD_DIRECTORY>${project.build.directory}</BUILD_DIRECTORY>\n            <ELASTICSEARCH_VERSION>${elasticsearch.version}</ELASTICSEARCH_VERSION>\n            <ZENTITY_VERSION>${zentity.version}</ZENTITY_VERSION>\n            </environmentVariables>\n          <assertions enableSystemAssertions=\"false\">\n            <enable />\n            </assertions>\n          <listeners>\n            <report-text />\n            </listeners>\n          </configuration>\n        <executions>\n          <execution>\n            <id>unit-tests</id>\n            <phase>test</phase>\n            <goals>\n              <goal>junit4</goal>\n              </goals>\n            <inherited>true</inherited>\n            <configuration>\n              <skipTests>${skipUnitTests}</skipTests>\n              <includes>\n                <include>**/*Test.class</include>\n                </includes>\n              <excludes>\n                <exclude>**/*$*</exclude>\n                </excludes>\n              </configuration>\n            </execution>\n          <execution>\n            <id>integration-tests</id>\n            <phase>integration-test</phase>\n            <goals>\n              <goal>junit4</goal>\n              </goals>\n            <inherited>true</inherited>\n            <configuration>\n              <skipTests>${skipIntegTests}</skipTests>\n              <includes>\n                <include>**/*IT.class</include>\n                </includes>\n              <excludes>\n                <exclude>**/*$*</exclude>\n                </excludes>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.10</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      </plugins>\n    <resources>\n      <resource>\n        <directory>src/main/resources</directory>\n        <filtering>true</filtering>\n        <includes>\n          <include>zentity.properties</include>\n          <include>plugin-descriptor.properties</include>\n          </includes>\n        </resource>\n      </resources>\n    <testResources>\n      <testResource>\n        <directory>src/main/resources</directory>\n        <filtering>true</filtering>\n        <includes>\n          <include>zentity.properties</include>\n          <include>plugin-descriptor.properties</include>\n          </includes>\n        </testResource>\n      <testResource>\n        <directory>src/test/resources</directory>\n        <filtering>true</filtering>\n        <includes>\n          <include>**</include>\n          </includes>\n        </testResource>\n      </testResources>\n    </build>\n  </project>\n",
+    "failed_tests": [
+      "org.elasticsearch.plugin.zentity.HomeActionIT#testHomeAction",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testBulkCreate",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testBulkCreateConflict",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testBulkDelete",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testBulkInvalidActionUnsupported",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testBulkInvalidEntityModelMalformed",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testBulkInvalidEntityTypeMissing",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testBulkUpdate",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testCannotCreateInvalidEntityType",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testDeleteModel",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testDeleteModelNotFound",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testGetModelNotFound",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testGetModels",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testPostModel",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testPostModelConflict",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testPutModel",
+      "org.elasticsearch.plugin.zentity.ModelsActionIT#testPutModelUpdate",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testBulkResolution",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testBulkResolutionInvalidEntityType",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testBulkResolutionOverrideEntityType",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testBulkResolutionWithMalformed",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testInvalidJobAttributesEmpty",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testInvalidJobIndexEmpty",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testInvalidJobIndexFieldEmpty",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testInvalidJobIndicesEmpty",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testInvalidJobMatchersEmpty",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testInvalidJobResolversEmpty",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobArrays",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobAttributes",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobAttributesIds",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobDataTypes",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobDataTypesDate",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobDataTypesDateTerm",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobElasticsearchError",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobEmbeddedModel",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobExplanation",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobExplanationTerms",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobIds",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobMaxHopsAndDocs",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobNoScope",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobObject",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobObjectArrays",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobResolverWeight",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobScopeExcludeAndIncludeAttributes",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobScopeExcludeAndIncludeAttributesTerms",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobScopeExcludeAttributes",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobScopeExcludeAttributesTerms",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobScopeIncludeAttributes",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobScopeIncludeAttributesTerms",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobScore",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobSearchParams",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobTerms",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobTermsIds",
+      "org.elasticsearch.plugin.zentity.ResolutionActionIT#testJobZentityError",
+      "org.elasticsearch.plugin.zentity.SetupActionIT#testSetupCustom",
+      "org.elasticsearch.plugin.zentity.SetupActionIT#testSetupDeconflict",
+      "org.elasticsearch.plugin.zentity.SetupActionIT#testSetupDefault",
+      "org.elasticsearch.plugin.zentity.ZentityPluginIT#testPluginIsLoaded",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.qtesla.QTeslaKeyEncodingTests#testDecodeEncodePrivateKeyQT3P",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.qtesla.QTeslaKeyEncodingTests#testDecodeEncodePublicKeyQT3P"
+    ],
+    "test_time": 2.689253807067871
+  },
+  "mutants": [
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>(Collections.reverseOrder()));\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : Collections.singletonList(resolversSorted.get(0))) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted.subList(0, resolversSorted.size() - 1)) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree; // Assigns the entire filterTree to current, which is not the intended behavior.\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = new TreeMap<>(); // Initializes current as a new empty TreeMap, losing the existing structure.\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = new TreeMap<>(filterTree); // Creates a shallow copy of filterTree, which may not reflect changes made to the original.\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : Collections.singletonList(\"defaultAttribute\")) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : filterTree.keySet()) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted.subList(1, resolverSorted.size())) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (current.size() < 1) // This will only add the attribute if the current map is empty, which is not the intended logic.\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName).isEmpty() ? new TreeMap<>() : current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = new TreeMap<>(current.get(attributeName));\n            }\n        }\n        return filterTree.get(\"root\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return filterTree.get(\"nonexistentKey\");\n    }",
+    "    /**\n     * Reorganize the attributes of all resolvers into a tree of Maps.\n     *\n     * @param resolversSorted The attributes for each resolver. Attributes are sorted first by priority and then lexicographically.\n     * @return The attributes of all applicable resolvers nested in a tree.\n     */\n    public static TreeMap<String, TreeMap> makeResolversFilterTree(List<List<String>> resolversSorted) {\n        TreeMap<String, TreeMap> filterTree = new TreeMap<>();\n        filterTree.put(\"root\", new TreeMap<>());\n        for (List<String> resolverSorted : resolversSorted) {\n            TreeMap<String, TreeMap> current = filterTree.get(\"root\");\n            for (String attributeName : resolverSorted) {\n                if (!current.containsKey(attributeName))\n                    current.put(attributeName, new TreeMap<String, TreeMap>());\n                current = current.get(attributeName);\n            }\n        }\n        return null;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result != null;\n//@ ensures \\result.comparator() == null;\n//@ ensures resolversSorted.stream().allMatch(rs -> { java.util.TreeMap cur = \\result; for (String a : rs) { if (cur == null || !cur.containsKey(a)) return false; cur = (java.util.TreeMap) cur.get(a); } return true; });\n//@ ensures \\result.keySet().stream().allMatch(k -> resolversSorted.stream().anyMatch(rs -> rs.size() > 0 && rs.get(0).equals(k)));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 183
+}
