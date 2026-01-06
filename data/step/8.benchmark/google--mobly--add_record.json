@@ -1,0 +1,357 @@
+{
+  "rlid": "add_record",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/records.py#L588-L609",
+  "name": "add_record",
+  "line_cov": 1.0,
+  "lines": 22,
+  "stats": 9,
+  "cc": 4,
+  "content": "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+  "header": "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"",
+  "file": "./mobly/records.py",
+  "start_line": 588,
+  "end_line": 609,
+  "body_start_line": 599,
+  "comment": "\"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"",
+  "test_time": 7.440160512924194,
+  "cover_tests": [
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_assumption_failure_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashed_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_failing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_ignored_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_multiple_tests",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_passing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_prefix_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_random_whitespace",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_runner_teardown_crash",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_on_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_on_fail_from_setup_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_setup_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_setup_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_teardown_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_class_in_on_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_class_in_setup_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_class_in_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_class_setup_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_equal_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_equal_fail_with_msg",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_equal_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_fail_with_noop",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_fail_with_wrong_error",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_fail_with_wrong_regex",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_regex_fail_with_noop",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_regex_fail_with_wrong_error",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_regex_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_true",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_both_teardown_and_test_body_raise_exceptions",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_cli_test_selection_override_self_tests_list",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_cli_test_selection_with_regex",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_cli_test_selection_with_regex_generated_tests",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_current_test_info",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_current_test_name",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_default_execution_of_all_tests",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_default_execution_skip_noncallable_tests",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_exception_objects_in_record",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_equal",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_false",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_setup_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_setup_class_and_on_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_setup_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_teardown_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_teardown_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_multiple_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_no_op",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_no_raises_custom_msg",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_no_raises_default_msg",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_true",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_true_and_assert_true",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_two_tests",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_explicit_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_explicit_pass_but_teardown_test_raises_an_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_failure_in_procedure_functions_is_recorded",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_failure_to_call_procedure_function_is_recorded",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_call_outside_of_pre_run",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_run",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_selected_run",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_with_none_uid",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_with_uid",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_get_existing_tests_do_not_call_properties",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_implicit_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_cannot_modify_original_record",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_both_test_and_teardown_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_setup_class_fails_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_setup_test_fails_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_teardown_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_raise_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_triggered_by_setup_class_failure_then_fail_too",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_pass_cannot_modify_original_record",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_pass_raise_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_paths",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_procedure_function_gets_correct_record",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_promote_extra_errors_to_termination_signal",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_record_controller_info",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_record_controller_info_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_generated",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_consec_error_at_the_beginning_aborts_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_consec_error_does_not_abort_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_consec_error_in_the_middle_aborts_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_failures",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_uid",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_all_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_first_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_generated_test_last_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_last_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_self_tests_list",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_setup_and_teardown_execution_count",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_setup_class_fail_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_skip",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_skip_if",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_skip_in_setup_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_class_fail_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_class_raise_abort_all",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_assert_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_executed_if_setup_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_executed_if_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_executed_if_test_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_expects_error",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_raise_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_uid",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_uid_not_specified",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_uid_with_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_write_user_data",
+    "tests/mobly/output_test.py::OutputTest::test_basic_output",
+    "tests/mobly/output_test.py::OutputTest::test_logging_before_run",
+    "tests/mobly/output_test.py::OutputTest::test_run_twice_for_two_sets_of_logs",
+    "tests/mobly/output_test.py::OutputTest::test_teardown_class_output",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass_negative",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass_with_repeat",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass_with_retry",
+    "tests/mobly/records_test.py::RecordsTest::test_is_test_executed",
+    "tests/mobly/records_test.py::RecordsTest::test_result_add_class_error_with_special_error",
+    "tests/mobly/records_test.py::RecordsTest::test_result_add_class_error_with_test_signal",
+    "tests/mobly/records_test.py::RecordsTest::test_result_add_operator_success",
+    "tests/mobly/records_test.py::RecordsTest::test_result_add_operator_type_mismatch",
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_run_suite",
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_run_suite_class",
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_run_suite_class_records_suite_info",
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_run_suite_class_with_combined_test_selection",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_main",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_twice",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_two_test_classes",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_two_test_classes_different_configs_and_aliases",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_when_terminated",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_with_abort_all",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_without_mobly_logger_context",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_summary_file_entries"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.result = TestResultEnums.TEST_RESULT_PASS  # Incorrectly forces the result to PASS\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    self.error.append(record)  # Incorrectly adds the record to error without checking the result\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    self.executed.append(record)  # Missing update_record call, leading to stale data\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    self.failed.append(record)  # Incorrectly adds the record to failed without checking the result\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    self.passed.append(record)  # Incorrectly adds the record to passed without checking the result\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result != TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_ERROR:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.error.append(record)  # Incorrectly categorizes skipped tests as errors\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.executed.append(record)  # Adds skipped tests to executed, misleading the results\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.failed.append(record)  # Incorrectly categorizes skipped tests as failed\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.passed.append(record)  # Incorrectly categorizes skipped tests as passed\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed = [record]  # This will overwrite the entire executed list with just the new record.\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record) if record.result != TestResultEnums.TEST_RESULT_PASS else None  # This will skip adding the record if it passed.\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record) if record.result == TestResultEnums.TEST_RESULT_FAIL else self.failed.append(record)  # This will incorrectly add passed tests to the failed list.\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.insert(0, record)  # This will add the record to the beginning of the list instead of the end.\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result != TestResultEnums.TEST_RESULT_PASS:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_ERROR:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_PASS or record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.error.append(record)  # Incorrectly adds failed record to error list\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.executed.append(record)  # Incorrectly adds failed record to executed list\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.passed.append(record)  # Incorrectly adds failed record to passed list\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.skipped.append(record)  # Incorrectly adds failed record to skipped list\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed = record  # This overwrites the passed list with a single record instead of appending.\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(None)  # This appends a None value instead of the actual record.\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record.uid)  # This appends the UID of the record instead of the record itself.\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.insert(0, record)  # This inserts the record at the beginning, which may not be the intended behavior.\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.insert(0, record)  # Incorrectly inserting at the beginning of the error list instead of appending",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.executed.append(record)  # Incorrectly appending to the executed list instead of the error list",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.failed.append(record)  # Incorrectly appending to the failed list instead of the error list",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.passed.append(record)  # Incorrectly appending to the passed list instead of the error list",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.skipped.append(record)  # Incorrectly appending to the skipped list instead of the error list"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda self: self.skipped[:], name=\"old_skipped\")\n@icontract.snapshot(lambda self: self.executed[:], name=\"old_executed\")\n@icontract.snapshot(lambda self: self.failed[:], name=\"old_failed\")\n@icontract.snapshot(lambda self: self.passed[:], name=\"old_passed\")\n@icontract.snapshot(lambda self: self.error[:], name=\"old_error\")\n@icontract.snapshot(lambda self, record: copy.deepcopy(record.extra_errors), name=\"old_extra_errors\")\n@icontract.snapshot(lambda self, record: record.result, name=\"old_result\")\n@icontract.ensure(\n    lambda OLD, self, record:\n        (\n            record.result == TestResultEnums.TEST_RESULT_SKIP\n            and self.skipped == OLD.old_skipped + [record]\n            and self.executed == OLD.old_executed\n            and self.failed == OLD.old_failed\n            and self.passed == OLD.old_passed\n            and self.error == OLD.old_error\n        ) or (\n            record.result == TestResultEnums.TEST_RESULT_FAIL\n            and self.executed == OLD.old_executed + [record]\n            and self.failed == OLD.old_failed + [record]\n            and self.passed == OLD.old_passed\n            and self.error == OLD.old_error\n            and self.skipped == OLD.old_skipped\n        ) or (\n            record.result == TestResultEnums.TEST_RESULT_PASS\n            and self.executed == OLD.old_executed + [record]\n            and self.passed == OLD.old_passed + [record]\n            and self.failed == OLD.old_failed\n            and self.error == OLD.old_error\n            and self.skipped == OLD.old_skipped\n        ) or (\n            record.result not in (\n                TestResultEnums.TEST_RESULT_SKIP,\n                TestResultEnums.TEST_RESULT_FAIL,\n                TestResultEnums.TEST_RESULT_PASS,\n            )\n            and self.executed == OLD.old_executed + [record]\n            and self.error == OLD.old_error + [record]\n            and self.failed == OLD.old_failed\n            and self.passed == OLD.old_passed\n            and self.skipped == OLD.old_skipped\n        )\n)\n@icontract.ensure(\n    lambda OLD, self, record:\n        (\n            (not OLD.old_extra_errors and record.result == OLD.old_result)\n        )\n        or (\n            OLD.old_extra_errors and (\n                (\n                    OLD.old_result == TestResultEnums.TEST_RESULT_FAIL\n                    and record.result == TestResultEnums.TEST_RESULT_FAIL\n                )\n                or\n                (\n                    OLD.old_result != TestResultEnums.TEST_RESULT_FAIL\n                    and record.result == TestResultEnums.TEST_RESULT_ERROR\n                )\n            )\n        )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 94
+}

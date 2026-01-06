@@ -1,0 +1,120 @@
+{
+  "rlid": "get_full_test_names",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/test_runner.py#L313-L339",
+  "name": "get_full_test_names",
+  "line_cov": 0.9333333333333333,
+  "lines": 27,
+  "stats": 14,
+  "cc": 6,
+  "content": "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+  "header": "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"",
+  "file": "./mobly/test_runner.py",
+  "start_line": 313,
+  "end_line": 339,
+  "body_start_line": 320,
+  "comment": "\"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"",
+  "test_time": 0.29033327102661133,
+  "cover_tests": [
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_print_test_names_for_suites",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_get_full_test_names",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_get_full_test_names_test_list",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_get_full_test_names_test_list_empty"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos[:1]:  # Only processes the first test run info, ignoring others\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos[::-1]:  # Iterates in reverse order, potentially affecting execution order\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test) + ['additional_test']  # Adds a non-existent test, leading to potential errors later.\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None and len(test_run_info.tests) > 0:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests * 2:  # This will duplicate the test names, leading to redundant checks.\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG} {test_name}')  # Incorrectly uses a space instead of a dot\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}:{test_name}')  # Incorrectly uses a colon instead of a dot\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}_{test_name}')  # Incorrectly uses an underscore instead of a dot\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test_name}')  # Missing the test.TAG prefix\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(test_name)  # Appends only the test name without the TAG\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests])\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n.upper()}' for n in tests])  # Converts test names to uppercase\n\n    return test_names",
+    "  def get_full_test_names(self):\n    \"\"\"Returns the names of all tests that will be run in this test runner.\n\n    Returns:\n      A list of test names. Each test name is in the format of\n      <test.TAG>.<test_name>.\n    \"\"\"\n    test_names = []\n    for test_run_info in self._test_run_infos:\n      test_config = test_run_info.config.copy()\n      test_config.test_class_name_suffix = test_run_info.test_class_name_suffix\n      test = test_run_info.test_class(test_config)\n\n      tests = self._get_test_names_from_class(test)\n      if test_run_info.tests is not None:\n        # If tests is provided, verify that all tests exist in the class.\n        tests_set = set(tests)\n        for test_name in test_run_info.tests:\n          if test_name not in tests_set:\n            raise Error(\n                'Unknown test method: %s in class %s', (test_name, test.TAG)\n            )\n          test_names.append(f'{test.TAG}.{test_name}')\n      else:\n        test_names.extend([f'{test.TAG}.{n}' for n in tests if n.startswith('skip_')])\n\n    return test_names"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: [((cfg := tri.config.copy(), setattr(cfg, \"test_class_name_suffix\", tri.test_class_name_suffix), (test := tri.test_class(cfg)), (test.TAG, list(tri.tests) if tri.tests is not None else self._get_test_names_from_class(test)))[-1]) for tri in self._test_run_infos], name=\"expected_pairs\")\n@icontract.ensure(lambda result, self, OLD: isinstance(result, list) and result == [f\"{tag}.{name}\" for tag, tests in OLD.expected_pairs for name in tests])",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 336
+}

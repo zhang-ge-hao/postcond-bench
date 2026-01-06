@@ -1,0 +1,238 @@
+{
+  "rlid": "skip_to_character",
+  "github_url": "https://github.com/mangiucugna/json_repair/blob/7ca4d6de56ab3824f617e913ee5003171a044578/./src/json_repair/json_parser.py#L158-L176",
+  "name": "skip_to_character",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 12,
+  "cc": 6,
+  "content": "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+  "header": "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"",
+  "file": "./src/json_repair/json_parser.py",
+  "start_line": 158,
+  "end_line": 176,
+  "body_start_line": 162,
+  "comment": "\"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"",
+  "test_time": 3.0600290298461914,
+  "cover_tests": [
+    "tests/test_json_repair.py::test_valid_json",
+    "tests/test_json_repair.py::test_repair_json_with_objects",
+    "tests/test_json_repair.py::test_stream_stable",
+    "tests/test_json_repair.py::test_logging",
+    "tests/test_parse_array.py::test_parse_array_edge_cases",
+    "tests/test_parse_comment.py::test_parse_comment",
+    "tests/test_parse_number.py::test_parse_number_edge_cases",
+    "tests/test_parse_object.py::test_parse_object",
+    "tests/test_parse_object.py::test_parse_object_edge_cases",
+    "tests/test_parse_string.py::test_missing_and_mixed_quotes",
+    "tests/test_parse_string.py::test_escaping",
+    "tests/test_parse_string.py::test_markdown",
+    "tests/test_repair_json_from_file.py::test_repair_json_from_file"
+  ],
+  "repo": {
+    "github_path": "mangiucugna/json_repair",
+    "commit": "7ca4d6de56ab3824f617e913ee5003171a044578",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=61.0\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"json_repair\"\nversion = \"0.50.0\"\nlicense = \"MIT\"\nlicense-files = [ \"LICENSE\",]\ndescription = \"A package to repair broken json strings\"\nkeywords = [ \"JSON\", \"REPAIR\", \"LLM\", \"PARSER\",]\nreadme = \"README.md\"\nrequires-python = \">=3.10\"\nclassifiers = [ \"Programming Language :: Python :: 3\", \"Operating System :: OS Independent\",]\n[[project.authors]]\nname = \"Stefano Baccianella\"\nemail = \"4247706+mangiucugna@users.noreply.github.com\"\n\n[project.urls]\nHomepage = \"https://github.com/mangiucugna/json_repair/\"\n\"Bug Tracker\" = \"https://github.com/mangiucugna/json_repair/issues\"\n\"Live demo\" = \"https://mangiucugna.github.io/json_repair/\"\n\n[project.scripts]\njson_repair = \"json_repair.__main__:cli\"\n\n[tool.ruff]\nindent-width = 4\nline-length = 120\ntarget-version = \"py313\"\n\n[tool.ruff.lint]\nselect = [ \"A\", \"ARG\", \"B\", \"C4\", \"COM\", \"C90\", \"E\", \"F\", \"I\", \"N\", \"PLC\", \"PLE\", \"PLW\", \"PT\", \"Q\", \"S\", \"SIM\", \"TID\", \"UP\", \"W\",]\nextend-select = [ \"RUF001\", \"RUF012\", \"RUF013\", \"RUF016\", \"RUF018\",]\nignore = [ \"S101\", \"COM812\", \"E501\", \"C901\",]\nfixable = [ \"ALL\",]\nunfixable = []\n\n[tool.ruff.format]\nquote-style = \"double\"\nindent-style = \"space\"\nskip-magic-trailing-comma = false\nline-ending = \"auto\"\n\n[tool.pytest.ini_options]\npythonpath = [ \".\",]\n\n[tool.coverage.run]\nomit = [ \"*/.cursor/extensions/*\", \"*/pythonFiles/lib/python/*\", \"*/site-packages/*\",]\n\n[tool.coverage.report]\nexclude_also = [ \"def __repr__\", \"if self.debug:\", \"if settings.DEBUG\", \"raise AssertionError\", \"raise NotImplementedError\", \"if 0:\", \"if __name__ == .__main__.:\", \"if TYPE_CHECKING:\", \"class .*\\\\bProtocol\\\\):\", \"@(abc\\\\.)?abstractmethod\",]\n\n[tool.setuptools.package-data]\npkgname = [ \"py.typed\",]\n\n[tool.poetry.dependencies]\nicontract = \"^2.7.1\"\n\n[tool.ruff.lint.per-file-ignores]\n\"__init__.py\" = [ \"PLC0414\",]\n\n[tool.setuptools.packages.find]\nwhere = [ \"src\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_performance.py::test_true_true_correct",
+      "tests/test_performance.py::test_true_true_incorrect",
+      "tests/test_performance.py::test_true_false_correct",
+      "tests/test_performance.py::test_true_false_incorrect",
+      "tests/test_performance.py::test_false_true_correct",
+      "tests/test_performance.py::test_false_true_incorrect",
+      "tests/test_performance.py::test_false_false_correct",
+      "tests/test_performance.py::test_false_false_incorrect"
+    ],
+    "test_time": 21.151262760162354
+  },
+  "mutants": [
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = None\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index - idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = [character] * 2 if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = [character] if isinstance(character, (list, str)) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = [character] if isinstance(character, list) else character\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(None, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, str) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, tuple) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char in character_list:  # This will cause the loop to run indefinitely if the character is found\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list and char != '\\n':  # This will ignore new line characters, which may be valid in certain contexts\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list and char.isalnum():  # This will only check for alphanumeric characters, ignoring other valid characters\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 2\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] != \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \" \":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"'\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"/\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"XX\\\\XX\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"n\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 2] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.index  # Returns the current index without skipping, causing an infinite loop\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(None, idx + 1)\n        return idx\n",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1) if char.isalpha() else idx  # Conditional skip that may not always proceed\n        return idx",
+    "    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(idx + 1)\n        return idx\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self, character, idx: idx, name=\"start_idx\")\n@icontract.snapshot(lambda self, character, idx: self.index, name=\"start_index\")\n@icontract.snapshot(lambda self, character, idx: len(self.json_str), name=\"start_len\")\n@icontract.snapshot(lambda self, character, idx: character, name=\"character_arg\")\n@icontract.ensure(lambda result, self, character, idx: isinstance(result, int) and result >= idx)\n@icontract.ensure(lambda result, self, character, idx: (self.index + idx >= len(self.json_str) and result == idx) or (self.index + idx < len(self.json_str)))\n@icontract.ensure(lambda result, self, character, idx: (self.index + result >= len(self.json_str)) or ( ((isinstance(character, list) and self.json_str[self.index + result] in character) or (not isinstance(character, list) and self.json_str[self.index + result] == character)) and ((self.index + result) == 0 or self.json_str[self.index + result - 1] != \"\\\\\")))\n@icontract.ensure(lambda result, self, character, idx: all(not(((self.index + k) < len(self.json_str)) and (((isinstance(character, list) and self.json_str[self.index + k] in character) or (not isinstance(character, list) and self.json_str[self.index + k] == character)) and (((self.index + k) == 0) or (self.json_str[self.index + k - 1] != \"\\\\\")))) for k in range(idx, result)))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom typing import Literal, TextIO\n\nfrom .constants import STRING_DELIMITERS, JSONReturnType\nfrom .json_context import JsonContext\nfrom .object_comparer import ObjectComparer\nfrom .parse_array import parse_array as _parse_array\nfrom .parse_boolean_or_null import parse_boolean_or_null as _parse_boolean_or_null\nfrom .parse_comment import parse_comment as _parse_comment\nfrom .parse_number import parse_number as _parse_number\nfrom .parse_object import parse_object as _parse_object\nfrom .parse_string import parse_string as _parse_string\nfrom .string_file_wrapper import StringFileWrapper\n\n\nclass JSONParser:\n    # Split the parse methods into separate files because this one was like 3000 lines\n    def parse_array(self, *args, **kwargs):\n        return _parse_array(self, *args, **kwargs)\n\n    def parse_boolean_or_null(self, *args, **kwargs):\n        return _parse_boolean_or_null(self, *args, **kwargs)\n\n    def parse_comment(self, *args, **kwargs):\n        return _parse_comment(self, *args, **kwargs)\n\n    def parse_number(self, *args, **kwargs):\n        return _parse_number(self, *args, **kwargs)\n\n    def parse_object(self, *args, **kwargs):\n        return _parse_object(self, *args, **kwargs)\n\n    def parse_string(self, *args, **kwargs):\n        return _parse_string(self, *args, **kwargs)\n\n    def __init__(\n        self,\n        json_str: str | StringFileWrapper,\n        json_fd: TextIO | None,\n        logging: bool | None,\n        json_fd_chunk_length: int = 0,\n        stream_stable: bool = False,\n    ) -> None:\n        # The string to parse\n        self.json_str: str | StringFileWrapper = json_str\n        # Alternatively, the file description with a json file in it\n        if json_fd:\n            # This is a trick we do to treat the file wrapper as an array\n            self.json_str = StringFileWrapper(json_fd, json_fd_chunk_length)\n        # Index is our iterator that will keep track of which character we are looking at right now\n        self.index: int = 0\n        # This is used in the object member parsing to manage the special cases of missing quotes in key or value\n        self.context = JsonContext()\n        # Use this to log the activity, but only if logging is active\n\n        # This is a trick but a beautiful one. We call self.log in the code over and over even if it's not needed.\n        # We could add a guard in the code for each call but that would make this code unreadable, so here's this neat trick\n        # Replace self.log with a noop\n        self.logging = logging\n        if logging:\n            self.logger: list[dict[str, str]] = []\n            self.log = self._log\n        else:\n            # No-op\n            self.log = lambda *args, **kwargs: None  # noqa: ARG005\n        # When the json to be repaired is the accumulation of streaming json at a certain moment.\n        # e.g. json obtained from llm response.\n        # If this parameter to True will keep the repair results stable. For example:\n        #   case 1:  '{\"key\": \"val\\\\' => '{\"key\": \"val\"}'\n        #   case 2:  '{\"key\": \"val\\\\n' => '{\"key\": \"val\\\\n\"}'\n        #   case 3:  '{\"key\": \"val\\\\n123,`key2:value2' => '{\"key\": \"val\\\\n123,`key2:value2\"}'\n        #   case 4:  '{\"key\": \"val\\\\n123,`key2:value2`\"}' => '{\"key\": \"val\\\\n123,`key2:value2`\"}'\n        self.stream_stable = stream_stable\n\n    def parse(\n        self,\n    ) -> JSONReturnType | tuple[JSONReturnType, list[dict[str, str]]]:\n        json = self.parse_json()\n        if self.index < len(self.json_str):\n            self.log(\n                \"The parser returned early, checking if there's more json elements\",\n            )\n            json = [json]\n            while self.index < len(self.json_str):\n                j = self.parse_json()\n                if j != \"\":\n                    if ObjectComparer.is_same_object(json[-1], j):\n                        # replace the last entry with the new one since the new one seems an update\n                        json.pop()\n                    json.append(j)\n                else:\n                    # this was a bust, move the index\n                    self.index += 1\n            # If nothing extra was found, don't return an array\n            if len(json) == 1:\n                self.log(\n                    \"There were no more elements, returning the element without the array\",\n                )\n                json = json[0]\n        if self.logging:\n            return json, self.logger\n        else:\n            return json\n\n    def parse_json(\n        self,\n    ) -> JSONReturnType:\n        while True:\n            char = self.get_char_at()\n            # False means that we are at the end of the string provided\n            if char is False:\n                return \"\"\n            # <object> starts with '{'\n            elif char == \"{\":\n                self.index += 1\n                return self.parse_object()\n            # <array> starts with '['\n            elif char == \"[\":\n                self.index += 1\n                return self.parse_array()\n            # <string> starts with a quote\n            elif not self.context.empty and (char in STRING_DELIMITERS or char.isalpha()):\n                return self.parse_string()\n            # <number> starts with [0-9] or minus\n            elif not self.context.empty and (char.isdigit() or char == \"-\" or char == \".\"):\n                return self.parse_number()\n            elif char in [\"#\", \"/\"]:\n                return self.parse_comment()\n            # If everything else fails, we just ignore and move on\n            else:\n                self.index += 1\n\n    def get_char_at(self, count: int = 0) -> str | Literal[False]:\n        # Why not use something simpler? Because try/except in python is a faster alternative to an \"if\" statement that is often True\n        try:\n            return self.json_str[self.index + count]\n        except IndexError:\n            return False\n\n    def skip_whitespaces_at(self, idx: int = 0, move_main_index=True) -> int:\n        \"\"\"\n        This function quickly iterates on whitespaces, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        while char.isspace():\n            if move_main_index:\n                self.index += 1\n            else:\n                idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        return idx\n\n    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n\n    def _log(self, text: str) -> None:\n        window: int = 10\n        start: int = max(self.index - window, 0)\n        end: int = min(self.index + window, len(self.json_str))\n        context: str = self.json_str[start:end]\n        self.logger.append(\n            {\n                \"text\": text,\n                \"context\": context,\n            }\n        )\n\n```\n## Target Method\n```\n    def skip_to_character(self, character: str | list, idx: int = 0) -> int:\n        \"\"\"\n        This function quickly iterates to find a character, syntactic sugar to make the code more concise\n        \"\"\"\n        try:\n            char = self.json_str[self.index + idx]\n        except IndexError:\n            return idx\n        character_list = character if isinstance(character, list) else [character]\n        while char not in character_list:\n            idx += 1\n            try:\n                char = self.json_str[self.index + idx]\n            except IndexError:\n                return idx\n        if self.json_str[self.index + idx - 1] == \"\\\\\":\n            # Ah shoot this was actually escaped, continue\n            return self.skip_to_character(character, idx + 1)\n        return idx\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `skip_to_character`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-all",
+  "postconds": [
+    "@icontract.snapshot(lambda idx: idx, name=\"start_idx\")\n@icontract.snapshot(lambda self: self.index, name=\"base_index\")\n@icontract.snapshot(lambda character: character if isinstance(character, list) else [character], name=\"character_list\")\n@icontract.ensure(lambda start_idx, result: result >= start_idx)\n@icontract.ensure(lambda self, base_index: self.index == base_index)\n@icontract.ensure(lambda self, base_index, start_idx, result: not (base_index + start_idx >= len(self.json_str)) or result == start_idx)\n@icontract.ensure(lambda self, base_index, result, character_list: (base_index + result >= len(self.json_str)) or (self.json_str[base_index + result] in character_list and not (base_index + result > 0 and self.json_str[base_index + result - 1] == \"\\\\\")))\n@icontract.ensure(lambda self, base_index, start_idx, result, character_list: all((not (0 <= base_index + k < len(self.json_str))) or (self.json_str[base_index + k] not in character_list) or ((base_index + k) > 0 and self.json_str[base_index + k - 1] == \"\\\\\") for k in range(start_idx, max(result, start_idx))))",
+    "@icontract.snapshot(lambda self: self.index, name=\"old_index\")\n@icontract.ensure(lambda self, old_index: self.index == old_index)\n@icontract.ensure(lambda idx, result: result >= idx)\n@icontract.ensure(lambda result: result >= 0)\n@icontract.ensure(\n    lambda self, character, result:\n    (self.index + result >= len(self.json_str)) or\n    (\n        (self.json_str[self.index + result] in (character if isinstance(character, list) else [character])) and\n        (self.json_str[self.index + result - 1] != \"\\\\\")\n    )\n)\n@icontract.ensure(\n    lambda self, character, idx, result:\n    all(\n        (self.index + i >= len(self.json_str)) or\n        (\n            self.json_str[self.index + i] not in (character if isinstance(character, list) else [character]) or\n            self.json_str[self.index + i - 1] == \"\\\\\"\n        )\n        for i in range(idx, result)\n    )\n)",
+    "@icontract.snapshot(lambda self: self.index, name=\"start_index\")\n@icontract.snapshot(lambda idx: idx, name=\"init_idx\")\n@icontract.snapshot(lambda self: len(self.json_str), name=\"n\")\n@icontract.snapshot(lambda character: character if isinstance(character, list) else [character], name=\"chars\")\n@icontract.ensure(lambda self, start_index: self.index == start_index)\n@icontract.ensure(lambda result, init_idx: result >= init_idx)\n@icontract.ensure(lambda start_index, init_idx, n, result: (start_index + init_idx < n) or (result == init_idx))\n@icontract.ensure(lambda self, start_index, n, chars, result: (start_index + result >= n) or (self.json_str[start_index + result] in chars))\n@icontract.ensure(lambda self, start_index, n, result: (start_index + result >= n) or (start_index + result == 0) or (self.json_str[start_index + result - 1] != \"\\\\\"))\n@icontract.ensure(lambda self, start_index, n, chars, init_idx, result: all(((start_index + k) >= n) or (self.json_str[start_index + k] not in chars) or ((start_index + k) >= 1 and self.json_str[start_index + k - 1] == \"\\\\\") for k in range(init_idx, result)))",
+    "@icontract.snapshot(lambda self, character, idx: self.index, name=\"index_before\")\n@icontract.snapshot(lambda self, character, idx: len(self.json_str), name=\"len_before\")\n@icontract.snapshot(lambda self, character, idx: idx, name=\"idx_before\")\n@icontract.snapshot(lambda self, character, idx: character if isinstance(character, list) else [character], name=\"character_list\")\n@icontract.ensure(lambda self, index_before: self.index == index_before)\n@icontract.ensure(lambda self, len_before: len(self.json_str) == len_before)\n@icontract.ensure(lambda idx_before, result: result >= idx_before)\n@icontract.ensure(lambda self, result, character_list: (not (0 <= self.index + result < len(self.json_str))) or (self.json_str[self.index + result] in character_list and self.json_str[self.index + result - 1] != \"\\\\\"))\n@icontract.ensure(lambda self, idx_before, result, character_list: all(((self.index + k) < 0) or ((self.index + k) >= len(self.json_str)) or (self.json_str[self.index + k] not in character_list) or (self.json_str[self.index + k - 1] == \"\\\\\") for k in range(idx_before, result)))\n@icontract.ensure(lambda self, character_list, idx_before, result: (not (0 <= self.index + idx_before < len(self.json_str))) or (self.json_str[self.index + idx_before] not in character_list) or (self.json_str[self.index + idx_before - 1] == \"\\\\\") or (result == idx_before))",
+    "@icontract.snapshot(lambda self, character, idx: self.index, name=\"old_index\")\n@icontract.snapshot(lambda self, character, idx: idx, name=\"old_idx\")\n@icontract.ensure(lambda self, character, idx, result, OLD: self.index == OLD.old_index)\n@icontract.ensure(lambda self, character, idx, result, OLD: result >= OLD.old_idx)\n@icontract.ensure(lambda self, character, idx, result: (self.index + result >= len(self.json_str)) or ((self.json_str[self.index + result] in (character if isinstance(character, list) else [character])) and (self.json_str[self.index + result - 1] != \"\\\\\")))\n@icontract.ensure(lambda self, character, idx, result, OLD: all(not (self.index + k < len(self.json_str) and (self.json_str[self.index + k] in (character if isinstance(character, list) else [character]) and self.json_str[self.index + k - 1] != \"\\\\\")) for k in range(OLD.old_idx, result)))\n@icontract.ensure(lambda self, character, idx, result: (self.index + idx < len(self.json_str)) or (result == idx))\n@icontract.ensure(lambda self, character, idx, result: result <= max(idx, len(self.json_str) - self.index))\n@icontract.ensure(lambda self, character, idx, result: (not (self.index + idx < len(self.json_str) and (self.json_str[self.index + idx] in (character if isinstance(character, list) else [character]) and self.json_str[self.index + idx - 1] != \"\\\\\"))) or (result == idx))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "failed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ]
+  ],
+  "traversal_rank": 151
+}

@@ -1,0 +1,115 @@
+{
+  "rlid": "build_yaml_file_mapping",
+  "github_url": "https://github.com/z3z1ma/dbt-osmosis/blob/cd453ea69e9473e45df5390d8bb2a41e201dd4ee/./src/dbt_osmosis/core/path_management.py#L144-L165",
+  "name": "build_yaml_file_mapping",
+  "line_cov": 0.9090909090909091,
+  "lines": 22,
+  "stats": 10,
+  "cc": 4,
+  "content": "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n    logger.info(\":globe_with_meridians: Building YAML file mapping...\")\n\n    if create_missing_sources:\n        create_missing_source_yamls(context)\n\n    out_map: dict[str, SchemaFileLocation] = {}\n    from dbt_osmosis.core.node_filters import _iter_candidate_nodes\n\n    for uid, node in _iter_candidate_nodes(context):\n        current_path = get_current_yaml_path(context, node)\n        out_map[uid] = SchemaFileLocation(\n            target=get_target_yaml_path(context, node).resolve(),\n            current=current_path.resolve() if current_path else None,\n            node_type=node.resource_type,\n        )\n\n    logger.debug(\":card_index_dividers: Built YAML file mapping => %s\", out_map)\n    return out_map",
+  "header": "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"",
+  "file": "./src/dbt_osmosis/core/path_management.py",
+  "start_line": 144,
+  "end_line": 165,
+  "body_start_line": 148,
+  "comment": "\"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"",
+  "test_time": 2.684251308441162,
+  "cover_tests": [
+    "tests/core/test_restructuring.py::test_draft_restructure_delta_plan",
+    "tests/core/test_restructuring.py::test_apply_restructure_plan",
+    "tests/test_yaml_context.py::test_draft_restructure_delta_plan",
+    "tests/test_yaml_context.py::test_apply_restructure_plan"
+  ],
+  "repo": {
+    "github_path": "z3z1ma/dbt-osmosis",
+    "commit": "cd453ea69e9473e45df5390d8bb2a41e201dd4ee",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"hatchling==1.26.3\",]\nbuild-backend = \"hatchling.build\"\n\n[project]\nname = \"dbt-osmosis\"\nversion = \"1.1.17\"\ndescription = \"A dbt utility for managing YAML to make developing with dbt more delightful.\"\nreadme = \"README.md\"\nkeywords = [ \"dbt\", \"yaml\", \"osmosis\",]\nclassifiers = [ \"Development Status :: 4 - Beta\", \"Intended Audience :: Developers\", \"Topic :: Software Development :: Build Tools\", \"License :: OSI Approved :: Apache Software License\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\",]\nrequires-python = \">=3.10,<3.13\"\ndependencies = [ \"click>7,<9\", \"dbt-core>=1.8,<=1.10\", \"ruamel.yaml>=0.17,<0.19\", \"rich>=10\", \"pluggy>=1.5.0,<2\", \"mysql-mimic>=2.5.7\", \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"z3z1ma\"\nemail = \"butler.alex2010@gmail.com\"\n\n[project.license]\ntext = \"Apache-2.0\"\n\n[project.optional-dependencies]\nworkbench = [ \"streamlit>=1.20.0,<1.34.0\", \"streamlit-ace~=0.1.1\", \"ydata-profiling~=4.12.1\", \"feedparser~=6.0.11\", \"streamlit-elements-fluence>=0.1.4\", \"dbt-duckdb>=1.8.0,<=1.10\", \"setuptools>=70\",]\nopenai = [ \"openai~=1.58.1\",]\n\n[project.scripts]\ndbt-osmosis = \"dbt_osmosis.cli.main:cli\"\n\n[tool.uv]\noverride-dependencies = [ \"protobuf>=5.0,<6.0\",]\n\n[tool.black]\nline-length = 100\ntarget-version = [ \"py310\", \"py311\", \"py312\",]\npreview = true\n\n[tool.isort]\ncolor_output = true\nline_length = 100\nprofile = \"black\"\nsrc_paths = [ \"src\",]\ninclude_trailing_comma = true\n\n[tool.ruff]\nline-length = 100\npreview = true\n\n[tool.poetry.group.dev.dependencies]\npytest = \">=8.4.2,<9.0.0\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nruff = \">=0.8.4,<0.9.0\"\npre-commit = \">3.0.0,<5\"\ndbt-duckdb = \">=1.0.0,<2\"\n",
+    "failed_tests": [
+      "tests/core/test_legacy.py::test_real_manifest_contains_customers",
+      "tests/test_yaml_inheritance.py::test_build_node_ancestor_tree[model.jaffle_shop_duckdb.customers-expected_tree0]"
+    ],
+    "test_time": 17.852922201156616
+  },
+  "mutants": [
+    "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n    logger.info(\":globe_with_meridians: Building YAML file mapping...\")\n\n    if create_missing_sources:\n        create_missing_source_yamls(context)\n\n    out_map: dict[str, SchemaFileLocation] = {}\n    from dbt_osmosis.core.node_filters import _iter_candidate_nodes\n\n    for uid, node in _iter_candidate_nodes(context):\n        current_path = get_current_yaml_path(context, node)\n        out_map[uid] = None\n\n    logger.debug(\":card_index_dividers: Built YAML file mapping => %s\", out_map)\n    return out_map\n",
+    "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n    logger.info(\":globe_with_meridians: Building YAML file mapping...\")\n\n    if create_missing_sources:\n        create_missing_source_yamls(context)\n\n    out_map: dict[str, SchemaFileLocation] = {}\n    from dbt_osmosis.core.node_filters import _iter_candidate_nodes\n\n    for uid, node in _iter_candidate_nodes(context):\n        current_path = get_current_yaml_path(context, node)\n        out_map[uid] = SchemaFileLocation(\n            target=None,\n            current=current_path.resolve() if current_path else None,\n            node_type=node.resource_type,\n        )\n\n    logger.debug(\":card_index_dividers: Built YAML file mapping => %s\", out_map)\n    return out_map\n",
+    "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n    logger.info(\":globe_with_meridians: Building YAML file mapping...\")\n\n    if create_missing_sources:\n        create_missing_source_yamls(context)\n\n    out_map: dict[str, SchemaFileLocation] = {}\n    from dbt_osmosis.core.node_filters import _iter_candidate_nodes\n\n    for uid, node in _iter_candidate_nodes(context):\n        current_path = get_current_yaml_path(context, node)\n        out_map[uid] = SchemaFileLocation(\n            target=get_target_yaml_path(context, node).resolve(),\n            current=current_path.resolve() if current_path else None,\n            )\n\n    logger.debug(\":card_index_dividers: Built YAML file mapping => %s\", out_map)\n    return out_map\n",
+    "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n    logger.info(\":globe_with_meridians: Building YAML file mapping...\")\n\n    if create_missing_sources:\n        create_missing_source_yamls(context)\n\n    out_map: dict[str, SchemaFileLocation] = {}\n    from dbt_osmosis.core.node_filters import _iter_candidate_nodes\n\n    for uid, node in _iter_candidate_nodes(context):\n        current_path = get_current_yaml_path(context, node)\n        out_map[uid] = SchemaFileLocation(\n            target=get_target_yaml_path(context, node).resolve(),\n            current=current_path.resolve() if current_path else None,\n            node_type=NodeType.Model if node.resource_type == NodeType.Model else NodeType.Source,  # Incorrectly defaults to Source for non-Model types\n        )\n\n    logger.debug(\":card_index_dividers: Built YAML file mapping => %s\", out_map)\n    return out_map",
+    "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n    logger.info(\":globe_with_meridians: Building YAML file mapping...\")\n\n    if create_missing_sources:\n        create_missing_source_yamls(context)\n\n    out_map: dict[str, SchemaFileLocation] = {}\n    from dbt_osmosis.core.node_filters import _iter_candidate_nodes\n\n    for uid, node in _iter_candidate_nodes(context):\n        current_path = get_current_yaml_path(context, node)\n        out_map[uid] = SchemaFileLocation(\n            target=get_target_yaml_path(context, node).resolve(),\n            current=current_path.resolve() if current_path else None,\n            node_type=NodeType.Model if node.resource_type == NodeType.Seed else NodeType.Model,  # Incorrectly treats all non-Seed types as Model\n        )\n\n    logger.debug(\":card_index_dividers: Built YAML file mapping => %s\", out_map)\n    return out_map",
+    "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n    logger.info(\":globe_with_meridians: Building YAML file mapping...\")\n\n    if create_missing_sources:\n        create_missing_source_yamls(context)\n\n    out_map: dict[str, SchemaFileLocation] = {}\n    from dbt_osmosis.core.node_filters import _iter_candidate_nodes\n\n    for uid, node in _iter_candidate_nodes(context):\n        current_path = get_current_yaml_path(context, node)\n        out_map[uid] = SchemaFileLocation(\n            target=get_target_yaml_path(context, node).resolve(),\n            current=current_path.resolve() if current_path else None,\n            node_type=NodeType.Model if node.resource_type == NodeType.Source else NodeType.Seed,  # Incorrectly assigns Seed type to non-Source nodes\n        )\n\n    logger.debug(\":card_index_dividers: Built YAML file mapping => %s\", out_map)\n    return out_map",
+    "def build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n    logger.info(\":globe_with_meridians: Building YAML file mapping...\")\n\n    if create_missing_sources:\n        create_missing_source_yamls(context)\n\n    out_map: dict[str, SchemaFileLocation] = {}\n    from dbt_osmosis.core.node_filters import _iter_candidate_nodes\n\n    for uid, node in _iter_candidate_nodes(context):\n        current_path = get_current_yaml_path(context, node)\n        out_map[uid] = SchemaFileLocation(\n            target=get_target_yaml_path(context, node).resolve(),\n            current=current_path.resolve() if current_path else None,\n            node_type=NodeType.Source,  # Incorrectly sets all node types to Source\n        )\n\n    logger.debug(\":card_index_dividers: Built YAML file mapping => %s\", out_map)\n    return out_map"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda _ARGS: {uid: node for uid, node in __import__('dbt_osmosis.core.node_filters', fromlist=['_iter_candidate_nodes'])._iter_candidate_nodes(_ARGS[0])}, name=\"candidates_map\")\n@icontract.ensure(lambda result, OLD: set(result.keys()) == set(OLD.candidates_map.keys()))\n@icontract.ensure(lambda result, context, OLD: all(\n    isinstance(result[uid], SchemaFileLocation)\n    and isinstance(result[uid].target, Path)\n    and result[uid].target.is_absolute()\n    and result[uid].target == get_target_yaml_path(context, OLD.candidates_map[uid]).resolve()\n    and (\n        (result[uid].current is None and get_current_yaml_path(context, OLD.candidates_map[uid]) is None)\n        or (result[uid].current == (get_current_yaml_path(context, OLD.candidates_map[uid]).resolve()))\n    )\n    and result[uid].node_type == OLD.candidates_map[uid].resource_type\n    for uid in result\n))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom __future__ import annotations\n\nimport os\nimport typing as t\nfrom dataclasses import dataclass, field\nfrom pathlib import Path\n\nfrom dbt.artifacts.resources.types import NodeType\nfrom dbt.contracts.graph.nodes import ResultNode\n\nimport dbt_osmosis.core.logger as logger\n\n__all__ = [\n    \"SchemaFileLocation\",\n    \"SchemaFileMigration\",\n    \"MissingOsmosisConfig\",\n    \"_get_yaml_path_template\",\n    \"get_current_yaml_path\",\n    \"get_target_yaml_path\",\n    \"build_yaml_file_mapping\",\n    \"create_missing_source_yamls\",\n]\n\n\n@dataclass\nclass SchemaFileLocation:\n    \"\"\"Describes the current and target location of a schema file.\"\"\"\n\n    target: Path\n    current: Path | None = None\n    node_type: NodeType = NodeType.Model\n\n    @property\n    def is_valid(self) -> bool:\n        \"\"\"Check if the current and target locations are valid.\"\"\"\n...\n@dataclass\nclass SchemaFileMigration:\n    \"\"\"Describes a schema file migration operation.\"\"\"\n\n    output: dict[str, t.Any] = field(\n        default_factory=lambda: {\"version\": 2, \"models\": [], \"sources\": []}\n    )\n    supersede: dict[Path, list[ResultNode]] = field(default_factory=dict)\n\n\nclass MissingOsmosisConfig(Exception):\n    \"\"\"Raised when an osmosis configuration is missing.\"\"\"\n\n\ndef _get_yaml_path_template(context: t.Any, node: ResultNode) -> str | None:\n    \"\"\"Get the yaml path template for a dbt model or source node.\"\"\"\n...\ndef get_current_yaml_path(context: t.Any, node: ResultNode) -> t.Union[Path, None]:\n    \"\"\"Get the current yaml path for a dbt model or source node.\"\"\"\n...\ndef get_target_yaml_path(context: t.Any, node: ResultNode) -> Path:\n    \"\"\"Get the target yaml path for a dbt model or source node.\"\"\"\n...\ndef build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n...\ndef create_missing_source_yamls(context: t.Any) -> None:\n    \"\"\"Create source files for sources defined in the dbt_project.yml dbt-osmosis var which don't exist as nodes.\n\n    This is a useful preprocessing step to ensure that all sources are represented in the dbt project manifest. We\n    do not have rich node information for non-existent sources, hence the alternative codepath here to bootstrap them.\n    \"\"\"\n...\n```\n## Target Method\n```\ndef build_yaml_file_mapping(\n    context: t.Any, create_missing_sources: bool = False\n) -> dict[str, SchemaFileLocation]:\n    \"\"\"Build a mapping of dbt model and source nodes to their current and target yaml paths.\"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `build_yaml_file_mapping`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: all(isinstance(k, str) for k in result.keys()))\n@icontract.ensure(lambda result: all(k != \"\" for k in result.keys()))\n@icontract.ensure(lambda result: all(isinstance(v, SchemaFileLocation) for v in result.values()))\n@icontract.ensure(lambda result: all(isinstance(v.target, Path) and v.target.suffix.lower() in {\".yml\", \".yaml\"} for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or (isinstance(v.current, Path) and v.current.suffix.lower() in {\".yml\", \".yaml\"}) for v in result.values()))\n@icontract.ensure(lambda result: all(isinstance(v.node_type, NodeType) for v in result.values()))",
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: all(isinstance(k, str) for k in result.keys()))\n@icontract.ensure(lambda result: all(k != \"\" for k in result.keys()))\n@icontract.ensure(lambda result: all(v is not None for v in result.values()))\n@icontract.ensure(lambda result: all(isinstance(v, SchemaFileLocation) for v in result.values()))\n@icontract.ensure(lambda result: all(isinstance(v.target, Path) for v in result.values()))\n@icontract.ensure(lambda result: all(v.target.suffix in (\".yml\", \".yaml\") for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or isinstance(v.current, Path) for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or (v.current.suffix in (\".yml\", \".yaml\")) for v in result.values()))\n@icontract.ensure(lambda result: all(v.node_type in (NodeType.Model, NodeType.Source) for v in result.values()))\n@icontract.ensure(lambda result: len(result) == len(set(result.keys())))",
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: all(isinstance(k, str) and k.strip() != \"\" for k in result.keys()))\n@icontract.ensure(lambda result: all(isinstance(v, SchemaFileLocation) for v in result.values()))\n@icontract.ensure(lambda result: all(isinstance(v.target, Path) for v in result.values()))\n@icontract.ensure(lambda result: all(v.target.suffix in {\".yml\", \".yaml\"} for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or isinstance(v.current, Path) for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or (v.current.suffix in {\".yml\", \".yaml\"}) for v in result.values()))\n@icontract.ensure(lambda result: all(v.node_type in {NodeType.Model, NodeType.Source} for v in result.values()))",
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: all(isinstance(k, str) and k != \"\" for k in result.keys()))\n@icontract.ensure(lambda result: all(isinstance(v, SchemaFileLocation) for v in result.values()))\n@icontract.ensure(lambda result: all(isinstance(v.target, Path) for v in result.values()))\n@icontract.ensure(lambda result: all(v.target.suffix.lower() in {\".yml\", \".yaml\"} for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or isinstance(v.current, Path) for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or (v.current.suffix.lower() in {\".yml\", \".yaml\"}) for v in result.values()))\n@icontract.ensure(lambda result: all(v.node_type in {NodeType.Model, NodeType.Source} for v in result.values()))",
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: all(isinstance(k, str) for k in result.keys()))\n@icontract.ensure(lambda result: all(v is not None for v in result.values()))\n@icontract.ensure(lambda result: all(isinstance(v, SchemaFileLocation) for v in result.values()))\n@icontract.ensure(lambda result: all(isinstance(v.target, Path) for v in result.values()))\n@icontract.ensure(lambda result: all(v.target.suffix.lower() in {\".yml\", \".yaml\"} for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or isinstance(v.current, Path) for v in result.values()))\n@icontract.ensure(lambda result: all((v.current is None) or (v.current.suffix.lower() in {\".yml\", \".yaml\"}) for v in result.values()))\n@icontract.ensure(lambda result: all(v.node_type in {NodeType.Model, NodeType.Source} for v in result.values()))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "mutant_kill": [
+    [
+      "local_crash",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 51
+}

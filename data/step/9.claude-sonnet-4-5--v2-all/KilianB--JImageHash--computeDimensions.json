@@ -1,0 +1,219 @@
+{
+  "rlid": "computeDimensions",
+  "github_url": "https://github.com/KilianB/JImageHash/blob/c41bd3daca951e9397dff10a6143cfa981069cab/./src/main/java/dev/brachtendorf/jimagehash/hashAlgorithms/DifferenceHash.java#L144-L169",
+  "name": "computeDimensions",
+  "line_cov": 1.0,
+  "lines": 26,
+  "stats": 10,
+  "cc": 4,
+  "content": "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+  "header": "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {",
+  "file": "./src/main/java/dev/brachtendorf/jimagehash/hashAlgorithms/DifferenceHash.java",
+  "start_line": 144,
+  "end_line": 169,
+  "body_start_line": 151,
+  "comment": "/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */",
+  "test_time": 4.256735563278198,
+  "cover_tests": [
+    "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest$AlgorithmId#consistency",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest$AlgorithmId#notVersionTwo",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest$AlgorithmId#uniquely",
+    "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest$Serizalization#consistentId"
+  ],
+  "repo": {
+    "github_path": "KilianB/JImageHash",
+    "commit": "c41bd3daca951e9397dff10a6143cfa981069cab",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>dev.brachtendorf</groupId>\n  <artifactId>JImageHash</artifactId>\n  <version>1.0.0</version>\n  <name>Java Image Hash</name>\n  <description>A performant perceptual image fingerprinting library </description>\n  <url>https://github.com/KilianB/JImageHash</url>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <javac.target>11</javac.target>\n  </properties>\n  <licenses>\n    <license>\n      <name>MIT</name>\n      <url>https://opensource.org/licenses/MIT</url>\n      <distribution>repo</distribution>\n    </license>\n  </licenses>\n  <scm>\n    <connection>scm:git:git://github.com/KilianB/JImageHash.git</connection>\n    <developerConnection>scm:git:ssh://github.com/KilianB/JImageHash.git</developerConnection>\n    <url>https://github.com/KilianB/JImageHash</url>\n  </scm>\n  <developers>\n    <developer>\n      <name>Kilian Brachtendorf</name>\n      <email>Kilian@brachtendorf.dev</email>\n      <roles>\n        <role>developer</role>\n      </roles>\n      <timezone>Europe/Berlin</timezone>\n      <organization>Brachtendorf Apps</organization>\n      <organizationUrl>https://brachtendorf.dev</organizationUrl>\n    </developer>\n  </developers>\n  <dependencies>\n    <dependency>\n      <groupId>dev.brachtendorf</groupId>\n      <artifactId>UtilityCode</artifactId>\n      <version>2.0.1</version>\n    </dependency>\n    <dependency>\n      <groupId>com.github.wendykierp</groupId>\n      <artifactId>JTransforms</artifactId>\n      <version>3.1</version>\n      <classifier>with-dependencies</classifier>\n    </dependency>\n    <dependency>\n      <groupId>com.h2database</groupId>\n      <artifactId>h2</artifactId>\n      <version>1.4.200</version>\n      <optional>true</optional>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-api</artifactId>\n      <version>5.7.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-engine</artifactId>\n      <version>5.7.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-params</artifactId>\n      <version>5.7.2</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.8.1</version>\n        <configuration>\n          <source>11</source>\n          <target>11</target>\n        </configuration>\n      </plugin>\n      <plugin>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>3.3.0</version>\n        <configuration>\n          <additionalOptions>-html5</additionalOptions>\n        </configuration>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.2.0</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.7</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>1.5</version>\n        <executions>\n          <execution>\n            <id>sign-artifacts</id>\n            <phase>verify</phase>\n            <goals>\n              <goal>sign</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M5</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <useFile>true</useFile>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n              <formats>\n                <format>XML</format>\n              </formats>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n    </plugins>\n  </build>\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n    <repository>\n      <id>ossrh</id>\n      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n    </repository>\n  </distributionManagement>\n</project>",
+    "failed_tests": [
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#addedHashCount",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#ensureHashConsistencyAdd",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#ensureHashConsistencySearch",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchDistanceExact",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchDistantItem",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchDistantItemFail",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchDistantItemZero",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchExactItem",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchExactItemZero",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchItemMultipleValues",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchItemMultipleValues2",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest#searchItemMultipleValuesExact",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#equidistant",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#multipleValues",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#nearestItem",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#searchDistantItem",
+      "dev.brachtendorf.jimagehash.dataStrorage.tree.BinaryTreeTest$NearestNeightbour#searchItemExact",
+      "dev.brachtendorf.jimagehash.datastructures.KMeansTest#testLargerDataSizeAndClusterCount",
+      "dev.brachtendorf.jimagehash.datastructures.KMeansTest#testMatchingDataSizeAndClusterCount",
+      "dev.brachtendorf.jimagehash.datastructures.KMeansTest#testSmallerDataSizeAndClusterCount",
+      "dev.brachtendorf.jimagehash.datastructures.tree.binaryTreeFuzzy.FuzzyBinaryTreeTest#testRuntime",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$Distance#ballonHash",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$Distance#ballonHashAfterReset",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$FuzzyDistance#test",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$WeightedDistance$FuzzyNormal#ballonHash",
+      "dev.brachtendorf.jimagehash.hash.FuzzyHashTest$WeightedDistance$FuzzyNormal#ballonHashAfterReset",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.AverageHashTest#toImageTest",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest#keyLength",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest#toImageTest",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.DifferenceHashTest$Serizalization#consistentHash",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$BitResolution#consistentKeyLength",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$LegacyCorectness#consistency",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.HashTestBase$Serizalization#consistentHash",
+      "dev.brachtendorf.jimagehash.hashAlgorithms.RotPHashTest#keyLengthExact",
+      "dev.brachtendorf.jimagehash.matcher.SingleImageMatcherTest$CheckDefaultMatcher#imageMatches",
+      "dev.brachtendorf.jimagehash.matcher.cached.ConsecutiveMatcherTest#alterAlgorithmAfterImageHasAlreadyBeenAdded",
+      "dev.brachtendorf.jimagehash.matcher.cached.ConsecutiveMatcherTest$TestDefaultSettings#defaultMatcher",
+      "dev.brachtendorf.jimagehash.matcher.cached.CumulativeMatcherTest#alterAlgorithmAfterImageHasAlreadyBeenAdded",
+      "dev.brachtendorf.jimagehash.matcher.cached.CumulativeMatcherTest#imageMatcheNonNormalizedVersion",
+      "dev.brachtendorf.jimagehash.matcher.cached.CumulativeMatcherTest#imageMatches",
+      "dev.brachtendorf.jimagehash.matcher.cached.CumulativeMatcherTest$TestDefaultSettings#defaultMatcher",
+      "dev.brachtendorf.jimagehash.matcher.categorize.CategoricalMatcherTest#categorizeMultipleImages",
+      "dev.brachtendorf.jimagehash.matcher.categorize.CategoricalMatcherTest#distanceIdentity",
+      "dev.brachtendorf.jimagehash.matcher.categorize.KMeansClassifierTest#categorizeMultipleImages",
+      "dev.brachtendorf.jimagehash.matcher.categorize.KMeansClassifierTest#distanceIdentity",
+      "dev.brachtendorf.jimagehash.matcher.categorize.WeightedCategoricalMatcherTest#categorizeMultipleImages",
+      "dev.brachtendorf.jimagehash.matcher.categorize.WeightedCategoricalMatcherTest#distanceIdentity",
+      "dev.brachtendorf.jimagehash.matcher.persistent.ConsecutiveImageMatcherTest#alterAlgorithmAfterImageHasAlreadyBeenAdded",
+      "dev.brachtendorf.jimagehash.matcher.persistent.ConsecutiveImageMatcherTest#serializeAndDeSeriazlize",
+      "dev.brachtendorf.jimagehash.matcher.persistent.ConsecutiveImageMatcherTest#serializeAndDeSeriazlizeEquality",
+      "dev.brachtendorf.jimagehash.matcher.persistent.ConsecutiveImageMatcherTest$TestDefaultSettings#defaultMatcher",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest#getAllMatchingImages",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest#reconstructHash",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest$EntryExist#doesEntryExistAddAlgoLater",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest$EntryExist#doesEntryExistTrue",
+      "dev.brachtendorf.jimagehash.matcher.persistent.database.H2DatabaseImageMatcherTest$TestDefaultSettings#imageMatches"
+    ],
+    "test_time": 2.8477797508239746
+  },
+  "mutants": [
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.floor(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 10));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.sqrt(bitResolution + 1);\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension + 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension - 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) / (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound > bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound >= bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (normalBound == bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (normalBound > bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution && (normalBound - bitResolution) == (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution && (normalBound - bitResolution) >= (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}",
+    "\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound >= bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures (((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) + 1) < \\old(bitResolution)) ==> (width == (int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) + 1 && height == (int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) + 1);\n//@ ensures (!(((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) + 1) < \\old(bitResolution)) && ((((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1))) < \\old(bitResolution)) || ((((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1))) - \\old(bitResolution)) > ((((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) + 1)) - \\old(bitResolution))))) ==> (width == (int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) && height == (int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) + 1);\n//@ ensures (!(((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) + 1) < \\old(bitResolution)) && !((((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1))) < \\old(bitResolution)) || ((((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1))) - \\old(bitResolution)) > ((((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) - 1) * ((int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) + 1)) - \\old(bitResolution)))) ) ==> (width == (int) Math.round(Math.sqrt(\\old(bitResolution) + 1)) && height == (int) Math.round(Math.sqrt(\\old(bitResolution) + 1)));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage dev.brachtendorf.jimagehash.hashAlgorithms;\n\nimport java.awt.image.BufferedImage;\nimport java.math.BigInteger;\nimport java.util.Objects;\n\n\nimport dev.brachtendorf.graphics.FastPixel;\nimport dev.brachtendorf.jimagehash.hash.Hash;\nimport javafx.scene.paint.Color;\n\n/**\n * Calculates a hash based on gradient tracking. This hash is cheap to compute\n * and provides a high degree of accuracy. Robust to a huge range of color\n * transformation\n * \n * @author Kilian\n * @since 1.0.0\n */\npublic class DifferenceHash extends HashingAlgorithm {\n\n\tprivate static final long serialVersionUID = 7236596241664072005L;\n\n\t/**\n\t * Algorithm precision used during calculation.\n\t * \n\t * <p>\n\t * <b>implnote:</b> Be aware that changing the enum names will alter the\n\t * algorithm id rendering generated keys unusable\n\t * \n\t * @author Kilian\n\t *\n\t */\n\tpublic enum Precision {\n\t\t/** Top to bottom gradient only */\n\t\tSimple,\n\t\t/** Additionally left to right gradient */\n\t\tDouble,\n\t\t/** Tripple precision (top-bottom, left-right, diagonally) */\n\t\tTriple\n\t}\n\n\t/**\n\t * The height and width of the scaled instance used to compute the hash\n\t */\n\tprivate int height;\n\t/**\n\t * The height and width of the scaled instance used to compute the hash\n\t */\n\tprivate int width;\n\n\t/**\n\t * Precision used to calculate the hash\n\t */\n\tprivate final Precision precision;\n\n\t/**\n\t * \n\t * Create a difference hasher with the given settings. The bit resolution always\n\t * corresponds to the simple precision value and will increase accordingly\n\t * depending on the precision chosen.\n\t * \n\t * <p>\n\t * Tests have shown that a 64 bit simple precision hash usually performs better\n\t * than a 32 bit double precision hash.\n\t * \n\t * @param bitResolution The bit resolution specifies the final length of the\n\t *                      generated hash. A higher resolution will increase\n\t *                      computation time and space requirement while being able\n\t *                      to track finer detail in the image. <b>Be aware that a\n\t *                      high resolution is not always desired.</b> The bit\n\t *                      resolution is only an <b>approximation</b> of the final\n\t *                      hash length.\n\t * @param precision     Algorithm precision. Allowed Values:\n\t *                      <dl>\n\t *                      <dt>Simple:</dt>\n\t *                      <dd>Calculates top - bottom gradient</dd>\n\t *                      <dt>Double:</dt>\n\t *                      <dd>Additionally computes left - right gradient (doubles\n\t *                      key length)</dd>\n\t *                      <dt>Tripple:</dt>\n\t *                      <dd>Additionally computes diagonal gradient (triples key\n\t *                      length)</dd>\n\t *                      </dl>\n\t */\n\tpublic DifferenceHash(int bitResolution, Precision precision) {\n\t\tsuper(bitResolution);\n\n\t\tcomputeDimensions(bitResolution);\n\n\t\tthis.precision = precision;\n\t}\n\n\t@Override\n\tprotected BigInteger hash(BufferedImage image, HashBuilder hash) {\n\t\tFastPixel fp = createPixelAccessor(image, width, height);\n\n\t\t// Use data buffer for faster access\n\n\t\tint[][] lum = fp.getLuma();\n\n\t\t// Calculate the left to right gradient\n\t\tfor (int x = 1; x < width; x++) {\n\t\t\tfor (int y = 0; y < height; y++) {\n\t\t\t\tif (lum[x][y] >= lum[x - 1][y]) {\n\t\t\t\t\thash.prependZero();\n\t\t\t\t} else {\n\t\t\t\t\thash.prependOne();\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\t// Top to bottom gradient\n\t\tif (!precision.equals(Precision.Simple)) {\n\t\t\t// We need a padding row at the top now.\n\t\t\t// Caution width and height are swapped\n\n\t\t\tfor (int x = 0; x < width; x++) {\n\t\t\t\tfor (int y = 1; y < height; y++) {\n\t\t\t\t\tif (lum[x][y] < lum[x][y - 1]) {\n\t\t\t\t\t\thash.prependZero();\n\t\t\t\t\t} else {\n\t\t\t\t\t\thash.prependOne();\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\t// Diagonally hash\n\t\tif (precision.equals(Precision.Triple)) {\n\t\t\tfor (int x = 1; x < width; x++) {\n\t\t\t\tfor (int y = 1; y < height; y++) {\n\t\t\t\t\tif (lum[x][y] < lum[x - 1][y - 1]) {\n\t\t\t\t\t\thash.prependZero();\n\t\t\t\t\t} else {\n\t\t\t\t\t\thash.prependOne();\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn hash.toBigInteger();\n\t}\n\n\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}\n\n\t@Override\n\tprotected int precomputeAlgoId() {\n\t\t// + 1 to ensure id is incompatible to earlier version\n\t\treturn Objects.hash(\"com.github.kilianB.hashAlgorithms.\"+getClass().getSimpleName(), height, width, this.precision.name()) * 31 + 1;\n\t}\n\n\t/*\n\t * Difference hash requires a little bit different handling when converting the\n\t * hash to an image.\n\t */\n\t@Override\n\tpublic Hash hash(BufferedImage image) {\n\t\treturn new DHash(super.hash(image), this.precision, width, height);\n\t}\n\n\t@Override\n\tpublic Hash createAlgorithmSpecificHash(Hash original) {\n\t\treturn new DHash(original, this.precision, width, height);\n\t}\n\n\t/**\n\t * An extended hash class allowing dhashes to be visually represented.\n\t * \n\t * @author Kilian\n\t * @since 3.0.0\n\t */\n\tpublic static class DHash extends Hash {\n\n\t\tprivate Precision precision;\n\t\tprivate int width;\n\t\tprivate int height;\n\n\t\tpublic DHash(Hash h, Precision precision, int width, int height) {\n\t\t\tsuper(h.getHashValue(), h.getBitResolution(), h.getAlgorithmId());\n\t\t\tthis.precision = precision;\n\t\t\tthis.width = width;\n\t\t\tthis.height = height;\n\t\t}\n\n\t\tpublic BufferedImage toImage(int blockSize) {\n\n\t\t\tColor[] colorArr = new Color[] { Color.WHITE, Color.BLACK };\n\t\t\tint[] colorIndex = new int[hashLength];\n\n\t\t\tfor (int i = 0; i < hashLength; i++) {\n\t\t\t\tcolorIndex[i] = hashValue.testBit(i) ? 1 : 0;\n\t\t\t}\n\t\t\treturn toImage(colorIndex, colorArr, blockSize);\n\t\t}\n\n\t\tpublic BufferedImage toImage(int[] bitColorIndex, Color[] colors, int blockSize) {\n\n\t\t\tif (precision.equals(Precision.Simple)) {\n\n\t\t\t\tBufferedImage bi = new BufferedImage(blockSize * width, blockSize * height,\n\t\t\t\t\t\tBufferedImage.TYPE_3BYTE_BGR);\n\n\t\t\t\tFastPixel fp = FastPixel.create(bi);\n\t\t\t\tdrawDoublePrecision(fp, width, 1, height, 0, blockSize, 0, 0, bitColorIndex, colors);\n\t\t\t\treturn bi;\n\t\t\t} else if (precision.equals(Precision.Double)) {\n\n\t\t\t\tBufferedImage bi = new BufferedImage(blockSize * width, blockSize * height * 2,\n\t\t\t\t\t\tBufferedImage.TYPE_3BYTE_BGR);\n\n\t\t\t\tFastPixel fp = FastPixel.create(bi);\n\t\t\t\tdrawDoublePrecision(fp, width, 1, height, 0, blockSize, 0, 0, bitColorIndex, colors);\n\t\t\t\tdrawDoublePrecision(fp, width, 0, height, 1, blockSize, hashLength / 2, height, bitColorIndex, colors);\n\t\t\t\treturn bi;\n\t\t\t} else {\n\n\t\t\t\tBufferedImage bi = new BufferedImage(blockSize * width, blockSize * height * 3,\n\t\t\t\t\t\tBufferedImage.TYPE_3BYTE_BGR);\n\n\t\t\t\tFastPixel fp = FastPixel.create(bi);\n\t\t\t\tint hashOffset = 0;\n\t\t\t\thashOffset += drawDoublePrecision(fp, width, 1, height, 0, blockSize, hashOffset, 0, bitColorIndex,\n\t\t\t\t\t\tcolors);\n\t\t\t\thashOffset += drawDoublePrecision(fp, width, 0, height, 1, blockSize, hashOffset, height, bitColorIndex,\n\t\t\t\t\t\tcolors);\n\t\t\t\tdrawDoublePrecision(fp, width, 1, height, 1, blockSize, hashOffset, 2 * height, bitColorIndex, colors);\n\t\t\t\treturn bi;\n\t\t\t}\n\t\t}\n\n\t\tprivate int drawDoublePrecision(FastPixel writer, int width, int wOffset, int height, int hOffset,\n\t\t\t\tint blockSize, int offset, int yOffset, int[] bitColorIndex, Color[] colors) {\n\t\t\tint i = offset;\n\t\t\tfor (int w = 0; w < (width - wOffset) * blockSize; w = w + blockSize) {\n\t\t\t\tfor (int h = 0; h < (height - hOffset) * blockSize; h = h + blockSize) {\n\t\t\t\t\tColor c = colors[bitColorIndex[i++]];\n\t\t\t\t\tint red = (int) (c.getRed() * 255);\n\t\t\t\t\tint green = (int) (c.getGreen() * 255);\n\t\t\t\t\tint blue = (int) (c.getBlue() * 255);\n\n\t\t\t\t\tfor (int m = 0; m < blockSize; m++) {\n\t\t\t\t\t\tfor (int n = 0; n < blockSize; n++) {\n\t\t\t\t\t\t\tint x = w + m;\n\t\t\t\t\t\t\tint y = h + n + yOffset * blockSize;\n\t\t\t\t\t\t\t// bi.setRGB(y, x, bit ? black : white);\n\t\t\t\t\t\t\twriter.setRed(x, y, red);\n\t\t\t\t\t\t\twriter.setGreen(x, y, green);\n\t\t\t\t\t\t\twriter.setBlue(x, y, blue);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn i-offset;\n\t\t}\n\t}\n\n\tpublic Precision getPrecision() {\n\t\treturn precision;\n\t}\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Compute the dimension for the resize operation. We want to get to close to a\n\t * quadratic images as possible to counteract scaling bias.\n\t * \n\t * @param bitResolution the desired resolution\n\t */\n\tprivate void computeDimensions(int bitResolution) {\n\t\tint dimension = (int) Math.round(Math.sqrt(bitResolution + 1));\n\n\t\t// width //height\n\t\tint normalBound = (dimension - 1) * (dimension);\n\t\tint higherBound = (dimension - 1) * (dimension + 1);\n\n\t\tthis.width = dimension;\n\t\tthis.height = dimension;\n\n\t\tif (higherBound < bitResolution) {\n\t\t\tthis.width++;\n\t\t\tthis.height++;\n\t\t} else {\n\t\t\tif (normalBound < bitResolution || (normalBound - bitResolution) > (higherBound - bitResolution)) {\n\t\t\t\tthis.height++;\n\t\t\t}\n\t\t}\n\n\t}\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `computeDimensions`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures this.width >= (int) Math.round(Math.sqrt(bitResolution + 1));\n//@ ensures this.height >= (int) Math.round(Math.sqrt(bitResolution + 1));\n//@ ensures this.width <= (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures this.height <= (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures (((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * ((int) Math.round(Math.sqrt(bitResolution + 1)) + 1) < bitResolution) ==> (this.width == (int) Math.round(Math.sqrt(bitResolution + 1)) + 1 && this.height == (int) Math.round(Math.sqrt(bitResolution + 1)) + 1);\n//@ ensures (((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * ((int) Math.round(Math.sqrt(bitResolution + 1)) + 1) >= bitResolution && (((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * (int) Math.round(Math.sqrt(bitResolution + 1)) < bitResolution || (((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * (int) Math.round(Math.sqrt(bitResolution + 1)) - bitResolution) > (((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * ((int) Math.round(Math.sqrt(bitResolution + 1)) + 1) - bitResolution))) ==> (this.width == (int) Math.round(Math.sqrt(bitResolution + 1)) && this.height == (int) Math.round(Math.sqrt(bitResolution + 1)) + 1);\n//@ ensures (((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * ((int) Math.round(Math.sqrt(bitResolution + 1)) + 1) >= bitResolution && !(((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * (int) Math.round(Math.sqrt(bitResolution + 1)) < bitResolution || (((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * (int) Math.round(Math.sqrt(bitResolution + 1)) - bitResolution) > (((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * ((int) Math.round(Math.sqrt(bitResolution + 1)) + 1) - bitResolution))) ==> (this.width == (int) Math.round(Math.sqrt(bitResolution + 1)) && this.height == (int) Math.round(Math.sqrt(bitResolution + 1)));\n//@ ensures Math.abs(this.width - this.height) <= 1;",
+    "//@ ensures this.width >= (int) Math.round(Math.sqrt(bitResolution + 1));\n//@ ensures this.height >= (int) Math.round(Math.sqrt(bitResolution + 1));\n//@ ensures this.width <= (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures this.height <= (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures (this.width - 1) * this.height >= bitResolution || this.width * this.height >= bitResolution;\n//@ ensures ((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * ((int) Math.round(Math.sqrt(bitResolution + 1)) + 1) < bitResolution ==> this.width == (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures ((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * ((int) Math.round(Math.sqrt(bitResolution + 1)) + 1) < bitResolution ==> this.height == (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures ((int) Math.round(Math.sqrt(bitResolution + 1)) - 1) * ((int) Math.round(Math.sqrt(bitResolution + 1)) + 1) >= bitResolution ==> this.width == (int) Math.round(Math.sqrt(bitResolution + 1));\n//@ ensures this.width * this.height - this.width < bitResolution || this.width * this.height - this.height < bitResolution;",
+    "//@ ensures this.width > 0;\n//@ ensures this.height > 0;\n//@ ensures this.width == (int) Math.round(Math.sqrt(bitResolution + 1)) || this.width == (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures this.height == (int) Math.round(Math.sqrt(bitResolution + 1)) || this.height == (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures Math.abs(this.width - this.height) <= 1;\n//@ ensures (this.width - 1) * this.height >= bitResolution - 1;\n//@ ensures (this.width - 1) * this.height <= bitResolution + (int) Math.round(Math.sqrt(bitResolution + 1)) + 1;",
+    "//@ ensures this.width > 0;\n//@ ensures this.height > 0;\n//@ ensures this.width >= (int)Math.round(Math.sqrt(bitResolution + 1));\n//@ ensures this.width <= (int)Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures this.height >= (int)Math.round(Math.sqrt(bitResolution + 1));\n//@ ensures this.height <= (int)Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures Math.abs(this.width - this.height) <= 1;\n//@ ensures (this.width - 1) * this.height <= bitResolution + ((int)Math.round(Math.sqrt(bitResolution + 1)) + 1);\n//@ ensures this.width == (int)Math.round(Math.sqrt(bitResolution + 1)) || this.width == (int)Math.round(Math.sqrt(bitResolution + 1)) + 1;\n//@ ensures this.height == (int)Math.round(Math.sqrt(bitResolution + 1)) || this.height == (int)Math.round(Math.sqrt(bitResolution + 1)) + 1;",
+    "Looking at the `computeDimensions` method, I need to capture the postconditions that describe how `width` and `height` are set based on the `bitResolution` parameter.\n"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "compile_failure",
+    "jml_fail",
+    "passed",
+    "passed",
+    "compile_failure"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    []
+  ],
+  "traversal_rank": 309
+}

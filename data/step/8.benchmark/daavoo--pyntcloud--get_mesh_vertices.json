@@ -1,0 +1,168 @@
+{
+  "rlid": "get_mesh_vertices",
+  "github_url": "https://github.com/daavoo/pyntcloud/blob/8368c6a22f8060aeafacf2964276e8704d732145/./src/pyntcloud/core_class.py#L612-L632",
+  "name": "get_mesh_vertices",
+  "line_cov": 1.0,
+  "lines": 21,
+  "stats": 10,
+  "cc": 3,
+  "content": "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+  "header": "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"",
+  "file": "./src/pyntcloud/core_class.py",
+  "start_line": 612,
+  "end_line": 632,
+  "body_start_line": 620,
+  "comment": "\"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"",
+  "test_time": 2.903444290161133,
+  "cover_tests": [
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_n_argument[1]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_n_argument[5]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_n_argument[10]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_n_argument[50]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_n_argument[100]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_rgb_normals_optional_arguments[False-False]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_rgb_normals_optional_arguments[True-False]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_rgb_normals_optional_arguments[True-True]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_rgb_normals_optional_arguments[False-True]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_sampled_points_bounds[1]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_sampled_points_bounds[5]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_sampled_points_bounds[10]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_sampled_points_bounds[50]",
+    "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_sampled_points_bounds[100]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_n_argument[1]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_n_argument[5]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_n_argument[10]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_n_argument[50]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_n_argument[100]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_rgb_normals_optional_arguments[False-False]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_rgb_normals_optional_arguments[True-False]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_rgb_normals_optional_arguments[True-True]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_rgb_normals_optional_arguments[False-True]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_sampled_points_bounds[1]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_sampled_points_bounds[5]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_sampled_points_bounds[10]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_sampled_points_bounds[50]",
+    "tests/unit/samplers/test_mesh_samplers.py::test_RandomMeshSampler_sampled_points_bounds[100]"
+  ],
+  "repo": {
+    "github_path": "daavoo/pyntcloud",
+    "commit": "8368c6a22f8060aeafacf2964276e8704d732145",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=48\", \"setuptools_scm[toml]>=6.3.1\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"pyntcloud\"\ndynamic = [ \"version\",]\ndescription = \"Python library for working with 3D point clouds.\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\nclassifiers = [ \"Programming Language :: Python :: 3\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\",]\ndependencies = [ \"numpy\", \"scipy>=1.6.0\", \"pandas\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"David de la Iglesia Castro\"\nemail = \"daviddelaiglesiacastro@gmail.com\"\n\n[project.license]\ntext = \"The MIT License\"\n\n[project.optional-dependencies]\nlas = [ \"laspy\", \"lazrs\",]\nplot = [ \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\",]\nnumba = [ \"numba\",]\nall = [ \"laspy\", \"lazrs\", \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\", \"numba\", \"open3d\",]\n\n[project.urls]\nrepository = \"https://github.com/daavoo/pyntcloud\"\n\n[tool.setuptools_scm]\n\n[tool.pytest.ini_options]\npythonpath = [ \"tests/integration/io\",]\naddopts = \"--import-mode=importlib\"\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\", \"tests.*\",]\nwhere = [ \"src\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nlaspy = \"^2.6.1\"\nlazrs = \"^0.8.0\"\n",
+    "failed_tests": [
+      "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_points_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centers]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centroids]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_nearest]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_max]"
+    ],
+    "test_time": 7.65758204460144
+  },
+  "mutants": [
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if not rgb:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb and normals:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb is None:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns += [\"red\", \"green\"]\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.append(\"red\")\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.insert(0, \"blue\")\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals is None:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if not normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals:\n            use_columns.extend([\"nx\", \"ny\"])  # Missing \"nz\", which will lead to incorrect data handling\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = None\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3\n",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = None\n        v3 = points[self.mesh[\"v3\"].values]\n\n        return v1, v2, v3\n",
+    "    def get_mesh_vertices(self, rgb=False, normals=False):\n        \"\"\"Decompose triangles of self.mesh from vertices in self.points.\n\n        Returns\n        -------\n        v1, v2, v3: ndarray\n            (N, 3) arrays of vertices so v1[i], v2[i], v3[i] represent the ith triangle\n        \"\"\"\n        use_columns = [\"x\", \"y\", \"z\"]\n        if rgb:\n            use_columns.extend([\"red\", \"green\", \"blue\"])\n        if normals:\n            use_columns.extend([\"nx\", \"ny\", \"nz\"])\n\n        points = self.points[use_columns].values\n\n        v1 = points[self.mesh[\"v1\"].values]\n        v2 = points[self.mesh[\"v2\"].values]\n        v3 = None\n\n        return v1, v2, v3\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(\n    lambda self, rgb, normals:\n    self.points[\n        [\"x\", \"y\", \"z\"]\n        + ([\"red\", \"green\", \"blue\"] if rgb else [])\n        + ([\"nx\", \"ny\", \"nz\"] if normals else [])\n    ].values.copy(),\n    name=\"old_pts\"\n)\n@icontract.snapshot(\n    lambda self: self.mesh[[\"v1\", \"v2\", \"v3\"]].values.copy(),\n    name=\"old_faces\"\n)\n@icontract.ensure(\n    lambda OLD, result, rgb, normals, self:\n        isinstance(result, tuple) and len(result) == 3\n        and\n        all(isinstance(v, np.ndarray) for v in result)\n        and\n        all(v.shape[0] == self.mesh.shape[0] for v in result)\n        and\n        all(\n            v.shape[1] == 3 + (3 if rgb else 0) + (3 if normals else 0)\n            for v in result\n        )\n)\n@icontract.ensure(\n    lambda OLD, result, rgb, normals, self:\n        isinstance(result, tuple) and len(result) == 3\n        and\n        all(isinstance(v, np.ndarray) for v in result)\n        and\n        np.array_equal(\n            result[0][:, 0:3],\n            OLD.old_pts[OLD.old_faces[:, 0], 0:3]\n        ) \n        and\n        np.array_equal(\n            result[1][:, 0:3],\n            OLD.old_pts[OLD.old_faces[:, 1], 0:3]\n        )\n        and\n        np.array_equal(\n            result[2][:, 0:3],\n            OLD.old_pts[OLD.old_faces[:, 2], 0:3]\n        )\n)\n@icontract.ensure(\n    lambda OLD, result, rgb, normals, self:\n        isinstance(result, tuple) and len(result) == 3\n        and\n        all(isinstance(v, np.ndarray) for v in result)\n        and (\n            (not rgb)\n            or (\n                np.array_equal(\n                    result[0][:, 3:6],\n                    OLD.old_pts[OLD.old_faces[:, 0], 3:6]\n                )\n                and np.array_equal(\n                    result[1][:, 3:6],\n                    OLD.old_pts[OLD.old_faces[:, 1], 3:6]\n                )\n                and np.array_equal(\n                    result[2][:, 3:6],\n                    OLD.old_pts[OLD.old_faces[:, 2], 3:6]\n                )\n            )\n        )\n)\n@icontract.ensure(\n    lambda OLD, result, rgb, normals, self:\n        isinstance(result, tuple) and len(result) == 3\n        and\n        all(isinstance(v, np.ndarray) for v in result)\n        and (\n            (not normals)\n            or (\n                np.array_equal(\n                    result[0][:, 3 + (3 if rgb else 0): 6 + (3 if rgb else 0)],\n                    OLD.old_pts[\n                        OLD.old_faces[:, 0],\n                        3 + (3 if rgb else 0): 6 + (3 if rgb else 0)\n                    ]\n                )\n                and np.array_equal(\n                    result[1][:, 3 + (3 if rgb else 0): 6 + (3 if rgb else 0)],\n                    OLD.old_pts[\n                        OLD.old_faces[:, 1],\n                        3 + (3 if rgb else 0): 6 + (3 if rgb else 0)\n                    ]\n                )\n                and np.array_equal(\n                    result[2][:, 3 + (3 if rgb else 0): 6 + (3 if rgb else 0)],\n                    OLD.old_pts[\n                        OLD.old_faces[:, 2],\n                        3 + (3 if rgb else 0): 6 + (3 if rgb else 0)\n                    ]\n                )\n            )\n        )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 235
+}

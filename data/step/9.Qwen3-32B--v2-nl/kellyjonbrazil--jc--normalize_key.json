@@ -1,0 +1,407 @@
+{
+  "rlid": "normalize_key",
+  "github_url": "https://github.com/kellyjonbrazil/jc/blob/9fd13e698709da95f5ee505ff1fde10564544d48/./jc/utils.py#L212-L249",
+  "name": "normalize_key",
+  "line_cov": 1.0,
+  "lines": 38,
+  "stats": 12,
+  "cc": 4,
+  "content": "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+  "header": "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"",
+  "file": "./jc/utils.py",
+  "start_line": 212,
+  "end_line": 249,
+  "body_start_line": 232,
+  "comment": "r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"",
+  "test_time": 0.38166141510009766,
+  "cover_tests": [
+    "tests/test_apt_cache_show.py::MyTests::test_apt_cache_show_all_fixtures",
+    "tests/test_ethtool.py::MyTests::test_ethtool_all_fixtures",
+    "tests/test_jc_utils.py::MyTests::test_normalize_key",
+    "tests/test_needrestart.py::MyTests::test_needsrestart_all_fixtures",
+    "tests/test_pkg_index_deb.py::MyTests::test_pkg_index_deb"
+  ],
+  "repo": {
+    "github_path": "kellyjonbrazil/jc",
+    "commit": "9fd13e698709da95f5ee505ff1fde10564544d48",
+    "language": "python",
+    "env_config": "[project]\nrequires-python = \">=3.10\"\nname = \"my_project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\npackage-mode = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [
+      "tests/test_cbt.py::MyTests::test_cbt_multiple_rows_raw",
+      "tests/test_cef.py::MyTests::test_cef_sample",
+      "tests/test_cef_s.py::MyTests::test_cef_s_sample",
+      "tests/test_certbot.py::MyTests::test_certbot_certificates",
+      "tests/test_clf.py::MyTests::test_clf",
+      "tests/test_clf_s.py::MyTests::test_clf_s_centos_7_7",
+      "tests/test_date.py::MyTests::test_date",
+      "tests/test_date.py::MyTests::test_date_after_midnight",
+      "tests/test_date.py::MyTests::test_date_am_ubuntu_20_04",
+      "tests/test_date.py::MyTests::test_date_before_midnight",
+      "tests/test_date.py::MyTests::test_date_pm_ubuntu_20_04",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_additional",
+      "tests/test_dig.py::MyTests::test_dig_additional2",
+      "tests/test_dig.py::MyTests::test_dig_additional3",
+      "tests/test_dig.py::MyTests::test_dig_answer_spaces",
+      "tests/test_dig.py::MyTests::test_dig_axfr_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_axfr_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_axfr_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_edns",
+      "tests/test_dig.py::MyTests::test_dig_edns2",
+      "tests/test_dig.py::MyTests::test_dig_edns3",
+      "tests/test_dig.py::MyTests::test_dig_nsid",
+      "tests/test_dig.py::MyTests::test_dig_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_x_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_x_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_x_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_x_ubuntu_18_4",
+      "tests/test_dir.py::MyTests::test_dir_windows_10",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_C",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_ODTC",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_S",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_dirs",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_files",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_mix",
+      "tests/test_git_log.py::MyTests::test_git_log",
+      "tests/test_git_log.py::MyTests::test_git_log_blank_author_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_hash_in_message_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_is_hash_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_shortstat",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_stat",
+      "tests/test_git_log.py::MyTests::test_git_log_medium",
+      "tests/test_git_log.py::MyTests::test_git_log_medium_shortstat",
+      "tests/test_git_log.py::MyTests::test_git_log_medium_stat",
+      "tests/test_git_log_s.py::MyTests::test_git_log_blank_author_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_hash_in_message_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_is_hash_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_shortstat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_stat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_shortstat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_stat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_s_ignore_exceptions_success",
+      "tests/test_ipconfig.py::MyTests::test_windows_ipconfig",
+      "tests/test_jc_cli.py::MyTests::test_cli_yaml_out",
+      "tests/test_jc_utils.py::MyTests::test_utils_timestamp",
+      "tests/test_last.py::MyTests::test_last_F_ubuntu_20_4",
+      "tests/test_last.py::MyTests::test_last_wF_centos_7_7",
+      "tests/test_last.py::MyTests::test_last_wixF_centos_7_7",
+      "tests/test_ls.py::MyTests::test_ls_l_iso_ubuntu_18_4",
+      "tests/test_ls_s.py::MyTests::test_ls_s_l_iso_ubuntu_18_4",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid0_offline",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid0_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_0_90_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_checking",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_faulty1",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_faulty2",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_moreflags",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_replacing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_resync",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_syncing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_homehost",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_meta09",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_detail",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid0_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_failed_and_flags",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty_and_removed",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty_with_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_0_9",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_rebuild_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_spare_writem_rebuild",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_syncing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_homehost",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_meta09",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_ok",
+      "tests/test_openvpn.py::MyTests::test_openvpn",
+      "tests/test_pacman.py::MyTests::test_pacman_all_fixtures",
+      "tests/test_plist.py::MyTests::test_plist_bin_alltypes",
+      "tests/test_plist.py::MyTests::test_plist_xml_alltypes",
+      "tests/test_rpm_qai.py::MyTests::test_rpm_qai_centos_7_7",
+      "tests/test_rpm_qai.py::MyTests::test_rpm_qi_package_centos_7_7",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_v_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vv_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vvv_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vvv_logfile_nochange",
+      "tests/test_rsync.py::MyTests::test_rsync_osx_10_14_6_rsync_i_vvv_logfile_nochange",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_v_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vv_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_nochange_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_nochange_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_centos_7_7",
+      "tests/test_stat.py::MyTests::test_stat_filename_with_spaces_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_freebsd12",
+      "tests/test_stat.py::MyTests::test_stat_missing_data",
+      "tests/test_stat.py::MyTests::test_stat_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_ubuntu_18_4",
+      "tests/test_stat_s.py::MyTests::test_stat_s_centos_7_7",
+      "tests/test_stat_s.py::MyTests::test_stat_s_filename_with_spaces_osx_10_14_6",
+      "tests/test_stat_s.py::MyTests::test_stat_s_freebsd12",
+      "tests/test_stat_s.py::MyTests::test_stat_s_osx_10_14_6",
+      "tests/test_stat_s.py::MyTests::test_stat_s_ubuntu_18_4",
+      "tests/test_syslog.py::MyTests::test_syslog_sample",
+      "tests/test_syslog_s.py::MyTests::test_syslog_s",
+      "tests/test_systeminfo.py::MyTests::test_windows_systeminfo",
+      "tests/test_timestamp.py::MyTests::test_10_digit_timestamp",
+      "tests/test_timestamp.py::MyTests::test_13_digit_timestamp",
+      "tests/test_tune2fs.py::MyTests::test_tune2fs_l",
+      "tests/test_upower.py::MyTests::test_upower_d_clocale_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_d_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_i_c_locale",
+      "tests/test_upower.py::MyTests::test_upower_i_non_utc_generic",
+      "tests/test_upower.py::MyTests::test_upower_i_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_i_utc_generic",
+      "tests/test_vmstat.py::MyTests::test_vmstat_at_5_10",
+      "tests/test_vmstat.py::MyTests::test_vmstat_awt",
+      "tests/test_vmstat.py::MyTests::test_vmstat_dt",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_at_5_10_centos_7_7",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_awt_centos_7_7",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_dt_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_a_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_a_ubuntu_18_4",
+      "tests/test_who.py::MyTests::test_who_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_login_screen",
+      "tests/test_who.py::MyTests::test_who_ubuntu_18_4"
+    ],
+    "test_time": 118.19753551483154
+  },
+  "mutants": [
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = True\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.replace(' ', '_')\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.rstrip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().capitalize()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().upper()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().upper()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special.split():  # This will cause the loop to iterate over individual characters instead of the special characters.\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special[1:]:  # This will skip the first character of the special string, potentially missing a special character.\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, ' ')  # Replaces special characters with spaces instead of underscores\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '')  # Removes special characters instead of replacing them with underscores\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '-')  # Replaces special characters with hyphens instead of underscores\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, 'XX_XX')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if '_' in data:  # This checks for the presence of underscores anywhere in the string, not just at the start.\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.endswith('_'):  # This checks for trailing underscores instead of leading ones.\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith(' '):  # This checks for leading spaces instead of underscores.\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('-'):  # This checks for leading hyphens instead of underscores.\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('XX_XX'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = False\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = None\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace(' ', '_')  # Incorrectly replaces spaces with underscores instead of replacing underscores with spaces\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('XX_XX', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', '')  # Removes underscores but does not replace them with spaces\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', 'XX XX')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = ' '.join(data.split('_'))\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = 'XX_XX'.join(data.split())\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split(' ')) + '_'\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split()) + ' '\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = data.replace(' ', '')  # removes all spaces instead of replacing them with underscores\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = data.replace(' ', '_').strip('_')\n\n    if initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore == False:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore is None:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore or data:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if not initial_underscore:\n        data = '_' + data\n\n    return data",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = 'XX_XX' + data\n\n    return data\n",
+    "def normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n    special = r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ '''\n    initial_underscore = False\n    data = data.strip().lower()\n\n    for special_char in special:\n        data = data.replace(special_char, '_')\n\n    if data.startswith('_'):\n        initial_underscore = True\n\n    # swap back to space so split() will compress multiple consecutive down to one\n    data = data.strip('_').replace('_', ' ')\n    data = '_'.join(data.split())\n\n    if initial_underscore:\n        data = None\n\n    return data\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda data: data, name=\"orig\")\n@icontract.snapshot(lambda data: data.strip().lower(), name=\"base\")\n@icontract.snapshot(\n    lambda data: ''.join(\n        ['_' if c in r'''!\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~ ''' else c\n         for c in data.strip().lower()]\n    ),\n    name=\"replaced\",\n)\n@icontract.ensure(\n    lambda OLD, result:\n        result is not None\n        and (\n            ('_' if OLD.replaced.startswith('_') else '')\n            + '_'.join(OLD.replaced.strip('_').replace('_', ' ').split())\n        ) == result\n        and result == result.lower()\n        and '__' not in result\n        and not result.endswith('_')\n        and ' ' not in result\n        and set(result) <= set('abcdefghijklmnopqrstuvwxyz0123456789_')\n        and (lambda r: (\n            ('_' if r.startswith('_') else '')\n            + '_'.join(r.strip('_').replace('_', ' ').split())\n        ))(result) == result\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"jc - JSON Convert utils\"\"\"\nimport sys\nimport re\nimport locale\nimport shutil\nfrom itertools import islice\nfrom collections import namedtuple\nfrom numbers import Number\nfrom datetime import datetime, timezone\nfrom textwrap import TextWrapper\nfrom functools import lru_cache\nfrom typing import Any, List, Dict, Iterable, Union, Optional, TextIO\nfrom .jc_types import TimeStampFormatType\n\nCLI_QUIET = False\n\ndef _asciify(string: str) -> str:\n    \"\"\"\n    Return a string downgraded from Unicode to ASCII with some simple\n    conversions.\n    \"\"\"\n...\ndef _safe_print(\n    string: str,\n    sep: str = ' ',\n    end: str = '\\n',\n    file: TextIO = sys.stdout,\n    flush: bool = False\n) -> None:\n    \"\"\"Output for both UTF-8 and ASCII encoding systems\"\"\"\n...\ndef _safe_pager(string: str) -> None:\n    \"\"\"Pager output for both UTF-8 and ASCII encoding systems\"\"\"\n...\ndef warning_message(message_lines: List[str]) -> None:\n    \"\"\"\n    Prints warning message to `STDERR` for non-fatal issues. The first line\n    is prepended with 'jc:  Warning - ' and subsequent lines are indented.\n    Wraps text as needed based on the terminal width.\n\n    Parameters:\n\n        message:   (list) list of string lines\n\n    Returns:\n\n        None - just prints output to STDERR\n    \"\"\"\n...\ndef error_message(message_lines: List[str]) -> None:\n    \"\"\"\n    Prints an error message to `STDERR` for fatal issues. The first line is\n    prepended with 'jc:  Error - ' and subsequent lines are indented.\n    Wraps text as needed based on the terminal width.\n\n    Parameters:\n\n        message:   (list) list of string lines\n\n    Returns:\n\n        None - just prints output to `STDERR`\n    \"\"\"\n...\ndef is_compatible(compatible: List[str]) -> bool:\n    \"\"\"\n    Returns True if the parser is compatible with the running OS platform.\n    \"\"\"\n...\ndef compatibility(mod_name: str, compatible: List[str], quiet: bool = False) -> None:\n    \"\"\"\n    Checks for the parser's compatibility with the running OS platform and\n    prints a warning message to `STDERR` if not compatible and\n    `quiet=False.`\n\n    Parameters:\n\n        mod_name:     (string) __name__ of the calling module\n\n        compatible:   (list) sys.platform name(s) compatible with\n                      the parser. compatible options:\n                      linux, darwin, cygwin, win32, aix, freebsd\n\n        quiet:        (bool) suppress compatibility message if `True`\n\n    Returns:\n\n        None - just prints output to STDERR\n    \"\"\"\n...\ndef has_data(data: Union[str, bytes]) -> bool:\n    \"\"\"\n    Checks if the string input contains data. If there are any\n    non-whitespace characters then return `True`, else return `False`.\n\n    For bytes, returns `True` if there is any data.\n\n    Parameters:\n\n        data:        (string, bytes) input to check whether it contains data\n\n    Returns:\n\n        Boolean      `True` if input string (data) contains non-whitespace\n                     characters, otherwise `False`. For bytes data, returns\n                     `True` if there is any data, otherwise `False`.\n    \"\"\"\n...\ndef remove_quotes(data: str) -> str:\n    \"\"\"\n    Remove single or double quotes surrounding a string. If no quotes are\n    found then the string is returned unmodified.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n...\ndef normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n...\ndef convert_to_int(value: object) -> Optional[int]:\n    \"\"\"\n    Converts string and float input to int. Strips all non-numeric\n    characters from strings.\n\n    Parameters:\n\n        value:         (string/float) Input value\n\n    Returns:\n\n        integer/None   Integer if successful conversion, otherwise None\n    \"\"\"\n...\ndef convert_to_float(value: object) -> Optional[float]:\n    \"\"\"\n    Converts string and int input to float. Strips all non-numeric\n    characters from strings.\n\n    Parameters:\n\n        value:         (string/integer) Input value\n\n    Returns:\n\n        float/None     Float if successful conversion, otherwise None\n    \"\"\"\n...\ndef convert_to_bool(value: object) -> bool:\n    \"\"\"\n    Converts string, integer, or float input to boolean by checking\n    for 'truthy' values.\n\n    Parameters:\n\n        value:          (string/integer/float) Input value\n\n    Returns:\n\n        True/False      False unless a 'truthy' number or string is found\n                        ('y', 'yes', 'true', '1', 1, -1, etc.)\n    \"\"\"\n...\n# convert_size_to_int from https://github.com/xolox/python-humanfriendly\n\n# Copyright (c) 2021 Peter Odding\n\n# Permission is hereby granted, free of charge, to any person obtaining\n# a copy of this software and associated documentation files (the\n# \"Software\"), to deal in the Software without restriction, including\n# without limitation the rights to use, copy, modify, merge, publish,\n# distribute, sublicense, and/or sell copies of the Software, and to\n# permit persons to whom the Software is furnished to do so, subject to\n# the following conditions:\n\n# The above copyright notice and this permission notice shall be\n# included in all copies or substantial portions of the Software.\n\n# THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\n# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\n# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\n# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\n# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\n# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\ndef convert_size_to_int(\n    size: str,\n    binary: bool = False,\n    posix_mode: bool = False,\n    decimal_bias: bool = False) -> Optional[int]:\n    \"\"\"\n    Parse a human readable data size and return the number of bytes.\n\n    Parameters:\n\n        size:           (string) The human readable file size to parse.\n        binary:         (boolean) `True` to use binary multiples of bytes\n                        (base-2) for ambiguous unit symbols and names,\n                        `False` to use decimal multiples of bytes (base-10).\n        posix_mode:     (boolean) Treat one-letter units (k, m, g, etc.) as\n                        binary.\n        decimal_bias:   (boolean) `True` to treat slightly ambiguous two-\n                        letter unit symbols ending in \"i\" (e.g. Ki, Gi) to\n                        use decimal multiples of bytes (base-10). `False`\n                        (default) to use binary multiples of bytes.\n    Returns:\n\n        integer/None    Integer if successful conversion, otherwise None\n\n    This function knows how to parse sizes in bytes, kilobytes, megabytes,\n    gigabytes, terabytes and petabytes. Some examples:\n\n        >>> convert_size_to_int('42')\n        42\n        >>> convert_size_to_int('13b')\n        13\n        >>> convert_size_to_int('5 bytes')\n        5\n        >>> convert_size_to_int('1 KB')\n        1000\n        >>> convert_size_to_int('1 kilobyte')\n        1000\n        >>> convert_size_to_int('1 KiB')\n        1024\n        >>> convert_size_to_int('1 Ki')\n        1024\n        >>> convert_size_to_int('1 Ki', decimal_bias=True)\n        1000\n        >>> convert_size_to_int('1 KB', binary=True)\n        1024\n        >>> convert_size_to_int('1.5 GB')\n        1500000000\n        >>> convert_size_to_int('1.5 GB', binary=True)\n        1610612736\n    \"\"\"\n...\ndef input_type_check(data: object) -> None:\n    \"\"\"Ensure input data is a string. Raises `TypeError` if not.\"\"\"\n...\ndef _lazy_splitlines(text: str) -> Iterable[str]:\n...\ndef line_slice(\n        data: Union[str, Iterable[str], TextIO, bytes, None],\n        slice_start: Optional[int] = None,\n        slice_end: Optional[int] = None\n) -> Union[str, Iterable[str], TextIO, bytes, None]:\n    \"\"\"\n    Slice input data by lines - lazily, if possible.\n\n    Accepts a string (for normal parsers) or an iterable (for streaming\n    parsers). Uses normal start/stop slicing values, but will always slice\n    on lines instead of characters. Positive slices will use less memory as\n    the function will attempt to lazily iterate over the input. A negative\n    slice parameter will force the function to read in all of the data and\n    then slice, which will use more memory.\n\n    Parameters:\n\n        data:              (string or iterable) - input to slice by lines\n        slice_start:       (int) - starting line\n        slice_end:         (int) - ending line\n\n    Returns:\n        string if input is a string.\n        iterable of strings if input is an iterable (for streaming parsers)\n    \"\"\"\n...\nclass timestamp:\n    __slots__ = ('string', 'format', 'naive', 'utc', 'iso')\n\n    def __init__(self,\n                 datetime_string: Optional[str],\n                 format_hint: Optional[Iterable[int]] = None\n    ) -> None:\n        \"\"\"\n        Input a datetime text string of several formats and convert to a\n        naive or timezone-aware epoch timestamp in UTC.\n\n        Parameters:\n\n            datetime_string  (str):  a string representation of a\n                datetime in several supported formats\n\n            format_hint  (iterable):  an optional iterable of format ID\n                integers to instruct the timestamp object to try those\n                formats first in the order given. Other formats will be\n                tried after the format hint list is exhausted. This can\n                speed up timestamp conversion so several different formats\n                don't have to be tried in brute-force fashion.\n\n        Returns a timestamp object with the following attributes:\n\n            string  (str):  the input datetime string\n\n            format  (int | None):  the format rule that was used to decode\n                the datetime string. None if conversion fails.\n\n            naive  (int | None):  timestamp based on locally configured\n                timezone. None if conversion fails.\n\n            utc  (int | None):  aware timestamp only if UTC timezone\n                detected in datetime string. None if conversion fails.\n\n            iso (str | None):  ISO string - timezone information is output\n                only if UTC timezone is detected in the datetime string.\n        \"\"\"\n...\n    def __repr__(self) -> str:\n...\n    @staticmethod\n    @lru_cache(maxsize=2048)\n    def _parse_dt(\n        dt_string: Optional[str],\n        format_hint: Optional[Iterable[int]] = None\n    ) -> Dict[str, Any]:\n        \"\"\"\n        Input a datetime text string of several formats and convert to\n        a naive or timezone-aware epoch timestamp in UTC.\n\n        Parameters:\n\n            dt_string:    (string) a string representation of a date-time\n                          in several supported formats\n\n            format_hint:  (list | tuple) a list of format ID int's that\n                          should be tried first. This can increase\n                          performance since the function will not need to\n                          try many incorrect formats before finding the\n                          correct one.\n\n        Returns:\n\n            Dictionary of the following format:\n\n                {\n                    # for debugging purposes. None if conversion fails\n                    \"format\":               int,\n\n                    # timestamp based on locally configured timezone.\n                    # None if conversion fails.\n                    \"timestamp_naive\":      int,\n\n                    # aware timestamp only if UTC timezone detected.\n                    # None if conversion fails.\n                    \"timestamp_utc\":        int\n\n                    # ISO string. None if conversion fails.\n                    \"iso\":                  str\n                }\n\n                The `format` integer denotes which date_time format\n                conversion succeeded.\n\n                The `timestamp_naive` integer is the converted date-time\n                string to a naive epoch timestamp.\n\n                The `timestamp_utc` integer is the converted date-time\n                string to an aware epoch timestamp in the UTC timezone. If\n                an aware conversion cannot be performed (e.g. the UTC\n                timezone is not found in the date-time string), then this\n                field will be None.\n\n                The `iso` string will only have timezone information if the\n                UTC timezone is detected in `dt_string`.\n\n                If the conversion completely fails, all fields will be None.\n        \"\"\"\n...\n```\n## Target Method\n```\ndef normalize_key(data: str) -> str:\n    r\"\"\"\n    Normalize a key name by shifting to lower-case and converting special\n    characters to underscores.\n\n    Special characters are defined as `space` and the following:\n\n        !\"#$%&'()*+,-./:;<=>?@[\\]^`{|}~\n\n    This is a lossy algorithm. Repeating and trailing underscores are\n    removed.\n\n    Parameters:\n\n        data:       (string) Input value\n\n    Returns:\n\n        string\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `normalize_key`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(data, name=\"original_data\")\n@icontract.ensure(\n    lambda result: all(c in string.ascii_lowercase + string.digits + '_'\n                     for c in result),\n    \"Result must only contain lowercase letters, digits, and underscores.\"\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    \"Result must not end with an underscore.\"\n)\n@icontract.ensure(\n    lambda result: not re.search(r'_{2,}', result),\n    \"Result must not contain repeated underscores.\"\n)\n@icontract.ensure(\n    lambda result: result == re.sub(r'_{2,}', '_', data.translate(str.maketrans(' '.join('!\"#$%&\\'()*+,-./:;<=>?@[\\]^`{|}~'), ' ' * len('!\"#$%&\\'()*+,-./:;<=>?@[\\]^`{|}~'))).lower().rstrip('_'),\n    \"Result must match the expected transformation of replacing special characters with underscores, converting to lowercase, and removing trailing/repeating underscores.\"\n)",
+    "@icontract.snapshot(data, name='original_data')\n@icontract.ensure(\n    lambda result: all(c in 'abcdefghijklmnopqrstuvwxyz0123456789_' or c.isspace() for c in data) or result != data,\n    message='Result must have special characters replaced by underscores or spaces'\n)\n@icontract.ensure(\n    lambda result: result == re.sub(r'[^a-zA-Z0-9_ ]', '_', data).lower(),\n    message='Result must match the expected transformation of replacing special characters with underscores and converting to lower case'\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    message='Result must not have a trailing underscore'\n)\n@icontract.ensure(\n    lambda result: not re.search(r'_+', result),\n    message='Result must not have repeating underscores'\n)",
+    "@icontract.ensure(\n    lambda result: all(c == '_' or c.isalnum() for c in result),\n    \"Result should only contain alphanumeric characters and underscores.\"\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    \"Result should not end with an underscore.\"\n)\n@icontract.ensure(\n    lambda result: not re.search(r'_+', result),\n    \"Result should not contain repeated underscores.\"\n)\n@icontract.ensure(\n    lambda result: result.islower(),\n    \"Result should be in lower-case.\"\n)\n@icontract.snapshot(data, name=\"original_data\")\n@icontract.ensure(\n    lambda original_data, result: len(result) <= len(original_data),\n    \"Result should not be longer than the original data.\"\n)",
+    "@icontract.ensure(\n    lambda result: all(c == '_' or c.isalnum() for c in result),\n    \"Result must contain only alphanumeric characters and underscores\"\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    \"Result must not have trailing underscores\"\n)\n@icontract.ensure(\n    lambda result: '__' not in result,\n    \"Result must not have repeated underscores\"\n)\n@icontract.ensure(\n    lambda result: result.islower(),\n    \"Result must be in lower-case\"\n)\n@icontract.snapshot(data, name=\"original_data\")\n@icontract.ensure(\n    lambda original_data, result: len(result) <= len(original_data),\n    \"Result must not be longer than the original data\"\n)",
+    "@icontract.snapshot(data, name=\"original_data\")\n@icontract.ensure(\n    lambda result: all(c in string.ascii_lowercase + string.digits + '_' for c in result),\n    message=\"Result must only contain lowercase letters, digits, and underscores.\"\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    message=\"Result must not end with an underscore.\"\n)\n@icontract.ensure(\n    lambda result: not re.search(r'_+', result),\n    message=\"Result must not contain repeated underscores.\"\n)\n@icontract.ensure(\n    lambda result: result == result.lower(),\n    message=\"Result must be in lowercase.\"\n)"
+  ],
+  "responses": [
+    "```python\n@icontract.snapshot(data, name=\"original_data\")\n@icontract.ensure(\n    lambda result: all(c in string.ascii_lowercase + string.digits + '_'\n                     for c in result),\n    \"Result must only contain lowercase letters, digits, and underscores.\"\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    \"Result must not end with an underscore.\"\n)\n@icontract.ensure(\n    lambda result: not re.search(r'_{2,}', result),\n    \"Result must not contain repeated underscores.\"\n)\n@icontract.ensure(\n    lambda result: result == re.sub(r'_{2,}', '_', data.translate(str.maketrans(' '.join('!\"#$%&\\'()*+,-./:;<=>?@[\\]^`{|}~'), ' ' * len('!\"#$%&\\'()*+,-./:;<=>?@[\\]^`{|}~'))).lower().rstrip('_'),\n    \"Result must match the expected transformation of replacing special characters with underscores, converting to lowercase, and removing trailing/repeating underscores.\"\n)\n```",
+    "```python\n@icontract.snapshot(data, name='original_data')\n@icontract.ensure(\n    lambda result: all(c in 'abcdefghijklmnopqrstuvwxyz0123456789_' or c.isspace() for c in data) or result != data,\n    message='Result must have special characters replaced by underscores or spaces'\n)\n@icontract.ensure(\n    lambda result: result == re.sub(r'[^a-zA-Z0-9_ ]', '_', data).lower(),\n    message='Result must match the expected transformation of replacing special characters with underscores and converting to lower case'\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    message='Result must not have a trailing underscore'\n)\n@icontract.ensure(\n    lambda result: not re.search(r'_+', result),\n    message='Result must not have repeating underscores'\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: all(c == '_' or c.isalnum() for c in result),\n    \"Result should only contain alphanumeric characters and underscores.\"\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    \"Result should not end with an underscore.\"\n)\n@icontract.ensure(\n    lambda result: not re.search(r'_+', result),\n    \"Result should not contain repeated underscores.\"\n)\n@icontract.ensure(\n    lambda result: result.islower(),\n    \"Result should be in lower-case.\"\n)\n@icontract.snapshot(data, name=\"original_data\")\n@icontract.ensure(\n    lambda original_data, result: len(result) <= len(original_data),\n    \"Result should not be longer than the original data.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: all(c == '_' or c.isalnum() for c in result),\n    \"Result must contain only alphanumeric characters and underscores\"\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    \"Result must not have trailing underscores\"\n)\n@icontract.ensure(\n    lambda result: '__' not in result,\n    \"Result must not have repeated underscores\"\n)\n@icontract.ensure(\n    lambda result: result.islower(),\n    \"Result must be in lower-case\"\n)\n@icontract.snapshot(data, name=\"original_data\")\n@icontract.ensure(\n    lambda original_data, result: len(result) <= len(original_data),\n    \"Result must not be longer than the original data\"\n)\n```",
+    "```python\n@icontract.snapshot(data, name=\"original_data\")\n@icontract.ensure(\n    lambda result: all(c in string.ascii_lowercase + string.digits + '_' for c in result),\n    message=\"Result must only contain lowercase letters, digits, and underscores.\"\n)\n@icontract.ensure(\n    lambda result: not result.endswith('_'),\n    message=\"Result must not end with an underscore.\"\n)\n@icontract.ensure(\n    lambda result: not re.search(r'_+', result),\n    message=\"Result must not contain repeated underscores.\"\n)\n@icontract.ensure(\n    lambda result: result == result.lower(),\n    message=\"Result must be in lowercase.\"\n)\n```"
+  ],
+  "postcond_corr": [
+    "syntax_error",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 75
+}

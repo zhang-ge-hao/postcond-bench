@@ -1,0 +1,269 @@
+{
+  "rlid": "get_ast",
+  "github_url": "https://github.com/miyuchina/mistletoe/blob/0860a8662d386b0b9bee2512e8a078715703f980/./mistletoe/ast_renderer.py#L22-L47",
+  "name": "get_ast",
+  "line_cov": 1.0,
+  "lines": 26,
+  "stats": 12,
+  "cc": 7,
+  "content": "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+  "header": "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"",
+  "file": "./mistletoe/ast_renderer.py",
+  "start_line": 22,
+  "end_line": 47,
+  "body_start_line": 30,
+  "comment": "\"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"",
+  "test_time": 0.4366111755371094,
+  "cover_tests": [
+    "test/test_ast_renderer.py::TestAstRenderer::test",
+    "test/test_ast_renderer.py::TestAstRenderer::test_footnotes",
+    "test/test_ast_renderer.py::TestAstRenderer::test_table"
+  ],
+  "repo": {
+    "github_path": "miyuchina/mistletoe",
+    "commit": "0860a8662d386b0b9bee2512e8a078715703f980",
+    "language": "python",
+    "env_config": "[project]\nrequires-python = \">=3.10,<4.0\"\nname = \"myproject\"\nversion = \"0.1.0\"\n\n[tool.poetry]\npackage-mode = false\n\n[tool.poetry.dependencies]\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nparameterized = \"^0.9.0\"\n",
+    "failed_tests": [],
+    "test_time": 4.7762980461120605
+  },
+  "mutants": [
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['TYPE'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['XXtypeXX'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = None\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['CONTENT', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['XXcontentXX', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'FOOTNOTES']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'XXfootnotesXX']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'header']:  # Incorrectly includes 'header', which is already handled separately\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'non_existent']:  # Includes a non-existent attribute, leading to missing data\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'type']:  # Incorrectly includes 'type', which is already set at the beginning\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['footnotes', 'children']:  # Incorrectly includes 'children', which is already processed\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['header', 'content']:  # Incorrectly includes 'header', which is already processed\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in dir(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if getattr(token, attrname, None) is not None:\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if hasattr(token, attrname):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = ''  # Assigning an empty string instead of the actual attribute value\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = 'default'  # Assigning a hardcoded string instead of the actual attribute value\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = None\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = None  # Assigning None instead of the actual attribute value\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in dir(token):\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.__dict__.keys():\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = ''  # Assigning an empty string instead of the actual attribute value\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = 'default'  # Assigning a hardcoded string instead of the actual attribute value\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = None\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = None  # Assigning None instead of the actual attribute value\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'HEADER' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'XXheaderXX' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['HEADER'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['XXheaderXX'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = None\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = None\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = getattr(token, 'header')\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['CHILDREN'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['XXchildrenXX'] = [get_ast(child) for child in token.children]\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = None\n    return node\n",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children[:1]]  # Only takes the first child\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children] + ['extra_child']  # Adds an extra child\n    return node",
+    "def get_ast(token):\n    \"\"\"\n    Recursively unrolls token attributes into dictionaries (token.children\n    into lists).\n\n    Returns:\n        a dictionary of token's attributes.\n    \"\"\"\n    node = {}\n    # Python 3.6 uses [ordered dicts] [1].\n    # Put in 'type' entry first to make the final tree format somewhat\n    # similar to [MDAST] [2].\n    #\n    #   [1]: https://docs.python.org/3/whatsnew/3.6.html\n    #   [2]: https://github.com/syntax-tree/mdast\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children] + [None]  # Appends None to the children list\n    return node"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, token: isinstance(result, dict))\n@icontract.ensure(lambda result, token: 'type' in result and result['type'] == token.__class__.__name__)\n@icontract.ensure(lambda result, token: set(result.keys()) == ({'type'} | set(token.repr_attributes) | ({'content'} if 'content' in vars(token) else set()) | ({'footnotes'} if 'footnotes' in vars(token) else set()) | ({'header'} if 'header' in vars(token) else set()) | ({'children'} if getattr(token, 'children', None) is not None else set())))\n@icontract.ensure(lambda result, token: all(((attr in vars(token) and result.get(attr) == getattr(token, attr)) or (attr not in vars(token) and attr not in result)) for attr in ('content', 'footnotes')))\n@icontract.ensure(lambda result, token: all(result[attr] == getattr(token, attr) for attr in token.repr_attributes))\n@icontract.ensure(lambda result, token: (('header' in vars(token) and 'header' in result and result['header'] == get_ast(getattr(token, 'header'))) or ('header' not in vars(token) and 'header' not in result)))\n@icontract.ensure(lambda result, token: ((getattr(token, 'children', None) is not None and 'children' in result and result['children'] == [get_ast(child) for child in token.children]) or (getattr(token, 'children', None) is None and 'children' not in result)))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\nimport json\nfrom mistletoe.base_renderer import BaseRenderer\n\n\nclass AstRenderer(BaseRenderer):\n    def render(self, token):\n        return json.dumps(get_ast(token), indent=2) + '\\n'\n\n    def __getattr__(self, name):\n        return lambda token: ''\n\n\ndef get_ast(token):\n    node = {}\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n\n\nASTRenderer = AstRenderer\n\n```\n## Target Method\n```\ndef get_ast(token):\n    node = {}\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `get_ast`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.ensure(lambda token: isinstance(token, object))\n@icontract.ensure(lambda token, result: isinstance(result, dict))\n@icontract.ensure(lambda token, result: 'type' in result)\n@icontract.ensure(lambda token, result: result['type'] == type(token).__name__)\n@icontract.snapshot(lambda token: vars(token))\n@icontract.snapshot(lambda token: token.repr_attributes)\n@icontract.snapshot(lambda token: token.children)",
+    "@icontract.ensure(lambda node: isinstance(node, dict))\n@icontract.ensure(lambda node: 'type' in node and isinstance(node['type'], str))\n@icontract.ensure(lambda token: token.__class__.__name__ == node['type'])\n@icontract.ensure(lambda node: all(isinstance(key, str) for key in node.keys()))\n@icontract.ensure(lambda node: 'content' in node if 'content' in vars(token) else True)\n@icontract.ensure(lambda node: 'footnotes' in node if 'footnotes' in vars(token) else True)\n@icontract.ensure(lambda node: all(attr in node for attr in token.repr_attributes))\n@icontract.ensure(lambda node: 'header' in node if 'header' in vars(token) else True)\n@icontract.ensure(lambda node: 'children' in node if token.children is not None else True)\n@icontract.ensure(lambda node: isinstance(node['children'], list) if token.children is not None else True)\n@icontract.ensure(lambda node: all(isinstance(child, dict) for child in node['children']) if token.children is not None else True)\n@icontract.snapshot(token)",
+    "@icontract.ensure(lambda token: isinstance(token, object))\n@icontract.ensure(lambda token, result: isinstance(result, dict))\n@icontract.snapshot(lambda token: (token.__class__.__name__, token.repr_attributes, [type(c) for c in (token.children if token.children else [])]))\ndef get_ast(token):\n    node = {}\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node",
+    "",
+    "@icontract.ensure(lambda token: isinstance(token, object))\n@icontract.ensure(lambda token, result: isinstance(result, dict))\n@icontract.ensure(lambda token, result: 'type' in result and isinstance(result['type'], str))\n@icontract.ensure(lambda token, result: all(key in ['content', 'footnotes'] or key not in result for key in result.keys()))\n@icontract.ensure(lambda token, result: all(attr in result for attr in token.repr_attributes if hasattr(token, attr)))\n@icontract.ensure(lambda token, result: ('header' in result) == ('header' in vars(token)))\n@icontract.ensure(lambda token, result: 'children' in result == (token.children is not None))\n@icontract.ensure(lambda token, result: token.children is None or isinstance(result['children'], list))\n@icontract.ensure(lambda token, result: token.children is None or all(isinstance(child, dict) for child in result['children']))\n@icontract.snapshot(lambda token: token)"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(lambda token: isinstance(token, object))\n@icontract.ensure(lambda token, result: isinstance(result, dict))\n@icontract.ensure(lambda token, result: 'type' in result)\n@icontract.ensure(lambda token, result: result['type'] == type(token).__name__)\n@icontract.snapshot(lambda token: vars(token))\n@icontract.snapshot(lambda token: token.repr_attributes)\n@icontract.snapshot(lambda token: token.children)\n``````",
+    "```python\n@icontract.ensure(lambda node: isinstance(node, dict))\n@icontract.ensure(lambda node: 'type' in node and isinstance(node['type'], str))\n@icontract.ensure(lambda token: token.__class__.__name__ == node['type'])\n@icontract.ensure(lambda node: all(isinstance(key, str) for key in node.keys()))\n@icontract.ensure(lambda node: 'content' in node if 'content' in vars(token) else True)\n@icontract.ensure(lambda node: 'footnotes' in node if 'footnotes' in vars(token) else True)\n@icontract.ensure(lambda node: all(attr in node for attr in token.repr_attributes))\n@icontract.ensure(lambda node: 'header' in node if 'header' in vars(token) else True)\n@icontract.ensure(lambda node: 'children' in node if token.children is not None else True)\n@icontract.ensure(lambda node: isinstance(node['children'], list) if token.children is not None else True)\n@icontract.ensure(lambda node: all(isinstance(child, dict) for child in node['children']) if token.children is not None else True)\n@icontract.snapshot(token)\n```",
+    "```python\n@icontract.ensure(lambda token: isinstance(token, object))\n@icontract.ensure(lambda token, result: isinstance(result, dict))\n@icontract.snapshot(lambda token: (token.__class__.__name__, token.repr_attributes, [type(c) for c in (token.children if token.children else [])]))\ndef get_ast(token):\n    node = {}\n    node['type'] = token.__class__.__name__\n    for attrname in ['content', 'footnotes']:\n        if attrname in vars(token):\n            node[attrname] = getattr(token, attrname)\n    for attrname in token.repr_attributes:\n        node[attrname] = getattr(token, attrname)\n    if 'header' in vars(token):\n        node['header'] = get_ast(getattr(token, 'header'))\n    if token.children is not None:\n        node['children'] = [get_ast(child) for child in token.children]\n    return node\n```##",
+    "```python\n@icontract.ensure(lambda node: isinstance(node, dict))\n@icontract.ensure(lambda node: 'type' in node and isinstance(node['type'], str))\n@icontract.ensure(lambda node: all(isinstance(key, str) for key in node.keys()))\n@icontract.snapshot(lambda token: token)\n```startswith(node['type'], token.__class__.__name__))\n```",
+    "```python\n@icontract.ensure(lambda token: isinstance(token, object))\n@icontract.ensure(lambda token, result: isinstance(result, dict))\n@icontract.ensure(lambda token, result: 'type' in result and isinstance(result['type'], str))\n@icontract.ensure(lambda token, result: all(key in ['content', 'footnotes'] or key not in result for key in result.keys()))\n@icontract.ensure(lambda token, result: all(attr in result for attr in token.repr_attributes if hasattr(token, attr)))\n@icontract.ensure(lambda token, result: ('header' in result) == ('header' in vars(token)))\n@icontract.ensure(lambda token, result: 'children' in result == (token.children is not None))\n@icontract.ensure(lambda token, result: token.children is None or isinstance(result['children'], list))\n@icontract.ensure(lambda token, result: token.children is None or all(isinstance(child, dict) for child in result['children']))\n@icontract.snapshot(lambda token: token)\n```##"
+  ],
+  "postcond_corr": [
+    "local_crash",
+    "local_crash",
+    "compile_failure",
+    "compile_failure",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 170
+}

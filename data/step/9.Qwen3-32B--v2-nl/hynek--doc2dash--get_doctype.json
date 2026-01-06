@@ -1,0 +1,105 @@
+{
+  "rlid": "get_doctype",
+  "github_url": "https://github.com/hynek/doc2dash/blob/a5fc14a6ee151eb1373733bed8d5f9adb2189795/./src/doc2dash/parsers/__init__.py#L17-L31",
+  "name": "get_doctype",
+  "line_cov": 1.0,
+  "lines": 15,
+  "stats": 5,
+  "cc": 3,
+  "content": "def get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n    for dt in DOCTYPES:\n        name = dt.detect(path)\n        if name:\n            return dt, name\n    else:\n        return None, None",
+  "header": "def get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"",
+  "file": "./src/doc2dash/parsers/__init__.py",
+  "start_line": 17,
+  "end_line": 31,
+  "body_start_line": 26,
+  "comment": "\"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"",
+  "test_time": 2.180384635925293,
+  "cover_tests": [
+    "tests/parsers/test_detectors.py::test_get_doctype_no_match",
+    "tests/parsers/test_detectors.py::test_get_doctype_first_match",
+    "tests/test_main.py::test_intersphinx",
+    "tests/test_main.py::TestArguments::test_handles_unknown_doc_types"
+  ],
+  "repo": {
+    "github_path": "hynek/doc2dash",
+    "commit": "a5fc14a6ee151eb1373733bed8d5f9adb2189795",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"hatchling\", \"hatch-vcs\", \"hatch-fancy-pypi-readme\",]\nbuild-backend = \"hatchling.build\"\n\n[project]\ndynamic = [ \"version\", \"readme\",]\nname = \"doc2dash\"\ndescription = \"Convert docs to the docset format.\"\nrequires-python = \">=3.10\"\nlicense = \"MIT\"\nlicense-files = [ \"LICENSE\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Environment :: Console\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: 3.14\", \"Topic :: Software Development :: Documentation\",]\ndependencies = [ \"attrs>=23.2\", \"beautifulsoup4\", \"click>8\", \"rich\", \"icontract (>=2.7.1,<3.0.0)\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Hynek Schlawack\"\nemail = \"hs@ox.cx\"\n\n[dependency-groups]\ntests = [ \"coverage[toml]\", \"pytest\",]\ndocs = [ \"mkdocs\", \"mkdocs-material\", \"mkdocs-include-markdown-plugin\", \"mkdocs-click\", \"mkdocs-callouts\", \"mkdocstrings[python]\",]\ntyping = [ \"mypy\", \"types-urllib3\",]\n[[dependency-groups.dev]]\ninclude-group = \"tests\"\n\n[[dependency-groups.dev]]\ninclude-group = \"typing\"\n\n[project.scripts]\ndoc2dash = \"doc2dash.__main__:main\"\n\n[project.urls]\nDocumentation = \"https://doc2dash.hynek.me/\"\nChangelog = \"https://github.com/hynek/doc2dash/blob/main/CHANGELOG.md\"\nGitHub = \"https://github.com/hynek/doc2dash\"\nFunding = \"https://github.com/sponsors/hynek\"\nMastodon = \"https://mastodon.social/@hynek\"\nTwitter = \"https://twitter.com/hynek\"\n\n[tool.interrogate]\nverbose = 2\nfail-under = 100\nwhitelist-regex = [ \"test_.*\",]\n\n[tool.mypy]\nstrict = true\nshow_error_codes = true\nenable_error_code = [ \"ignore-without-code\",]\nignore_missing_imports = true\n[[tool.mypy.overrides]]\nmodule = \"tests.*\"\nignore_errors = true\n\n[[tool.mypy.overrides]]\nmodule = \"noxfile\"\ndisallow_untyped_decorators = false\n\n[tool.ruff]\nsrc = [ \"src\", \"tests\", \"noxfile.py\",]\nline-length = 79\n\n[tool.ruff.lint]\nignore = [ \"A001\", \"ANN\", \"ARG\", \"COM\", \"D\", \"E501\", \"FBT\", \"FIX\", \"INP001\", \"ISC001\", \"PLR0913\", \"PLR2004\", \"PYI034\", \"RUF001\", \"SLF001\", \"TCH\", \"TD\",]\n\n[tool.hatch.version]\nsource = \"vcs\"\n\n[tool.pytest.ini_options]\naddopts = [ \"-ra\", \"--strict-markers\", \"--strict-config\", \"--import-mode=importlib\",]\nxfail_strict = true\ntestpaths = \"tests\"\nfilterwarnings = [ \"once::Warning\",]\n\n[tool.coverage.run]\nparallel = true\nbranch = true\nsource = [ \"doc2dash\",]\n\n[tool.coverage.paths]\nsource = [ \"src\", \".nox/tests-*/**/site-packages\",]\n\n[tool.coverage.report]\nshow_missing = true\nskip_covered = true\nexclude_lines = [ \"pragma: no cover\", \"if TYPE_CHECKING:\", \"raise NotImplementedError\", \"^if (False|TYPE_CHECKING):\", \": \\\\.\\\\.\\\\.$\", \"^ +\\\\.\\\\.\\\\.$\", \"-> ['\\\"]?NoReturn['\\\"]?:\",]\n\n[tool.ruff.lint.per-file-ignores]\n\"**/test_*\" = [ \"ARG005\", \"S101\", \"SIM300\", \"PT005\", \"PT011\", \"TRY002\", \"EM101\",]\n\n[tool.ruff.lint.isort]\nlines-between-types = 1\nlines-after-imports = 2\n\n[tool.hatch.version.raw-options]\nlocal_scheme = \"no-local-version\"\n\n[tool.hatch.metadata.hooks.fancy-pypi-readme]\ncontent-type = \"text/markdown\"\n[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]\ntext = \"# doc2dash\\n\"\n\n[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]\npath = \"README.md\"\nstart-after = \"<!-- begin-short -->\\n\"\nend-before = \"## Project Links\"\n\n[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]\npath = \"README.md\"\nstart-at = \"## Credits\"\n\n[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]\ntext = \"## Release Information\\n\\n\"\n\n[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]\npath = \"CHANGELOG.md\"\nstart-after = \"<!-- changelog follows -->\"\npattern = \"\\n(###.+?\\n)## \"\n\n[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]\npattern = \"\\\\[(.+?)\\\\]\\\\(((?!https?://)\\\\S+?.\\\\.(png|gif))\\\\)\"\nreplacement = \"[\\\\1](https://raw.githubusercontent.com/hynek/doc2dash/main/\\\\g<2>)\"\n\n[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]\npattern = \"\\\\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\\\\]\"\nreplacement = \"**\\\\1**:\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [],
+    "test_time": 1.8894307613372803
+  },
+  "mutants": [
+    "def get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n    for dt in DOCTYPES:\n        name = None\n        if name:\n            return dt, name\n    else:\n        return None, None\n",
+    "def get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n    for dt in DOCTYPES:\n        name = dt.detect(path)\n        if dt is None:\n            return dt, name\n    else:\n        return None, None",
+    "def get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n    for dt in DOCTYPES:\n        name = dt.detect(path)\n        if dt.detect(path) == name:\n            return dt, name\n    else:\n        return None, None",
+    "def get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n    for dt in DOCTYPES:\n        name = dt.detect(path)\n        if name == \"\":\n            return dt, name\n    else:\n        return None, None",
+    "def get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n    for dt in DOCTYPES:\n        name = dt.detect(path)\n        if name is None:\n            return dt, name\n    else:\n        return None, None",
+    "def get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n    for dt in DOCTYPES:\n        name = dt.detect(path)\n        if not name:\n            return dt, name\n    else:\n        return None, None"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda path: list(DOCTYPES), name=\"DOCS\")\n@icontract.snapshot(lambda path: [dt.detect(path) for dt in DOCTYPES], name=\"DETS\")\n@icontract.ensure(lambda OLD, result: (any(OLD.DETS) and result == next(((OLD.DOCS[i], OLD.DETS[i]) for i in range(len(OLD.DETS)) if OLD.DETS[i]), (None, None))) or (not any(OLD.DETS) and result == (None, None)))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n# SPDX-FileCopyrightText: 2012 Hynek Schlawack <hs@ox.cx>\n#\n# SPDX-License-Identifier: MIT\n\nfrom __future__ import annotations\n\nfrom pathlib import Path\n\nfrom . import intersphinx, types\n\n\nDOCTYPES: list[type[types.Parser]] = [\n    intersphinx.InterSphinxParser,\n]\n\n\ndef get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n...\n__all__ = [\"get_doctype\", \"types\"]\n\n```\n## Target Method\n```\ndef get_doctype(\n    path: Path,\n) -> tuple[type[types.Parser], str] | tuple[None, None]:\n    \"\"\"\n    Gets the appropriate doctype for *path*.\n\n    Returns:\n        Tuple of parser type and the name of the documentation.\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `get_doctype`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[0], type) and issubclass(result[0], types.Parser),\n    \"If a parser type is returned, it must be a subclass of types.Parser.\"\n)\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[1], str),\n    \"If a documentation name is returned, it must be a string.\"\n)\n@icontract.snapshot(path, name=\"path_snapshot\")",
+    "@icontract.snapshot(path, name=\"path\")\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[0], type) and issubclass(result[0], types.Parser),\n    description=\"If a parser is returned, it must be a subclass of types.Parser.\"\n)\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[1], str),\n    description=\"If a documentation name is returned, it must be a string.\"\n)\n@icontract.ensure(\n    lambda path, result: result[0] is None and result[1] is None or any(issubclass(result[0], doctype) for doctype in DOCTYPES),\n    description=\"The returned parser type must be one of the known doctypes.\"\n)",
+    "@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[0], type) and issubclass(result[0], types.Parser),\n    \"If the result is not (None, None), the first element must be a subclass of types.Parser.\"\n)\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[1], str),\n    \"If the result is not (None, None), the second element must be a string.\"\n)\n@icontract.snapshot(path, name=\"path\")",
+    "@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or all(\n        isinstance(x, (type, str)) for x in result\n    ),\n    \"The result must be a tuple of (type[types.Parser], str) or (None, None).\",\n)\n@icontract.snapshot(path, name=\"path\")",
+    "@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or all(\n        issubclass(result[0], types.Parser) for _ in DOCTYPES\n    ),\n    \"If a parser type is returned, it must be a subclass of types.Parser.\"\n)\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[1], str),\n    \"If a documentation name is returned, it must be a string.\"\n)\n@icontract.snapshot(\"DOCTYPES\", name=\"doctype_list\")\n@icontract.ensure(\n    lambda result, doctype_list: result[0] is None or result[0] in doctype_list,\n    \"The returned parser type must be in the DOCTYPES list.\"\n)"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[0], type) and issubclass(result[0], types.Parser),\n    \"If a parser type is returned, it must be a subclass of types.Parser.\"\n)\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[1], str),\n    \"If a documentation name is returned, it must be a string.\"\n)\n@icontract.snapshot(path, name=\"path_snapshot\")\n```",
+    "```python\n@icontract.snapshot(path, name=\"path\")\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[0], type) and issubclass(result[0], types.Parser),\n    description=\"If a parser is returned, it must be a subclass of types.Parser.\"\n)\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[1], str),\n    description=\"If a documentation name is returned, it must be a string.\"\n)\n@icontract.ensure(\n    lambda path, result: result[0] is None and result[1] is None or any(issubclass(result[0], doctype) for doctype in DOCTYPES),\n    description=\"The returned parser type must be one of the known doctypes.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[0], type) and issubclass(result[0], types.Parser),\n    \"If the result is not (None, None), the first element must be a subclass of types.Parser.\"\n)\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[1], str),\n    \"If the result is not (None, None), the second element must be a string.\"\n)\n@icontract.snapshot(path, name=\"path\")\n```",
+    "```python\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or all(\n        isinstance(x, (type, str)) for x in result\n    ),\n    \"The result must be a tuple of (type[types.Parser], str) or (None, None).\",\n)\n@icontract.snapshot(path, name=\"path\")\n```",
+    "```python\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or all(\n        issubclass(result[0], types.Parser) for _ in DOCTYPES\n    ),\n    \"If a parser type is returned, it must be a subclass of types.Parser.\"\n)\n@icontract.ensure(\n    lambda result: result[0] is None and result[1] is None or isinstance(result[1], str),\n    \"If a documentation name is returned, it must be a string.\"\n)\n@icontract.snapshot(\"DOCTYPES\", name=\"doctype_list\")\n@icontract.ensure(\n    lambda result, doctype_list: result[0] is None or result[0] in doctype_list,\n    \"The returned parser type must be in the DOCTYPES list.\"\n)\n```"
+  ],
+  "postcond_corr": [
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 68
+}

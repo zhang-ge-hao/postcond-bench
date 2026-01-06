@@ -1,0 +1,430 @@
+{
+  "rlid": "getBaseUriString",
+  "github_url": "https://github.com/Mastercard/oauth1-signer-java/blob/8c84f7d0309f2de6a1a93ff5933d588fd861867c/./src/main/java/com/mastercard/developer/oauth/OAuth.java#L201-L228",
+  "name": "getBaseUriString",
+  "line_cov": 1.0,
+  "lines": 28,
+  "stats": 10,
+  "cc": 8,
+  "content": "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+  "header": "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {",
+  "file": "./src/main/java/com/mastercard/developer/oauth/OAuth.java",
+  "start_line": 201,
+  "end_line": 228,
+  "body_start_line": 209,
+  "comment": "/**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */",
+  "test_time": 6.449952840805054,
+  "cover_tests": [
+    "com.mastercard.developer.oauth.OAuthTest#testGetBaseUriString_ShouldNotEncodePathSegments",
+    "com.mastercard.developer.oauth.OAuthTest#testGetBaseUriString_ShouldNotNormalizeEncodedChars",
+    "com.mastercard.developer.oauth.OAuthTest#testGetBaseUriString_ShouldRemoveRedundantPorts",
+    "com.mastercard.developer.oauth.OAuthTest#testGetBaseUriString_ShouldSupportRfcExamples",
+    "com.mastercard.developer.oauth.OAuthTest#testGetSignatureBaseString_Integrated",
+    "com.mastercard.developer.signers.ApacheHttpClient4SignerTest#testSign_ShouldAddOAuth1HeaderToPostRequest",
+    "com.mastercard.developer.signers.GoogleApiClientSignerTest#testSign_ShouldAddOAuth1HeaderToPostRequest",
+    "com.mastercard.developer.signers.HttpsUrlConnectionSignerTest#testSign_ShouldAddOAuth1HeaderToPostRequest",
+    "com.mastercard.developer.signers.OkHttp2SignerTest#testSign_ShouldAddOAuth1HeaderToPostRequest",
+    "com.mastercard.developer.signers.OkHttpSignerTest#testSign_ShouldAddOAuth1HeaderToPostRequest",
+    "com.mastercard.developer.signers.OpenFeignSignerTest#testSign_ShouldAddOAuth1HeaderToGetRequest",
+    "com.mastercard.developer.signers.OpenFeignSignerTest#testSign_ShouldAddOAuth1HeaderToPostRequest",
+    "com.mastercard.developer.signers.SpringHttpRequestSignerTest#testSignShouldAddOAuth1HeaderToGetRequestEmptyBody",
+    "com.mastercard.developer.signers.SpringHttpRequestSignerTest#testSignShouldAddOAuth1HeaderToGetRequestNullBody",
+    "com.mastercard.developer.signers.SpringHttpRequestSignerTest#testSignShouldAddOAuth1HeaderToPostRequest",
+    "com.mastercard.developer.signers.SpringHttpRequestSignerTest#testSignShouldAddOAuth1HeaderToPostRequestWithCharset",
+    "com.mastercard.developer.signers.SpringHttpRequestSignerTest#testSignShouldAddOAuth1HeaderToPostRequestWithInvalidCharset",
+    "com.mastercard.developer.signers.SpringWebfluxSignerTest#testSign_ShouldAddOAuth1HeaderToPostRequest"
+  ],
+  "repo": {
+    "github_path": "Mastercard/oauth1-signer-java",
+    "commit": "8c84f7d0309f2de6a1a93ff5933d588fd861867c",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.mastercard.developer</groupId>\n  <artifactId>oauth1-signer</artifactId>\n  <version>1.5.6</version>\n  <packaging>jar</packaging>\n  <description>Zero dependency library for generating a Mastercard API compliant OAuth signature</description>\n  <url>https://github.com/Mastercard/oauth1-signer-java</url>\n  <name>oauth1-signer</name>\n  <properties>\n    <spring-version>6.2.8</spring-version>\n    <spring-webflux-version>3.5.3</spring-webflux-version>\n    <okhttp2-version>2.7.5</okhttp2-version>\n    <okhttp3-version>4.12.0</okhttp3-version>\n    <google-api-client-version>2.3.0</google-api-client-version>\n    <feign-version>9.7.0</feign-version>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <gpg.signature.skip>false</gpg.signature.skip>\n  </properties>\n  <scm>\n    <connection>scm:git:git://github.com/Mastercard/oauth1-signer-java.git</connection>\n    <developerConnection>scm:git:git@github.com:Mastercard/oauth1-signer-java.git</developerConnection>\n    <url>https://github.com/Mastercard/oauth1-signer-java</url>\n  </scm>\n  <developers>\n    <developer>\n      <organization>Mastercard</organization>\n      <organizationUrl>https://developer.mastercard.com</organizationUrl>\n    </developer>\n  </developers>\n  <licenses>\n    <license>\n      <name>MIT License</name>\n      <url>https://opensource.org/licenses/MIT</url>\n    </license>\n  </licenses>\n  <dependencies>\n    <dependency>\n      <groupId>org.springframework</groupId>\n      <artifactId>spring-web</artifactId>\n      <version>${spring-version}</version>\n      <scope>provided</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.httpcomponents</groupId>\n      <artifactId>httpclient</artifactId>\n      <version>4.5.13</version>\n      <scope>provided</scope>\n    </dependency>\n    <dependency>\n      <groupId>com.squareup.okhttp3</groupId>\n      <artifactId>okhttp</artifactId>\n      <version>${okhttp3-version}</version>\n      <scope>provided</scope>\n    </dependency>\n    <dependency>\n      <groupId>com.squareup.okhttp</groupId>\n      <artifactId>okhttp</artifactId>\n      <version>${okhttp2-version}</version>\n      <scope>provided</scope>\n    </dependency>\n    <dependency>\n      <groupId>com.google.api-client</groupId>\n      <artifactId>google-api-client</artifactId>\n      <version>${google-api-client-version}</version>\n      <scope>provided</scope>\n    </dependency>\n    <dependency>\n      <groupId>io.github.openfeign</groupId>\n      <artifactId>feign-core</artifactId>\n      <version>${feign-version}</version>\n      <scope>provided</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter-webflux</artifactId>\n      <version>${spring-webflux-version}</version>\n      <scope>provided</scope>\n    </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-params</artifactId>\n      <version>5.7.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>2.9.1</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <profiles>\n    <profile>\n      <id>java17</id>\n      <activation>\n        <jdk>17</jdk>\n      </activation>\n      <properties>\n        <maven.javadoc.skip>true</maven.javadoc.skip>\n      </properties>\n    </profile>\n  </profiles>\n  <build>\n    <pluginManagement>\n      <plugins>\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-compiler-plugin</artifactId>\n          <version>3.12.1</version>\n          <configuration>\n            <source>10</source>\n            <target>10</target>\n          </configuration>\n        </plugin>\n      </plugins>\n    </pluginManagement>\n    <plugins>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.7</version>\n        <executions>\n          <execution>\n            <id>pre-unit-test</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>post-unit-test</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <xmlOutputDirectory>${project.build.directory}/site/jacoco</xmlOutputDirectory>\n              <xml>true</xml>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>3.1.0</version>\n        <executions>\n          <execution>\n            <id>sign-artifacts</id>\n            <phase>deploy</phase>\n            <goals>\n              <goal>sign</goal>\n            </goals>\n            <configuration>\n              <skip>${gpg.signature.skip}</skip>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.3.0</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>3.6.3</version>\n        <executions>\n          <execution>\n            <id>generate-javadoc</id>\n            <phase>package</phase>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n            <configuration>\n              <nodeprecated>true</nodeprecated>\n              <additionalOptions>-Xdoclint:none</additionalOptions>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.sonatype.central</groupId>\n        <artifactId>central-publishing-maven-plugin</artifactId>\n        <version>0.7.0</version>\n        <extensions>true</extensions>\n        <configuration>\n          <publishingServerId>central</publishingServerId>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <configuration>\n          <source>10</source>\n          <target>10</target>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 3.7421722412109375
+  },
+  "mutants": [
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = \"\"; // Sets scheme to an empty string, resulting in an invalid URI\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().replace(\"http\", \"https\"); // Incorrectly forces HTTP scheme to HTTPS\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().substring(0, 3); // Incorrectly truncates the scheme, leading to malformed URIs\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toUpperCase(); // Incorrectly converts scheme to uppercase\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().replace(\":\", \"\"); // Removes the port information, which can lead to incorrect URI normalization.\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().substring(0, 5).toLowerCase(); // Truncates the authority string, potentially losing important information.\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toUpperCase(); // Changes authority to uppercase, which is incorrect.\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority(); // Omits the lowercase conversion, which may lead to incorrect URI normalization.\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getHost().toLowerCase(); // Uses the host instead of the authority, which may not include the port.\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() != 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"ftp\".equals(scheme) && uri.getPort() == 21)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"http\".equals(scheme) && uri.getPort() == 80)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() != 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf('/'); // This will incorrectly look for a '/' instead of ':'.\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':') + 1; // This will set index to one position after the ':' instead of the position of ':'.\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index < 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index <= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index == 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.replace(\":\", \"\"); // This will remove the colon entirely, leading to an incorrect authority format.\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index + 1); // This will include the colon, which is not correct for normalization.\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index - 1); // This will incorrectly truncate the authority, potentially causing an invalid URI.\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(index + 1); // This will remove the part before the colon and the colon itself, leading to incorrect authority.\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(index); // This will remove the part before the colon, leading to incorrect authority.\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = \"\"; // This sets the path to an empty string, which may cause incorrect URI normalization.\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getFragment(); // This incorrectly assigns the fragment part of the URI instead of the path, leading to incorrect behavior.\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getPath(); // This will not include the raw path, potentially leading to incorrect URI normalization.\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawQuery(); // This incorrectly assigns the query string instead of the path, leading to malformed URIs.\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getScheme(); // This incorrectly assigns the scheme of the URI as the path, resulting in an invalid URI.\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path != null && path.length() > 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path != null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() < 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() > 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return \"\";\n  }",
+    "  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return null;\n  }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures \\result != null;\n//@ ensures \\result.startsWith(uri.getScheme().toLowerCase() + \"://\");\n//@ ensures !\\result.contains(\"#\") && !\\result.contains(\"?\");\n//@ ensures \\result.endsWith((uri.getRawPath() == null || uri.getRawPath().length() <= 0) ? \"/\" : uri.getRawPath());\n//@ ensures \\result.equals(uri.getScheme().toLowerCase() + \"://\" + (((((\"http\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 80) || (\"https\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 443)) && uri.getAuthority().toLowerCase().lastIndexOf(':') >= 0) ? uri.getAuthority().toLowerCase().substring(0, uri.getAuthority().toLowerCase().lastIndexOf(':')) : uri.getAuthority().toLowerCase()) + ((uri.getRawPath() == null || uri.getRawPath().length() <= 0) ? \"/\" : uri.getRawPath())));\n//@ ensures ((\"http\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 80) || (\"https\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 443)) ==> !\\result.contains(\":\" + Integer.toString(uri.getPort()));\n//@ ensures !((\"http\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 80) || (\"https\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 443)) ==> (\\result.contains(\":\" + Integer.toString(uri.getPort())) || uri.getPort() == -1);\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.mastercard.developer.oauth;\n\nimport java.net.URI;\nimport java.nio.charset.Charset;\nimport java.security.*;\nimport java.util.Arrays;\nimport java.util.Collections;\nimport java.util.HashMap;\nimport java.util.LinkedList;\nimport java.util.List;\nimport java.util.Map;\nimport java.util.SortedMap;\nimport java.util.TreeMap;\nimport java.util.logging.Level;\nimport java.util.logging.Logger;\n\n/**\n * Performs OAuth1.0a compliant signing with body hash support for non-urlencoded content types.\n */\npublic class OAuth {\n\n  private OAuth() {\n  }\n\n  public static final String EMPTY_STRING = \"\";\n  public static final String AUTHORIZATION_HEADER_NAME = \"Authorization\";\n\n  private static final Logger LOG = Logger.getLogger(OAuth.class.getName());\n  private static final String HASH_ALGORITHM = \"SHA-256\";\n  private static final int NONCE_LENGTH = 16;\n  private static final String ALPHA_NUMERIC_CHARS = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\";\n\n  /**\n   * Creates a Mastercard API compliant OAuth Authorization header\n   *\n   * @param uri Target URI for this request\n   * @param method HTTP method of the request\n   * @param payload Payload (nullable)\n   * @param charset Charset encoding of the request\n   * @param consumerKey Consumer key set up in a Mastercard Developer Portal project\n   * @param signingKey The private key that will be used for signing the request that corresponds to the consumerKey\n   * @return Valid OAuth1.0a signature with a body hash when payload is present\n   */\n  public static String getAuthorizationHeader(URI uri, String method, String payload, Charset charset, String consumerKey, PrivateKey signingKey) {\n    TreeMap<String, List<String>> queryParams = extractQueryParams(uri, charset);\n\n    HashMap<String, String> oauthParams = new HashMap<>();\n    oauthParams.put(\"oauth_consumer_key\", consumerKey);\n    oauthParams.put(\"oauth_nonce\", getNonce());\n    oauthParams.put(\"oauth_signature_method\", \"RSA-\" + HASH_ALGORITHM.replace(\"-\", \"\"));\n    oauthParams.put(\"oauth_timestamp\", getTimestamp());\n    oauthParams.put(\"oauth_version\", \"1.0\");\n    oauthParams.put(\"oauth_body_hash\", getBodyHash(payload, charset, HASH_ALGORITHM));\n\n    // Combine query and oauth_ parameters into lexicographically sorted string\n    String paramString = toOauthParamString(queryParams, oauthParams);\n\n    // Normalized URI without query params and fragment\n    String baseUri = getBaseUriString(uri);\n\n    // Signature base string\n    String sbs = getSignatureBaseString(method, baseUri, paramString, charset);\n\n    // Signature\n    String signature = signSignatureBaseString(sbs, signingKey, charset);\n    oauthParams.put(\"oauth_signature\", Util.percentEncode(signature, charset));\n\n    return getAuthorizationString(oauthParams);\n  }\n\n  /**\n   * Generate a valid signature base string as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1\n   *\n   * @param httpMethod HTTP method of the request\n   * @param baseUri Base URI that conforms with https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   * @param paramString OAuth parameter string that conforms with https://tools.ietf.org/html/rfc5849#section-3.4.1.3\n   * @param charset Charset encoding of the request\n   * @return A correctly constructed and escaped signature base string\n   */\n  static String getSignatureBaseString(String httpMethod, String baseUri, String paramString, Charset charset) {\n    String sbs =\n        // Uppercase HTTP method\n        httpMethod.toUpperCase() + \"&\" +\n        // Base URI\n        Util.percentEncode(baseUri, charset) + \"&\" +\n        // OAuth parameter string\n        Util.percentEncode(paramString, charset);\n\n    LOG.log(Level.FINE, \"Generated SBS: {0}\", sbs);\n    return sbs;\n  }\n\n  /**\n   * Parse query parameters out of the URL.\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.3\n   *\n   * @param uri URL containing all query parameters that need to be signed\n   * @param charset Charset encoding of the request\n   * @return Sorted map of query parameter key/value pairs. Values for parameters with the same name are added into a list.\n   */\n  static TreeMap<String, List<String>> extractQueryParams(URI uri, Charset charset) {\n\n    final String decodedQueryString = uri.getQuery();\n    final String rawQueryString =  uri.getRawQuery();\n    if (decodedQueryString == null || decodedQueryString.isEmpty()\n            || rawQueryString == null || rawQueryString.isEmpty()) {\n      // No query params\n      return new TreeMap<>();\n    }\n\n    boolean mustEncode = !decodedQueryString.equals(rawQueryString);\n    final TreeMap<String, List<String>> queryPairs = new TreeMap<>();\n    final String[] pairs = decodedQueryString.split(\"&\");\n    for (String pair : pairs) {\n      final int idx = pair.indexOf('=');\n      String key = idx > 0 ? pair.substring(0, idx) : pair;\n      if (!queryPairs.containsKey(key)) {\n        key = mustEncode ? Util.percentEncode(key, charset) : key;\n        List<String> list = new LinkedList<>();\n        queryPairs.put(key, list);\n      }\n      String value = idx > 0 && pair.length() > idx + 1 ? pair.substring(idx + 1) : EMPTY_STRING;\n      value = mustEncode ? Util.percentEncode(value, charset) : value;\n      queryPairs.get(key).add(value);\n    }\n\n    return queryPairs;\n  }\n\n  /**\n   * Lexicographically sort all parameters and concatenate them into a string as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.3.2\n   *\n   * @param queryParamsMap Sorted map of all oauth parameters that need to be signed\n   * @param oauthParamsMap Map of OAuth parameters to be included in Authorization header\n   * @return Correctly encoded and sorted OAuth parameter string\n   */\n  static String toOauthParamString(SortedMap<String, List<String>> queryParamsMap, Map<String, String> oauthParamsMap) {\n    TreeMap<String, List<String>> consolidatedParams = new TreeMap<>(queryParamsMap);\n\n    // Add OAuth params to consolidated params map\n    for (Map.Entry<String, String> entry : oauthParamsMap.entrySet()) {\n      if (consolidatedParams.containsKey(entry.getKey())) {\n        consolidatedParams.get(entry.getKey()).add(entry.getValue());\n      } else {\n        consolidatedParams.put(entry.getKey(), Arrays.asList(entry.getValue()));\n      }\n    }\n\n    StringBuilder oauthParams = new StringBuilder();\n\n    // Add all parameters to the parameter string for signing\n    for (Map.Entry<String, List<String>> entry : consolidatedParams.entrySet()) {\n      String key = entry.getKey();\n\n      // Keys with same name are sorted by their values\n      if (entry.getValue().size() > 1) {\n        Collections.sort(entry.getValue());\n      }\n\n      for (String value : entry.getValue()) {\n        oauthParams.append(key).append(\"=\").append(value).append(\"&\");\n      }\n    }\n\n    // Remove trailing ampersand\n    int stringLength = oauthParams.length() - 1;\n    if (oauthParams.charAt(stringLength) == '&') {\n      oauthParams.deleteCharAt(stringLength);\n    }\n\n    return oauthParams.toString();\n  }\n\n  /**\n   * Generates a random string for replay protection as per\n   * https://tools.ietf.org/html/rfc5849#section-3.3\n   *\n   * @return random string of 16 characters.\n   */\n  static String getNonce() {\n    SecureRandom rnd = new SecureRandom();\n    StringBuilder sb = new StringBuilder(NONCE_LENGTH);\n    for (int i = 0; i < NONCE_LENGTH; i++) {\n      sb.append(ALPHA_NUMERIC_CHARS.charAt(rnd.nextInt(ALPHA_NUMERIC_CHARS.length())));\n    }\n    return sb.toString();\n  }\n\n  /**\n   * Returns UNIX Timestamp as required per\n   * https://tools.ietf.org/html/rfc5849#section-3.3\n   *\n   * @return UNIX timestamp (UTC)\n   */\n  private static String getTimestamp() {\n    return Long.toString(System.currentTimeMillis() / 1000L);\n  }\n\n  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }\n\n  /**\n   * Generates a hash based on request payload as per\n   * https://tools.ietf.org/id/draft-eaton-oauth-bodyhash-00.html\n   *\n   * @param payload Request payload\n   * @param charset Charset encoding of the request\n   * @return Base64 encoded cryptographic hash of the given payload\n   */\n  static String getBodyHash(String payload, Charset charset, String hashAlg) {\n    MessageDigest digest;\n\n    try {\n      digest = MessageDigest.getInstance(hashAlg);\n    } catch (NoSuchAlgorithmException e) {\n      throw new IllegalStateException(\"Unable to obtain \" + hashAlg + \" message digest\", e);\n    }\n\n    digest.reset();\n    // \"If the request does not have an entity body, the hash should be taken over the empty string\"\n    byte[] byteArray = null == payload ? \"\".getBytes() : payload.getBytes(charset);\n    byte[] hash = digest.digest(byteArray);\n\n    return Util.b64Encode(hash);\n  }\n\n  /**\n   * Signs the signature base string using an RSA private key. The methodology is described at\n   * https://tools.ietf.org/html/rfc5849#section-3.4.3 but Mastercard uses the stronger SHA-256 algorithm\n   * as a replacement for the described SHA1 which is no longer considered secure.\n   *\n   * @param sbs Signature base string formatted as per https://tools.ietf.org/html/rfc5849#section-3.4.1\n   * @param signingKey Private key of the RSA key pair that was established with the service provider\n   * @param charset Charset encoding of the request\n   * @return RSA signature matching the contents of signature base string\n   */\n  static String signSignatureBaseString(String sbs, PrivateKey signingKey, Charset charset) {\n    try {\n      Signature signer = Signature.getInstance(\"SHA256withRSA\");\n      signer.initSign(signingKey);\n      byte[] sbsBytes = sbs.getBytes(charset);\n      signer.update(sbsBytes);\n      byte[] signatureBytes = signer.sign();\n      return Util.b64Encode(signatureBytes);\n    } catch (GeneralSecurityException e) {\n      throw new IllegalStateException(\"Unable to RSA-SHA256 sign the given string with the provided key\", e);\n    }\n  }\n\n  /**\n   * Constructs a valid Authorization header as per\n   * https://tools.ietf.org/html/rfc5849#section-3.5.1\n   *\n   * @param oauthParams Map of OAuth parameters to be included in the Authorization header\n   * @return Correctly formatted header\n   */\n  private static String getAuthorizationString(Map<String, String> oauthParams) {\n    StringBuilder header = new StringBuilder(\"OAuth \");\n    for (Map.Entry<String, String> param : oauthParams.entrySet()) {\n      header.append(param.getKey()).append(\"=\\\"\")\n          .append(param.getValue()).append(\"\\\",\");\n    }\n    // Remove trailing ,\n    header.deleteCharAt(header.length() - 1);\n    return header.toString();\n  }\n}\n\n```\n## Target Method\n```\n  /**\n   * Normalizes the URL as per\n   * https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n   *\n   * @param uri URL that will be called as part of this request\n   * @return Normalized URL\n   */\n  static String getBaseUriString(URI uri) {\n    // Lowercase scheme and authority\n    String scheme = uri.getScheme().toLowerCase();\n    String authority = uri.getAuthority().toLowerCase();\n\n    // Remove port if it matches the default for scheme\n    if ((\"http\".equals(scheme) && uri.getPort() == 80)\n        || (\"https\".equals(scheme) && uri.getPort() == 443)) {\n      int index = authority.lastIndexOf(':');\n      if (index >= 0) {\n        authority = authority.substring(0, index);\n      }\n    }\n\n    String path = uri.getRawPath();\n    if (path == null || path.length() <= 0) {\n      path = \"/\";\n    }\n\n    return scheme + \"://\" + authority + path;\n  }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `getBaseUriString`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "// @ ensures \\result != null;\n// @ ensures (\\old(uri.getRawPath()) == null || \\old(uri.getRawPath()).length() <= 0) ==> \\result.endsWith(\"/\");\n// @ ensures (\\old(uri.getRawPath()) != null && \\old(uri.getRawPath()).length() > 0) ==> \\result.endsWith(\\old(uri.getRawPath()));\n// @ ensures (\\old(uri.getScheme()) != null && \\old(uri.getAuthority()) != null) ==> \\result.equals( \\old(uri.getScheme().toLowerCase()) + \"://\" + ( ( ( \"http\".equals(\\old(uri.getScheme().toLowerCase())) && \\old(uri.getPort()) == 80 ) || ( \"https\".equals(\\old(uri.getScheme().toLowerCase())) && \\old(uri.getPort()) == 443 ) ) && (\\old(uri.getAuthority().toLowerCase()).lastIndexOf(':') >= 0) ? \\old(uri.getAuthority().toLowerCase()).substring(0, \\old(uri.getAuthority().toLowerCase()).lastIndexOf(':')) : \\old(uri.getAuthority().toLowerCase()) ) + ( (\\old(uri.getRawPath()) == null || \\old(uri.getRawPath()).length() <= 0) ? \"/\" : \\old(uri.getRawPath()) ) );",
+    "// @ ensures \\result != null;\n// @ ensures \\result.equals(uri.getScheme().toLowerCase() + \"://\" + ((((\"http\".equals(uri.getScheme().toLowerCase())) && uri.getPort() == 80) || ((\"https\".equals(uri.getScheme().toLowerCase())) && uri.getPort() == 443)) ? ((uri.getAuthority().toLowerCase().lastIndexOf(':') >= 0) ? uri.getAuthority().toLowerCase().substring(0, uri.getAuthority().toLowerCase().lastIndexOf(':')) : uri.getAuthority().toLowerCase()) : uri.getAuthority().toLowerCase()) + ((uri.getRawPath() == null || uri.getRawPath().length() <= 0) ? \"/\" : uri.getRawPath()));",
+    "// @ ensures \\result != null;\n// @ ensures (uri.getScheme() != null && uri.getAuthority() != null) ==> \\result.equals(uri.getScheme().toLowerCase() + \"://\" + ((((\"http\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 80) || (\"https\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 443)) && uri.getAuthority().toLowerCase().lastIndexOf(':') >= 0) ? uri.getAuthority().toLowerCase().substring(0, uri.getAuthority().toLowerCase().lastIndexOf(':')) : uri.getAuthority().toLowerCase()) + ((uri.getRawPath() == null || uri.getRawPath().length() <= 0) ? \"/\" : uri.getRawPath()));\n// @ ensures (uri.getScheme() != null && uri.getAuthority() != null && (uri.getRawPath() == null || uri.getRawPath().length() <= 0)) ==> \\result.endsWith(\"/\");\n// @ ensures (uri.getScheme() != null && uri.getAuthority() != null && !(uri.getRawPath() == null || uri.getRawPath().length() <= 0)) ==> \\result.endsWith(uri.getRawPath());",
+    "// @ ensures \\result != null;\n// @ ensures (uri.getScheme() != null && uri.getAuthority() != null) ==> \\result.equals(uri.getScheme().toLowerCase() + \"://\" + ((((\"http\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 80) || (\"https\".equals(uri.getScheme().toLowerCase()) && uri.getPort() == 443)) && uri.getAuthority().toLowerCase().lastIndexOf(':') >= 0) ? uri.getAuthority().toLowerCase().substring(0, uri.getAuthority().toLowerCase().lastIndexOf(':')) : uri.getAuthority().toLowerCase()) + ((uri.getRawPath() == null || uri.getRawPath().length() <= 0) ? \"/\" : uri.getRawPath()));\n// @ ensures (uri.getScheme() != null) ==> \\result.startsWith(uri.getScheme().toLowerCase() + \"://\");\n// @ ensures (uri.getRawPath() == null || uri.getRawPath().length() <= 0) ==> \\result.endsWith(\"/\");\n// @ ensures (uri.getRawPath() != null && uri.getRawPath().length() > 0) ==> \\result.endsWith(uri.getRawPath());\n// @ ensures \\result.indexOf('?') == -1;\n// @ ensures \\result.indexOf('#') == -1;",
+    "// @ ensures \\result.equals((\\old(uri.getScheme()).toLowerCase()) + \"://\" + ((((\"http\".equals(\\old(uri.getScheme()).toLowerCase()) && \\old(uri.getPort()) == 80) || (\"https\".equals(\\old(uri.getScheme()).toLowerCase()) && \\old(uri.getPort()) == 443)) && \\old(uri.getAuthority()).toLowerCase().lastIndexOf(':') >= 0) ? \\old(uri.getAuthority()).toLowerCase().substring(0, \\old(uri.getAuthority()).toLowerCase().lastIndexOf(':')) : \\old(uri.getAuthority()).toLowerCase()) + ((\\old(uri.getRawPath()) == null || \\old(uri.getRawPath()).length() <= 0) ? \"/\" : \\old(uri.getRawPath())));"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 244
+}

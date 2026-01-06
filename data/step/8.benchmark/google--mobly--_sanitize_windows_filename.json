@@ -1,0 +1,123 @@
+{
+  "rlid": "_sanitize_windows_filename",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/logger.py#L294-L328",
+  "name": "_sanitize_windows_filename",
+  "line_cov": 1.0,
+  "lines": 35,
+  "stats": 12,
+  "cc": 5,
+  "content": "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename:\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars)\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+  "header": "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"",
+  "file": "./mobly/logger.py",
+  "start_line": 294,
+  "end_line": 328,
+  "body_start_line": 310,
+  "comment": "\"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"",
+  "test_time": 1.738523006439209,
+  "cover_tests": [
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test__enable_logpersist_with_logpersist",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test__enable_logpersist_with_missing_all_logpersist",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test__enable_logpersist_with_missing_logpersist_start",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test__enable_logpersist_with_missing_logpersist_stop",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test__enable_logpersist_with_user_build_device",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_clear_adb_log",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_instantiation",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_logcat_service_create_output_excerpts",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_pause_and_resume",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_start_and_stop",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_start_in_fastboot_mode",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_take_logcat_with_extra_params",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_update_config",
+    "tests/mobly/controllers/android_device_lib/services/logcat_test.py::LogcatTest::test_update_config_while_running",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_AndroidDevice_build_info",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_AndroidDevice_build_info_cached",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_AndroidDevice_build_info_with_minimal_properties",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_AndroidDevice_change_log_path",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_AndroidDevice_change_log_path_no_log_exists",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_AndroidDevice_change_log_path_with_existing_file",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_AndroidDevice_change_log_path_with_service",
+    "tests/mobly/controllers/android_device_test.py::AndroidDeviceTest::test_AndroidDevice_debug_tag"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, 0)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename:\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars)\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename + ' ':  # This adds an extra space to the filename, which could lead to invalid filenames.\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars)\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename[:-1]:  # This skips the last character of the filename.\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars)\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename[::-1]:  # This iterates over the filename in reverse order, which disrupts the intended sanitization.\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars)\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename:\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char if char in 'abcdefghijklmnopqrstuvwxyz' else '_')\n  filename = ''.join(new_filename_chars)\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename:\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char.upper())\n  filename = ''.join(new_filename_chars)\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename:\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars) + '_'\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename:\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars) + str(len(new_filename_chars))\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename:\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars).upper()\n  if filename.endswith('.') or filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename",
+    "def _sanitize_windows_filename(filename):\n  \"\"\"Sanitizes a filename for Windows.\n\n  Refer to the following Windows documentation page for the rules:\n  https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions\n\n  If the filename matches one of Window's reserved file namespaces, then the\n  `WINDOWS_RESERVED_FILENAME_PREFIX` (i.e. \"mobly_\") prefix will be appended\n  to the filename to convert it into a valid Windows filename.\n\n  Args:\n    filename: string, the filename to sanitize for the Windows file system.\n\n  Returns:\n    A filename that should be safe to use on Windows.\n  \"\"\"\n  if re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename):\n    return WINDOWS_RESERVED_FILENAME_PREFIX + filename\n\n  filename = _truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH)\n\n  # In order to meet max length, none of these replacements should increase\n  # the length of the filename.\n  new_filename_chars = []\n  for char in filename:\n    if char in WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS:\n      new_filename_chars.append(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS[char])\n    else:\n      new_filename_chars.append(char)\n  filename = ''.join(new_filename_chars)\n  if not filename.endswith('.') and not filename.endswith(' '):\n    # Filenames cannot end with a period or space on Windows.\n    filename = filename[:-1] + '_'\n\n  return filename"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, filename: (re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename) and result == WINDOWS_RESERVED_FILENAME_PREFIX + filename) or (not re.match(WINDOWS_RESERVED_FILENAME_REGEX, filename) and result == (lambda truncated: (lambda replaced: replaced[:-1] + '_' if (replaced.endswith('.') or replaced.endswith(' ')) else replaced)(''.join(WINDOWS_RESERVED_CHARACTERS_REPLACEMENTS.get(c, c) for c in truncated)))(_truncate_filename(filename, WINDOWS_MAX_FILENAME_LENGTH))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 115
+}

@@ -1,0 +1,420 @@
+{
+  "rlid": "_update_output",
+  "github_url": "https://github.com/kellyjonbrazil/jc/blob/9fd13e698709da95f5ee505ff1fde10564544d48/./jc/parsers/lsusb.py#L365-L383",
+  "name": "_update_output",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 12,
+  "cc": 5,
+  "content": "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+  "header": "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"",
+  "file": "./jc/parsers/lsusb.py",
+  "start_line": 365,
+  "end_line": 383,
+  "body_start_line": 368,
+  "comment": "\"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"",
+  "test_time": 0.49982571601867676,
+  "cover_tests": [
+    "tests/test_lsusb.py::MyTests::test_lsusb_binary_object_store",
+    "tests/test_lsusb.py::MyTests::test_lsusb_cdc_mbim",
+    "tests/test_lsusb.py::MyTests::test_lsusb_device_qualifier",
+    "tests/test_lsusb.py::MyTests::test_lsusb_extra_hub_port_status_info",
+    "tests/test_lsusb.py::MyTests::test_lsusb_test_attributes2_generic",
+    "tests/test_lsusb.py::MyTests::test_lsusb_test_attributes_generic",
+    "tests/test_lsusb.py::MyTests::test_lsusb_v_centos_7_7",
+    "tests/test_lsusb.py::MyTests::test_lsusb_v_single_centos_7_7"
+  ],
+  "repo": {
+    "github_path": "kellyjonbrazil/jc",
+    "commit": "9fd13e698709da95f5ee505ff1fde10564544d48",
+    "language": "python",
+    "env_config": "[project]\nrequires-python = \">=3.10\"\nname = \"my_project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\npackage-mode = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [
+      "tests/test_cbt.py::MyTests::test_cbt_multiple_rows_raw",
+      "tests/test_cef.py::MyTests::test_cef_sample",
+      "tests/test_cef_s.py::MyTests::test_cef_s_sample",
+      "tests/test_certbot.py::MyTests::test_certbot_certificates",
+      "tests/test_clf.py::MyTests::test_clf",
+      "tests/test_clf_s.py::MyTests::test_clf_s_centos_7_7",
+      "tests/test_date.py::MyTests::test_date",
+      "tests/test_date.py::MyTests::test_date_after_midnight",
+      "tests/test_date.py::MyTests::test_date_am_ubuntu_20_04",
+      "tests/test_date.py::MyTests::test_date_before_midnight",
+      "tests/test_date.py::MyTests::test_date_pm_ubuntu_20_04",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_aaaa_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_additional",
+      "tests/test_dig.py::MyTests::test_dig_additional2",
+      "tests/test_dig.py::MyTests::test_dig_additional3",
+      "tests/test_dig.py::MyTests::test_dig_answer_spaces",
+      "tests/test_dig.py::MyTests::test_dig_axfr_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_axfr_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_axfr_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_edns",
+      "tests/test_dig.py::MyTests::test_dig_edns2",
+      "tests/test_dig.py::MyTests::test_dig_edns3",
+      "tests/test_dig.py::MyTests::test_dig_nsid",
+      "tests/test_dig.py::MyTests::test_dig_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_ubuntu_18_4",
+      "tests/test_dig.py::MyTests::test_dig_x_centos_7_7",
+      "tests/test_dig.py::MyTests::test_dig_x_osx_10_11_6",
+      "tests/test_dig.py::MyTests::test_dig_x_osx_10_14_6",
+      "tests/test_dig.py::MyTests::test_dig_x_ubuntu_18_4",
+      "tests/test_dir.py::MyTests::test_dir_windows_10",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_C",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_ODTC",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_S",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_dirs",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_files",
+      "tests/test_dir.py::MyTests::test_dir_windows_10_mix",
+      "tests/test_git_log.py::MyTests::test_git_log",
+      "tests/test_git_log.py::MyTests::test_git_log_blank_author_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_hash_in_message_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_is_hash_fix",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_shortstat",
+      "tests/test_git_log.py::MyTests::test_git_log_fuller_stat",
+      "tests/test_git_log.py::MyTests::test_git_log_medium",
+      "tests/test_git_log.py::MyTests::test_git_log_medium_shortstat",
+      "tests/test_git_log.py::MyTests::test_git_log_medium_stat",
+      "tests/test_git_log_s.py::MyTests::test_git_log_blank_author_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_hash_in_message_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_is_hash_fix",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_shortstat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_fuller_stat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_shortstat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_medium_stat_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_s",
+      "tests/test_git_log_s.py::MyTests::test_git_log_s_ignore_exceptions_success",
+      "tests/test_ipconfig.py::MyTests::test_windows_ipconfig",
+      "tests/test_jc_cli.py::MyTests::test_cli_yaml_out",
+      "tests/test_jc_utils.py::MyTests::test_utils_timestamp",
+      "tests/test_last.py::MyTests::test_last_F_ubuntu_20_4",
+      "tests/test_last.py::MyTests::test_last_wF_centos_7_7",
+      "tests/test_last.py::MyTests::test_last_wixF_centos_7_7",
+      "tests/test_ls.py::MyTests::test_ls_l_iso_ubuntu_18_4",
+      "tests/test_ls_s.py::MyTests::test_ls_s_l_iso_ubuntu_18_4",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid0_offline",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid0_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_0_90_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_checking",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_faulty1",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_faulty2",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_moreflags",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_replacing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_resync",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid1_syncing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_homehost",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_meta09",
+      "tests/test_mdadm.py::MyTests::test_mdadm_examine_raid5_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_detail",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid0_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_failed_and_flags",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty_and_removed",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_faulty_with_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_0_9",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_ok_spare",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_rebuild_failfast",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_spare_writem_rebuild",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid1_syncing",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_homehost",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_meta09",
+      "tests/test_mdadm.py::MyTests::test_mdadm_query_raid5_ok",
+      "tests/test_openvpn.py::MyTests::test_openvpn",
+      "tests/test_pacman.py::MyTests::test_pacman_all_fixtures",
+      "tests/test_plist.py::MyTests::test_plist_bin_alltypes",
+      "tests/test_plist.py::MyTests::test_plist_xml_alltypes",
+      "tests/test_rpm_qai.py::MyTests::test_rpm_qai_centos_7_7",
+      "tests/test_rpm_qai.py::MyTests::test_rpm_qi_package_centos_7_7",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_v_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vv_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vvv_logfile",
+      "tests/test_rsync.py::MyTests::test_rsync_centos_7_7_rsync_i_vvv_logfile_nochange",
+      "tests/test_rsync.py::MyTests::test_rsync_osx_10_14_6_rsync_i_vvv_logfile_nochange",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_v_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vv_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_nochange_centos_7_7",
+      "tests/test_rsync_s.py::MyTests::test_rsync_s_i_vvv_logfile_nochange_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_centos_7_7",
+      "tests/test_stat.py::MyTests::test_stat_filename_with_spaces_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_freebsd12",
+      "tests/test_stat.py::MyTests::test_stat_missing_data",
+      "tests/test_stat.py::MyTests::test_stat_osx_10_14_6",
+      "tests/test_stat.py::MyTests::test_stat_ubuntu_18_4",
+      "tests/test_stat_s.py::MyTests::test_stat_s_centos_7_7",
+      "tests/test_stat_s.py::MyTests::test_stat_s_filename_with_spaces_osx_10_14_6",
+      "tests/test_stat_s.py::MyTests::test_stat_s_freebsd12",
+      "tests/test_stat_s.py::MyTests::test_stat_s_osx_10_14_6",
+      "tests/test_stat_s.py::MyTests::test_stat_s_ubuntu_18_4",
+      "tests/test_syslog.py::MyTests::test_syslog_sample",
+      "tests/test_syslog_s.py::MyTests::test_syslog_s",
+      "tests/test_systeminfo.py::MyTests::test_windows_systeminfo",
+      "tests/test_timestamp.py::MyTests::test_10_digit_timestamp",
+      "tests/test_timestamp.py::MyTests::test_13_digit_timestamp",
+      "tests/test_tune2fs.py::MyTests::test_tune2fs_l",
+      "tests/test_upower.py::MyTests::test_upower_d_clocale_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_d_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_i_c_locale",
+      "tests/test_upower.py::MyTests::test_upower_i_non_utc_generic",
+      "tests/test_upower.py::MyTests::test_upower_i_ubuntu_18_4",
+      "tests/test_upower.py::MyTests::test_upower_i_utc_generic",
+      "tests/test_vmstat.py::MyTests::test_vmstat_at_5_10",
+      "tests/test_vmstat.py::MyTests::test_vmstat_awt",
+      "tests/test_vmstat.py::MyTests::test_vmstat_dt",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_at_5_10_centos_7_7",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_awt_centos_7_7",
+      "tests/test_vmstat_s.py::MyTests::test_vmstat_s_dt_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_a_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_a_ubuntu_18_4",
+      "tests/test_who.py::MyTests::test_who_centos_7_7",
+      "tests/test_who.py::MyTests::test_who_login_screen",
+      "tests/test_who.py::MyTests::test_who_ubuntu_18_4"
+    ],
+    "test_time": 118.19753551483154
+  },
+  "mutants": [
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list[1:]:  # Skipping the first item in the list, potentially missing important data.\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list[::-1]:  # Iterating in reverse order, which may not align with expected processing order.\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if 'XX_stateXX' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_STATE' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] != bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] != bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx + 1:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] is None:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' not in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if 'attribute_value' in item[keyname]['_state']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value'] == False:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value'] is not None:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if not item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = None\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'ATTRIBUTES' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'XXattributesXX' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}']:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = None\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"VALUE\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"XXvalueXX\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"description\", \"\")} {item[keyname].get(\"value\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"DESCRIPTION\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"XXdescriptionXX\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"No description available\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"XXXX\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", )}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", None)}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(None, \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"N/A\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"XXXX\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", )} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", None)} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(None, \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'] = this_attribute\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(None)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute + \" (added)\")\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].insert(0, this_attribute)\n                    continue\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    break\n\n                output_line[f'{self.name}'].update(item)\n                del output_line[f'{self.name}'][keyname]['_state']\n",
+    "    def _update_output(self, bus_idx, output_line):\n        \"\"\"modifies output_line dictionary for the corresponding bus index.\n        output_line is the self.output_line attribute from the _lsusb object.\"\"\"\n        for item in self.list:\n            keyname = tuple(item.keys())[0]\n\n            if '_state' in item[keyname] and item[keyname]['_state']['bus_idx'] == bus_idx:\n                # is this a top level value or an attribute?\n                if item[keyname]['_state']['attribute_value']:\n                    last_item = item[keyname]['_state']['last_item']\n                    if 'attributes' not in output_line[f'{self.name}'][last_item]:\n                        output_line[f'{self.name}'][last_item]['attributes'] = []\n\n                    this_attribute = f'{keyname} {item[keyname].get(\"value\", \"\")} {item[keyname].get(\"description\", \"\")}'.strip()\n                    output_line[f'{self.name}'][last_item]['attributes'].append(this_attribute)\n                    continue\n\n                output_line[f'{self.name}'] = item  # This will overwrite the entire entry instead of updating it.\n                del output_line[f'{self.name}'][keyname]['_state']"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(\n    lambda self, bus_idx, output_line: {\n        \"non_attr\": {\n            key: {\n                k: v\n                for k, v in entry.items()\n                if k != \"_state\"\n            }\n            for item in self.list\n            for key, entry in [\n                (tuple(item.keys())[0], list(item.values())[0])\n            ]\n            if isinstance(entry, dict)\n            and \"_state\" in entry\n            and entry[\"_state\"][\"bus_idx\"] == bus_idx\n            and not entry[\"_state\"][\"attribute_value\"]\n        },\n        \"attr\": [\n            (\n                entry[\"_state\"][\"last_item\"],\n                f\"{key} {entry.get('value', '')} {entry.get('description', '')}\".strip()\n            )\n            for item in self.list\n            for key, entry in [\n                (tuple(item.keys())[0], list(item.values())[0])\n            ]\n            if isinstance(entry, dict)\n            and \"_state\" in entry\n            and entry[\"_state\"][\"bus_idx\"] == bus_idx\n            and entry[\"_state\"][\"attribute_value\"]\n        ]\n    },\n    name=\"entries_for_bus\"\n)\n@icontract.ensure(\n    lambda self, bus_idx, output_line, result, OLD:\n    all(\n        key in output_line[self.name]\n        and isinstance(output_line[self.name][key], dict)\n        and \"_state\" not in output_line[self.name][key]\n        and all(\n            k in output_line[self.name][key]\n            and output_line[self.name][key][k] == v\n            for k, v in expected_entry.items()\n        )\n        for key, expected_entry in OLD.entries_for_bus[\"non_attr\"].items()\n    )\n)\n@icontract.ensure(\n    lambda self, bus_idx, output_line, result, OLD:\n    all(\n        last_item in output_line[self.name]\n        and isinstance(output_line[self.name][last_item], dict)\n        and (\n            all(\n                attr_str in output_line[self.name][last_item].get(\"attributes\", [])\n                for attr_str in [\n                    attr_str2\n                    for li2, attr_str2 in OLD.entries_for_bus[\"attr\"]\n                    if li2 == last_item\n                ]\n            )\n            and all(\n                output_line[self.name][last_item].get(\"attributes\", []).index(exps_i)\n                < output_line[self.name][last_item].get(\"attributes\", []).index(exps_j)\n                for idx_i, exps_i in enumerate(\n                    [\n                        attr_str2\n                        for li2, attr_str2 in OLD.entries_for_bus[\"attr\"]\n                        if li2 == last_item\n                    ]\n                )\n                for idx_j, exps_j in enumerate(\n                    [\n                        attr_str2\n                        for li2, attr_str2 in OLD.entries_for_bus[\"attr\"]\n                        if li2 == last_item\n                    ]\n                )\n                if idx_i < idx_j and exps_i != exps_j\n            )\n        )\n        for last_item in {li for (li, _) in OLD.entries_for_bus[\"attr\"]}\n    )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 138
+}

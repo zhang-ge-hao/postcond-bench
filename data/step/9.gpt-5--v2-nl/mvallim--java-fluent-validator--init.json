@@ -1,0 +1,214 @@
+{
+  "rlid": "init",
+  "github_url": "https://github.com/mvallim/java-fluent-validator/blob/37ddfa4bde71e8cc8552ed085e86c6d32e7ea297/./src/main/java/br/com/fluentvalidator/AbstractValidator.java#L58-L75",
+  "name": "init",
+  "line_cov": 1.0,
+  "lines": 18,
+  "stats": 7,
+  "cc": 3,
+  "content": "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(oldValue, newValue);\n          }\n        }\n      }\n    }",
+  "header": "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {",
+  "file": "./src/main/java/br/com/fluentvalidator/AbstractValidator.java",
+  "start_line": 58,
+  "end_line": 75,
+  "body_start_line": 65,
+  "comment": "/**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */",
+  "test_time": 12.798733949661255,
+  "cover_tests": [
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenBillDescriptionIsEmpty",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenBillDescriptionIsNull",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenBillDueDateIsFarTooAhead",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenBillDueDateIsPast",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenBillDueDateIsToday",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenBillValueIsNegative",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenBillValueIsNull",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenBillValueIsZero",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenValidateCollectionNullValue",
+    "br.com.fluentvalidator.ValidatorTest#testFailWhenValidatePropertyNullValue",
+    "br.com.fluentvalidator.ValidatorTest#testSuccessWhenBillDueDateIsExactlyThreeYears",
+    "br.com.fluentvalidator.ValidatorTest#testSuccessWhenBillIsCorrect",
+    "br.com.fluentvalidator.ValidatorTest#testSuccessWhenCriticalWasInDifferentRuleGroup",
+    "br.com.fluentvalidator.ValidatorTest#testSuccessWhenCriticalWasInDifferentRuleGroupFailFast",
+    "br.com.fluentvalidator.ValidatorTest#validationCollectionParentMustBeSuccess",
+    "br.com.fluentvalidator.ValidatorTest#validationMultiThreadMustBeTrue",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeFailWhenChildAgeGreateThanParentAgeInvalid",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeFailWhenFieldOfParentAreInvalid",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeFailWhenFieldOfParentAreInvalidCriticalValidation",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeFalseWhenChildrenIsEmpty",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeFalseWhenChildrenIsInvalid",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeFalseWhenChildrenIsNull",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeFalseWhenParentAndChildrenIsCriticalInvalid",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeFalseWhenParentAndChildrenIsInvalid",
+    "br.com.fluentvalidator.ValidatorTest#validationMustBeSuccess",
+    "br.com.fluentvalidator.ValidatorTest#validationTwiceDiferentParentMustBeSuccess",
+    "br.com.fluentvalidator.aspect.ValidationExceptionAdviceTest#validationMustBeFail",
+    "br.com.fluentvalidator.aspect.ValidationExceptionAdviceTest#validationMustBeSuccess",
+    "br.com.fluentvalidator.playground.StudentValidatorTest#shouldValidateStudentValidatorAnotherWay01",
+    "br.com.fluentvalidator.playground.StudentValidatorTest#shouldValidateStudentValidatorAnotherWay02",
+    "br.com.fluentvalidator.playground.StudentValidatorTest#shouldValidateStudentValidatorAnotherWay03",
+    "br.com.fluentvalidator.rule.RuleBuilderCollectionTest#testFailRuleValidator",
+    "br.com.fluentvalidator.rule.RuleBuilderCollectionTest#testFailRuleValidatorWithCritical",
+    "br.com.fluentvalidator.rule.RuleBuilderCollectionTest#testFailRuleValidatorWithCriticalException",
+    "br.com.fluentvalidator.rule.RuleBuilderPropertyTest#testFailRuleValidatorWithCritical",
+    "br.com.fluentvalidator.rule.RuleBuilderPropertyTest#testFailRuleValidatorWithCriticalException",
+    "br.com.fluentvalidator.rule.RuleBuilderPropertyTest#testSuccesInnerClass",
+    "br.com.fluentvalidator.rule.RuleBuilderPropertyTest#testSuccessRuleValidator",
+    "br.com.fluentvalidator.transform.ValidationResultTransformTest#validationTransformCollectionParentMustBeSuccess",
+    "br.com.fluentvalidator.transform.ValidationResultTransformTest#validationTransformMultiThreadMustBeTrue",
+    "br.com.fluentvalidator.transform.ValidationResultTransformTest#validationTransformMustBeFailWhenFieldOfParentAreInvalid",
+    "br.com.fluentvalidator.transform.ValidationResultTransformTest#validationTransformMustBeSuccess"
+  ],
+  "repo": {
+    "github_path": "mvallim/java-fluent-validator",
+    "commit": "37ddfa4bde71e8cc8552ed085e86c6d32e7ea297",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n\n\t<modelVersion>4.0.0</modelVersion>\n\n\t<groupId>com.github.mvallim</groupId>\n\t<artifactId>java-fluent-validator</artifactId>\n\t<version>1.10.1-SNAPSHOT</version>\n\t<packaging>jar</packaging>\n\n\t<properties>\n\t\t<java.version>11</java.version>\n\t\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n\t\t<aspectj.version>1.9.6</aspectj.version>\n\t\t<sonar.exclusions>**/test/**,**/ValidationExceptionAdvice**</sonar.exclusions>\n\t</properties>\n\n\t<scm>\n\t\t<url>scm:git:git@github.com:mvallim/java-fluent-validator</url>\n\t\t<connection>scm:git:git@github.com:mvallim/java-fluent-validator</connection>\n\t\t<developerConnection>scm:git:git@github.com:mvallim/java-fluent-validator</developerConnection>\n\t\t<tag>HEAD</tag>\n\t</scm>\n\n\t<name>java-fluent-validator</name>\n\t<description>A Java validation framework leveraging fluent interface style.</description>\n\t<url>https://github.com/mvallim/java-fluent-validator</url>\n\t<inceptionYear>2019</inceptionYear>\n\n\t<organization>\n\t\t<name>com.github.mvallim</name>\n\t\t<url>https://github.com/mvallim</url>\n\t</organization>\n\n\t<developers>\n\t\t<developer>\n\t\t\t<name>Marcos Tischer Vallim</name>\n\t\t\t<email>tischer@gmail.com</email>\n\t\t\t<timezone>-3</timezone>\n\t\t</developer>\n\t\t<developer>\n\t\t\t<name>Paulo Sergio</name>\n\t\t\t<email>paulosergio.jnr@gmail.com</email>\n\t\t\t<timezone>-3</timezone>\n\t\t</developer>\n\t</developers>\n\n\t<licenses>\n\t\t<license>\n\t\t\t<name>Apache 2</name>\n\t\t\t<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n\t\t\t<distribution>repo</distribution>\n\t\t\t<comments>A business-friendly OSS license</comments>\n\t\t</license>\n\t</licenses>\n\n\t<build>\n\t\t<resources>\n\t\t\t<resource>\n\t\t\t\t<directory>${project.basedir}</directory>\n\t\t\t\t<includes>\n\t\t\t\t\t<include>NOTICE*</include>\n\t\t\t\t\t<include>LICENSE*</include>\n\t\t\t\t</includes>\n\t\t\t</resource>\n\t\t</resources>\n\t\t<plugins>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-surefire-plugin</artifactId>\n\t\t\t\t<version>2.22.2</version>\n\t\t\t\t<configuration>\n\t\t\t\t\t<useSystemClassLoader>false</useSystemClassLoader>\n\t\t\t\t\t<argLine>${jacoco.argLine} -Dfile.encoding=${project.build.sourceEncoding}</argLine>\n\t\t\t\t<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.codehaus.mojo</groupId>\n\t\t\t\t<artifactId>aspectj-maven-plugin</artifactId>\n\t\t\t\t<version>1.14.0</version>\n\t\t\t\t<configuration>\n\t\t\t\t\t<Xlint>ignore</Xlint>\n\t\t\t\t\t<complianceLevel>${java.version}</complianceLevel>\n\t\t\t\t\t<showWeaveInfo>false</showWeaveInfo>\n\t\t\t\t\t<verbose>false</verbose>\n\t\t\t\t\t<source>${java.version}</source>\n\t\t\t\t\t<target>${java.version}</target>\n\t\t\t\t</configuration>\n\t\t\t\t<dependencies>\n\t\t\t\t\t<dependency>\n\t\t\t\t\t\t<groupId>org.aspectj</groupId>\n\t\t\t\t\t\t<artifactId>aspectjtools</artifactId>\n\t\t\t\t\t\t<version>${aspectj.version}</version>\n\t\t\t\t\t</dependency>\n\t\t\t\t</dependencies>\n\t\t\t\t<executions>\n\t\t\t\t\t<execution>\n\t\t\t\t\t\t<phase>process-sources</phase>\n\t\t\t\t\t\t<goals>\n\t\t\t\t\t\t\t<goal>compile</goal>\n\t\t\t\t\t\t\t<goal>test-compile</goal>\n\t\t\t\t\t\t</goals>\n\t\t\t\t\t</execution>\n\t\t\t\t</executions>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.jacoco</groupId>\n\t\t\t\t<artifactId>jacoco-maven-plugin</artifactId>\n\t\t\t\t<version>0.8.8</version>\n\t\t\t\t<configuration>\n\t\t\t\t\t<excludes>\n\t\t\t\t\t\t<exclude>**/test/**</exclude>\n\t\t\t\t\t\t<exclude>**/ValidationExceptionAdvice**</exclude>\n\t\t\t\t\t</excludes>\n\t\t\t\t<formats><format>XML</format></formats><outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory></configuration>\n\t\t\t\t<executions>\n\t\t\t\t\t<execution>\n\t\t\t\t\t\t<id>prepare-agent</id>\n\t\t\t\t\t\t<phase>test-compile</phase>\n\t\t\t\t\t\t<goals>\n\t\t\t\t\t\t\t<goal>prepare-agent</goal>\n\t\t\t\t\t\t</goals>\n\t\t\t\t\t\t<configuration>\n\t\t\t\t\t\t\t<propertyName>jacoco.argLine</propertyName>\n\t\t\t\t\t\t</configuration>\n\t\t\t\t\t</execution>\n\t\t\t\t\t<execution>\n\t\t\t\t\t\t<id>report</id>\n\t\t\t\t\t\t<phase>test</phase>\n\t\t\t\t\t\t<goals>\n\t\t\t\t\t\t\t<goal>report</goal>\n\t\t\t\t\t\t</goals>\n\t\t\t\t\t</execution>\n\t\t\t\t</executions>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-clean-plugin</artifactId>\n\t\t\t\t<version>3.2.0</version>\n\t\t\t\t<inherited>true</inherited>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-compiler-plugin</artifactId>\n\t\t\t\t<version>3.7.0</version>\n\t\t\t\t<configuration>\n\t\t\t\t\t<source>${java.version}</source>\n\t\t\t\t\t<target>${java.version}</target>\n\t\t\t\t\t<encoding>${project.build.sourceEncoding}</encoding>\n\t\t\t\t\t<debug>true</debug>\n\t\t\t\t\t<optimize>true</optimize>\n\t\t\t\t\t<showDeprecation>true</showDeprecation>\n\t\t\t\t\t<showWarnings>true</showWarnings>\n\t\t\t\t\t<useIncrementalCompilation>false</useIncrementalCompilation>\n\t\t\t\t</configuration>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-resources-plugin</artifactId>\n\t\t\t\t<version>3.0.2</version>\n\t\t\t\t<configuration>\n\t\t\t\t\t<encoding>${project.build.sourceEncoding}</encoding>\n\t\t\t\t</configuration>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-source-plugin</artifactId>\n\t\t\t\t<version>3.2.1</version>\n\t\t\t\t<inherited>true</inherited>\n\t\t\t\t<executions>\n\t\t\t\t\t<execution>\n\t\t\t\t\t\t<id>attach-source</id>\n\t\t\t\t\t\t<goals>\n\t\t\t\t\t\t\t<goal>jar</goal>\n\t\t\t\t\t\t</goals>\n\t\t\t\t\t</execution>\n\t\t\t\t</executions>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-install-plugin</artifactId>\n\t\t\t\t<version>3.1.0</version>\n\t\t\t\t<inherited>true</inherited>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-deploy-plugin</artifactId>\n\t\t\t\t<version>2.8.1</version>\n\t\t\t\t<inherited>true</inherited>\n\t\t\t\t<configuration>\n\t\t\t\t\t<updateReleaseInfo>true</updateReleaseInfo>\n\t\t\t\t</configuration>\n\t\t\t</plugin>\n\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-release-plugin</artifactId>\n\t\t\t\t<configuration>\n\t\t\t\t\t<localCheckout>true</localCheckout>\n\t\t\t\t\t<pushChanges>false</pushChanges>\n\t\t\t\t\t<mavenExecutorId>forked-path</mavenExecutorId>\n\t\t\t\t\t<arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>\n\t\t\t\t</configuration>\n\t\t\t</plugin>\n\t\t</plugins>\n\t</build>\n\n\t<dependencies>\n\t\t<dependency>\n\t\t\t<groupId>org.aspectj</groupId>\n\t\t\t<artifactId>aspectjrt</artifactId>\n\t\t\t<version>${aspectj.version}</version>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>junit</groupId>\n\t\t\t<artifactId>junit</artifactId>\n\t\t\t<version>4.13.2</version>\n\t\t\t<scope>test</scope>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>org.hamcrest</groupId>\n\t\t\t<artifactId>hamcrest</artifactId>\n\t\t\t<version>2.2</version>\n\t\t\t<scope>test</scope>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>org.mockito</groupId>\n\t\t\t<artifactId>mockito-all</artifactId>\n\t\t\t<version>1.10.19</version>\n\t\t\t<scope>test</scope>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>org.springframework</groupId>\n\t\t\t<artifactId>spring-context</artifactId>\n\t\t\t<version>5.1.2.RELEASE</version>\n\t\t\t<scope>test</scope>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>org.springframework</groupId>\n\t\t\t<artifactId>spring-test</artifactId>\n\t\t\t<version>5.1.2.RELEASE</version>\n\t\t\t<scope>test</scope>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>ch.qos.logback</groupId>\n\t\t\t<artifactId>logback-classic</artifactId>\n\t\t\t<version>1.3.5</version>\n\t\t\t<scope>test</scope>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>ch.qos.logback</groupId>\n\t\t\t<artifactId>logback-core</artifactId>\n\t\t\t<version>1.3.5</version>\n\t\t\t<scope>test</scope>\n\t\t</dependency>\n\t\t<dependency>\n\t\t\t<groupId>org.assertj</groupId>\n\t\t\t<artifactId>assertj-core</artifactId>\n\t\t\t<version>3.11.1</version>\n\t\t\t<scope>test</scope>\n\t\t</dependency>\n\t</dependencies>\n\n\t<profiles>\n\t\t<profile>\n\t\t\t<id>code-ql</id>\n\t\t\t<build>\n\t\t\t\t<plugins>\n\t\t\t\t\t<plugin>\n\t\t\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t\t\t<artifactId>maven-compiler-plugin</artifactId>\n\t\t\t\t\t\t<version>3.7.0</version>\n\t\t\t\t\t\t<configuration>\n\t\t\t\t\t\t\t<source>${java.version}</source>\n\t\t\t\t\t\t\t<target>${java.version}</target>\n\t\t\t\t\t\t\t<encoding>${project.build.sourceEncoding}</encoding>\n\t\t\t\t\t\t\t<debug>true</debug>\n\t\t\t\t\t\t\t<optimize>true</optimize>\n\t\t\t\t\t\t\t<showDeprecation>true</showDeprecation>\n\t\t\t\t\t\t\t<showWarnings>true</showWarnings>\n\t\t\t\t\t\t\t<useIncrementalCompilation>true</useIncrementalCompilation>\n\t\t\t\t\t\t</configuration>\n\t\t\t\t\t</plugin>\n\t\t\t\t</plugins>\n\t\t\t</build>\n\t\t</profile>\n\t\t<profile>\n\t\t\t<id>release-sign-artifacts</id>\n\t\t\t<activation>\n\t\t\t\t<property>\n\t\t\t\t\t<name>performRelease</name>\n\t\t\t\t\t<value>true</value>\n\t\t\t\t</property>\n\t\t\t</activation>\n\t\t\t<build>\n\t\t\t\t<plugins>\n\t\t\t\t\t<plugin>\n\t\t\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t\t\t<artifactId>maven-gpg-plugin</artifactId>\n\t\t\t\t\t\t<version>3.0.1</version>\n\t\t\t\t\t\t<executions>\n\t\t\t\t\t\t\t<execution>\n\t\t\t\t\t\t\t\t<id>sign-artifacts</id>\n\t\t\t\t\t\t\t\t<phase>verify</phase>\n\t\t\t\t\t\t\t\t<goals>\n\t\t\t\t\t\t\t\t\t<goal>sign</goal>\n\t\t\t\t\t\t\t\t</goals>\n\t\t\t\t\t\t\t</execution>\n\t\t\t\t\t\t</executions>\n\t\t\t\t\t</plugin>\n\t\t\t\t</plugins>\n\t\t\t</build>\n\t\t</profile>\n\t\t<profile>\n\t\t\t<id>nexus-release</id>\n\t\t\t<distributionManagement>\n\t\t\t\t<snapshotRepository>\n\t\t\t\t\t<id>nexus-release</id>\n\t\t\t\t\t<layout>default</layout>\n\t\t\t\t\t<url>https://oss.sonatype.org/content/repositories/snapshots/</url>\n\t\t\t\t</snapshotRepository>\n\t\t\t\t<repository>\n\t\t\t\t\t<id>nexus-release</id>\n\t\t\t\t\t<layout>default</layout>\n\t\t\t\t\t<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n\t\t\t\t</repository>\n\t\t\t</distributionManagement>\n\t\t\t<build>\n\t\t\t\t<plugins>\n\t\t\t\t\t<plugin>\n\t\t\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t\t\t<artifactId>maven-source-plugin</artifactId>\n\t\t\t\t\t\t<version>3.2.1</version>\n\t\t\t\t\t\t<executions>\n\t\t\t\t\t\t\t<execution>\n\t\t\t\t\t\t\t\t<phase>package</phase>\n\t\t\t\t\t\t\t\t<goals>\n\t\t\t\t\t\t\t\t\t<goal>jar-no-fork</goal>\n\t\t\t\t\t\t\t\t</goals>\n\t\t\t\t\t\t\t</execution>\n\t\t\t\t\t\t</executions>\n\t\t\t\t\t</plugin>\n\t\t\t\t\t<plugin>\n\t\t\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t\t\t<artifactId>maven-javadoc-plugin</artifactId>\n\t\t\t\t\t\t<version>2.9.1</version>\n\t\t\t\t\t\t<executions>\n\t\t\t\t\t\t\t<execution>\n\t\t\t\t\t\t\t\t<phase>package</phase>\n\t\t\t\t\t\t\t\t<goals>\n\t\t\t\t\t\t\t\t\t<goal>jar</goal>\n\t\t\t\t\t\t\t\t</goals>\n\t\t\t\t\t\t\t</execution>\n\t\t\t\t\t\t</executions>\n\t\t\t\t\t</plugin>\n\t\t\t\t\t<plugin>\n\t\t\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t\t\t<artifactId>maven-gpg-plugin</artifactId>\n\t\t\t\t\t\t<version>3.0.1</version>\n\t\t\t\t\t\t<executions>\n\t\t\t\t\t\t\t<execution>\n\t\t\t\t\t\t\t\t<id>sign-artifacts</id>\n\t\t\t\t\t\t\t\t<phase>verify</phase>\n\t\t\t\t\t\t\t\t<goals>\n\t\t\t\t\t\t\t\t\t<goal>sign</goal>\n\t\t\t\t\t\t\t\t</goals>\n\t\t\t\t\t\t\t</execution>\n\t\t\t\t\t\t</executions>\n\t\t\t\t\t</plugin>\n\t\t\t\t</plugins>\n\t\t\t</build>\n\t\t</profile>\n\t</profiles>\n</project>",
+    "failed_tests": [
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationCollectionParentMustBeSuccess",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMultiThreadMustBeTrue",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeFailWhenChildAgeGreateThanParentAgeInvalid",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeFailWhenFieldOfParentAreInvalid",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeFailWhenFieldOfParentAreInvalidCriticalValidation",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeFalseWhenChildrenIsEmpty",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeFalseWhenChildrenIsInvalid",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeFalseWhenChildrenIsNull",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeFalseWhenParentAndChildrenIsCriticalInvalid",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeFalseWhenParentAndChildrenIsInvalid",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationMustBeSuccess",
+      "br.com.fluentvalidator.spring.ValidatorSpringTest#validationTwiceDiferentParentMustBeSuccess"
+    ],
+    "test_time": 13.165646314620972
+  },
+  "mutants": [
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (!isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(oldValue, newValue);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (atomicReference.get() == Boolean.TRUE) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(oldValue, newValue);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized() && atomicReference.get()) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(oldValue, newValue);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (!isNotInitialized()) { // incorrectly checks the opposite condition }\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(oldValue, newValue);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (atomicReference.get()) { // checks if already initialized instead of not initialized }\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(oldValue, newValue);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            \n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(oldValue, newValue);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(newValue, Boolean.TRUE);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(newValue, oldValue);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.compareAndSet(oldValue, Boolean.FALSE);\n          }\n        }\n      }\n    }",
+    "    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n      if (isNotInitialized()) {\n        synchronized (atomicReference) {\n          if (isNotInitialized()) { // double check if was initialized\n            validator.rules();\n            final Boolean oldValue = atomicReference.get();\n            final Boolean newValue = Boolean.TRUE;\n            atomicReference.set(oldValue);\n          }\n        }\n      }\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures atomicReference.get() == Boolean.TRUE;\n//@ ensures \\old(atomicReference.get()) == Boolean.FALSE && !validator.getClass().getName().contains(\"InternalValidator\") ==> ((AbstractValidator)validator).rules.size() > \\old(((AbstractValidator)validator).rules.size());",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n/*\n * Copyright 2019 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      https://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\npackage br.com.fluentvalidator;\n\nimport java.util.Collection;\nimport java.util.Collections;\nimport java.util.LinkedList;\nimport java.util.List;\nimport java.util.concurrent.atomic.AtomicReference;\nimport java.util.function.Function;\nimport java.util.stream.Collectors;\n\nimport br.com.fluentvalidator.builder.RuleBuilderCollection;\nimport br.com.fluentvalidator.builder.RuleBuilderProperty;\nimport br.com.fluentvalidator.context.ProcessorContext;\nimport br.com.fluentvalidator.context.ValidationContext;\nimport br.com.fluentvalidator.context.ValidationResult;\nimport br.com.fluentvalidator.rule.Rule;\nimport br.com.fluentvalidator.rule.RuleBuilderCollectionImpl;\nimport br.com.fluentvalidator.rule.RuleBuilderPropertyImpl;\nimport br.com.fluentvalidator.rule.RuleProcessorStrategy;\nimport br.com.fluentvalidator.transform.ValidationResultTransform;\n\npublic abstract class AbstractValidator<T> implements Validator<T> {\n\n  private final List<Rule<T>> rules = new LinkedList<>();\n\n  private final Initializer<T> initialize;\n\n  private String property;\n\n  private RuleProcessorStrategy ruleProcessor = RuleProcessorStrategy.getDefault();\n\n  private static class Initializer<T> {\n\n    private final AtomicReference<Boolean> atomicReference = new AtomicReference<>(Boolean.FALSE);\n\n    private final Validator<T> validator;\n\n    Initializer(final Validator<T> validator) {\n      this.validator = validator;\n    }\n\n    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n...\n    private boolean isNotInitialized() {\n...\n  }\n\n  protected AbstractValidator() {\n    this.initialize = new Initializer<>(this);\n  }\n\n  /**\n   * {@link #failFastRule() AbstractValidator}\n   */\n  @Override\n  public void failFastRule() {\n...\n  /**\n   * {@link #getCounter() AbstractValidator}\n   */\n  @Override\n  public Integer getCounter() {\n...\n  /**\n   * {@link #setPropertyOnContext(String) AbstractValidator }\n   */\n  @Override\n  public void setPropertyOnContext(final String property) {\n...\n  /**\n   * {@link #getPropertyOnContext(String, Class) AbstractValidator }\n   */\n  @Override\n  public <P> P getPropertyOnContext(final String property, final Class<P> clazz) {\n...\n  /**\n   * {@link #validate(Object) AbstractValidator }\n   */\n  @Override\n  public ValidationResult validate(final T instance) {\n...\n  /**\n   * {@link #validate(Object, ValidationResultTransform) AbstractValidator}\n   */\n  @Override\n  public <E> E validate(final T instance, final ValidationResultTransform<E> resultTransform) {\n...\n  /**\n   * {@link #validate(Collection) AbstractValidator}\n   */\n  @Override\n  public List<ValidationResult> validate(final Collection<T> instances) {\n...\n  /**\n   * {@link #validate(Collection, ValidationResultTransform) AbstractValidator}\n   */\n  @Override\n  public <E> List<E> validate(final Collection<T> instances, final ValidationResultTransform<E> resultTransform) {\n...\n  /**\n   * {@link #apply(Object) AbstractValidator}\n   */\n  @Override\n  public boolean apply(final T instance) {\n...\n  /**\n   * {@link #ruleFor(Function) AbstractValidator}\n   */\n  @Override\n  public <P> RuleBuilderProperty<T, P> ruleFor(final Function<T, P> function) {\n...\n  /**\n   * {@link #ruleFor(String, Function) AbstractValidator}\n   */\n  @Override\n  public <P> RuleBuilderProperty<T, P> ruleFor(final String fieldName, final Function<T, P> function) {\n...\n  /**\n   * {@link #ruleForEach(String, Function) AbstractValidator}\n   */\n  @Override\n  public <P> RuleBuilderCollection<T, P> ruleForEach(final String fieldName, final Function<T, Collection<P>> function) {\n...\n  /**\n   * {@link #ruleForEach(Function) AbstractValidator}\n   */\n  @Override\n  public <P> RuleBuilderCollection<T, P> ruleForEach(final Function<T, Collection<P>> function) {\n...\n}\n\n```\n## Target Method\n```\n    /**\n     * This method cause Race Condition. We are using Compare And Swap (CAS)\n     * <p>\n     * {@link https://en.wikipedia.org/wiki/Race_condition}\n     * {@link https://en.wikipedia.org/wiki/Compare-and-swap}\n     */\n    public void init() {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `init`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "// @ ensures atomicReference == \\old(atomicReference)\n// @ ensures validator == \\old(validator)\n// @ ensures atomicReference.get() == Boolean.TRUE\n// @ ensures \\old(atomicReference.get() == Boolean.FALSE) ==> (atomicReference.get() == Boolean.TRUE)\n// @ ensures \\old(atomicReference.get() == Boolean.TRUE) ==> (atomicReference.get() == Boolean.TRUE)",
+    "//@ ensures Boolean.TRUE.equals(atomicReference.get());\n//@ ensures \\old(Boolean.TRUE.equals(atomicReference.get())) ==> Boolean.TRUE.equals(atomicReference.get());\n//@ ensures \\old(!Boolean.TRUE.equals(atomicReference.get())) ==> Boolean.TRUE.equals(atomicReference.get());\n//@ ensures validator == \\old(validator)",
+    "// @ ensures atomicReference != null;\n// @ ensures validator != null;\n// @ ensures validator == \\old(validator);\n// @ ensures atomicReference == \\old(atomicReference);\n// @ ensures Boolean.TRUE.equals(atomicReference.get());\n// @ ensures !isNotInitialized();",
+    "// @ ensures atomicReference == \\old(atomicReference));\n// @ ensures atomicReference != null;\n// @ ensures Boolean.TRUE.equals(atomicReference.get());\n// @ ensures \\old(Boolean.TRUE.equals(atomicReference.get())) ==> Boolean.TRUE.equals(atomicReference.get());\n// @ ensures !\\old(Boolean.TRUE.equals(atomicReference.get())) ==> Boolean.TRUE.equals(atomicReference.get());",
+    "// @ ensures atomicReference.get() == Boolean.TRUE\n// @ ensures validator == \\old(validator)\n// @ ensures (\\old(atomicReference.get() == Boolean.TRUE)) ==> (atomicReference.get() == Boolean.TRUE)\n// @ ensures (\\old(atomicReference.get() == Boolean.FALSE)) ==> (atomicReference.get() == Boolean.TRUE)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "compile_failure",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 9
+}

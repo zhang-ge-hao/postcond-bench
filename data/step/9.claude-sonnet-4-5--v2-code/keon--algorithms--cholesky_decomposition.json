@@ -1,0 +1,442 @@
+{
+  "rlid": "cholesky_decomposition",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/matrix/cholesky_matrix_decomposition.py#L27-L51",
+  "name": "cholesky_decomposition",
+  "line_cov": 1.0,
+  "lines": 25,
+  "stats": 19,
+  "cc": 9,
+  "content": "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+  "header": "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"",
+  "file": "./algorithms/matrix/cholesky_matrix_decomposition.py",
+  "start_line": 27,
+  "end_line": 51,
+  "body_start_line": 33,
+  "comment": "\"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"",
+  "test_time": 0.758145809173584,
+  "cover_tests": [
+    "tests/test_matrix.py::TestCholeskyMatrixDecomposition::test_cholesky_matrix_decomposition"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = 0  # Sets n to zero, causing the algorithm to not process any elements\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = None\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A) + 1  # Incorrectly increases the size of n, leading to index errors\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A) // 2  # Incorrectly halves the size of n, leading to incomplete processing of the matrix\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A[0])  # Assumes all rows have the same length, which may not be true\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = sum(len(row) for row in A)  # Sets n to the total number of elements instead of the number of rows\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) == n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) == n:  # This will incorrectly allow matrices that are not square\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if n > 1:  # This will incorrectly allow matrices of size 1x1 or larger without checking dimensions\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * (n + 1) for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n + 1)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)] + [0.0]  # Adds an extra row\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[1.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(1, n):  # This will start from the second row, missing the first row.\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n-1):  # This will skip the last row, leading to incorrect results.\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = -1  # Negative initialization leading to incorrect results\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 1\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 1  # Arbitrary non-zero initialization\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = A[j][j]  # Incorrect initialization\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(0, j, 2):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j + 1, n):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j, n):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + 1\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + V[j][k]\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 3)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 3)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element - math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element - math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] + sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element != 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 1:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element >= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 1.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 1/3)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 2)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.sqrt(sum_diagonal_element) + 1\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = sum_diagonal_element\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(0, j):  # This will cause incorrect indexing and may lead to wrong values being computed.\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, ):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+2, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j, j+1):  # This will only iterate once, causing incomplete calculations for the matrix.\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(n):  # This will iterate over all rows, including those that should not be processed, leading to incorrect results.\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = -1  # Incorrectly initializes to a negative value\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0.5  # Incorrectly initializes to a constant non-zero value\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 1\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 1  # Incorrectly initializes to a non-zero value\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = A[i][j]  # Incorrectly initializes to a value from the matrix\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(0, j, 2):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j + 1, n):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j - 1):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j, n):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k] * V[j][j]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k] + V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k] - V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k] / (V[j][k] + 1)\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k] / V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[j][k] ** 2\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element -= V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element = V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] + sum_other_element)/V[j][j]\n    return V\n",
+    "def cholesky_decomposition(A):\n    \"\"\"\n    :param A: Hermitian positive-definite matrix of type List[List[float]]\n    :return: matrix of type List[List[float]] if A can be decomposed,\n    otherwise None\n    \"\"\"\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element) * V[j][j]\n    return V\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.ensure(\n    lambda A, result:\n        all(len(row) == len(A) for row in A)\n        or result is None,\n)\n@icontract.ensure(\n    lambda A, result:\n        (result is None)\n        or (\n            all(len(row) == len(A) for row in A)\n            and len(result) == len(A)\n            and all(len(row) == len(A) for row in result)\n            and all(\n                result[i][j] == 0.0\n                for i in range(len(result))\n                for j in range(i + 1, len(result))\n            )\n            and all(\n                result[i][i] > 0.0\n                for i in range(len(result))\n            )\n            and all(\n                abs(\n                    A[i][j]\n                    - sum(\n                        result[i][k] * result[j][k]\n                        for k in range(len(result))\n                    )\n                ) < 1e-8\n                for i in range(len(A))\n                for j in range(len(A))\n            )\n        ),\n)\n@icontract.ensure(\n    lambda A, result:\n        not (\n            len(A) > 0\n            and all(len(row) == len(A) for row in A)\n            and all(\n                A[i][j] == A[j][i]\n                for i in range(len(A))\n                for j in range(len(A))\n            )\n            and (\n                (lambda det:\n                    all(\n                        det(\n                            det,\n                            [row[:k + 1] for row in A[:k + 1]]\n                        ) > 0\n                        for k in range(len(A))\n                    )\n                )(\n                    lambda self, M:\n                        M[0][0]\n                        if len(M) == 1\n                        else sum(\n                            ((-1) ** j)\n                            * M[0][j]\n                            * self(\n                                self,\n                                [\n                                    [\n                                        M[r][c]\n                                        for c in range(len(M))\n                                        if c != j\n                                    ]\n                                    for r in range(1, len(M))\n                                ],\n                            )\n                            for j in range(len(M))\n                        )\n                )\n            )\n        ) or result is not None,\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport math\n\n\ndef cholesky_decomposition(A):\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n\n```\n## Target Method\n```\ndef cholesky_decomposition(A):\n    n = len(A)\n    for ai in A:\n        if len(ai) != n:\n            return None\n    V = [[0.0] * n for _ in range(n)]\n    for j in range(n):\n        sum_diagonal_element = 0\n        for k in range(j):\n            sum_diagonal_element = sum_diagonal_element + math.pow(V[j][k], 2)\n        sum_diagonal_element = A[j][j] - sum_diagonal_element\n        if sum_diagonal_element <= 0:\n            return None\n        V[j][j] = math.pow(sum_diagonal_element, 0.5)\n        for i in range(j+1, n):\n            sum_other_element = 0\n            for k in range(j):\n                sum_other_element += V[i][k]*V[j][k]\n            V[i][j] = (A[i][j] - sum_other_element)/V[j][j]\n    return V\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `cholesky_decomposition`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda A: [row[:] for row in A] if A else None, name=\"original_A\")\n@icontract.ensure(lambda result, A: result is None or len(result) == len(A))\n@icontract.ensure(lambda result, A: result is None or all(len(row) == len(A) for row in result))\n@icontract.ensure(lambda result: result is None or all(result[i][j] == 0.0 for i in range(len(result)) for j in range(i+1, len(result))))\n@icontract.ensure(lambda result, original_A: result is None or all(\n    abs(sum(result[i][k] * result[j][k] for k in range(len(result))) - original_A[i][j]) < 1e-9\n    for i in range(len(result)) for j in range(len(result))\n))",
+    "@icontract.snapshot(lambda A: [row[:] for row in A] if A else None, name=\"A_copy\")\n@icontract.ensure(lambda result, A: result is None or len(result) == len(A), \"Result has same number of rows as input\")\n@icontract.ensure(lambda result, A: result is None or all(len(row) == len(A) for row in result), \"Result is square matrix\")\n@icontract.ensure(lambda result: result is None or all(result[i][j] == 0.0 for i in range(len(result)) for j in range(i+1, len(result))), \"Result is lower triangular\")\n@icontract.ensure(lambda result: result is None or all(result[i][i] > 0 for i in range(len(result))), \"Diagonal elements are positive\")\n@icontract.ensure(lambda result, A_copy: result is None or all(abs(sum(result[i][k] * result[j][k] for k in range(len(result))) - A_copy[i][j]) < 1e-9 for i in range(len(result)) for j in range(len(result))), \"V * V^T equals original matrix A\")",
+    "@icontract.ensure(lambda result, A: result is None or len(result) == len(A))\n@icontract.ensure(lambda result, A: result is None or all(len(row) == len(A) for row in result))\n@icontract.ensure(lambda result: result is None or all(result[i][j] == 0.0 for i in range(len(result)) for j in range(i+1, len(result))))\n@icontract.ensure(lambda result, A: result is None or all(\n    abs(sum(result[i][k] * result[j][k] for k in range(len(result))) - A[i][j]) < 1e-6\n    for i in range(len(A)) for j in range(len(A))\n))",
+    "@icontract.snapshot(lambda A: [row[:] for row in A] if A and all(isinstance(row, list) for row in A) else A, name=\"A_copy\")\n@icontract.ensure(lambda result, A: result is None or len(result) == len(A), \"Result has same dimension as input\")\n@icontract.ensure(lambda result, A: result is None or all(len(row) == len(A) for row in result), \"Result is square matrix\")\n@icontract.ensure(lambda result: result is None or all(result[i][j] == 0.0 for i in range(len(result)) for j in range(i+1, len(result))), \"Result is lower triangular\")\n@icontract.ensure(lambda result, A_copy: result is None or all(abs(sum(result[i][k] * result[j][k] for k in range(len(result))) - A_copy[i][j]) < 1e-9 for i in range(len(result)) for j in range(len(result))), \"V * V^T equals A\")",
+    "@icontract.snapshot(lambda A: [row[:] for row in A] if A else None, name=\"original_A\")\n@icontract.ensure(lambda result, A: result is None or len(result) == len(A), \"Result dimensions match input\")\n@icontract.ensure(lambda result: result is None or all(len(result[i]) == len(result) for i in range(len(result))), \"Result is square matrix\")\n@icontract.ensure(lambda result: result is None or all(result[i][j] == 0.0 for i in range(len(result)) for j in range(i+1, len(result))), \"Result is lower triangular\")\n@icontract.ensure(lambda result, original_A: result is None or all(abs(sum(result[i][k] * result[j][k] for k in range(len(result))) - original_A[i][j]) < 1e-9 for i in range(len(result)) for j in range(len(result))), \"V * V^T equals original matrix A\")"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "passed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed"
+    ],
+    [],
+    []
+  ],
+  "traversal_rank": 81
+}

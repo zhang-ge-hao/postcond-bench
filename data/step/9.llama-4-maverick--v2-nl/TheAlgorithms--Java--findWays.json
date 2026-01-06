@@ -1,0 +1,135 @@
+{
+  "rlid": "findWays",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/dynamicprogramming/DiceThrow.java#L21-L46",
+  "name": "findWays",
+  "line_cov": 1.0,
+  "lines": 26,
+  "stats": 12,
+  "cc": 7,
+  "content": "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+  "header": "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {",
+  "file": "./src/main/java/com/thealgorithms/dynamicprogramming/DiceThrow.java",
+  "start_line": 21,
+  "end_line": 46,
+  "body_start_line": 24,
+  "comment": "/* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */",
+  "test_time": 8.19548773765564,
+  "cover_tests": [
+    "com.thealgorithms.dynamicprogramming.DPTest#testEdgeCaseZeroSum",
+    "com.thealgorithms.dynamicprogramming.DPTest#testSumLessThanMinimumFaceValue",
+    "com.thealgorithms.dynamicprogramming.DPTest#testThreeDiceWithSumEight",
+    "com.thealgorithms.dynamicprogramming.DPTest#testThreeDiceWithSumFive",
+    "com.thealgorithms.dynamicprogramming.DPTest#testTwoDiceWithSumEqualToTwo",
+    "com.thealgorithms.dynamicprogramming.DPTest#testTwoDiceWithSumFive",
+    "com.thealgorithms.dynamicprogramming.DPTest#testTwoDiceWithSumThree"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j < m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j > m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i < n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i += 2) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i > n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j < x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j <= x; j += 2) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j > x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k < m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k < m; k++) { // This will incorrectly limit k to values less than m, missing valid face values.\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k > m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return table[n][x];\n    }",
+    "    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n        /* Create a table to store the results of subproblems.\n    One extra row and column are used for simplicity\n    (Number of dice is directly used as row index and sum is directly used as column index).\n    The entries in 0th row and 0th column are never used. */\n        long[][] table = new long[n + 1][x + 1];\n\n        /* Table entries for only one dice */\n        for (int j = 1; j <= m && j <= x; j++) {\n            table[1][j] = 1;\n        }\n\n        /* Fill rest of the entries in table using recursive relation\n    i: number of dice, j: sum */\n        for (int i = 2; i <= n; i++) {\n            for (int j = 1; j <= x; j++) {\n                for (int k = 1; k < j && k <= m; k++) {\n                    table[i][j] += table[i - 1][j - k];\n                }\n            }\n        }\n\n        return 0;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result >= 0;\n//@ ensures n >= 1 && (x < n || x > n * m) ==> \\result == 0;\n//@ ensures n >= 1 && n == 1 && x >= 1 && x <= m ==> \\result == 1;\n//@ ensures n >= 1 && n == 1 && (x < 1 || x > m) ==> \\result == 0;\n//@ ensures n >= 1 && x == n ==> \\result == 1;\n//@ ensures n >= 1 && x == n * m ==> \\result == 1;\n//@ ensures n == 2 && x >= 2 && x <= 2 * m ==> \\result == (x <= m + 1 ? x - 1 : 2 * m + 1 - x);\n//@ ensures n >= 1 && x >= n && x <= n * m ==> \\result > 0;",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.dynamicprogramming;\n\n// Given N dice each with M faces, numbered from 1 to M, find the number of ways to get sum X.\n// X is the summation of values on each face when all the dice are thrown.\n\n/* The Naive approach is to find all the possible combinations of values from n dice and\nkeep on counting the results that sum to X. This can be done using recursion. */\n// The above recursion solution exhibits overlapping subproblems.\n\n/* Hence, storing the results of the solved sub-problems saves time.\nAnd it can be done using Dynamic Programming(DP).\n// Time Complexity: O(m * n * x) where m is number of faces, n is number of dice and x is given sum.\nFollowing is implementation of Dynamic Programming approach. */\n// Code ---->\n// Java program to find number of ways to get sum 'x' with 'n'\n// dice where every dice has 'm' faces\nfinal class DP {\n    private DP() {\n    }\n\n    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n...\n}\n\n```\n## Target Method\n```\n    /* The main function that returns the number of ways to get sum 'x' with 'n' dice and 'm' with m\n     * faces. */\n    public static long findWays(int m, int n, int x) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `findWays`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures \\result >= 0;\n//@ ensures \\result == countWays(m, n, x);\n//@ ensures (x > n * m || x < n) ==> \\result == 0;\n//@ ensures (n == 0 && x == 0) ==> \\result == 1;",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result == countWays(m, n, x);\n//@ ensures (\\old(x) < n || \\old(x) > n * \\old(m)) ==> \\result == 0;\n//@ ensures (\\old(n) == 0 && \\old(x) == 0) ==> \\result == 1;\n//@ ensures (\\old(n) > 0 && \\old(x) <= 0) ==> \\result == 0;",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result == countWays(m, n, x);\n//@ ensures (x > n * m || x < n) ==> \\result == 0;\n//@ ensures (n == 0 && x == 0) ==> \\result == 1;\n//@ ensures (n == 0 && x != 0) ==> \\result == 0;",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result == countWays(m, n, x);\n//@ ensures (\\old(x) < n || \\old(x) > n * \\old(m)) ==> \\result == 0;\n//@ ensures (\\old(n) == 0 && \\old(x) == 0) ==> \\result == 1;\n//@ ensures (\\old(n) > 0 && \\old(x) <= 0) ==> \\result == 0;",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result == countWays(m, n, x);\n//@ ensures (\\old(n) < 1 || \\old(x) < 1) ==> \\result == 0;\n//@ ensures (\\old(n) == 1 && \\old(x) <= \\old(m) && \\old(x) > 0) ==> \\result == 1;\n//@ ensures (\\old(n) == 1 && (\\old(x) > \\old(m) || \\old(x) <= 0)) ==> \\result == 0;"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 170
+}

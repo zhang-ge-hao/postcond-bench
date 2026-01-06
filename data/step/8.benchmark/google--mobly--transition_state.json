@@ -1,0 +1,151 @@
+{
+  "rlid": "transition_state",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/base_instrumentation_test.py#L434-L461",
+  "name": "transition_state",
+  "line_cov": 1.0,
+  "lines": 28,
+  "stats": 7,
+  "cc": 3,
+  "content": "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+  "header": "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"",
+  "file": "./mobly/base_instrumentation_test.py",
+  "start_line": 434,
+  "end_line": 461,
+  "body_start_line": 450,
+  "comment": "\"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"",
+  "test_time": 1.5071487426757812,
+  "cover_tests": [
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_logs_correctly",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_assumption_failure_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashed_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_failing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_ignored_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_missing_runner",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_missing_test_package",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_multiple_tests",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_no_tests",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_passing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_prefix_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_random_whitespace",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_runner_setup_crash",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_runner_teardown_crash"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state != _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.METHOD:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.RESULT:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state is None:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=None,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=_InstrumentationBlockStates.METHOD,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=_InstrumentationBlockStates.RESULT,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=self.state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix='',\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=None,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.current_key,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=None,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self.previous_instrumentation_block,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.TIMING:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code == _InstrumentationStatusCodes.ERROR:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code == _InstrumentationStatusCodes.UNKNOWN:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.PASS:\n        next_block.begin_time = self.begin_time\n      return next_block",
+    "  def transition_state(self, new_state):\n    \"\"\"Transitions or sets the current instrumentation block to the new\n    parser state.\n\n    Args:\n      new_state: _InstrumentationBlockStates, the state that the parser\n        should transition to.\n\n    Returns:\n      A new instrumentation block set to the new state, representing\n      the start of parsing a new instrumentation test method.\n      Alternatively, if the current instrumentation block represents the\n      start of parsing a new instrumentation block (state UNKNOWN), then\n      this returns the current instrumentation block set to the now\n      known parsing state.\n    \"\"\"\n    if self.state == _InstrumentationBlockStates.UNKNOWN:\n      self.state = new_state\n      return self\n    else:\n      next_block = _InstrumentationBlock(\n          state=new_state,\n          prefix=self.prefix,\n          previous_instrumentation_block=self,\n      )\n      if self.status_code in _InstrumentationStatusCodeCategories.SKIPPED:\n        next_block.begin_time = self.begin_time\n      return next_block"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: self.state, name=\"old_state\")\n@icontract.snapshot(lambda self: self.status_code, name=\"old_status_code\")\n@icontract.snapshot(lambda self: self.begin_time, name=\"old_begin_time\")\n@icontract.snapshot(lambda self: self.prefix, name=\"old_prefix\")\n@icontract.snapshot(lambda self: self.previous_instrumentation_block, name=\"old_prev_block\")\n@icontract.snapshot(lambda self: self, name=\"old_self\")\n@icontract.ensure(lambda result, new_state: result is not None)\n@icontract.ensure(lambda result, new_state: isinstance(result, _InstrumentationBlock))\n@icontract.ensure(lambda result, new_state: result.state == new_state)\n@icontract.ensure(lambda OLD, self, result: (OLD.old_state == _InstrumentationBlockStates.UNKNOWN) == (result is self))\n@icontract.ensure(lambda OLD, self, result: (OLD.old_state == _InstrumentationBlockStates.UNKNOWN and self.state == result.state and self.previous_instrumentation_block is OLD.old_prev_block and self.prefix == OLD.old_prefix and result.begin_time == OLD.old_begin_time) or (OLD.old_state != _InstrumentationBlockStates.UNKNOWN and result is not self and result.previous_instrumentation_block is OLD.old_self and result.prefix == OLD.old_prefix and self.state == OLD.old_state))\n@icontract.ensure(lambda OLD, self, result: (OLD.old_state == _InstrumentationBlockStates.UNKNOWN and result.begin_time == OLD.old_begin_time) or (OLD.old_state != _InstrumentationBlockStates.UNKNOWN and ((OLD.old_status_code in _InstrumentationStatusCodeCategories.TIMING and result.begin_time == OLD.old_begin_time) or (OLD.old_status_code not in _InstrumentationStatusCodeCategories.TIMING and result.begin_time is None))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 303
+}

@@ -1,0 +1,298 @@
+{
+  "rlid": "get_cli_string",
+  "github_url": "https://github.com/theskumar/python-dotenv/blob/85f43295ccb2d15d13da370954e5b85079f4a56c/./src/dotenv/__init__.py#L12-L39",
+  "name": "get_cli_string",
+  "line_cov": 1.0,
+  "lines": 28,
+  "stats": 14,
+  "cc": 7,
+  "content": "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+  "header": "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"",
+  "file": "./src/dotenv/__init__.py",
+  "start_line": 12,
+  "end_line": 39,
+  "body_start_line": 24,
+  "comment": "\"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"",
+  "test_time": 1.029144525527954,
+  "cover_tests": [
+    "tests/test_utils.py::test_to_cli_string"
+  ],
+  "repo": {
+    "github_path": "theskumar/python-dotenv",
+    "commit": "85f43295ccb2d15d13da370954e5b85079f4a56c",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools >= 77.0\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"python-dotenv\"\ndescription = \"Read key-value pairs from a .env file and set them as environment variables\"\nlicense = \"BSD-3-Clause\"\nkeywords = [ \"environment variables\", \"deployments\", \"settings\", \"env\", \"dotenv\", \"configurations\", \"python\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: Implementation :: PyPy\", \"Intended Audience :: Developers\", \"Intended Audience :: System Administrators\", \"Operating System :: OS Independent\", \"Topic :: System :: Systems Administration\", \"Topic :: Utilities\", \"Environment :: Web Environment\",]\nrequires-python = \">=3.9,<4.0\"\ndynamic = [ \"version\", \"readme\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Saurabh Kumar\"\nemail = \"me+github@saurabh-kumar.com\"\n\n[project.urls]\nSource = \"https://github.com/theskumar/python-dotenv\"\n\n[project.optional-dependencies]\ncli = [ \"click>=5.0\",]\n\n[project.scripts]\ndotenv = \"dotenv.__main__:cli\"\n\n[tool.setuptools]\npackages = [ \"dotenv\",]\n\n[tool.mypy]\ncheck_untyped_defs = true\nignore_missing_imports = true\n\n[tool.poetry]\n[[tool.poetry.packages]]\ninclude = \"dotenv\"\nfrom = \"src\"\n\n[tool.setuptools.package-dir]\n\"\" = \"src\"\n\n[tool.setuptools.package-data]\ndotenv = [ \"py.typed\",]\n\n[tool.pytest.ini_options]\ntestpaths = [ \"tests\",]\n\n[tool.coverage.run]\nrelative_files = true\nsource = [ \"dotenv\",]\n\n[tool.coverage.paths]\nsource = [ \"src/dotenv\", \".tox/*/lib/python*/site-packages/dotenv\", \".tox/pypy*/site-packages/dotenv\",]\n\n[tool.coverage.report]\nshow_missing = true\nomit = [ \"*/tests/*\",]\nexclude_lines = [ \"if IS_TYPE_CHECKING:\", \"pragma: no cover\",]\n\n[tool.setuptools.dynamic.version]\nattr = \"dotenv.version.__version__\"\n\n[tool.setuptools.dynamic.readme]\nfile = [ \"README.md\", \"CHANGELOG.md\",]\ncontent-type = \"text/markdown\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nclick = \">=5.0\"\nsh = \"^2.2.2\"\n",
+    "failed_tests": [
+      "tests/test_cli.py::test_get_default_path",
+      "tests/test_cli.py::test_run",
+      "tests/test_cli.py::test_run_with_existing_variable",
+      "tests/test_cli.py::test_run_with_existing_variable_not_overridden",
+      "tests/test_cli.py::test_run_with_none_value",
+      "tests/test_cli.py::test_run_with_other_env"
+    ],
+    "test_time": 9.738614559173584
+  },
+  "mutants": [
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"DOTENV\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()\n",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"XXdotenvXX\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()\n",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if not quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote == \"\":\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"--quote {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote.upper()}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote} extra\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote} {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if not path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path == \"\":\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"--file {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path} --extra\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path} --verbose\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path} {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-p {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action == \"run\":\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action in [\"set\", \"unset\"]:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action.upper())\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action[0])  # Only appending the first character of action\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(f\"action:{action}\")\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key == \"\":\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key and value:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(f\"--key={key}\")  # This adds the key with a flag format, which may not be compatible with the expected command structure.\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(f\"{key}=\")  # This appends the key followed by an equals sign, which could lead to incorrect command syntax.\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value == \"\":\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value is True:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" not in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()\n",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \"XX XX\" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()\n",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if len(value) > 0:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if value != \"\":\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if value is not None:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if value.count(\" \") > 1:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if value.startswith('\"'):\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f\"\\'{value}\\'\")  # This uses single quotes instead of double quotes, which may not be compatible with the shell.\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f\"{value} \")  # This adds an extra space after the value, which may lead to unexpected behavior.\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f\"{value}\")  # This will also not quote the value, similar to the previous line.\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}')  # This will miss the closing quote, causing a malformed command.\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(value)  # This will not quote the value, leading to incorrect command formation.\n                else:\n                    command.append(value)\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(f\"[{value}]\")  # This wraps the value in brackets, changing its format unexpectedly.\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value.upper())  # This modifies the value by converting it to uppercase, which may not be intended.\n\n    return \" \".join(command).strip()",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command) + \" \"  # Adds an unnecessary trailing space",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" \".join(command).upper()  # Converts the command to uppercase, which may not be valid for shell execution",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \" | \".join(command).strip()  # Incorrectly uses '|' instead of space as a separator",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return \"XX XX\".join(command).strip()\n",
+    "def get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n    command = [\"dotenv\"]\n    if quote:\n        command.append(f\"-q {quote}\")\n    if path:\n        command.append(f\"-f {path}\")\n    if action:\n        command.append(action)\n        if key:\n            command.append(key)\n            if value:\n                if \" \" in value:\n                    command.append(f'\"{value}\"')\n                else:\n                    command.append(value)\n\n    return command  # Returns the list instead of a string, leading to type issues"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, path, action, key, value, quote: result == \" \".join([\"dotenv\"] + ([\"-q \" + quote] if quote else []) + ([\"-f \" + path] if path else []) + (([action] + ([key] + ((['\"' + value + '\"'] if (value and \" \" in value) else ([value] if value else []))) if key else [])) if action else [])).strip())",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom typing import Any, Optional\n\nfrom .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key\n\n\ndef load_ipython_extension(ipython: Any) -> None:\n...\ndef get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n...\n__all__ = [\n    \"get_cli_string\",\n    \"load_dotenv\",\n    \"dotenv_values\",\n    \"get_key\",\n    \"set_key\",\n    \"unset_key\",\n    \"find_dotenv\",\n    \"load_ipython_extension\",\n]\n\n```\n## Target Method\n```\ndef get_cli_string(\n    path: Optional[str] = None,\n    action: Optional[str] = None,\n    key: Optional[str] = None,\n    value: Optional[str] = None,\n    quote: Optional[str] = None,\n):\n    \"\"\"Returns a string suitable for running as a shell script.\n\n    Useful for converting a arguments passed to a fabric task\n    to be passed to a `local` or `run` command.\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `get_cli_string`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(lambda args: args.path is None or isinstance(args.path, str), name=\"path_is_str_or_none\")\n@icontract.snapshot(lambda args: args.action is None or isinstance(args.action, str), name=\"action_is_str_or_none\")\n@icontract.snapshot(lambda args: args.key is None or isinstance(args.key, str), name=\"key_is_str_or_none\")\n@icontract.snapshot(lambda args: args.value is None or isinstance(args.value, str), name=\"value_is_str_or_none\")\n@icontract.snapshot(lambda args: args.quote is None or isinstance(args.quote, str), name=\"quote_is_str_or_none\")\n@icontract.ensure(\n    lambda result, args: (args.path is None or args.path in result)\n    and (args.action is None or args.action in result)\n    and (args.key is None or args.key in result)\n    and (args.value is None or args.value in result)\n    and (args.quote is None or args.quote in result)\n)\n@icontract.ensure(lambda result: result.startswith(\"dotenv\"))",
+    "@icontract.snapshot(lambda args: args.path, name=\"path\")\n@icontract.snapshot(lambda args: args.action, name=\"action\")\n@icontract.snapshot(lambda args: args.key, name=\"key\")\n@icontract.snapshot(lambda args: args.value, name=\"value\")\n@icontract.snapshot(lambda args: args.quote, name=\"quote\")\n@icontract.ensure(\n    lambda result, path, action: (path is None or path in result)\n    and (action is None or action in result)\n)\n@icontract.ensure(\n    lambda result, key: (key is None or key in result)\n)\n@icontract.ensure(\n    lambda result, value: (value is None or value in result)\n)\n@icontract.ensure(\n    lambda result, quote: (quote is None or quote in result)\n)",
+    "@icontract.snapshot(lambda args: args.path, name=\"path\")\n@icontract.snapshot(lambda args: args.action, name=\"action\")\n@icontract.snapshot(lambda args: args.key, name=\"key\")\n@icontract.snapshot(lambda args: args.value, name=\"value\")\n@icontract.snapshot(lambda args: args.quote, name=\"quote\")\n@icontract.ensure(\n    lambda result, path, action: (path is None or action is not None)\n    and (result.startswith(\"dotenv\") or not result.startswith(\"dotenv\")),\n    \"If path is provided, action must be provided, and result starts with 'dotenv' if action is valid.\"\n)\n@icontract.ensure(\n    lambda result, action: (action is None or result.startswith(\"dotenv\"))\n    or (action is not None and not result.startswith(\"dotenv\")),\n    \"Result starts with 'dotenv' if action is provided.\"\n)\n@icontract.ensure(\n    lambda result, key, action: (action != \"get\" or key is not None)\n    and (action != \"set\" or key is not None)\n    and (action != \"unset\" or key is not None),\n    \"If action is 'get', 'set', or 'unset', key must be provided.\"\n)\n@icontract.ensure(\n    lambda result, value, action: (action != \"set\" or value is not None),\n    \"If action is 'set', value must be provided.\"\n)\n@icontract.ensure(\n    lambda result: isinstance(result, str),\n    \"The function returns a string.\"\n)",
+    "@icontract.snapshot(lambda args: args.path, name=\"path\")\n@icontract.snapshot(lambda args: args.action, name=\"action\")\n@icontract.snapshot(lambda args: args.key, name=\"key\")\n@icontract.snapshot(lambda args: args.value, name=\"value\")\n@icontract.snapshot(lambda args: args.quote, name=\"quote\")\n@icontract.ensure(\n    lambda result, path, action: (path is None or path in result)\n    and (action is None or action in result)\n)\n@icontract.ensure(\n    lambda result, key: (key is None or key in result)\n)\n@icontract.ensure(\n    lambda result, value: (value is None or value in result)\n)\n@icontract.ensure(\n    lambda result, quote: (quote is None or quote in result)\n)",
+    "@icontract.snapshot(lambda args: args.path, name=\"path\")\n@icontract.snapshot(lambda args: args.action, name=\"action\")\n@icontract.snapshot(lambda args: args.key, name=\"key\")\n@icontract.snapshot(lambda args: args.value, name=\"value\")\n@icontract.snapshot(lambda args: args.quote, name=\"quote\")\n@icontract.ensure(\n    lambda result, path, action: (path is None or path in result)\n    and (action is None or action in result)\n)\n@icontract.ensure(\n    lambda result, key: (key is None or key in result)\n)\n@icontract.ensure(\n    lambda result, value: (value is None or value in result)\n)\n@icontract.ensure(\n    lambda result, quote: (quote is None or quote in result)\n)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 83
+}

@@ -1,0 +1,185 @@
+{
+  "rlid": "numberOfWays",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/dynamicprogramming/ClimbingStairs.java#L25-L54",
+  "name": "numberOfWays",
+  "line_cov": 1.0,
+  "lines": 30,
+  "stats": 11,
+  "cc": 4,
+  "content": "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+  "header": "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {",
+  "file": "./src/main/java/com/thealgorithms/dynamicprogramming/ClimbingStairs.java",
+  "start_line": 25,
+  "end_line": 54,
+  "body_start_line": 35,
+  "comment": "/**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */",
+  "test_time": 7.826286315917969,
+  "cover_tests": [
+    "com.thealgorithms.dynamicprogramming.ClimbStairsTest#climbStairsTestForFive",
+    "com.thealgorithms.dynamicprogramming.ClimbStairsTest#climbStairsTestForOne",
+    "com.thealgorithms.dynamicprogramming.ClimbStairsTest#climbStairsTestForThree",
+    "com.thealgorithms.dynamicprogramming.ClimbStairsTest#climbStairsTestForTwo",
+    "com.thealgorithms.dynamicprogramming.ClimbStairsTest#climbStairsTestForZero"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n != 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n < 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n != 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n > 1) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return 0;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i < n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i < n; i++) { // step 2 to n-1\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n + 1; i++) { // step 2 to n+1\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i--) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i > n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 3; i <= n; i++) { // step 3 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr - prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; // Ways to reach the nth step\n    }",
+    "    /**\n     * Calculates the no. of distinct ways to climb a staircase with n steps.\n     *\n     * @param n the no. of steps in the staircase (non-negative integer)\n     * @return the no. of distinct ways to climb to the top\n     *         - Returns 0 if n is 0 (no steps to climb).\n     *         - Returns 1 if n is 1 (only one way to climb).\n     *         - For n > 1, it returns the total no. of ways to climb.\n     */\n    public static int numberOfWays(int n) {\n\n        // Base case: if there are no steps or only one step, return n.\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; // Ways to reach the step before the current one (step 1)\n        int curr = 1; // Ways to reach the current step (step 2)\n        int next; // Total ways to reach the next step\n\n        for (int i = 2; i <= n; i++) { // step 2 to n\n            next = curr + prev;\n\n            // Move the pointers to the next step\n            prev = curr;\n            curr = next;\n        }\n\n        return 0; // Ways to reach the nth step\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures n == 0 ==> \\result == 0;\n//@ ensures n == 1 ==> \\result == 1;\n//@ ensures n == 2 ==> \\result == 2;\n//@ ensures n == 3 ==> \\result == 3;\n//@ ensures n >= 4 ==> \\result > n;\n//@ ensures n >= 0 ==> \\result >= 0;",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.dynamicprogramming;\n\npublic final class ClimbingStairs {\n\n    private ClimbingStairs() {\n    }\n\n    public static int numberOfWays(int n) {\n\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; \n        int curr = 1; \n        int next; \n\n        for (int i = 2; i <= n; i++) { \n            next = curr + prev;\n\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; \n    }\n}\n\n```\n## Target Method\n```\n    public static int numberOfWays(int n) {\n\n        if (n == 1 || n == 0) {\n            return n;\n        }\n\n        int prev = 1; \n        int curr = 1; \n        int next; \n\n        for (int i = 2; i <= n; i++) { \n            next = curr + prev;\n\n            prev = curr;\n            curr = next;\n        }\n\n        return curr; \n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `numberOfWays`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "// @ ensures \\result == (n < 0 ? 1 : (n <= 1 ? n : java.util.stream.IntStream.rangeClosed(2, n).reduce(new int[]{1, 1}, (a, i) -> new int[]{a[1], a[0] + a[1]})[1]));",
+    "// @ ensures n < 0 ==> \\result == 1;\n// @ ensures (n == 0 || n == 1) ==> \\result == n;\n// @ ensures n >= 2 ==> \\result == java.util.stream.IntStream.rangeClosed(2, n).collect(() -> new int[]{1, 1}, (a, i) -> { int next = a[0] + a[1]; a[0] = a[1]; a[1] = next; }, (a, b) -> {})[1];",
+    "// @ ensures (n == 0 || n == 1) ==> \\result == n;\n// @ ensures (n < 0) ==> \\result == 1;\n// @ ensures (n >= 2) ==> \\result == java.util.stream.IntStream.rangeClosed(2, n).reduce(new int[]{1, 1}, (a, i) -> new int[]{a[1], a[0] + a[1]})[1];\n// @ ensures \\result == ((n == 0 || n == 1) ? n : java.util.stream.IntStream.rangeClosed(2, n).reduce(new int[]{1, 1}, (a, i) -> new int[]{a[1], a[0] + a[1]})[1]);",
+    "// @ ensures (n == 0 || n == 1) ==> \\result == n\n// @ ensures n < 0 ==> \\result == 1\n// @ ensures n >= 2 ==> java.util.stream.IntStream.rangeClosed(2, n).collect(() -> new int[]{1, 1}, (a, i) -> { int next = a[0] + a[1]; a[0] = a[1]; a[1] = next; }, (a, b) -> {} )[1] == \\result",
+    "// @ ensures n < 0 ==> \\result == 1;\n// @ ensures n == 0 ==> \\result == 0;\n// @ ensures n == 1 ==> \\result == 1;\n// @ ensures n >= 2 ==> \\result == java.util.stream.IntStream.rangeClosed(2, n).boxed().reduce(new int[]{1, 1}, (a, i) -> new int[]{a[1], a[0] + a[1]}, (a, b) -> a)[1];"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "compile_failure",
+    "passed",
+    "compile_failure",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 204
+}

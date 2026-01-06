@@ -1,0 +1,136 @@
+{
+  "rlid": "bellman_ford",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/graph/bellman_ford.py#L5-L38",
+  "name": "bellman_ford",
+  "line_cov": 0.9333333333333333,
+  "lines": 34,
+  "stats": 14,
+  "cc": 8,
+  "content": "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                return False\n\n    return True",
+  "header": "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"",
+  "file": "./algorithms/graph/bellman_ford.py",
+  "start_line": 5,
+  "end_line": 38,
+  "body_start_line": 21,
+  "comment": "\"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"",
+  "test_time": 1.372943639755249,
+  "cover_tests": [
+    "tests/test_graph.py::TestBellmanFord::test_bellman_ford"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, ):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                return False\n\n    return True\n",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] == weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                return False\n\n    return True",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] - graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                return False\n\n    return True\n",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] - graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                return False\n\n    return True\n",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] < weight[node] + graph[node][adjacent] + 1:\n                return False\n\n    return True",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] < weight[node] + graph[node][adjacent]:\n                return False\n\n    return True",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] == weight[node] + graph[node][adjacent]:\n                return False\n\n    return True",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] > weight[node] - graph[node][adjacent]:\n                return False\n\n    return True\n",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] >= weight[node] + graph[node][adjacent]:\n                return False\n\n    return True",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] >= weight[node] + graph[node][adjacent]:\n                return False\n\n    return True\n",
+    "def bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n    weight = {}\n    pre_node = {}\n\n    initialize_single_source(graph, source, weight, pre_node)\n\n    for _ in range(1, len(graph)):\n        for node in graph:\n            for adjacent in graph[node]:\n                if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                    weight[adjacent] = weight[node] + graph[node][adjacent]\n                    pre_node[adjacent] = node\n\n    for node in graph:\n        for adjacent in graph[node]:\n            if weight[adjacent] > weight[node] + graph[node][adjacent]:\n                return False\n\n    return False\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, graph, source: (lambda d, edges: result == (not any(d[u] + w < d[v] and d[u] < float('inf') for (u, v, w) in edges)))(__import__('functools').reduce(lambda d, _: {v: min([d[v]] + [d[u] + w for (u, vv, w) in [(u_, v_, w_) for u_ in graph for (v_, w_) in graph[u_].items()] if vv == v]) for v in graph}, range(max(0, len(graph) - 1)), {n: (0 if n == source else float('inf')) for n in graph}), [(u, v, w) for u in graph for (v, w) in graph[u].items()]))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nDetermination of single-source shortest-path.\n\"\"\"\n\ndef bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n...\ndef initialize_single_source(graph, source, weight, pre_node):\n    \"\"\"\n    Initialize data structures for Bellman-Ford algorithm.\n    \"\"\"\n...\n```\n## Target Method\n```\ndef bellman_ford(graph, source):\n    \"\"\"\n    This Bellman-Ford Code is for determination whether we can get\n    shortest path from given graph or not for single-source shortest-paths problem.\n    In other words, if given graph has any negative-weight cycle that is reachable\n    from the source, then it will give answer False for \"no solution exits\".\n    For argument graph, it should be a dictionary type\n    such as\n    graph = {\n        'a': {'b': 6, 'e': 7},\n        'b': {'c': 5, 'd': -4, 'e': 8},\n        'c': {'b': -2},\n        'd': {'a': 2, 'c': 7},\n        'e': {'b': -3}\n    }\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `bellman_ford`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(lambda result: isinstance(result, bool), \"Result must be a boolean value\")\n@icontract.ensure(lambda result: result in [True, False], \"Result must be either True (solution exists) or False (negative cycle detected)\")",
+    "@icontract.ensure(lambda result: result is not None, \"Result should not be None\")\n@icontract.ensure(lambda result: isinstance(result, (bool, tuple)), \"Result should be either bool or tuple\")\n@icontract.ensure(lambda result, source, graph: result is False or (isinstance(result, tuple) and source in result[0]), \"If solution exists, source must be in distance dictionary\")\n@icontract.ensure(lambda result, source: result is False or result[0][source] == 0, \"Source vertex distance should be 0 when solution exists\")\n@icontract.ensure(lambda result, graph: result is False or all(u in result[0] for u in graph), \"All vertices should have distances when solution exists\")\n@icontract.ensure(lambda result, graph: result is False or all(\n    result[0][v] <= result[0][u] + weight\n    for u in graph \n    for v, weight in graph[u].items()\n    if u in result[0] and v in result[0]\n), \"Triangle inequality must hold for all edges when solution exists\")",
+    "@icontract.ensure(lambda result: result is not None, \"Result must not be None\")\n@icontract.ensure(lambda result: isinstance(result, (bool, tuple)), \"Result must be either False or a tuple with path data\")\n@icontract.ensure(lambda result: result is False or (isinstance(result, tuple) and len(result) == 3), \"If not False, result must be a 3-tuple (success, distances, predecessors)\")\n@icontract.ensure(lambda result, source: result is False or result[0] is True, \"If no negative cycle, first element should be True\")\n@icontract.ensure(lambda result, source, graph: result is False or source in result[1], \"Source vertex must be in distances dictionary\")\n@icontract.ensure(lambda result, source: result is False or result[1][source] == 0, \"Distance from source to itself must be 0\")\n@icontract.ensure(lambda result, source: result is False or result[2][source] is None, \"Predecessor of source must be None\")\n@icontract.ensure(lambda result, graph: result is False or all(v in result[1] for v in graph.keys()), \"All vertices must be in distances dictionary\")",
+    "@icontract.ensure(lambda result: result is False or (isinstance(result, tuple) and len(result) == 2))\n@icontract.ensure(lambda result, source: result is False or source in result[0])\n@icontract.ensure(lambda result, source: result is False or result[0][source] == 0)\n@icontract.ensure(lambda result, source: result is False or result[1][source] is None)\n@icontract.ensure(lambda result, graph: result is False or all(node in result[0] for node in graph))\n@icontract.ensure(lambda result, graph: result is False or all(node in result[1] for node in graph))",
+    "@icontract.snapshot(lambda graph: set(graph.keys()), name=\"nodes\")\n@icontract.snapshot(lambda source: source, name=\"source_node\")\n@icontract.ensure(lambda result, source_node: result is False or (isinstance(result, tuple) and len(result) == 3) or result is True)\n@icontract.ensure(lambda result, source_node: result is False or result is True or result[0] is True)\n@icontract.ensure(lambda result, source_node: result is False or result is True or source_node in result[1])\n@icontract.ensure(lambda result, source_node: result is False or result is True or result[1][source_node] == 0, \"Source node distance should be 0\")\n@icontract.ensure(lambda result, nodes: result is False or result is True or all(node in result[1] for node in nodes), \"All nodes should have distance values\")"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "failed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 87
+}

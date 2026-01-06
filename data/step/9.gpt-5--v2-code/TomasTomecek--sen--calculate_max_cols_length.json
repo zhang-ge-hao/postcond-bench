@@ -1,0 +1,116 @@
+{
+  "rlid": "calculate_max_cols_length",
+  "github_url": "https://github.com/TomasTomecek/sen/blob/3a31c949f3732910a1f2e58ef8ee88c4758c1107/./sen/tui/widgets/table.py#L11-L32",
+  "name": "calculate_max_cols_length",
+  "line_cov": 1.0,
+  "lines": 22,
+  "stats": 9,
+  "cc": 3,
+  "content": "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths.setdefault(0, 1)  # in case table is empty\n    return max_cols_lengths",
+  "header": "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"",
+  "file": "./sen/tui/widgets/table.py",
+  "start_line": 11,
+  "end_line": 32,
+  "body_start_line": 22,
+  "comment": "\"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"",
+  "test_time": 0.4178593158721924,
+  "cover_tests": [
+    "tests/test_widgets.py::test_table_random_data",
+    "tests/test_widgets.py::test_table_empty"
+  ],
+  "repo": {
+    "github_path": "TomasTomecek/sen",
+    "commit": "3a31c949f3732910a1f2e58ef8ee88c4758c1107",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=45\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"sen\"\nversion = \"0.9.0-dev\"\ndescription = \"Terminal User Interface for Docker and Podman\"\nreadme = \"README.md\"\nrequires-python = \">=3.10,<4.0\"\ndependencies = [ \"urwid\", \"docker\", \"urwidtrees\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Intended Audience :: System Administrators\", \"License :: OSI Approved :: MIT License\", \"Operating System :: POSIX :: Linux\", \"Programming Language :: Python :: Implementation :: CPython\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3 :: Only\", \"Topic :: System :: Monitoring\",]\n[[project.authors]]\nname = \"Tomas Tomecek\"\nemail = \"tomas@tomecek.net\"\n\n[project.license]\ntext = \"MIT\"\n\n[project.urls]\nHomepage = \"https://github.com/TomasTomecek/sen/\"\nRepository = \"https://github.com/TomasTomecek/sen/\"\n\n[project.scripts]\nsen = \"sen.cli:main\"\n\n[tool.setuptools]\npackages = [ \"sen\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nflexmock = \"^0.12.2\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nversion = \"^1.2.0\"\npython = \">=3.10\"\n",
+    "failed_tests": [],
+    "test_time": 5.035623073577881
+  },
+  "mutants": [
+    "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets[1:]):  # Skipping the first widget, which may lead to incorrect calculations\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths.setdefault(0, 1)  # in case table is empty\n    return max_cols_lengths",
+    "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets[:-1]):  # Iterating over all but the last widget, potentially missing data\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths.setdefault(0, 1)  # in case table is empty\n    return max_cols_lengths",
+    "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = None\n            col_index += 1\n\n    max_cols_lengths.setdefault(0, 1)  # in case table is empty\n    return max_cols_lengths\n",
+    "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths.setdefault(0, )  # in case table is empty\n    return max_cols_lengths\n",
+    "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths.setdefault(0, None)  # in case table is empty\n    return max_cols_lengths\n",
+    "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths.setdefault(1)  # in case table is empty\n    return max_cols_lengths\n",
+    "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths[0] = -1  # sets a negative width, which is invalid and can lead to unexpected behavior\n    return max_cols_lengths",
+    "def calculate_max_cols_length(table, size):\n    \"\"\"\n    :param table: list of lists:\n\n    [[\"row 1 column 1\", \"row 1 column 2\"],\n     [\"row 2 column 1\", \"row 2 column 2\"]]\n\n    each item consists of instance of urwid.Text\n\n    :returns dict, {index: width}\n    \"\"\"\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths[0] = None  # assigns None, which can cause issues when calculating widths later\n    return max_cols_lengths"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda _ARGS: _ARGS[0], name=\"table\")\n@icontract.snapshot(lambda _ARGS: _ARGS[1], name=\"size\")\n@icontract.ensure(lambda OLD, result, table, size: isinstance(result, dict))\n@icontract.ensure(lambda OLD, result, table, size: all(isinstance(k, int) and k >= 0 for k in result.keys()))\n@icontract.ensure(lambda OLD, result, table, size: all(isinstance(v, int) and v >= 0 for v in result.values()))\n@icontract.ensure(lambda OLD, result, table, size: (not OLD.table and result == {0: 1}) or (OLD.table and (max((len(r.widgets) for r in OLD.table), default=0) == 0 and result == {0: 1}) or (OLD.table and max((len(r.widgets) for r in OLD.table), default=0) > 0)))\n@icontract.ensure(lambda OLD, result, table, size: (not OLD.table) or (max((len(r.widgets) for r in OLD.table), default=0) == 0 and result == {0: 1}) or (set(result.keys()) == set(range(max(len(r.widgets) for r in OLD.table)))))\n@icontract.ensure(lambda OLD, result, table, size: (not OLD.table) or (max((len(r.widgets) for r in OLD.table), default=0) == 0) or all(\n    any(idx < len(r.widgets) for r in OLD.table) and\n    result[idx] == max([r.widgets[idx].pack((OLD.size[0],))[0] for r in OLD.table if idx < len(r.widgets)])\n    for idx in result.keys()\n))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport logging\n\nimport urwid\n\nfrom sen.tui.widgets.list.base import WidgetBase\nfrom sen.tui.widgets.list.util import RowWidget\n\nlogger = logging.getLogger(__name__)\n\n\ndef calculate_max_cols_length(table, size):\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths.setdefault(0, 1)  \n    return max_cols_lengths\n\n\ndef assemble_rows(data, max_allowed_lengths=None, dividechars=1,\n                  ignore_columns=None):\n    rows = []\n    max_lengths = {}\n    ignore_columns = ignore_columns or []\n\n    for row in data:\n        col_index = 0\n        for widget in row:\n            if col_index in ignore_columns:\n                continue\n            l = len(widget.text)\n            if max_allowed_lengths:\n                if col_index in max_allowed_lengths and max_allowed_lengths[col_index] < l:\n                    l = max_allowed_lengths[col_index]\n\n            max_lengths.setdefault(col_index, l)\n            max_lengths[col_index] = max(l, max_lengths[col_index])\n            col_index += 1\n\n    for row in data:\n        row_widgets = []\n        for idx, item in enumerate(row):\n            if idx in ignore_columns:\n                row_widgets.append(item)\n            else:\n                row_widgets.append((max_lengths[idx], item))\n        rows.append(\n            RowWidget(row_widgets, dividechars=dividechars)\n        )\n\n    return rows\n\n\nclass ResponsiveTable(WidgetBase):\n    def __init__(self, ui, walker, headers=None, dividechars=1, responsive=True):\n        self.dividechars = dividechars\n        self.responsive = responsive\n\n        super().__init__(ui, walker)\n\n    def render(self, size, focus=False):\n        screen_width = size[0]\n\n        min_col_lengths = calculate_max_cols_length(self.body, size)\n\n        max_col_width = int(screen_width / len(min_col_lengths)) - self.dividechars\n        for k, v in min_col_lengths.items():\n            min_col_lengths[k] = min(min_col_lengths[k], max_col_width)\n\n        columns_occupy = sum(min_col_lengths.values())\n\n        if self.responsive:\n            to_spread = screen_width - len(min_col_lengths) * self.dividechars - columns_occupy\n            if to_spread:\n                spread_remaining = to_spread\n                weights = {}  \n                sum_weights = 0\n                sorted_by_length = sorted(min_col_lengths.items(), key=lambda x: x[1])\n                longest_col = sorted_by_length[-1][0]\n                for weight, (idx, length) in enumerate(sorted_by_length):\n                    weights[idx] = weight + 1  \n                    sum_weights += weight + 1\n                for k, v in min_col_lengths.items():\n                    expansion = int(to_spread * weights[k] / sum_weights)\n                    min_col_lengths[k] += expansion\n                    spread_remaining -= expansion\n                min_col_lengths[longest_col] += spread_remaining\n\n        for row in self.body:\n            row.contents[:] = [\n                (w, (urwid.GIVEN, min_col_lengths[idx], is_box))\n                for idx, (w, (_, _, is_box)) in enumerate(row.contents)\n            ]\n\n        return super().render(size, focus=focus)\n\n```\n## Target Method\n```\ndef calculate_max_cols_length(table, size):\n    max_cols_lengths = {}\n\n    for row in table:\n        col_index = 0\n        for idx, widget in enumerate(row.widgets):\n            l = widget.pack((size[0], ))[0]\n            max_cols_lengths[idx] = max(max_cols_lengths.get(idx, 0), l)\n            col_index += 1\n\n    max_cols_lengths.setdefault(0, 1)  \n    return max_cols_lengths\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `calculate_max_cols_length`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda table: {idx for row in table for idx, _ in enumerate(row.widgets)}, name=\"encountered\")\n@icontract.ensure(lambda result, OLD: set(result.keys()) == (OLD.encountered | {0}))\n@icontract.ensure(lambda result, table, size, OLD: all(result[k] == max(widget.pack((size[0],))[0] for row in table for idx, widget in enumerate(row.widgets) if idx == k) for k in OLD.encountered))\n@icontract.ensure(lambda result, OLD: (0 in OLD.encountered) or (result[0] == 1))",
+    "@icontract.snapshot(lambda table, size: [tuple(widget.pack((size[0],))[0] for widget in row.widgets) for row in table], name=\"widths\")\n@icontract.snapshot(lambda table, size: set(i for row in table for i, _w in enumerate(row.widgets)), name=\"encountered_indices\")\n@icontract.ensure(lambda result: set(result.keys()) == (OLD.encountered_indices | {0}))\n@icontract.ensure(lambda result: all(result[i] == max(r[i] for r in OLD.widths if len(r) > i) for i in OLD.encountered_indices))\n@icontract.ensure(lambda result: (0 in OLD.encountered_indices) or (result[0] == 1))",
+    "@icontract.snapshot(lambda table, size: [(idx, widget.pack((size[0], ))[0]) for row in table for idx, widget in enumerate(row.widgets)], name=\"observed_pairs\")\n@icontract.ensure(lambda observed_pairs, result: (len(observed_pairs) == 0 and result == {0: 1}) or (set(result.keys()) == {i for (i, _) in observed_pairs}))\n@icontract.ensure(lambda observed_pairs, result: len(observed_pairs) == 0 or all(result[i] == max(v for (j, v) in observed_pairs if j == i) for i in {j for (j, _) in observed_pairs}))\n@icontract.ensure(lambda result: all(isinstance(k, int) for k in result.keys()) and all(isinstance(v, int) for v in result.values()))",
+    "@icontract.snapshot(lambda table, size: [(idx, widget.pack((size[0], ))[0]) for row in table for idx, widget in enumerate(row.widgets)], name='pairs')\n@icontract.snapshot(lambda pairs: set(idx for idx, _ in pairs), name='col_indices')\n@icontract.snapshot(lambda pairs, col_indices: {i: max(l for j, l in pairs if j == i) for i in col_indices}, name='max_by_col')\n@icontract.ensure(lambda max_by_col, result: set(result.keys()) == (set(max_by_col.keys()) | {0}))\n@icontract.ensure(lambda max_by_col, result: all(result[k] == v for k, v in max_by_col.items()))\n@icontract.ensure(lambda max_by_col, result: ((0 in max_by_col and result[0] == max_by_col[0]) or (0 not in max_by_col and result[0] == 1)))\n@icontract.ensure(lambda pairs, result: all(result[idx] >= l for idx, l in pairs))",
+    "@icontract.snapshot(name=\"indices_before\", snapshot=lambda table: {i for row in table for i, _ in enumerate(row.widgets)})\n@icontract.snapshot(name=\"widths_by_index\", snapshot=lambda table, size: {i: [widget.pack((size[0],))[0] for row in table for j, widget in enumerate(row.widgets) if j == i] for i in {j for row in table for j, _ in enumerate(row.widgets)}})\n@icontract.ensure(lambda result: 0 in result)\n@icontract.ensure(lambda result: len(result) >= 1)\n@icontract.ensure(lambda result: all(isinstance(k, int) for k in result.keys()))\n@icontract.ensure(lambda result: all(isinstance(v, int) for v in result.values()))\n@icontract.ensure(lambda result: all(v >= 0 for v in result.values()))\n@icontract.ensure(lambda result, indices_before: set(result.keys()) - {0} == indices_before - {0})\n@icontract.ensure(lambda result, widths_by_index, indices_before: all(result[i] == max(widths_by_index[i]) for i in indices_before))\n@icontract.ensure(lambda result, indices_before: (0 in indices_before) or (result[0] == 1))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "local_crash",
+    "failed",
+    "failed",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 252
+}

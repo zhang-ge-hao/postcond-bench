@@ -1,0 +1,116 @@
+{
+  "rlid": "contains_cycle",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/graph/cycle_detection.py#L38-L55",
+  "name": "contains_cycle",
+  "line_cov": 1.0,
+  "lines": 18,
+  "stats": 5,
+  "cc": 4,
+  "content": "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+  "header": "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"",
+  "file": "./algorithms/graph/cycle_detection.py",
+  "start_line": 38,
+  "end_line": 55,
+  "body_start_line": 50,
+  "comment": "\"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"",
+  "test_time": 1.3611297607421875,
+  "cover_tests": [
+    "tests/test_graph.py::TestCycleDetection::test_cycle_detection_with_cycle",
+    "tests/test_graph.py::TestCycleDetection::test_cycle_detection_with_no_cycle"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state != TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False\n",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.BLACK and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.GRAY and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and not\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE or\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE or is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False\n",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return False\n    return False\n",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return True\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda graph: any((lambda f: f(f, v, v, {v}))(lambda self, u, t, vis: any(n == t or (n not in vis and self(self, n, t, vis | {n})) for n in graph.get(u, ())) ) for v in graph), name=\"HAS_CYCLE_RECURSIVE\")\n@icontract.snapshot(lambda graph: any(v in __import__('functools').reduce(lambda fr, _: set().union(*(graph.get(u, ()) for u in fr)), range(len(graph)), {v}) for v in graph), name=\"HAS_CYCLE_ITERATIVE\")\n@icontract.snapshot(lambda graph: any(v in graph.get(v, ()) for v in graph), name=\"HAS_SELF_LOOP\")\n@icontract.snapshot(lambda graph: all(len(graph.get(v, ())) == 0 for v in graph), name=\"ALL_OUT_EMPTY\")\n@icontract.ensure(lambda OLD, result: result == OLD.HAS_CYCLE_RECURSIVE)\n@icontract.ensure(lambda OLD, result: result == OLD.HAS_CYCLE_ITERATIVE)\n@icontract.ensure(lambda OLD, result: (not OLD.ALL_OUT_EMPTY) or (result is False))\n@icontract.ensure(lambda OLD, result: (not OLD.HAS_SELF_LOOP) or (result is True))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nGiven a directed graph, check whether it contains a cycle.\n\nReal-life scenario: deadlock detection in a system. Processes may be\nrepresented by vertices, then and an edge A -> B could mean that process A is\nwaiting for B to release its lock on a resource.\n\"\"\"\nfrom enum import Enum\n\n\nclass TraversalState(Enum):\n    \"\"\"\n    For a given node:\n        - WHITE: has not been visited yet\n        - GRAY: is currently being investigated for a cycle\n        - BLACK: is not part of a cycle\n    \"\"\"\n    WHITE = 0\n    GRAY = 1\n    BLACK = 2\n\ndef is_in_cycle(graph, traversal_states, vertex):\n    \"\"\"\n    Determines if the given vertex is in a cycle.\n\n    :param: traversal_states: for each vertex, the state it is in\n    \"\"\"\n...\ndef contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n...\n```\n## Target Method\n```\ndef contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `contains_cycle`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result, original_graph: result == any(is_in_cycle(original_graph, traversal_states, v) for v in original_graph), \"The result should be True if any vertex is part of a cycle, otherwise False\")\n@icontract.ensure(lambda result: isinstance(result, bool), \"The result should be a boolean indicating whether the graph contains a cycle\")",
+    "@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result: result == any(is_in_cycle(graph, traversal_states, v) for v in graph))",
+    "@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result, original_graph: result == any(is_in_cycle(original_graph, traversal_states, v) for v in original_graph))",
+    "@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result, original_graph: result == any(is_in_cycle(original_graph, traversal_states, v) for v in original_graph))",
+    "@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result: result == any(is_in_cycle(graph, traversal_states, v) for v in graph))"
+  ],
+  "responses": [
+    "```python\n@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result, original_graph: result == any(is_in_cycle(original_graph, traversal_states, v) for v in original_graph), \"The result should be True if any vertex is part of a cycle, otherwise False\")\n@icontract.ensure(lambda result: isinstance(result, bool), \"The result should be a boolean indicating whether the graph contains a cycle\")\n```",
+    "```python\n@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result: result == any(is_in_cycle(graph, traversal_states, v) for v in graph))\n```",
+    "```python\n@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result, original_graph: result == any(is_in_cycle(original_graph, traversal_states, v) for v in original_graph))\n```",
+    "```python\n@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result, original_graph: result == any(is_in_cycle(original_graph, traversal_states, v) for v in original_graph))\n```",
+    "```python\n@icontract.snapshot(graph, \"original_graph\")\n@icontract.ensure(lambda result: result == any(is_in_cycle(graph, traversal_states, v) for v in graph))\n```"
+  ],
+  "postcond_corr": [
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 27
+}

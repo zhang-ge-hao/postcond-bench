@@ -1,0 +1,150 @@
+{
+  "rlid": "all_pairs_shortest_path",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/graph/all_pairs_shortest_path.py#L27-L42",
+  "name": "all_pairs_shortest_path",
+  "line_cov": 1.0,
+  "lines": 16,
+  "stats": 8,
+  "cc": 5,
+  "content": "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+  "header": "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"",
+  "file": "./algorithms/graph/all_pairs_shortest_path.py",
+  "start_line": 27,
+  "end_line": 42,
+  "body_start_line": 32,
+  "comment": "\"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"",
+  "test_time": 1.3266236782073975,
+  "cover_tests": [
+    "tests/test_graph.py::TestAll_Pairs_Shortest_Path::test_all_pairs_shortest_path"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = [[0] * len(adjacency_matrix) for _ in range(len(adjacency_matrix))]  # This initializes all distances to zero, ignoring the original weights.\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = [[float('inf')] * len(adjacency_matrix) for _ in range(len(adjacency_matrix))]  # This initializes with infinity, losing original weights.\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = 0\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array) - 1\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(1, size):  # Starts from 1, ignoring the 0th node\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size - 1):  # Off-by-one error, missing the last node\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size - 1):  # Off-by-one error, will skip the last row\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(1, size):  # Starts from 1, missing the first column\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size - 1):  # Off-by-one error, will skip the last column\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] != new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] < new_array[i][k] + new_array[k][j] and new_array[i][j] != 0:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] < new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] == new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] - new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n",
+    "def all_pairs_shortest_path(adjacency_matrix):\n    \"\"\"\n    Given a matrix of the edge weights between respective nodes, returns a\n    matrix containing the shortest distance distance between the two nodes.\n    \"\"\"\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] - new_array[k][j]\n\n    return new_array\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda adjacency_matrix: [row[:] for row in adjacency_matrix])\n@icontract.ensure(lambda OLD, result: len(result) == len(OLD.adjacency_matrix) and all(len(row) == len(result) for row in result))\n@icontract.ensure(lambda OLD, result: all(result[i][i] == 0 for i in range(len(result))))\n@icontract.ensure(lambda OLD, result: (not all(all(x >= 0 for x in row) for row in OLD.adjacency_matrix)) or all(v >= 0 for row in result for v in row))\n@icontract.ensure(lambda OLD, result: all(result[i][j] <= OLD.adjacency_matrix[i][j] for i in range(len(result)) for j in range(len(result))))\n@icontract.ensure(lambda OLD, result: all((OLD.adjacency_matrix[i][k] + OLD.adjacency_matrix[k][j] >= OLD.adjacency_matrix[i][j]) or (result[i][j] <= OLD.adjacency_matrix[i][k] + OLD.adjacency_matrix[k][j]) for i in range(len(result)) for j in range(len(result)) for k in range(len(result))))\n@icontract.ensure(lambda OLD, result: all((i == j) or (not (OLD.adjacency_matrix[i][j] > 0)) or (result[i][j] > 0) for i in range(len(result)) for j in range(len(result))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport copy\n\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n\n```\n## Target Method\n```\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `all_pairs_shortest_path`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] == min(\n                adjacency_matrix[i][j] if adjacency_matrix[i][j] != float('inf') else float('inf'),\n                min(\n                    result[i][k] + result[k][j]\n                    for k in range(len(adjacency_matrix))\n                    if result[i][k] != float('inf') and result[k][j] != float('inf')\n                )\n            )\n            for j in range(len(adjacency_matrix))\n        )\n        for i in range(len(adjacency_matrix))\n    ),\n    \"The resulting matrix contains the shortest path distances between all pairs of nodes.\"\n)\n@icontract.snapshot(\n    lambda adjacency_matrix: adjacency_matrix\n)\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] >= 0 for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] == adjacency_matrix[i][j] if adjacency_matrix[i][j] == 0 and i != j\n            else True\n            for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][i] == 0 for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] <= sum(adjacency_matrix[i][k] + adjacency_matrix[k][j] for k in range(len(adjacency_matrix)))\n            for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.snapshot(before=True, after=True)\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "import copy\n\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        result[i][j] <= adjacency_matrix[i][j] for i in range(len(adjacency_matrix)) for j in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(result[i][j] == result[j][i] for j in range(len(adjacency_matrix))) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.snapshot(\n    lambda adjacency_matrix: adjacency_matrix\n)\n@icontract.snapshot(\n    lambda result: result\n)",
+    "import icontract\n\n@icontract.ensure(\n    lambda adj_matrix, result: all(\n        result[i][j] == min(\n            adj_matrix[i][j] if adj_matrix[i][j] != float('inf') else float('inf'),\n            min(\n                result[i][k] + result[k][j]\n                for k in range(len(adj_matrix))\n            )\n        )\n        for i in range(len(adj_matrix))\n        for j in range(len(adj_matrix))\n    )\n)\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array",
+    "@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] <= float('inf') for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] == adjacency_matrix[i][j] if adjacency_matrix[i][j] == 0 and i != j else True\n            for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] == result[j][i] if adjacency_matrix[i][j] != float('inf') and adjacency_matrix[j][i] != float('inf') else True\n            for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.snapshot(\n    lambda adjacency_matrix: adjacency_matrix\n)\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] == min(\n                adjacency_matrix[i][j] if adjacency_matrix[i][j] != float('inf') else float('inf'),\n                min(\n                    result[i][k] + result[k][j]\n                    for k in range(len(adjacency_matrix))\n                    if result[i][k] != float('inf') and result[k][j] != float('inf')\n                )\n            )\n            for j in range(len(adjacency_matrix))\n        )\n        for i in range(len(adjacency_matrix))\n    ),\n    \"The resulting matrix contains the shortest path distances between all pairs of nodes.\"\n)\n@icontract.snapshot(\n    lambda adjacency_matrix: adjacency_matrix\n)\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n```",
+    "```python\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] >= 0 for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] == adjacency_matrix[i][j] if adjacency_matrix[i][j] == 0 and i != j\n            else True\n            for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][i] == 0 for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] <= sum(adjacency_matrix[i][k] + adjacency_matrix[k][j] for k in range(len(adjacency_matrix)))\n            for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.snapshot(before=True, after=True)\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n```",
+    "```python\nimport copy\n\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        result[i][j] <= adjacency_matrix[i][j] for i in range(len(adjacency_matrix)) for j in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(result[i][j] == result[j][i] for j in range(len(adjacency_matrix))) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.snapshot(\n    lambda adjacency_matrix: adjacency_matrix\n)\n@icontract.snapshot(\n    lambda result: result\n)\n```",
+    "```python\nimport copy\n\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n```\n```python\nimport icontract\n\n@icontract.ensure(\n    lambda adj_matrix, result: all(\n        result[i][j] == min(\n            adj_matrix[i][j] if adj_matrix[i][j] != float('inf') else float('inf'),\n            min(\n                result[i][k] + result[k][j]\n                for k in range(len(adj_matrix))\n            )\n        )\n        for i in range(len(adj_matrix))\n        for j in range(len(adj_matrix))\n    )\n)\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n```",
+    "```python\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] <= float('inf') for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] == adjacency_matrix[i][j] if adjacency_matrix[i][j] == 0 and i != j else True\n            for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.ensure(\n    lambda adjacency_matrix, result: all(\n        all(\n            result[i][j] == result[j][i] if adjacency_matrix[i][j] != float('inf') and adjacency_matrix[j][i] != float('inf') else True\n            for j in range(len(adjacency_matrix))\n        ) for i in range(len(adjacency_matrix))\n    )\n)\n@icontract.snapshot(\n    lambda adjacency_matrix: adjacency_matrix\n)\ndef all_pairs_shortest_path(adjacency_matrix):\n\n    new_array = copy.deepcopy(adjacency_matrix)\n\n    size = len(new_array)\n    for k in range(size):\n        for i in range(size):\n            for j in range(size):\n                if new_array[i][j] > new_array[i][k] + new_array[k][j]:\n                    new_array[i][j] = new_array[i][k] + new_array[k][j]\n\n    return new_array\n```"
+  ],
+  "postcond_corr": [
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 201
+}

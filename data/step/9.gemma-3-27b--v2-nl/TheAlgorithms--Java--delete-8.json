@@ -1,0 +1,140 @@
+{
+  "rlid": "delete-8",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/datastructures/trees/Trie.java#L103-L131",
+  "name": "delete",
+  "line_cov": 0.9,
+  "lines": 29,
+  "stats": 11,
+  "cc": 4,
+  "content": "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+  "header": "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {",
+  "file": "./src/main/java/com/thealgorithms/datastructures/trees/Trie.java",
+  "start_line": 103,
+  "end_line": 131,
+  "body_start_line": 115,
+  "comment": "/**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */",
+  "test_time": 6.1253345012664795,
+  "cover_tests": [
+    "com.thealgorithms.datastructures.trees.TrieTest#testDeleteExistingWord",
+    "com.thealgorithms.datastructures.trees.TrieTest#testDeleteNonExistentWord"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length() - 1; i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i += 2) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i >= word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 1; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(Character.toUpperCase(word.charAt(i)), null); // This will only find nodes for uppercase characters, missing lowercase ones.\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null || !currentNode.end) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return true;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (!currentNode.end) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.child.containsKey(word.charAt(word.length() - 1))) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end && currentNode.child.size() > 0) {\n            currentNode.end = false;\n            return true;\n        }\n\n        return false;\n    }",
+    "    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n        TrieNode currentNode = root;\n        for (int i = 0; i < word.length(); i++) {\n            TrieNode node = currentNode.child.getOrDefault(word.charAt(i), null);\n            if (node == null) {\n                return false;\n            }\n\n            currentNode = node;\n        }\n\n        if (currentNode.end) {\n            currentNode.end = false;\n            return false;\n        }\n\n        return false;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result == \\old(search(word)) && !search(word);",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.datastructures.trees;\n\nimport java.util.HashMap;\n\n/**\n * Represents a Trie Node that stores a character and pointers to its children.\n * Each node has a hashmap which can point to all possible characters.\n * Each node also has a boolean value to indicate if it is the end of a word.\n */\nclass TrieNode {\n    char value;\n    HashMap<Character, TrieNode> child;\n    boolean end;\n\n    /**\n     * Constructor to initialize a TrieNode with an empty hashmap\n     * and set end to false.\n     */\n    TrieNode(char value) {\n        this.value = value;\n        this.child = new HashMap<>();\n        this.end = false;\n    }\n}\n\n/**\n * Trie Data structure implementation without any libraries.\n * <p>\n * The Trie (also known as a prefix tree) is a special tree-like data structure\n * that is used to store a dynamic set or associative array where the keys are\n * usually strings. It is highly efficient for prefix-based searches.\n * <p>\n * This implementation supports basic Trie operations like insertion, search,\n * and deletion.\n * <p>\n * Each node of the Trie represents a character and has child nodes for each\n * possible character.\n *\n * @author <a href=\"https://github.com/dheeraj92\">Dheeraj Kumar Barnwal</a>\n * @author <a href=\"https://github.com/sailok\">Sailok Chinta</a>\n */\n\npublic class Trie {\n    private static final char ROOT_NODE_VALUE = '*';\n\n    private final TrieNode root;\n\n    /**\n     * Constructor to initialize the Trie.\n     * The root node is created but doesn't represent any character.\n     */\n    public Trie() {\n        root = new TrieNode(ROOT_NODE_VALUE);\n    }\n\n    /**\n     * Inserts a word into the Trie.\n     * <p>\n     * The method traverses the Trie from the root, character by character, and adds\n     * nodes if necessary. It marks the last node of the word as an end node.\n     *\n     * @param word The word to be inserted into the Trie.\n     */\n    public void insert(String word) {\n...\n    /**\n     * Searches for a word in the Trie.\n     * <p>\n     * This method traverses the Trie based on the input word and checks whether\n     * the word exists. It returns true if the word is found and its end flag is\n     * true.\n     *\n     * @param word The word to search in the Trie.\n     * @return true if the word exists in the Trie, false otherwise.\n     */\n    public boolean search(String word) {\n...\n    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n...\n    /**\n     * Counts the number of words in the trie\n     *<p>\n     * The method traverses the Trie and counts the number of words.\n     *\n     * @return count of words\n     */\n    public int countWords() {\n...\n    private int countWords(TrieNode node) {\n...\n    /**\n     * Check if the prefix exists in the trie\n     *\n     * @param prefix the prefix to be checked in the Trie\n     * @return true / false depending on the prefix if exists in the Trie\n     */\n    public boolean startsWithPrefix(String prefix) {\n...\n    /**\n     * Count the number of words starting with the given prefix in the trie\n     *\n     * @param prefix the prefix to be checked in the Trie\n     * @return count of words\n     */\n    public int countWordsWithPrefix(String prefix) {\n...\n}\n\n```\n## Target Method\n```\n    /**\n     * Deletes a word from the Trie.\n     * <p>\n     * The method traverses the Trie to find the word and marks its end flag as\n     * false.\n     * It returns true if the word was successfully deleted, false if the word\n     * wasn't found.\n     *\n     * @param word The word to be deleted from the Trie.\n     * @return true if the word was found and deleted, false if it was not found.\n     */\n    public boolean delete(String word) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `delete`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures \\result == (\\old(search(word)) && search(word));\n//@ ensures search(word) == (\\old(search(word)) && !search(word));",
+    "//@ ensures \\result == (\\old(startsWithPrefix(word)) && \\old(search(word)));\n//@ ensures startsWithPrefix(word) == (\\old(startsWithPrefix(word)) && \\old(search(word)));\n//@ ensures search(word) == (\\old(startsWithPrefix(word)) && \\old(search(word)));",
+    "//@ ensures \\result == (\\old(countWords()) - (countWords() - \\old(countWords())));\n//@ ensures \\result == (\\old(startsWithPrefix(word)) && !startsWithPrefix(word));\n//@ ensures \\result == (\\old(search(word)) == false);\n//@ ensures \\result == (\\old(search(word)) == false);",
+    "//@ ensures \\result == (\\old(this.search(word)) && word != null);\n//@ ensures this.search(word) == (\\old(this.search(word)) && word != null) ==> \\old(this.search(word));\n//@ ensures this.search(word) == (\\old(this.search(word)) && word != null) ==> !this.search(word);",
+    "//@ ensures \\result == (\\old(this.search(word)));"
+  ],
+  "responses": [
+    "```jml\n//@ ensures \\result == (\\old(search(word)) && search(word));\n//@ ensures search(word) == (\\old(search(word)) && !search(word));\n```",
+    "```jml\n//@ ensures \\result == (\\old(startsWithPrefix(word)) && \\old(search(word)));\n//@ ensures startsWithPrefix(word) == (\\old(startsWithPrefix(word)) && \\old(search(word)));\n//@ ensures search(word) == (\\old(startsWithPrefix(word)) && \\old(search(word)));\n```",
+    "```jml\n//@ ensures \\result == (\\old(countWords()) - (countWords() - \\old(countWords())));\n//@ ensures \\result == (\\old(startsWithPrefix(word)) && !startsWithPrefix(word));\n//@ ensures \\result == (\\old(search(word)) == false);\n//@ ensures \\result == (\\old(search(word)) == false);\n```",
+    "```jml\n//@ ensures \\result == (\\old(this.search(word)) && word != null);\n//@ ensures this.search(word) == (\\old(this.search(word)) && word != null) ==> \\old(this.search(word));\n//@ ensures this.search(word) == (\\old(this.search(word)) && word != null) ==> !this.search(word);\n```",
+    "```jml\n//@ ensures \\result == (\\old(this.search(word)));\n```"
+  ],
+  "postcond_corr": [
+    "jml_fail",
+    "jml_fail",
+    "compile_failure",
+    "jml_fail",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 57
+}

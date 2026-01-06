@@ -1,0 +1,369 @@
+{
+  "rlid": "sherlockAndCostProblem",
+  "github_url": "https://github.com/nikoo28/java-solutions/blob/a7f282d36a96a486af2259f5fd15deb96b00667a/./src/main/java/hackerrank/algorithms/dynamicprogramming/SherLockAndCost.java#L7-L31",
+  "name": "sherlockAndCostProblem",
+  "line_cov": 1.0,
+  "lines": 25,
+  "stats": 11,
+  "cc": 2,
+  "content": "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+  "header": "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {",
+  "file": "./src/main/java/hackerrank/algorithms/dynamicprogramming/SherLockAndCost.java",
+  "start_line": 7,
+  "end_line": 31,
+  "body_start_line": 17,
+  "comment": "/**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */",
+  "test_time": 4.764442443847656,
+  "cover_tests": [
+    "hackerrank.algorithms.dynamicprogramming.SherLockAndCostTest#testSherlockAndCost1",
+    "hackerrank.algorithms.dynamicprogramming.SherLockAndCostTest#testSherlockAndCost2",
+    "hackerrank.algorithms.dynamicprogramming.SherLockAndCostTest#testSherlockAndCost3"
+  ],
+  "repo": {
+    "github_path": "nikoo28/java-solutions",
+    "commit": "a7f282d36a96a486af2259f5fd15deb96b00667a",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.studyalgorithms.javasolutions</groupId>\n  <artifactId>java-solutions</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <name>java-solutions</name>\n  <url>http://www.studyalgorithms.com</url>\n  <dependencies>\n    <dependency>\n      <groupId>com.google.guava</groupId>\n      <artifactId>guava</artifactId>\n      <version>32.0.0-jre</version>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-engine</artifactId>\n      <version>5.1.0</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>11</maven.compiler.source>\n    <maven.compiler.target>11</maven.compiler.target>\n  </properties>\n  <build>\n    <pluginManagement>\n      <plugins>\n        <plugin>\n          <artifactId>maven-clean-plugin</artifactId>\n          <version>3.1.0</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-resources-plugin</artifactId>\n          <version>3.0.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-compiler-plugin</artifactId>\n          <version>3.8.0</version>\n          <configuration>\n            <source>11</source>\n            <target>11</target>\n          </configuration>\n        </plugin>\n        <plugin>\n          <artifactId>maven-surefire-plugin</artifactId>\n          <version>2.22.1</version>\n        <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n        <plugin>\n          <artifactId>maven-jar-plugin</artifactId>\n          <version>3.0.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-install-plugin</artifactId>\n          <version>2.5.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-deploy-plugin</artifactId>\n          <version>2.8.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-site-plugin</artifactId>\n          <version>3.7.1</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-project-info-reports-plugin</artifactId>\n          <version>3.0.0</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-assembly-plugin</artifactId>\n          <configuration>\n            <descriptorRefs>\n              <descriptorRef>jar-with-dependencies</descriptorRef>\n            </descriptorRefs>\n          </configuration>\n        </plugin>\n      </plugins>\n    </pluginManagement>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <configuration>\n          <source>11</source>\n          <target>11</target>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>2.22.1</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.10</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <xml>true</xml>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 2.7155823707580566
+  },
+  "mutants": [
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = 1; // Incorrectly sets N to 1 regardless of the list size\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size() - 1; // Incorrectly subtracts 1 from the size\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N - 1; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i += 2) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i >= N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 2; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = 0; // Setting curr to a constant value, ignoring the actual list element\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i - 1); // Using the previous element instead of the current one\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i) + 1; // Incrementing the current element, which alters the intended value\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i) - 1; // Decrementing the current element, which also alters the intended value\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = 0; // Sets prev to a constant value instead of the actual previous element\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1) + 1; // Incorrectly modifies the previous element\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1) - 1; // Incorrectly modifies the previous element\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i); // Incorrectly uses the current element instead of the previous one\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0] + prev, dp[i - 1][1]); // Incorrectly adds prev to the first state\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev + 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] - prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]); // Ignores the current element\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.min(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = dp[i - 1][0] + prev; // Incorrectly adds instead of maximizing\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = dp[i - 1][1] + prev; // Incorrectly uses only the previous 1 state\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr + 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.min(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = dp[i - 1][0] + curr + 1;\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = dp[i - 1][1] + curr - 1;\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return 0;\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.min(dp[N - 1][0], dp[N - 1][1]); // Incorrectly takes the minimum instead of the maximum\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return dp[N - 1][0] + dp[N - 1][1]; // Incorrectly sums both values instead of taking the maximum\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return dp[N - 1][0] - dp[N - 1][1]; // Incorrectly subtracts the second value from the first\n  }",
+    "  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return dp[N - 1][0]; // Only returns the first value, ignoring the second\n  }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures \\old(list.size()) >= 1 ==> \\result >= 0;\n//@ ensures \\old(list.size()) == 1 ==> \\result == 0;\n//@ ensures \\old(list.size()) == 2 ==> \\result == Math.max(\\old(list.get(0)) - 1, \\old(list.get(1)) - 1);\n//@ ensures \\result == java.lang.Math.max(\\old(java.util.stream.IntStream.range(1, list.size()).mapToObj(i -> i).reduce(new int[]{0, 0}, (dp, i) -> { int prev = list.get(i - 1); int curr = list.get(i); int ndp0 = java.lang.Math.max(dp[0], dp[1] + prev - 1); int ndp1 = java.lang.Math.max(dp[1], dp[0] + curr - 1); return new int[]{ndp0, ndp1}; }, (a, b) -> b)[0]), \\old(java.util.stream.IntStream.range(1, list.size()).mapToObj(i -> i).reduce(new int[]{0, 0}, (dp, i) -> { int prev = list.get(i - 1); int curr = list.get(i); int ndp0 = java.lang.Math.max(dp[0], dp[1] + prev - 1); int ndp1 = java.lang.Math.max(dp[1], dp[0] + curr - 1); return new int[]{ndp0, ndp1}; }, (a, b) -> b)[1]));\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage hackerrank.algorithms.dynamicprogramming;\n\nimport java.util.List;\n\npublic class SherLockAndCost {\n\n  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }\n}\n\n```\n## Target Method\n```\n  /**\n   * Approach:\n   * I can use dynamic programming to solve this problem efficiently. Let\u2019s break down the approach:\n   * <p>\n   * 1.) Initialize two arrays: dp[i][0] and dp[i][1]. These arrays will store the maximum sum of absolute differences for the first i elements of the input array.\n   * 2.) Iterate through the input array from left to right:\n   * Update dp[i][0] and dp[i][1] based on the previous values and the current element.\n   * 3.) The final answer is the maximum value between dp[N-1][0] and dp[N-1][1].\n   */\n  int sherlockAndCostProblem(List<Integer> list) {\n    int N = list.size();\n    int[][] dp = new int[N][2];\n    dp[0][0] = 0;\n    dp[0][1] = 0;\n\n    for (int i = 1; i < N; i++) {\n      int curr = list.get(i);\n      int prev = list.get(i - 1);\n\n      dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prev - 1);\n      dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] + curr - 1);\n    }\n\n    return Math.max(dp[N - 1][0], dp[N - 1][1]);\n  }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `sherlockAndCostProblem`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures \\result >= 0;\n//@ ensures list.equals(\\old(list));\n//@ ensures list.size() == \\old(list.size());\n//@ ensures list.size() == 1 ==> \\result == 0;\n//@ ensures list.stream().allMatch(x -> x == 1) ==> \\result == 0;",
+    "//@ ensures \\result >= 0;\n//@ ensures list.equals(\\old(list));\n//@ ensures list.size() == \\old(list.size());\n//@ ensures list.isEmpty() ==> \\result == 0;\n//@ ensures list.size() == 1 ==> \\result == 0;",
+    "//@ ensures \\result >= 0;\n//@ ensures list.size() == 1 ==> \\result == 0;\n//@ ensures list.equals(\\old(list));",
+    "//@ ensures \\result >= 0;\n//@ ensures list.size() == 1 ==> \\result == 0;\n//@ ensures list.stream().allMatch(x -> x == 1) ==> \\result == 0;\n//@ ensures \\result <= list.stream().mapToInt(x -> x - 1).sum();",
+    "//@ ensures \\result >= 0;\n//@ ensures \\old(list.size()) == 1 ==> \\result == 0;\n//@ ensures \\old(list.size()) == 0 ==> \\result == 0;\n//@ ensures list.equals(\\old(list));\n//@ ensures list.size() == \\old(list.size());"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "jml_fail",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed"
+    ],
+    [],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 143
+}

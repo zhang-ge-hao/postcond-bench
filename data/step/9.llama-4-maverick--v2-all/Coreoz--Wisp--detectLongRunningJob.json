@@ -1,0 +1,286 @@
+{
+  "rlid": "detectLongRunningJob",
+  "github_url": "https://github.com/Coreoz/Wisp/blob/1076065124550231680c5ece56dbb281eeedcc1c/./src/main/java/com/coreoz/wisp/LongRunningJobMonitor.java#L75-L110",
+  "name": "detectLongRunningJob",
+  "line_cov": 1.0,
+  "lines": 36,
+  "stats": 9,
+  "cc": 6,
+  "content": "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+  "header": "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {",
+  "file": "./src/main/java/com/coreoz/wisp/LongRunningJobMonitor.java",
+  "start_line": 75,
+  "end_line": 110,
+  "body_start_line": 82,
+  "comment": "/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */",
+  "test_time": 4.613052606582642,
+  "cover_tests": [
+    "com.coreoz.wisp.LongRunningJobMonitorTest#cleanUpLongJobIfItHasFinishedExecuting__check_that_a_clean_job_execution_is_really_cleaned",
+    "com.coreoz.wisp.LongRunningJobMonitorTest#cleanUpLongJobIfItHasFinishedExecuting__check_that_a_detected_same_running_job_is_not_cleaned",
+    "com.coreoz.wisp.LongRunningJobMonitorTest#cleanUpLongJobIfItHasFinishedExecuting__check_that_the_approximate_job_execution_time_is_logged_when_job_execution_is_incremented_by_more_than_one",
+    "com.coreoz.wisp.LongRunningJobMonitorTest#cleanUpLongJobIfItHasFinishedExecuting__check_that_the_exact_job_execution_time_is_logged_when_job_execution_is_incremented_by_one",
+    "com.coreoz.wisp.LongRunningJobMonitorTest#detectLongRunningJob__check_running_job_limits_detection",
+    "com.coreoz.wisp.LongRunningJobMonitorTest#detectLongRunningJob__check_that_a_job_long_execution_is_detected_only_once",
+    "com.coreoz.wisp.LongRunningJobMonitorTest#detectLongRunningJob__check_that_a_job_not_being_run_is_not_detected_as_too_long",
+    "com.coreoz.wisp.LongRunningJobMonitorTest#detectLongRunningJob__check_that_a_job_with_a_null_running_time_or_thread_is_not_detected"
+  ],
+  "repo": {
+    "github_path": "Coreoz/Wisp",
+    "commit": "1076065124550231680c5ece56dbb281eeedcc1c",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.coreoz</groupId>\n  <artifactId>wisp</artifactId>\n  <version>2.5.1-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <name>Wisp Scheduler</name>\n  <description>A simple Java Scheduler library with a minimal footprint and a straightforward API</description>\n  <url>https://github.com/Coreoz/Wisp</url>\n  <organization>\n    <name>Coreoz</name>\n    <url>http://coreoz.com/</url>\n    </organization>\n  <licenses>\n    <license>\n      <name>Apache License, Version 2.0</name>\n      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n      <distribution>repo</distribution>\n      </license>\n    </licenses>\n  <developers>\n    <developer>\n      <name>Aur\u00e9lien Manteaux</name>\n      <email>amanteaux@coreoz.com</email>\n      <organization>Coreoz</organization>\n      <organizationUrl>http://coreoz.com/</organizationUrl>\n      </developer>\n    </developers>\n  <scm>\n    <developerConnection>scm:git:git@github.com:Coreoz/Wisp.git</developerConnection>\n    <connection>scm:git:git@github.com:Coreoz/Wisp.git</connection>\n    <url>https://github.com/Coreoz/Wisp</url>\n    <tag>HEAD</tag>\n    </scm>\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n      </snapshotRepository>\n    <repository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>\n      </repository>\n    </distributionManagement>\n  <repositories>\n    <repository>\n      <id>oss.public</id>\n      <url>https://oss.sonatype.org/content/groups/public</url>\n      <snapshots>\n        <enabled>true</enabled>\n        </snapshots>\n      </repository>\n    <repository>\n      <id>maven_central</id>\n      <name>Maven Central</name>\n      <url>https://repo.maven.apache.org/maven2/</url>\n      </repository>\n    </repositories>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>10</maven.compiler.source>\n    <maven.compiler.target>10</maven.compiler.target>\n    <additionalparam>-Xdoclint:none</additionalparam>\n    </properties>\n  <profiles>\n    <profile>\n      <id>release</id>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-source-plugin</artifactId>\n            <version>3.0.1</version>\n            <executions>\n              <execution>\n                <id>attach-sources</id>\n                <goals>\n                  <goal>jar-no-fork</goal>\n                  </goals>\n                </execution>\n              </executions>\n            </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-jar-plugin</artifactId>\n            <configuration>\n              <archive>\n                <manifestEntries>\n                  <Automatic-Module-Name>com.coreoz.wisp</Automatic-Module-Name>\n                  </manifestEntries>\n                </archive>\n              </configuration>\n            </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-javadoc-plugin</artifactId>\n            <version>2.10.4</version>\n            <executions>\n              <execution>\n                <id>attach-javadocs</id>\n                <goals>\n                  <goal>jar</goal>\n                  </goals>\n                </execution>\n              </executions>\n            <configuration>\n              <stylesheet>java</stylesheet>\n              </configuration>\n            </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>3.2.5</version>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                  </goals>\n                </execution>\n              </executions>\n            </plugin>\n          </plugins>\n        </build>\n      </profile>\n    </profiles>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-release-plugin</artifactId>\n        <version>2.5.3</version>\n        <configuration>\n          <autoVersionSubmodules>true</autoVersionSubmodules>\n          <useReleaseProfile>false</useReleaseProfile>\n          <releaseProfiles>release</releaseProfiles>\n          <goals>deploy</goals>\n          <tagNameFormat>@{project.version}</tagNameFormat>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.eluder.coveralls</groupId>\n        <artifactId>coveralls-maven-plugin</artifactId>\n        <version>4.3.0</version>\n        </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.12</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            </execution>\n          </executions>\n        <configuration>\n          <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n          <dataFile>${project.build.directory}/jacoco.exec</dataFile>\n          <xml>true</xml>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          </configuration>\n        </plugin>\n      </plugins>\n    </build>\n  <dependencies>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-api</artifactId>\n      <version>2.0.16</version>\n      </dependency>\n    <dependency>\n      <groupId>org.projectlombok</groupId>\n      <artifactId>lombok</artifactId>\n      <version>1.18.34</version>\n      <scope>provided</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.cronutils</groupId>\n      <artifactId>cron-utils</artifactId>\n      <version>9.2.1</version>\n      <optional>true</optional>\n      </dependency>\n    <dependency>\n      <groupId>ch.eitchnet</groupId>\n      <artifactId>cron</artifactId>\n      <version>1.6.2</version>\n      <optional>true</optional>\n      </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.2</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>3.26.3</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>ch.qos.logback</groupId>\n      <artifactId>logback-classic</artifactId>\n      <version>1.3.14</version>\n      <scope>test</scope>\n      </dependency>\n    </dependencies>\n  </project>",
+    "failed_tests": [],
+    "test_time": 37.25912523269653
+  },
+  "mutants": [
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(!longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() != JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount() + 1; // Incorrectly increments the count\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount() - 1; // Incorrectly decrements the count\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionEndedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = null; // Always null, causing incorrect behavior\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = timeProvider.currentTime(); // Uses current time instead of job's start time\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = null; // Introduces a null reference, causing the logger to not log the stack trace.\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis < 0\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& job.status() != JobStatus.RUNNING\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& jobExecutionsCount > 0\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime + jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis != detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis < detectionThresholdInMillis / 2) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis < detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis <= detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis == detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis >= detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\t\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures (\\old(job.status()) == JobStatus.RUNNING && !\\old(longRunningJobs.containsKey(job)) && \\old(job.lastExecutionStartedTimeInMillis()) != null && \\old(job.threadRunningJob()) != null && currentTime - \\old(job.lastExecutionStartedTimeInMillis()) > detectionThresholdInMillis) ==> \\result == true;\n//@ ensures \\result == true ==> (\\old(job.status()) == JobStatus.RUNNING && !\\old(longRunningJobs.containsKey(job)) && \\old(job.lastExecutionStartedTimeInMillis()) != null && \\old(job.threadRunningJob()) != null && currentTime - \\old(job.lastExecutionStartedTimeInMillis()) > detectionThresholdInMillis);\n//@ ensures \\result == true ==> longRunningJobs.containsKey(job);\n//@ ensures \\result == true ==> longRunningJobs.get(job).executionsCount == \\old(job.executionsCount());\n//@ ensures \\result == true ==> longRunningJobs.get(job).jobStartedtimeInMillis == \\old(job.lastExecutionStartedTimeInMillis()).longValue();\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.coreoz.wisp;\n\nimport java.time.Duration;\nimport java.util.HashMap;\nimport java.util.Map;\nimport java.util.stream.Collectors;\nimport java.util.stream.Stream;\n\nimport org.slf4j.Logger;\nimport org.slf4j.LoggerFactory;\n\nimport com.coreoz.wisp.time.TimeProvider;\n\nimport lombok.AllArgsConstructor;\n\n/**\n * Detect jobs that are running for too long.\n * When a job is running for too long, a warning message is being logged.\n */\npublic class LongRunningJobMonitor implements Runnable {\n\n\tprivate static final Logger logger = LoggerFactory.getLogger(LongRunningJobMonitor.class);\n\n\tpublic static final Duration DEFAULT_THRESHOLD_DETECTION = Duration.ofMinutes(5);\n\n\tprivate final Scheduler scheduler;\n\tprivate final TimeProvider timeProvider;\n\tprivate final long detectionThresholdInMillis;\n\tprivate final Map<Job, LongRunningJobInfo> longRunningJobs;\n\n\t/**\n\t * Create a new {@link LongRunningJobMonitor}.\n\t * @param scheduler The scheduler that will be monitored\n\t * @param detectionThreshold The threshold after which a message will be logged if the job takes longer to execute\n\t * @param timeProvider The time provider used to calculate long running jobs\n\t */\n\tpublic LongRunningJobMonitor(Scheduler scheduler, Duration detectionThreshold, TimeProvider timeProvider) {\n\t\tthis.scheduler = scheduler;\n\t\tthis.timeProvider = timeProvider;\n\t\tthis.detectionThresholdInMillis = detectionThreshold.toMillis();\n\n\t\tthis.longRunningJobs = new HashMap<>();\n\t}\n\n\t/**\n\t * Create a new {@link LongRunningJobMonitor}.\n\t * @param scheduler The scheduler that will be monitored\n\t * @param detectionThreshold The threshold after which a message will be logged if the job takes longer to execute\n\t */\n\tpublic LongRunningJobMonitor(Scheduler scheduler, Duration detectionThreshold) {\n\t\tthis(scheduler, detectionThreshold, SchedulerConfig.DEFAULT_TIME_PROVIDER);\n\t}\n\n\t/**\n\t * Create a new {@link LongRunningJobMonitor} with a 5 minutes detection threshold.\n\t * @param scheduler The scheduler that will be monitored\n\t */\n\tpublic LongRunningJobMonitor(Scheduler scheduler) {\n\t\tthis(scheduler, DEFAULT_THRESHOLD_DETECTION, SchedulerConfig.DEFAULT_TIME_PROVIDER);\n\t}\n\n\t/**\n\t * Run the too long jobs detection on the {@link Scheduler}.\n\t * This method is *not* thread safe.\n\t */\n\t@Override\n\tpublic void run() {\n\t\tlong currentTime = timeProvider.currentTime();\n\t\tfor(Job job : scheduler.jobStatus()) {\n\t\t\tcleanUpLongJobIfItHasFinishedExecuting(currentTime, job);\n\t\t\tdetectLongRunningJob(currentTime, job);\n\t\t}\n\t}\n\n\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n\n\t/**\n\t * cleanup jobs that have finished executing after {@link #thresholdDetectionInMillis}\n\t */\n\tLong cleanUpLongJobIfItHasFinishedExecuting(long currentTime, Job job) {\n\t\tif(longRunningJobs.containsKey(job)\n\t\t\t&& longRunningJobs.get(job).executionsCount != job.executionsCount()) {\n\t\t\tLong jobLastExecutionTimeInMillis = job.lastExecutionEndedTimeInMillis();\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLongRunningJobInfo jobRunningInfo = longRunningJobs.get(job);\n\n\t\t\tlong jobExecutionDuration = 0L;\n\t\t\tif(jobExecutionsCount == jobRunningInfo.executionsCount + 1) {\n\t\t\t\tjobExecutionDuration = jobLastExecutionTimeInMillis - jobRunningInfo.jobStartedtimeInMillis;\n\t\t\t\tlogger.info(\n\t\t\t\t\t\"Job '{}' has finished executing after {}ms\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tjobExecutionDuration\n\t\t\t\t);\n\t\t\t} else {\n\t\t\t\tjobExecutionDuration = currentTime - jobRunningInfo.jobStartedtimeInMillis;\n\t\t\t\tlogger.info(\n\t\t\t\t\t\"Job '{}' has finished executing after about {}ms\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tjobExecutionDuration\n\t\t\t\t);\n\t\t\t}\n\n\t\t\tlongRunningJobs.remove(job);\n\t\t\treturn jobExecutionDuration;\n\t\t}\n\n\t\treturn null;\n\t}\n\n\t@AllArgsConstructor\n\tprivate static class LongRunningJobInfo {\n\t\tfinal long jobStartedtimeInMillis;\n\t\tfinal int executionsCount;\n\t}\n\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Check whether a job is running for too long or not.\n\t *\n\t * @return true if the is running for too long, else false.\n\t * Returned value is made available for testing purposes.\n\t */\n\tboolean detectLongRunningJob(long currentTime, Job job) {\n\t\tif(job.status() == JobStatus.RUNNING && !longRunningJobs.containsKey(job)) {\n\t\t\tint jobExecutionsCount = job.executionsCount();\n\t\t\tLong jobStartedtimeInMillis = job.lastExecutionStartedTimeInMillis();\n\t\t\tThread threadRunningJob = job.threadRunningJob();\n\n\t\t\tif(jobStartedtimeInMillis != null\n\t\t\t\t&& threadRunningJob != null\n\t\t\t\t&& currentTime - jobStartedtimeInMillis > detectionThresholdInMillis) {\n\t\t\t\tlogger.warn(\n\t\t\t\t\t\"Job '{}' is still running after {}ms (detection threshold = {}ms), stack trace = {}\",\n\t\t\t\t\tjob.name(),\n\t\t\t\t\tcurrentTime - jobStartedtimeInMillis,\n\t\t\t\t\tdetectionThresholdInMillis,\n\t\t\t\t\tStream\n\t\t\t\t\t\t.of(threadRunningJob.getStackTrace())\n\t\t\t\t\t\t.map(StackTraceElement::toString)\n\t\t\t\t\t\t.collect(Collectors.joining(\"\\n  \"))\n\t\t\t\t);\n\n\t\t\t\tlongRunningJobs.put(\n\t\t\t\t\tjob,\n\t\t\t\t\tnew LongRunningJobInfo(jobStartedtimeInMillis, jobExecutionsCount)\n\t\t\t\t);\n\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `detectLongRunningJob`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures (job.status() == JobStatus.RUNNING && !\\old(longRunningJobs.containsKey(job))) ==> (\\result <==> (job.lastExecutionStartedTimeInMillis() != null && job.threadRunningJob() != null && currentTime - job.lastExecutionStartedTimeInMillis() > detectionThresholdInMillis));\n//@ ensures (job.status() != JobStatus.RUNNING || \\old(longRunningJobs.containsKey(job))) ==> !\\result;\n//@ ensures \\result ==> \\old(!longRunningJobs.containsKey(job)) && longRunningJobs.containsKey(job);\n//@ ensures \\old(job.executionsCount() == job.executionsCount());\n//@ ensures longRunningJobs.containsKey(job) ==> longRunningJobs.get(job).jobStartedtimeInMillis == job.lastExecutionStartedTimeInMillis() && longRunningJobs.get(job).executionsCount == job.executionsCount();",
+    "//@ ensures (job.status() == JobStatus.RUNNING && !\\old(longRunningJobs.containsKey(job))) ==> (\\result <==> (job.lastExecutionStartedTimeInMillis() != null && job.threadRunningJob() != null && currentTime - job.lastExecutionStartedTimeInMillis() > detectionThresholdInMillis));\n//@ ensures (job.status() != JobStatus.RUNNING || \\old(longRunningJobs.containsKey(job))) ==> !\\result;\n//@ ensures \\result ==> \\old(!longRunningJobs.containsKey(job)) && longRunningJobs.containsKey(job);\n//@ ensures \\old(job.executionsCount()) == job.executionsCount();\n//@ ensures \\result ==> longRunningJobs.get(job).jobStartedtimeInMillis == \\old(job.lastExecutionStartedTimeInMillis()) && longRunningJobs.get(job).executionsCount == \\old(job.executionsCount());",
+    "//@ ensures (job.status() == JobStatus.RUNNING && !\\old(longRunningJobs.containsKey(job))) ==> (\\result <==> (job.lastExecutionStartedTimeInMillis() != null && job.threadRunningJob() != null && currentTime - job.lastExecutionStartedTimeInMillis() > detectionThresholdInMillis));\n//@ ensures (job.status() != JobStatus.RUNNING || \\old(longRunningJobs.containsKey(job))) ==> !\\result;\n//@ ensures \\result ==> \\old(!longRunningJobs.containsKey(job)) && longRunningJobs.containsKey(job);\n//@ ensures \\old(job.executionsCount() == job.executionsCount());\n//@ ensures longRunningJobs.containsKey(job) ==> longRunningJobs.get(job).jobStartedtimeInMillis == job.lastExecutionStartedTimeInMillis() && longRunningJobs.get(job).executionsCount == job.executionsCount();",
+    "//@ ensures (job.status() == JobStatus.RUNNING && !\\old(longRunningJobs.containsKey(job))) ==> (\\result <==> (job.lastExecutionStartedTimeInMillis() != null && job.threadRunningJob() != null && currentTime - job.lastExecutionStartedTimeInMillis() > detectionThresholdInMillis));\n//@ ensures (job.status() != JobStatus.RUNNING || \\old(longRunningJobs.containsKey(job))) ==> !\\result;\n//@ ensures \\result ==> \\old(!longRunningJobs.containsKey(job)) && longRunningJobs.containsKey(job);\n//@ ensures \\old(job.executionsCount() == job.executionsCount());\n//@ ensures longRunningJobs.containsKey(job) ==> longRunningJobs.get(job).jobStartedtimeInMillis == \\old(job.lastExecutionStartedTimeInMillis());\n//@ ensures longRunningJobs.containsKey(job) ==> longRunningJobs.get(job).executionsCount == \\old(job.executionsCount());",
+    "//@ ensures (job.status() == JobStatus.RUNNING && !\\old(longRunningJobs.containsKey(job))) ==> (\\result <==> (job.lastExecutionStartedTimeInMillis() != null && job.threadRunningJob() != null && \\old(currentTime) - job.lastExecutionStartedTimeInMillis() > detectionThresholdInMillis));\n//@ ensures (job.status() != JobStatus.RUNNING || \\old(longRunningJobs.containsKey(job))) ==> !\\result;\n//@ ensures \\old(longRunningJobs.containsKey(job)) ==> !longRunningJobs.containsKey(job);\n//@ ensures (\\result ==> longRunningJobs.containsKey(job));\n//@ ensures (\\result ==> longRunningJobs.get(job).jobStartedtimeInMillis == job.lastExecutionStartedTimeInMillis());\n//@ ensures (\\result ==> longRunningJobs.get(job).executionsCount == job.executionsCount());"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "jml_fail"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    []
+  ],
+  "traversal_rank": 1
+}

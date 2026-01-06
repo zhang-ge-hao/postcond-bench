@@ -1,0 +1,135 @@
+{
+  "rlid": "sink-2",
+  "github_url": "https://github.com/ashish-chopra/Structures/blob/ce0a8f131568368bec3110f4ffddcb74d0b9ca0f/./src/main/java/com/sorting/Heap.java#L106-L121",
+  "name": "sink",
+  "line_cov": 1.0,
+  "lines": 16,
+  "stats": 9,
+  "cc": 5,
+  "content": "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+  "header": "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {",
+  "file": "./src/main/java/com/sorting/Heap.java",
+  "start_line": 106,
+  "end_line": 121,
+  "body_start_line": 111,
+  "comment": "/*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */",
+  "test_time": 4.579341888427734,
+  "cover_tests": [
+    "com.sorting.HeapSortTest#testSortWithIntegersWithComparator",
+    "com.sorting.HeapSortTest#testSortWithStringWithComparator"
+  ],
+  "repo": {
+    "github_path": "ashish-chopra/Structures",
+    "commit": "ce0a8f131568368bec3110f4ffddcb74d0b9ca0f",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.types.adt</groupId>\n  <artifactId>Structures</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <name>Structures</name>\n  <url>https://github.com/ashish-chopra/Structures</url>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    </properties>\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.11</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.googlecode.princeton-java-introduction</groupId>\n      <artifactId>stdlib</artifactId>\n      <version>1.0.1</version>\n      </dependency>\n    </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>2.10.3</version>\n        <configuration>\n        </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.3</version>\n        <configuration>\n          <source>10</source><target>10</target></configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            <configuration>\n              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n              <formats><format>XML</format></formats></configuration>\n            </execution>\n          </executions>\n        </plugin>\n      </plugins>\n    </build>\n  </project>",
+    "failed_tests": [
+      "com.graph.BFSTest#testBFSOperations",
+      "com.graph.ConnectedComponentsTest#testConnectedComponents",
+      "com.graph.CycleTest#testBasicCycleDetection",
+      "com.graph.DFSTest#testDFSQueries",
+      "com.graph.GraphTest#testBasicOperationsOfGraph",
+      "com.graph.GraphTest#testGraphAPI"
+    ],
+    "test_time": 2.620187997817993
+  },
+  "mutants": [
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice < 1) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice < len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice < len) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice > len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c) || less(A, j + 1, j, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j - 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if (j < len && !less(A, j, j + 1, c))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if (j < len && (less(A, j, j + 1, c) || j % 2 == 0))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j--;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (less(A, indice, j, c)) // This will incorrectly allow sinking when it shouldn't.\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            \n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, indice); // Swaps the element with itself, causing no change\n            indice = j;\n        }\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures A.length == \\old(A.length);\n//@ ensures (2 * \\old(indice) <= len) ==> ( (c == null ? ((Comparable)A[\\old(indice) - 1]).compareTo(A[2 * \\old(indice) - 1]) >= 0 : c.compare(A[\\old(indice) - 1], A[2 * \\old(indice) - 1]) >= 0) );\n//@ ensures (2 * \\old(indice) + 1 <= len) ==> ( (c == null ? ((Comparable)A[\\old(indice) - 1]).compareTo(A[2 * \\old(indice)]) >= 0 : c.compare(A[\\old(indice) - 1], A[2 * \\old(indice)]) >= 0) );",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n/*\n * File: Heap.java\n * Date: 26 Fev, 2017\n * Author: Stephane Miguel KAKANAKOU\n * ---------------------------------------\n * Sorting is the process of rearranging a sequence of objects so as to put them \n * in some logical order. Heapsort can be thought of as an improved selection sort: like \n * that algorithm, it divides its input into a sorted and an unsorted region, and it \n * iteratively shrinks the unsorted region by extracting the largest element and moving \n * that to the sorted region. The improvement consists of the use of a heap data structure \n * rather than a linear-time search to find the maximum. Heapsort is an in-place algorithm, \n * but it is not a stable sort\n * \n * \n *  *  Features:\n * \n *  1. Heap Sort is implemented as an array of Comparable Objects and sorts them\n *     based on their natural order defined by Comparable interface.\n *  2. In case if client wants to sort the objects in some other order than the natural\n *     order of objects, then client can call the overloaded method \n *     Heap.sort(array, comparator) and pass the comparator object which gives the \n *     customized ordering   \n *  3. It is a generic implementation which can take any type of array of objects.   \n *  4. The implementation is based on array based data structure.\n *  5. The running time complexity of each operation is constant, O(n*log(n)).\n */\npackage com.sorting;\n\nimport java.util.Comparator;\n\npublic class Heap {\n\n    /*\n     * private constructor prevents the instantiation of the class.\n     */\n    private Heap() {\n    }\n\n    /**\n     * rearranges the array in ascending order, using the natural order.\n     * \n     * @param array\n     *            the array to be sorted\n     */\n    public static void sort(Comparable[] array) {\n        if (array == null)\n            throw new NullPointerException();\n        heapify(array);\n        for (int k = array.length; k >= 1; k--) {\n            exch(array, 1, k);\n            sink(array, 1, k - 1);\n        }\n    }\n\n    /**\n     * Rearranges the array in ascending order, using a comparator.\n     * \n     * @param array\n     *            the array to be sorted\n     * @param c\n     *            the comparator specifying the order\n     */\n    public static void sort(Comparable[] array, Comparator c) {\n        if (array == null)\n            throw new NullPointerException();\n        heapify(array, c);\n        for (int k = array.length; k >= 1; k--) {\n            exch(array, 1, k);\n            sink(array, 1, k - 1, c);\n        }\n    }\n\n    /*\n     * transform array in heap\n     */\n    private static void heapify(Comparable[] A) {\n        for (int k = A.length / 2; k >= 1; k--)\n            sink(A, k, A.length);\n    }\n\n    /*\n     * transform array in heap using a comparator.\n     */\n    private static void heapify(Comparable[] A, Comparator c) {\n        for (int k = A.length / 2; k >= 1; k--)\n            sink(A, k, A.length, c);\n    }\n\n    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's.\n     */\n    private static void sink(Comparable[] A, int indice, int len) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, null)))\n                j++;\n            if (!less(A, indice, j, null))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }\n\n    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }\n\n    /*\n     * swap A[i] and A[j]\n     */\n    private static void exch(Object[] A, int i, int j) {\n        i = getArrayIndex(i);\n        j = getArrayIndex(j);\n        Object k = A[i];\n        A[i] = A[j];\n        A[j] = k;\n    }\n\n    /*\n     * check is A[i] is less than A[j] ?\n     */\n    private static boolean less(Comparable[] A, int i, int j, Comparator c) {\n        i = getArrayIndex(i);\n        j = getArrayIndex(j);\n        int compareValue;\n        if (c == null)\n            compareValue = A[i].compareTo(A[j]);\n        else\n            compareValue = c.compare(A[i], A[j]);\n        if (compareValue < 0)\n            return true;\n        return false;\n    }\n\n    /*\n     * the array index begin by 0 and the heap index begin by 1. So this\n     * function convert a given heap index into the array index\n     */\n    private static int getArrayIndex(int indice) {\n        return --indice;\n    }\n\n    /**\n     * prints sequence of Objects to standard output.\n     * \n     * @param array\n     *            the array to be printed\n     */\n    public static void show(Comparable[] array) {\n        for (int i = 0; i < array.length; i++) {\n            System.out.print(array[i] + \",\");\n        }\n    }\n\n}\n\n```\n## Target Method\n```\n    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `sink`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures (\\forall int k; 1 <= k && k <= len; k > indice ==> (\\forall int child; child == 2 * k || child == 2 * k + 1; child <= len ==> !less(A, k-1, child-1, c)));\n//@ ensures (\\forall int k; 1 <= k && k <= indice; k > 1 ==> (\\forall int parent; parent == k/2; parent >= 1 ==> !less(A, parent-1, k-1, c)));\n//@ ensures (\\forall int i; 0 <= i && i < len; i ==> (\\exists int j; 0 <= j && j < len; A[i] == \\old(A[j])));\n//@ ensures (\\forall int i; len <= i && i < A.length; i ==> A[i] == \\old(A[i]));",
+    "//@ ensures (\\forall int i; 1 <= i && i <= len; i != indice ==> (\\forall int j; j == 2 * i || j == 2 * i + 1; j <= len ==> !less(A, j, indice, c)));\n//@ ensures (\\forall int i; 1 <= i && i <= len; i != indice ==> A[getArrayIndex(i)] == \\old(A[getArrayIndex(i)]));\n//@ ensures (\\forall int i; i == indice; 1 <= i && i <= len ==> A[getArrayIndex(i)] == \\old(A[getArrayIndex(\\max(\\old(A), indice, c, len))]));",
+    "//@ ensures (\\forall int k; 1 <= k && k <= len; k > indice ==> !less(A, k, indice, c));\n//@ ensures (\\forall int k; 1 <= k && k <= indice; (\\forall int child; 2*k <= len && (child == 2*k || (2*k+1 <= len && !less(A, 2*k, 2*k+1, c))) ==> !less(A, k, child, c)));\n//@ ensures (\\forall int i; 1 <= i && i <= len; (\\exists int j; 1 <= j && j <= len; j != indice && A[getArrayIndex(i)] == \\old(A[getArrayIndex(j)])) ==> A[getArrayIndex(i)] == \\old(A[getArrayIndex(i)]));\n//@ ensures (\\forall int i; 1 <= i && i <= len; A[getArrayIndex(i)] == \\old(A[getArrayIndex(i)]) || (\\exists int j; 1 <= j && j <= len; j != indice && A[getArrayIndex(i)] == \\old(A[getArrayIndex(j)])));",
+    "//@ ensures (\\forall int k; 1 <= k && k <= len; (isHeapNode(A, k, len, c) && (k >= indice ==> isHeapNode(A, k, len, c))) ==> isHeapNode(A, indice, len, c));\n//@ ensures (\\forall int k; 1 <= k && k <= len; isHeapNode(A, k, len, c) ==> isHeap(A, len, c));\n//@ ensures len == \\old(len);\n//@ ensures indice > len/2 ==> (\\forall int i; indice <= i && i <= len; A[i] == \\old(A[i]));\n//@ ensures (\\forall int i; 1 <= i && i <= len; i < indice ==> A[i] == \\old(A[i]) || A[i] == \\old(A[2*i]) || A[i] == \\old(A[2*i+1]));",
+    "//@ ensures (\\forall int i; 1 <= i && i <= len; i > indice ==> (\\forall int j; j == 2 * i || j == 2 * i + 1; j <= len ==> !less(A, i, j, c)));\n//@ ensures (\\forall int i; 1 <= i && i <= len; i == indice ==> (\\forall int j; j == 2 * i || j == 2 * i + 1; j <= len ==> !less(A, i, j, c)) ==> A == \\old(A));\n//@ ensures (\\forall int i; 1 <= i && i <= len; (\\forall int j; j == 2 * i || j == 2 * i + 1; j <= len ==> !less(A, i, j, c)));"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 280
+}

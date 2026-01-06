@@ -1,0 +1,467 @@
+{
+  "rlid": "solve-2",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/datastructures/graphs/TwoSat.java#L149-L190",
+  "name": "solve",
+  "line_cov": 1.0,
+  "lines": 42,
+  "stats": 23,
+  "cc": 7,
+  "content": "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+  "header": "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {",
+  "file": "./src/main/java/com/thealgorithms/datastructures/graphs/TwoSat.java",
+  "start_line": 149,
+  "end_line": 190,
+  "body_start_line": 154,
+  "comment": "/**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */",
+  "test_time": 8.095320701599121,
+  "cover_tests": [
+    "com.thealgorithms.datastructures.graphs.TwoSatTest#test6",
+    "com.thealgorithms.datastructures.graphs.TwoSatTest#testChainedDependenciesSatisfiable",
+    "com.thealgorithms.datastructures.graphs.TwoSatTest#testSatisfiableBasicCase",
+    "com.thealgorithms.datastructures.graphs.TwoSatTest#testSingleVariableTrivialSatisfiable",
+    "com.thealgorithms.datastructures.graphs.TwoSatTest#testUnsatisfiableContradiction",
+    "com.thealgorithms.datastructures.graphs.TwoSatTest#testUnsatisfiableCycle"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n - 1; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i += 2) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i >= n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 2; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (i % 2 == 0) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (i == 1) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                \n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(1, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i - 1, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        \n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, true);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        for (int i = 0; i < n; i++) { visited[i] = true; }\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        for (int i = 0; i < topologicalOrder.size(); i++) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        if (topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop() - 1; // This also modifies the node value, which can lead to incorrect processing of the graph.\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop(); topologicalOrder.clear(); // This clears the stack, preventing further processing of remaining nodes.\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (component[node] != 0) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (node < 1 || node >= n) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (sccId == 0) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (topologicalOrder.isEmpty()) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                \n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                component[node] = sccId; // Incorrectly assigns the component ID without performing DFS\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                sccId++; // Increments the SCC ID without performing DFS, potentially causing incorrect component assignments\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                visited[node] = false; // Incorrectly marks the node as unvisited, leading to incorrect SCC identification\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId--;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i < numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i > numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = i; // Incorrectly assigns notI to i instead of its negation\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i + 1); // Incorrectly negates the variable index plus one\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i + numberOfVariables); // Incorrectly adds the number of variables to i before negating\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i - 1); // Incorrectly negates the variable index minus one\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(negate(i)); // Double negation, which results in the original variable instead of its negation\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] != component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] < component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] > component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[notI] == 0) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] > component[notI];\n        }\n    }",
+    "    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n        isSolved = true;\n        int n = 2 * numberOfVariables + 1;\n\n        boolean[] visited = new boolean[n];\n        int[] component = new int[n];\n        Stack<Integer> topologicalOrder = new Stack<>();\n\n        // Step 1: Perform DFS to get topological order\n        for (int i = 1; i < n; i++) {\n            if (!visited[i]) {\n                dfsForTopologicalOrder(i, visited, topologicalOrder);\n            }\n        }\n\n        Arrays.fill(visited, false);\n        int sccId = 0;\n\n        // Step 2: Find SCCs on transposed graph\n        while (!topologicalOrder.isEmpty()) {\n            int node = topologicalOrder.pop();\n            if (!visited[node]) {\n                dfsForScc(node, visited, component, sccId);\n                sccId++;\n            }\n        }\n\n        // Step 3: Check for contradictions and assign values\n        for (int i = 1; i <= numberOfVariables; i++) {\n            int notI = negate(i);\n            if (component[i] == component[notI]) {\n                hasSolution = false;\n                return;\n            }\n            // If SCC(i) > SCC(\u00aci), then variable i is true.\n            variableAssignments[i] = component[i] <= component[notI];\n        }\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures isSolved;\n//@ ensures variableAssignments.length == numberOfVariables + 1;\n//@ ensures hasSolution ==> java.util.stream.IntStream.range(1, graph.length).allMatch(u -> graph[u].stream().allMatch(v -> (!(u <= numberOfVariables ? variableAssignments[u] : !variableAssignments[u - numberOfVariables]) || (v <= numberOfVariables ? variableAssignments[v] : !variableAssignments[v - numberOfVariables]))));\n//@ ensures hasSolution || java.util.stream.IntStream.range(1, numberOfVariables + 1).anyMatch(i -> { int lit = i; int notLit = i + numberOfVariables; int limit = graph.length; java.util.Set<Integer> startLit = java.util.Collections.singleton(lit); java.util.Set<Integer> startNot = java.util.Collections.singleton(notLit); boolean reachLitToNot = java.util.stream.Stream.iterate(startLit, s -> s.stream().flatMap(v -> graph[v].stream()).collect(java.util.stream.Collectors.toSet())).limit(limit).anyMatch(s -> s.contains(notLit)); boolean reachNotToLit = java.util.stream.Stream.iterate(startNot, s -> s.stream().flatMap(v -> graph[v].stream()).collect(java.util.stream.Collectors.toSet())).limit(limit).anyMatch(s -> s.contains(lit)); return reachLitToNot && reachNotToLit; });\n//@ ensures ((java.util.function.Supplier<Boolean>)() -> { int n = 2 * numberOfVariables + 1; boolean[] visited = new boolean[n]; int[] comp = new int[n]; java.util.Stack<Integer> st = new java.util.Stack<>(); for (int i = 1; i < n; i++) { if (!visited[i]) { java.util.Stack<Integer> dfs = new java.util.Stack<>(); dfs.push(i); while (!dfs.isEmpty()) { int u = dfs.pop(); if (!visited[u]) { visited[u] = true; for (int idx = 0; idx < graph[u].size(); idx++) { int v = graph[u].get(idx); if (!visited[v]) { dfs.push(v); } } st.push(u); } } } } java.util.Arrays.fill(visited, false); int sccId = 0; while (!st.isEmpty()) { int node = st.pop(); if (!visited[node]) { java.util.Stack<Integer> dfs2 = new java.util.Stack<>(); dfs2.push(node); while (!dfs2.isEmpty()) { int u = dfs2.pop(); if (!visited[u]) { visited[u] = true; comp[u] = sccId; for (int idx = 0; idx < graphTranspose[u].size(); idx++) { int v = graphTranspose[u].get(idx); if (!visited[v]) { dfs2.push(v); } } } } sccId++; } } boolean specHasSol = true; boolean[] specAssign = new boolean[numberOfVariables + 1]; for (int i = 1; i <= numberOfVariables; i++) { int notI = i + numberOfVariables; if (comp[i] == comp[notI]) { specHasSol = false; break; } specAssign[i] = comp[i] > comp[notI]; } if (specHasSol != hasSolution) { return false; } if (!specHasSol) { return true; } for (int i = 1; i <= numberOfVariables; i++) { if (specAssign[i] != variableAssignments[i]) { return false; } } return true; }).get();\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.datastructures.graphs;\n\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Stack;\n\n/**\n * This class implements a solution to the 2-SAT (2-Satisfiability) problem\n * using Kosaraju's algorithm to find strongly connected components (SCCs)\n * in the implication graph.\n *\n * <p>\n * <strong>Brief Idea:</strong>\n * </p>\n *\n * <pre>\n * 1. From each clause (a \u2228 b), we can derive implications:\n *      (\u00aca \u2192 b) and (\u00acb \u2192 a)\n *\n * 2. We construct an implication graph using these implications.\n *\n * 3. For each variable x, its negation \u00acx is also represented as a node.\n *    If x and \u00acx belong to the same SCC, the expression is unsatisfiable.\n *\n * 4. Otherwise, we assign truth values based on the SCC order:\n *    If SCC(x) > SCC(\u00acx), then x = true; otherwise, x = false.\n * </pre>\n *\n * <p>\n * <strong>Complexities:</strong>\n * </p>\n * <ul>\n * <li>Time Complexity: O(n + m)</li>\n * <li>Space Complexity: O(n + m)</li>\n * </ul>\n * where {@code n} is the number of variables and {@code m} is the number of\n * clauses.\n *\n * <p>\n * <strong>Usage Example:</strong>\n * </p>\n *\n * <pre>\n * TwoSat twoSat = new TwoSat(5); // Initialize with 5 variables: x1, x2, x3, x4, x5\n *\n * // Add clauses\n * twoSat.addClause(1, false, 2, false); // (x1 \u2228 x2)\n * twoSat.addClause(3, true, 2, false); // (\u00acx3 \u2228 x2)\n * twoSat.addClause(4, false, 5, true); // (x4 \u2228 \u00acx5)\n *\n * twoSat.solve(); // Solve the problem\n *\n * if (twoSat.isSolutionExists()) {\n *     boolean[] solution = twoSat.getSolutions();\n *     for (int i = 1; i <= 5; i++) {\n *         System.out.println(\"x\" + i + \" = \" + solution[i]);\n *     }\n * }\n * </pre>\n * <p><strong>Reference</strong></p>\n * <a href=\"https://cp-algorithms.com/graph/2SAT.html\">CP Algorithm</a> <br></br>\n * <a href=\"https://en.wikipedia.org/wiki/2-satisfiability\">Wikipedia - 2 SAT</a>\n * @author Shoyeb Ansari\n *\n * @see Kosaraju\n */\nclass TwoSat {\n\n    /** Number of variables in the boolean expression. */\n    private final int numberOfVariables;\n\n    /** Implication graph built from the boolean clauses. */\n    private final ArrayList<Integer>[] graph;\n\n    /** Transposed implication graph used in Kosaraju's algorithm. */\n    private final ArrayList<Integer>[] graphTranspose;\n\n    /** Stores one valid truth assignment for all variables (1-indexed). */\n    private final boolean[] variableAssignments;\n\n    /** Indicates whether a valid solution exists. */\n    private boolean hasSolution = true;\n\n    /** Tracks whether the {@code solve()} method has been called. */\n    private boolean isSolved = false;\n\n    /**\n     * Initializes the TwoSat solver with the given number of variables.\n     *\n     * @param numberOfVariables the number of boolean variables\n     * @throws IllegalArgumentException if the number of variables is negative\n     */\n    @SuppressWarnings({\"unchecked\", \"rawtypes\"})\n    TwoSat(int numberOfVariables) {\n        if (numberOfVariables < 0) {\n            throw new IllegalArgumentException(\"Number of variables cannot be negative.\");\n        }\n        this.numberOfVariables = numberOfVariables;\n        int n = 2 * numberOfVariables + 1;\n\n        graph = (ArrayList<Integer>[]) new ArrayList[n];\n        graphTranspose = (ArrayList<Integer>[]) new ArrayList[n];\n        for (int i = 0; i < n; i++) {\n            graph[i] = new ArrayList<>();\n            graphTranspose[i] = new ArrayList<>();\n        }\n        variableAssignments = new boolean[numberOfVariables + 1];\n    }\n\n    /**\n     * Adds a clause of the form (a \u2228 b) to the boolean expression.\n     *\n     * <p>\n     * Example: To add (\u00acx\u2081 \u2228 x\u2082), call:\n     * </p>\n     *\n     * <pre>{@code\n     * addClause(1, true, 2, false);\n     * }</pre>\n     *\n     * @param a         the first variable (1 \u2264 a \u2264 numberOfVariables)\n     * @param isNegateA {@code true} if variable {@code a} is negated\n     * @param b         the second variable (1 \u2264 b \u2264 numberOfVariables)\n     * @param isNegateB {@code true} if variable {@code b} is negated\n     * @throws IllegalArgumentException if {@code a} or {@code b} are out of range\n     */\n    void addClause(int a, boolean isNegateA, int b, boolean isNegateB) {\n...\n    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n...\n    /**\n     * Returns whether the given boolean formula is satisfiable.\n     *\n     * @return {@code true} if a solution exists; {@code false} otherwise\n     * @throws Error if called before {@link #solve()}\n     */\n    boolean isSolutionExists() {\n...\n    /**\n     * Returns one valid assignment of variables that satisfies the boolean formula.\n     *\n     * @return a boolean array where {@code result[i]} represents the truth value of\n     *         variable {@code x\u1d62}\n     * @throws Error if called before {@link #solve()} or if no solution exists\n     */\n    boolean[] getSolutions() {\n...\n    /** Performs DFS to compute topological order. */\n    private void dfsForTopologicalOrder(int u, boolean[] visited, Stack<Integer> topologicalOrder) {\n...\n    /** Performs DFS on the transposed graph to identify SCCs. */\n    private void dfsForScc(int u, boolean[] visited, int[] component, int sccId) {\n...\n    /**\n     * Returns the index representing the negation of the given variable.\n     *\n     * <p>\n     * Mapping rule:\n     * </p>\n     *\n     * <pre>\n     * For a variable i:\n     *     negate(i) = i + n\n     * For a negated variable (i + n):\n     *     negate(i + n) = i\n     * where n = numberOfVariables\n     * </pre>\n     *\n     * @param a the variable index\n     * @return the index representing its negation\n     */\n    private int negate(int a) {\n...\n}\n\n```\n## Target Method\n```\n    /**\n     * Solves the 2-SAT problem using Kosaraju's algorithm to find SCCs\n     * and determines whether a satisfying assignment exists.\n     */\n    void solve() {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `solve`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures isSolved == true;\n//@ ensures numberOfVariables == \\old(numberOfVariables);\n//@ ensures variableAssignments != null;\n//@ ensures variableAssignments.length == \\old(variableAssignments.length);\n//@ ensures graph != null;\n//@ ensures graphTranspose != null;\n//@ ensures graph.length == \\old(graph.length);\n//@ ensures graphTranspose.length == \\old(graphTranspose.length);",
+    "//@ ensures isSolved == true;\n//@ ensures numberOfVariables == \\old(numberOfVariables);\n//@ ensures graph == \\old(graph);\n//@ ensures graphTranspose == \\old(graphTranspose);\n//@ ensures variableAssignments == \\old(variableAssignments);",
+    "//@ ensures isSolved == true;\n//@ ensures numberOfVariables == \\old(numberOfVariables);\n//@ ensures graph == \\old(graph);\n//@ ensures graphTranspose == \\old(graphTranspose);\n//@ ensures variableAssignments == \\old(variableAssignments);",
+    "//@ ensures isSolved == true;\n//@ ensures hasSolution == true || hasSolution == false;\n//@ ensures variableAssignments != null;\n//@ ensures variableAssignments.length == numberOfVariables + 1;\n//@ ensures graph == \\old(graph);\n//@ ensures graphTranspose == \\old(graphTranspose);\n//@ ensures numberOfVariables == \\old(numberOfVariables);",
+    "//@ ensures isSolved == true;\n//@ ensures numberOfVariables == \\old(numberOfVariables);\n//@ ensures graph != null;\n//@ ensures graphTranspose != null;\n//@ ensures variableAssignments != null;\n//@ ensures variableAssignments.length == numberOfVariables + 1;"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 139
+}

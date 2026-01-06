@@ -1,0 +1,142 @@
+{
+  "rlid": "containsPoint",
+  "github_url": "https://github.com/romankh3/image-comparison/blob/0e9c63792af31dac63b439554dcc0d35c34e0b78/./src/main/java/com/github/romankh3/image/comparison/model/Rectangle.java#L152-L160",
+  "name": "containsPoint",
+  "line_cov": 1.0,
+  "lines": 9,
+  "stats": 1,
+  "cc": 4,
+  "content": "    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n        return  point.x >= minPoint.x && point.x<= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y;\n    }",
+  "header": "    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {",
+  "file": "./src/main/java/com/github/romankh3/image/comparison/model/Rectangle.java",
+  "start_line": 152,
+  "end_line": 160,
+  "body_start_line": 159,
+  "comment": "/**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */",
+  "test_time": 6.725624322891235,
+  "cover_tests": [
+    "com.github.romankh3.image.comparison.ImageComparisonUnitTest#shouldIgnoreExcludedAreas",
+    "com.github.romankh3.image.comparison.ImageComparisonUnitTest#shouldProperlyCompareBug113",
+    "com.github.romankh3.image.comparison.ImageComparisonUnitTest#shouldProperlyCompareBug171",
+    "com.github.romankh3.image.comparison.ImageComparisonUnitTest#shouldProperlyFillInTransparentGreen",
+    "com.github.romankh3.image.comparison.ImageComparisonUnitTest#shouldProperlyFillInTransparentRed",
+    "com.github.romankh3.image.comparison.ImageComparisonUnitTest#shouldReproduceBug98and97"
+  ],
+  "repo": {
+    "github_path": "romankh3/image-comparison",
+    "commit": "0e9c63792af31dac63b439554dcc0d35c34e0b78",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.romankh3</groupId>\n  <artifactId>image-comparison</artifactId>\n  <version>4.5.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <name>Image Comparison</name>\n  <url>https://romankh3.github.io/image-comparison/</url>\n  <properties>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <mockito.version>2.26.0</mockito.version>\n    <junit.jupiter.api.version>5.5.2</junit.jupiter.api.version>\n    <maven.source.plugin.version>3.2.0</maven.source.plugin.version>\n    <maven.javadoc.plugin.version>3.1.1</maven.javadoc.plugin.version>\n  </properties>\n  <dependencies>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>${mockito.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-api</artifactId>\n      <version>${junit.jupiter.api.version}</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>${maven.source.plugin.version}</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>${maven.javadoc.plugin.version}</version>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>2.22.2</version>\n        <configuration>\n          <reportsDirectory>target/surefire-reports</reportsDirectory>\n          <useFile>true</useFile>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n          </execution>\n        </executions>\n        <configuration>\n          <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n          <reports>\n            <xml>true</xml>\n            <html>false</html>\n          </reports>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 7.416135549545288
+  },
+  "mutants": [
+    "    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n        return  point.x < minPoint.x && point.x<= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y;\n    }",
+    "    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n        return  point.x >= minPoint.x && point.x<= maxPoint.x && point.y < minPoint.y && point.y <= maxPoint.y;\n    }",
+    "    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n        return  point.x >= minPoint.x && point.x<= maxPoint.x && point.y >= minPoint.y && point.y > maxPoint.y;\n    }",
+    "    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n        return  point.x >= minPoint.x && point.x> maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y;\n    }",
+    "    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n        return false;\n    }",
+    "    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n        return true;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.github.romankh3.image.comparison.model;\n\nimport static java.lang.Integer.max;\nimport static java.lang.Integer.min;\n\nimport java.awt.Point;\nimport java.util.Objects;\n\n/**\n * Object contained data for a rectangle.\n */\npublic class Rectangle {\n\n    /**\n     * Left Top {@link Point} on the {@link Rectangle}.\n     */\n    private Point minPoint;\n\n    /**\n     * Right bottom {@link Point} on the {@link Rectangle}.\n     */\n    private Point maxPoint;\n\n    /**\n     * Create empty instance of the {@link Rectangle}.\n     */\n    private Rectangle() {\n        minPoint = new Point();\n        maxPoint = new Point();\n    }\n\n    /**\n     * Create clone object based on the provided {@link Rectangle}.\n     *\n     * @param rectangle provided {@link Rectangle} object.\n     */\n    public Rectangle(Rectangle rectangle) {\n        this.minPoint = new Point(rectangle.getMinPoint().x, rectangle.getMinPoint().y);\n        this.maxPoint = new Point(rectangle.getMaxPoint().x, rectangle.getMaxPoint().y);\n    }\n\n    /**\n     * Create instance of the {@link Rectangle} based on the provided coordinates.\n     *\n     * @param minX minimal X-coordinate.\n     * @param minY minimal Y-coordinate.\n     * @param maxX maximal X-coordinate.\n     * @param maxY maximal Y-coordinate.\n     */\n    public Rectangle(int minX, int minY, int maxX, int maxY) {\n        this.minPoint = new Point(minX, minY);\n        this.maxPoint = new Point(maxX, maxY);\n    }\n\n    /**\n     * Create default {@link Rectangle} object.\n     *\n     * @return default rectangle {@link Rectangle}.\n     */\n    public static Rectangle createDefault() {\n...\n    /**\n     * Create instance with zero points.\n     *\n     * @return created {@link Rectangle} instance.\n     */\n    public static Rectangle createZero() {\n...\n    /**\n     * Create new {@link Rectangle} via merging this and that.\n     *\n     * @param that {@link Rectangle} for merging with this.\n     * @return new merged {@link Rectangle}.\n     */\n    public Rectangle merge(Rectangle that) {\n...\n    /**\n     * Check is that rectangle overlap this.\n     *\n     * @param that {@link Rectangle} which checks with this.\n     * @return true if this over lapp that, false otherwise.\n     */\n    public boolean isOverlapping(Rectangle that) {\n...\n    /**\n     * Set default values for rectangle.\n     */\n    public void setDefaultValues() {\n...\n    /**\n     * Make zero rectangle.\n     */\n    public void makeZeroRectangle() {\n...\n    /**\n     * Size of the {@link Rectangle}, counted as width x height.\n     *\n     * @return the size of the {@link Rectangle}.\n     */\n    public Integer size() {\n...\n    /**\n     * Count the width of the {@link Rectangle}.\n     * Min and max point are included, so real width is +1px\n     *\n     * @return rectangle width.\n     */\n    public int getWidth() {\n...\n    /**\n     * Count the height of the {@link Rectangle}.\n     * Min and max point are included, so real width is +1px.\n     *\n     * @return rectangle height.\n     */\n    public int getHeight() {\n...\n    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n...\n    public Point getMinPoint() {\n...\n    public void setMinPoint(Point minPoint) {\n...\n    public Point getMaxPoint() {\n...\n    public void setMaxPoint(Point maxPoint) {\n...\n    @Override\n    public boolean equals(Object o) {\n...\n    @Override\n    public int hashCode() {\n...\n}\n\n```\n## Target Method\n```\n    /**\n     * Check if the provided {@link Point} contains in the {@link Rectangle}.\n     *\n     * @param point provided {@link Point}.\n     * @return {@code true} if provided {@link Point} contains, {@code false} - otherwise.\n     */\n    boolean containsPoint(Point point) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `containsPoint`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);",
+    "//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);",
+    "//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);",
+    "//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);",
+    "//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);"
+  ],
+  "responses": [
+    "```jml\n//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);\n```",
+    "```jml\n//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);\n```",
+    "```jml\n//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);\n```",
+    "```jml\n//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);\n```",
+    "```jml\n//@ ensures \\result == (point.x >= minPoint.x && point.x <= maxPoint.x && point.y >= minPoint.y && point.y <= maxPoint.y);\n```"
+  ],
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 164
+}

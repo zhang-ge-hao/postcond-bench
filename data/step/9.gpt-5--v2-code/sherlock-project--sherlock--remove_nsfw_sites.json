@@ -1,0 +1,152 @@
+{
+  "rlid": "remove_nsfw_sites",
+  "github_url": "https://github.com/sherlock-project/sherlock/blob/339634f7bc370517b06f960b464b10935bb829fb/./sherlock_project/sites.py#L213-L229",
+  "name": "remove_nsfw_sites",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 7,
+  "cc": 4,
+  "content": "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+  "header": "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"",
+  "file": "./sherlock_project/sites.py",
+  "start_line": 213,
+  "end_line": 229,
+  "body_start_line": 223,
+  "comment": "\"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"",
+  "test_time": 1.3988590240478516,
+  "cover_tests": [
+    "tests/test_ux.py::test_remove_nsfw",
+    "tests/test_ux.py::test_nsfw_explicit_selection[nsfwsites0]",
+    "tests/test_ux.py::test_nsfw_explicit_selection[nsfwsites1]"
+  ],
+  "repo": {
+    "github_path": "sherlock-project/sherlock",
+    "commit": "339634f7bc370517b06f960b464b10935bb829fb",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.2.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"sherlock-project\"\nversion = \"0.1.0\"\n\n[tool.poetry-version-plugin]\nsource = \"init\"\n\n[tool.poetry]\nname = \"sherlock-project\"\nversion = \"0.16.0\"\ndescription = \"Hunt down social media accounts by username across social networks\"\nlicense = \"MIT\"\nauthors = [ \"Siddharth Dushantha <siddharth.dushantha@gmail.com>\",]\nmaintainers = [ \"Paul Pfeister <code@pfeister.dev>\", \"Matheus Felipe <matheusfelipeog@protonmail.com>\", \"Sondre Karlsen Dyrnes <sondre@villdyr.no>\",]\nreadme = \"docs/pyproject/README.md\"\nkeywords = [ \"osint\", \"reconnaissance\", \"information gathering\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Intended Audience :: Information Technology\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Topic :: Security\",]\nhomepage = \"https://sherlockproject.xyz/\"\nrepository = \"https://github.com/sherlock-project/sherlock\"\n[[tool.poetry.packages]]\ninclude = \"sherlock_project\"\n\n[tool.poetry.urls]\n\"Bug Tracker\" = \"https://github.com/sherlock-project/sherlock/issues\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\ncertifi = \">=2019.6.16\"\ncolorama = \"^0.4.1\"\nPySocks = \"^1.7.0\"\nrequests = \"^2.22.0\"\nrequests-futures = \"^1.0.0\"\nstem = \"^1.8.0\"\npandas = \"^2.2.1\"\nopenpyxl = \"^3.0.10\"\ntomli = \"^2.2.1\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.scripts]\nsherlock = \"sherlock_project.sherlock:main\"\n\n[tool.poetry.group.dev.dependencies]\njsonschema = \"^4.0.0\"\nrstr = \"^3.2.2\"\npytest = \"^8.4.2\"\npytest-xdist = \"^3.8.0\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n\n[tool.poetry.group.ci.dependencies]\ndefusedxml = \"^0.7.1\"\n",
+    "failed_tests": [
+      "tests/test_ux.py::test_no_usernames_provided[]",
+      "tests/test_ux.py::test_no_usernames_provided[--site urghrtuight --egiotr]",
+      "tests/test_ux.py::test_no_usernames_provided[--]",
+      "tests/test_version.py::test_versioning"
+    ],
+    "test_time": 5.668840646743774
+  },
+  "mutants": [
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove if site.casefold() in self.sites]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.upper() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if not self.sites[site].is_nsfw and site.casefold() in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites\n",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw or site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw or site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites\n",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                break\n            sites[site] = self.sites[site]\n        self.sites =  sites\n",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = None\n        self.sites =  sites\n",
+    "    def remove_nsfw_sites(self, do_not_remove: list = []):\n        \"\"\"\n        Remove NSFW sites from the sites, if isNSFW flag is true for site\n\n        Keyword Arguments:\n        self                   -- This object.\n\n        Return Value:\n        None\n        \"\"\"\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  None\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda self: dict(self.sites), name=\"old_sites\")\n@icontract.snapshot(lambda do_not_remove: [s.casefold() for s in do_not_remove], name=\"old_do_not_remove\")\n@icontract.ensure(\n    lambda OLD, self: \n        isinstance(self.sites, dict)\n        and\n        all(((site in self.sites and self.sites[site] is OLD.old_sites[site]) if (not OLD.old_sites[site].is_nsfw or site.casefold() in OLD.old_do_not_remove) else (site not in self.sites)) for site in OLD.old_sites)\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport json\nimport requests\nimport secrets\n\n\nMANIFEST_URL = \"https://raw.githubusercontent.com/sherlock-project/sherlock/master/sherlock_project/resources/data.json\"\nEXCLUSIONS_URL = \"https://raw.githubusercontent.com/sherlock-project/sherlock/refs/heads/exclusions/false_positive_exclusions.txt\"\n\nclass SiteInformation:\n    def __init__(self, name, url_home, url_username_format, username_claimed,\n                information, is_nsfw, username_unclaimed=secrets.token_urlsafe(10)):\n\n        self.name = name\n        self.url_home = url_home\n        self.url_username_format = url_username_format\n\n        self.username_claimed = username_claimed\n        self.username_unclaimed = secrets.token_urlsafe(32)\n        self.information = information\n        self.is_nsfw  = is_nsfw\n\n        return\n\n    def __str__(self):\n\n        return f\"{self.name} ({self.url_home})\"\n\n\nclass SitesInformation:\n    def __init__(\n            self,\n            data_file_path: str|None = None,\n            honor_exclusions: bool = True,\n            do_not_exclude: list[str] = [],\n        ):\n\n        if not data_file_path:\n            data_file_path = MANIFEST_URL\n\n        if not data_file_path.lower().endswith(\".json\"):\n            raise FileNotFoundError(f\"Incorrect JSON file extension for data file '{data_file_path}'.\")\n\n        if data_file_path.lower().startswith(\"http\"):\n            try:\n                response = requests.get(url=data_file_path, timeout=30)\n            except Exception as error:\n                raise FileNotFoundError(\n                    f\"Problem while attempting to access data file URL '{data_file_path}':  {error}\"\n                )\n\n            if response.status_code != 200:\n                raise FileNotFoundError(f\"Bad response while accessing \"\n                                        f\"data file URL '{data_file_path}'.\"\n                                        )\n            try:\n                site_data = response.json()\n            except Exception as error:\n                raise ValueError(\n                    f\"Problem parsing json contents at '{data_file_path}':  {error}.\"\n                )\n\n        else:\n            try:\n                with open(data_file_path, \"r\", encoding=\"utf-8\") as file:\n                    try:\n                        site_data = json.load(file)\n                    except Exception as error:\n                        raise ValueError(\n                            f\"Problem parsing json contents at '{data_file_path}':  {error}.\"\n                        )\n\n            except FileNotFoundError:\n                raise FileNotFoundError(f\"Problem while attempting to access \"\n                                        f\"data file '{data_file_path}'.\"\n                                        )\n\n        site_data.pop('$schema', None)\n\n        if honor_exclusions:\n            try:\n                response = requests.get(url=EXCLUSIONS_URL, timeout=10)\n                if response.status_code == 200:\n                    exclusions = response.text.splitlines()\n                    exclusions = [exclusion.strip() for exclusion in exclusions]\n\n                    for site in do_not_exclude:\n                        if site in exclusions:\n                            exclusions.remove(site)\n\n                    for exclusion in exclusions:\n                        try:\n                            site_data.pop(exclusion, None)\n                        except KeyError:\n                            pass\n\n            except Exception:\n                print(\"Warning: Could not load exclusions, continuing without them.\")\n                honor_exclusions = False\n\n        self.sites = {}\n\n        for site_name in site_data:\n            try:\n\n                self.sites[site_name] = \\\n                    SiteInformation(site_name,\n                                    site_data[site_name][\"urlMain\"],\n                                    site_data[site_name][\"url\"],\n                                    site_data[site_name][\"username_claimed\"],\n                                    site_data[site_name],\n                                    site_data[site_name].get(\"isNSFW\",False)\n\n                                    )\n            except KeyError as error:\n                raise ValueError(\n                    f\"Problem parsing json contents at '{data_file_path}':  Missing attribute {error}.\"\n                )\n            except TypeError:\n                print(f\"Encountered TypeError parsing json contents for target '{site_name}' at {data_file_path}\\nSkipping target.\\n\")\n\n        return\n\n    def remove_nsfw_sites(self, do_not_remove: list = []):\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites\n\n    def site_name_list(self):\n\n        return sorted([site.name for site in self], key=str.lower)\n\n    def __iter__(self):\n\n        for site_name in self.sites:\n            yield self.sites[site_name]\n\n    def __len__(self):\n        return len(self.sites)\n\n```\n## Target Method\n```\n    def remove_nsfw_sites(self, do_not_remove: list = []):\n        sites = {}\n        do_not_remove = [site.casefold() for site in do_not_remove]\n        for site in self.sites:\n            if self.sites[site].is_nsfw and site.casefold() not in do_not_remove:\n                continue\n            sites[site] = self.sites[site]\n        self.sites =  sites\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `remove_nsfw_sites`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda self: dict(self.sites), name=\"sites_before\")\n@icontract.ensure(lambda self, do_not_remove, OLD: set(self.sites.keys()) == {k for k, v in OLD.sites_before.items() if (not v.is_nsfw) or (k.casefold() in {x.casefold() for x in do_not_remove})})\n@icontract.ensure(lambda self, OLD: all(self.sites[k] is OLD.sites_before[k] for k in self.sites))\n@icontract.ensure(lambda self, do_not_remove, OLD: len(self.sites) == sum(1 for k, v in OLD.sites_before.items() if (not v.is_nsfw) or (k.casefold() in {x.casefold() for x in do_not_remove})))",
+    "@icontract.snapshot(lambda self: dict(self.sites), name=\"old_sites\")\n@icontract.snapshot(lambda do_not_remove: [s.casefold() for s in do_not_remove], name=\"old_do_not_remove_cf\")\n@icontract.ensure(lambda self, OLD: set(self.sites.keys()) == {k for k, v in OLD.old_sites.items() if (not v.is_nsfw) or (k.casefold() in OLD.old_do_not_remove_cf)})\n@icontract.ensure(lambda self, OLD: all(self.sites[k] is OLD.old_sites[k] for k in self.sites))",
+    "@icontract.snapshot(lambda self: dict(self.sites), name=\"old_sites\")\n@icontract.snapshot(lambda do_not_remove: {s.casefold() for s in do_not_remove}, name=\"dnr\")\n@icontract.ensure(lambda self, old_sites: set(self.sites.keys()).issubset(set(old_sites.keys())))\n@icontract.ensure(lambda self, old_sites: all(self.sites[k] is old_sites[k] for k in self.sites))\n@icontract.ensure(lambda self, old_sites, dnr: all((((not si.is_nsfw) or (k.casefold() in dnr)) == (k in self.sites)) for k, si in old_sites.items()))",
+    "@icontract.snapshot(lambda self: dict(self.sites), name=\"pre_sites\")\n@icontract.snapshot(lambda self, do_not_remove: {s.casefold() for s in do_not_remove}, name=\"do_not_remove_cf\")\n@icontract.ensure(lambda self, pre_sites, do_not_remove_cf: set(self.sites.keys()) == {k for (k, v) in pre_sites.items() if (not v.is_nsfw) or (k.casefold() in do_not_remove_cf)})\n@icontract.ensure(lambda self, pre_sites: all(self.sites[k] is pre_sites[k] for k in self.sites.keys()))\n@icontract.ensure(lambda self, do_not_remove_cf: all((not si.is_nsfw) or (name.casefold() in do_not_remove_cf) for name, si in self.sites.items()))\n@icontract.ensure(lambda self, pre_sites, do_not_remove_cf: all(pre_sites[k].is_nsfw and k.casefold() not in do_not_remove_cf for k in set(pre_sites.keys()) - set(self.sites.keys())))",
+    "@icontract.snapshot(lambda self: set(self.sites.keys()), name=\"old_keys\")\n@icontract.snapshot(lambda self: dict(self.sites), name=\"old_map\")\n@icontract.snapshot(lambda self: {k: v.is_nsfw for k, v in self.sites.items()}, name=\"old_nsfw_map\")\n@icontract.ensure(lambda self, old_keys: set(self.sites.keys()).issubset(old_keys))\n@icontract.ensure(lambda self, do_not_remove, old_keys, old_nsfw_map: set(self.sites.keys()) == {k for k in old_keys if (not old_nsfw_map[k]) or (k.casefold() in {s.casefold() for s in do_not_remove})})\n@icontract.ensure(lambda self, old_map: all(self.sites[k] is old_map[k] for k in self.sites))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "failed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash"
+    ],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 246
+}

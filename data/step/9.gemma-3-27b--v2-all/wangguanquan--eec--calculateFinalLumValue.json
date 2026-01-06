@@ -1,0 +1,253 @@
+{
+  "rlid": "calculateFinalLumValue",
+  "github_url": "https://github.com/wangguanquan/eec/blob/43cbda4ee4e09bf9988e033f4e4ac8cc3b108af4/./src/main/java/org/ttzero/excel/entity/style/HlsColor.java#L109-L128",
+  "name": "calculateFinalLumValue",
+  "line_cov": 1.0,
+  "lines": 20,
+  "stats": 6,
+  "cc": 3,
+  "content": "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n        return lum;\n    }",
+  "header": "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {",
+  "file": "./src/main/java/org/ttzero/excel/entity/style/HlsColor.java",
+  "start_line": 109,
+  "end_line": 128,
+  "body_start_line": 124,
+  "comment": "/**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */",
+  "test_time": 2.437143325805664,
+  "cover_tests": [
+    "org.ttzero.excel.entity.style.StylesTest#testThemeColor"
+  ],
+  "repo": {
+    "github_path": "wangguanquan/eec",
+    "commit": "43cbda4ee4e09bf9988e033f4e4ac8cc3b108af4",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>org.ttzero</groupId>\n  <artifactId>eec</artifactId>\n  <version>0.5.27</version>\n  <name>Excel Write/Read Framework</name>\n  <packaging>jar</packaging>\n  <url>https://github.com/wangguanquan/eec/wiki</url>\n  <description>\n    A fast and lower memory excel write/read tool\n    \u4e00\u4e2a\u975ePOI\u5e95\u5c42\u652f\u6301\u6d41\u5f0f\u5904\u7406\u7684\u9ad8\u6548\u4e14\u8d85\u4f4e\u5185\u5b58\u7684Excel\u8bfb\u5199\u5de5\u5177\n  </description>\n  <properties>\n    <java.version>11</java.version>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>\n    <maven.compiler.source>${java.version}</maven.compiler.source>\n    <maven.compiler.target>${java.version}</maven.compiler.target>\n    <dom4j.version>2.1.3</dom4j.version>\n    <slf4j.version>2.0.12</slf4j.version>\n  </properties>\n  <dependencies>\n    <dependency>\n      <groupId>org.dom4j</groupId>\n      <artifactId>dom4j</artifactId>\n      <version>${dom4j.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-api</artifactId>\n      <version>${slf4j.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.xerial</groupId>\n      <artifactId>sqlite-jdbc</artifactId>\n      <version>3.41.2.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>ch.qos.logback</groupId>\n      <artifactId>logback-classic</artifactId>\n      <version>1.3.12</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>com.squareup.okhttp3</groupId>\n      <artifactId>okhttp</artifactId>\n      <version>3.11.0</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <licenses>\n    <license>\n      <name>The Apache Software License, Version 2.0</name>\n      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n    </license>\n  </licenses>\n  <developers>\n    <developer>\n      <name>guanquan.wang</name>\n      <email>guanquan.wang@hotmail.com</email>\n    </developer>\n  </developers>\n  <scm>\n    <connection>scm:git:https://github.com/wangguanquan/eec.git</connection>\n    <url>https://github.com/wangguanquan/eec</url>\n    <tag>HEAD</tag>\n  </scm>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.0.1</version>\n        <executions>\n          <execution>\n            <phase>package</phase>\n            <goals>\n              <goal>jar-no-fork</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>3.0.1</version>\n        <executions>\n          <execution>\n            <phase>package</phase>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n        <configuration>\n          <excludePackageNames>org.ttzero.excel.hash</excludePackageNames>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <xml>true</xml>\n                <html>false</html>\n              </reports>\n            </configuration>\n          </execution>\n        </executions>\n        <configuration>\n          <reports>\n            <xml>true</xml>\n          </reports>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n  <profiles>\n    <profile>\n      <id>release</id>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>1.6</version>\n            <executions>\n              <execution>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n          <plugin>\n            <groupId>org.sonatype.central</groupId>\n            <artifactId>central-publishing-maven-plugin</artifactId>\n            <version>0.7.0</version>\n            <extensions>true</extensions>\n            <configuration>\n              <publishingServerId>oss</publishingServerId>\n            </configuration>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n  </profiles>\n</project>",
+    "failed_tests": [
+      "org.ttzero.excel.annotation.CustomAnnoReaderTest#testCustomeAnno",
+      "org.ttzero.excel.entity.ListObjectPagingTest#testLocalPicWatermark",
+      "org.ttzero.excel.entity.ListObjectSheetTest#testLocalPicWatermark",
+      "org.ttzero.excel.entity.ListObjectSheetTest#testStreamWatermark",
+      "org.ttzero.excel.entity.PictureTest#testExportPicture",
+      "org.ttzero.excel.entity.PictureTest#testExportPictureUseBuffer",
+      "org.ttzero.excel.entity.PictureTest#testExportPictureUseByteArray",
+      "org.ttzero.excel.entity.PictureTest#testExportPictureUseFile",
+      "org.ttzero.excel.entity.PictureTest#testExportPictureUseStream",
+      "org.ttzero.excel.entity.PictureTest#testPresetPictureEffects",
+      "org.ttzero.excel.entity.TemplateSheetTest#testAllTemplateSheets",
+      "org.ttzero.excel.entity.TemplateSheetTest#testCopyCascadeList",
+      "org.ttzero.excel.entity.TemplateSheetTest#testDefaultFormatOnDateCell",
+      "org.ttzero.excel.entity.TemplateSheetTest#testFillListMap",
+      "org.ttzero.excel.entity.TemplateSheetTest#testFillListObject",
+      "org.ttzero.excel.entity.TemplateSheetTest#testFillMap",
+      "org.ttzero.excel.entity.TemplateSheetTest#testFillObject",
+      "org.ttzero.excel.entity.TemplateSheetTest#testFillSupplierListMap",
+      "org.ttzero.excel.entity.TemplateSheetTest#testFillSupplierListObject",
+      "org.ttzero.excel.entity.TemplateSheetTest#testInnerFormula",
+      "org.ttzero.excel.entity.TemplateSheetTest#testMultiTemplates",
+      "org.ttzero.excel.entity.TemplateSheetTest#testSimpleTemplate",
+      "org.ttzero.excel.entity.TemplateSheetTest#testTemplate",
+      "org.ttzero.excel.entity.ValidationTest#testTailElements",
+      "org.ttzero.excel.reader.ExcelReader2Test#test354",
+      "org.ttzero.excel.reader.ExcelReader2Test#testCalcSheet",
+      "org.ttzero.excel.reader.ExcelReader2Test#testFullReader",
+      "org.ttzero.excel.reader.ExcelReader2Test#testIsBlank",
+      "org.ttzero.excel.reader.ExcelReader2Test#testLargeMerge",
+      "org.ttzero.excel.reader.ExcelReader2Test#testLastColumnIndex",
+      "org.ttzero.excel.reader.ExcelReader2Test#testMerge",
+      "org.ttzero.excel.reader.ExcelReader2Test#testMergeSheet",
+      "org.ttzero.excel.reader.ExcelReader2Test#testReadComments",
+      "org.ttzero.excel.reader.ExcelReader2Test#testReadHeader",
+      "org.ttzero.excel.reader.ExcelReader2Test#testReadRelManager",
+      "org.ttzero.excel.reader.ExcelReader2Test#testSpecifyHeaderRow",
+      "org.ttzero.excel.reader.ExcelReaderTest#test175",
+      "org.ttzero.excel.reader.ExcelReaderTest#test1751",
+      "org.ttzero.excel.reader.ExcelReaderTest#test226",
+      "org.ttzero.excel.reader.ExcelReaderTest#testAllType",
+      "org.ttzero.excel.reader.ExcelReaderTest#testBoxAllType",
+      "org.ttzero.excel.reader.ExcelReaderTest#testClassBind",
+      "org.ttzero.excel.reader.ExcelReaderTest#testClassSharedBind",
+      "org.ttzero.excel.reader.ExcelReaderTest#testColumnIndex",
+      "org.ttzero.excel.reader.ExcelReaderTest#testDimension",
+      "org.ttzero.excel.reader.ExcelReaderTest#testFilter",
+      "org.ttzero.excel.reader.ExcelReaderTest#testForEach",
+      "org.ttzero.excel.reader.ExcelReaderTest#testFormula",
+      "org.ttzero.excel.reader.ExcelReaderTest#testFormulaReader",
+      "org.ttzero.excel.reader.ExcelReaderTest#testHeaderString",
+      "org.ttzero.excel.reader.ExcelReaderTest#testHeaderString2",
+      "org.ttzero.excel.reader.ExcelReaderTest#testMergeFunc",
+      "org.ttzero.excel.reader.ExcelReaderTest#testMergedReader",
+      "org.ttzero.excel.reader.ExcelReaderTest#testNumber2ExcelFormula",
+      "org.ttzero.excel.reader.ExcelReaderTest#testReadDrawings",
+      "org.ttzero.excel.reader.ExcelReaderTest#testReadEmptyCell",
+      "org.ttzero.excel.reader.ExcelReaderTest#testReader",
+      "org.ttzero.excel.reader.ExcelReaderTest#testReaderByName",
+      "org.ttzero.excel.reader.ExcelReaderTest#testReset",
+      "org.ttzero.excel.reader.ExcelReaderTest#testResetToEntry",
+      "org.ttzero.excel.reader.ExcelReaderTest#testRowToMap",
+      "org.ttzero.excel.reader.ExcelReaderTest#testSheetConvert",
+      "org.ttzero.excel.reader.ExcelReaderTest#testToAnnotationObject",
+      "org.ttzero.excel.reader.ExcelReaderTest#testToCSV",
+      "org.ttzero.excel.reader.ExcelReaderTest#testToObject",
+      "org.ttzero.excel.reader.ExcelReaderTest#testToObject2",
+      "org.ttzero.excel.reader.ExcelReaderTest#testToStandardObject",
+      "org.ttzero.excel.reader.ExcelReaderTest#test_81",
+      "org.ttzero.excel.reader.MultiHeaderReaderTest#testFractureMerged",
+      "org.ttzero.excel.reader.MultiHeaderReaderTest#testLargeMerge",
+      "org.ttzero.excel.reader.MultiHeaderReaderTest#testMergeExcel",
+      "org.ttzero.excel.reader.MultiHeaderReaderTest#testMergeExcel2",
+      "org.ttzero.excel.reader.MultiStyleInCellTest#testMulti",
+      "org.ttzero.excel.reader.ReadStyleTest#testReadStyles",
+      "org.ttzero.excel.reader.ReadStyleTest#testSpecialIndexedColor"
+    ],
+    "test_time": 23.01715612411499
+  },
+  "mutants": [
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint != null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint != null) return lum; // This incorrectly returns lum when tint is not null, ignoring the case when it is null.\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint >= 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 + tint) + (255 - 255 * (1 - tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 + 255 * (1 - tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 * (1 + tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 / (1 - tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) - (255 - 255 * (1 - tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum / (1 - tint) + (255 - 255 * (1 - tint)));\n        return lum;\n    }",
+    "    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n        return 0;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\old(tint) == null ==> \\result == \\old(lum);\n//@ ensures \\old(tint) != null && \\old(tint) < 0.0 ==> \\result == (float)(\\old(lum) * (1.0 + \\old(tint)));\n//@ ensures \\old(tint) != null && \\old(tint) >= 0.0 ==> \\result == (float)(\\old(lum) * (1.0 - \\old(tint)) + (255.0 - 255.0 * (1.0 - \\old(tint))));\n//@ ensures \\result >= 0.0f && \\result <= 255.0f",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n/*\n * Copyright (c) 2017-2023, guanquan.wang@yandex.com All Rights Reserved.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *     http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\n\npackage org.ttzero.excel.entity.style;\n\nimport org.ttzero.excel.util.StringUtil;\n\nimport java.awt.Color;\n\n/**\n * Hue-Luminance-Saturation Color Util (OpenXML theme color)\n *\n * @author guanquan.wang at 2023-01-02 15:59\n */\npublic class HlsColor {\n    /**\n     * Alpha\n     */\n    public float a;\n    /**\n     * Hue\n     */\n    public float h;\n    /**\n     * Luminance\n     */\n    public float l;\n    /**\n     * Saturation\n     */\n    public float s;\n\n    /**\n     * \u5c06RGBA\u989c\u8272\u8f6c\u6362\u4e3aHLS\u989c\u8272\n     *\n     * @param rgbColor RGB\u989c\u8272\n     * @return HLS\u989c\u8272\n     */\n    public static HlsColor rgbToHls(Color rgbColor) {\n        HlsColor hlsColor = new HlsColor();\n        float r = rgbColor.getRed() / 255.0F, g = rgbColor.getGreen() / 255.0F\n            , b = rgbColor.getBlue() / 255.0F, a = rgbColor.getAlpha() / 255.0F;\n        float min = Math.min(r, Math.min(g, b));\n        float max = Math.max(r, Math.max(g, b));\n        float delta = max - min;\n        if (max == min) {\n            hlsColor.h = 0F;\n            hlsColor.s = 0F;\n            hlsColor.l = max;\n            return hlsColor;\n        }\n        hlsColor.l = (min + max) / 2.0F;\n        if (hlsColor.l < 0.5F) hlsColor.s = delta / (max + min);\n        else hlsColor.s = delta / (2.0F - max - min);\n        if (r == max) hlsColor.h = (g - b) / delta;\n        if (g == max) hlsColor.h = 2.0F + (b - r) / delta;\n        if (b == max) hlsColor.h = 4.0F + (r - g) / delta;\n        hlsColor.h *= 60F;\n        if (hlsColor.h < 0F) hlsColor.h += 360F;\n        hlsColor.a = a;\n        return hlsColor;\n    }\n\n    /**\n     * \u5c06HLS\u989c\u8272\u8f6c\u6362\u4e3aRGBA\u989c\u8272\n     *\n     * @param hlsColor HLS\u989c\u8272\n     * @return RGBA\u989c\u8272\n     */\n    public static Color hlsToRgb(HlsColor hlsColor) {\n        // \u7070\u8272\uff0c\u6ca1\u6709\u8272\u76f8\u548c\u9971\u548c\u5ea6\n        if (hlsColor.s == 0) {\n            return new Color(hlsColor.l, hlsColor.l, hlsColor.l, hlsColor.a);\n        }\n        float t1 = hlsColor.l < 0.5F ? hlsColor.l * (1.0F + hlsColor.s) : hlsColor.l + hlsColor.s - (hlsColor.l * hlsColor.s);\n        float t2 = 2.0F * hlsColor.l - t1;\n        float h = hlsColor.h / 360F;\n        float r = hueToRGB(t1, t2, h + 0.3333333333F);\n        float g = hueToRGB(t1, t2, h);\n        float b = hueToRGB(t1, t2, h - 0.3333333333F);\n        return new Color(r, g, b, hlsColor.a);\n    }\n\n    private static float hueToRGB(float t1, float t2, float t3) {\n        if (t3 < 0) t3 += 1.0F;\n        if (t3 > 1) t3 -= 1.0F;\n        float color;\n        if (6.0F * t3 < 1) color = t2 + (t1 - t2) * 6.0F * t3;\n        else if (2.0F * t3 < 1) color = t1;\n        else if (3.0F * t3 < 2) color = t2 + (t1 - t2) * ((2.0F / 3.0F) - t3) * 6.0F;\n        else color = t2;\n        return color;\n    }\n\n    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n        return lum;\n    }\n\n    /**\n     * Convert RGB to HSL and then adjust the luminance part\n     *\n     * @param theme rgb color\n     * @param tintV tint a double from {@code -1.0 .. 1.0}\n     * @return rgb color\n     */\n    public static Color calculateColor(Color theme, String tintV) {\n        Double tint = null;\n        if (StringUtil.isNotEmpty(tintV)) {\n            try {\n                tint = Double.parseDouble(tintV);\n            } catch (NumberFormatException ex) {\n                // Ignore\n            }\n        }\n\n        // Theme value range 0 ... 9\n        HlsColor hls = rgbToHls(theme);\n        hls.l = calculateFinalLumValue(tint, hls.l * 255) / 255;\n        return hlsToRgb(hls);\n    }\n}\n\n```\n## Target Method\n```\n    /**\n     * If tint is supplied, then it is applied to the value of the color to determine the final color applied.\n     * <p>\n     * The tint value is stored as a double from {@code -1.0 .. 1.0}, where {@code -1.0} means {@code 100%} darken\n     * and {@code 1.0} means {@code 100%} lighten. Also, {@code 0.0} means no change.\n     * <p>\n     * In loading the value, it is converted to HLS where HLS values are (0..HLSMAX), where HLSMAX is currently 255.\n     * <p>\n     * Referer: <a href=\"https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.color?view=openxml-2.8.1\">Tint</a>\n     *\n     * @param tint Specifies the tint value applied to the color.\n     * @param lum Luminance part\n     * @return calculate tint Luminance\n     */\n    public static float calculateFinalLumValue(Double tint, float lum) {\n        if (tint == null) return lum;\n        if (tint < 0) lum = (float) (lum * (1 + tint));\n        else lum = (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n        return lum;\n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `calculateFinalLumValue`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float) (lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));",
+    "//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float)(lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float)(lum * (1 - tint) + (255 - 255 * (1 - tint)));",
+    "//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float) (lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));",
+    "//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float) (lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));",
+    "//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float) (lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));"
+  ],
+  "responses": [
+    "```jml\n//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float) (lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n```",
+    "```jml\n//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float)(lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float)(lum * (1 - tint) + (255 - 255 * (1 - tint)));\n```",
+    "```jml\n//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float) (lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n```",
+    "```jml\n//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float) (lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n```",
+    "```jml\n//@ ensures tint == null ==> \\result == lum;\n//@ ensures tint != null && tint < 0 ==> \\result == (float) (lum * (1 + tint));\n//@ ensures tint != null && tint >= 0 ==> \\result == (float) (lum * (1 - tint) + (255 - 255 * (1 - tint)));\n```"
+  ],
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 127
+}

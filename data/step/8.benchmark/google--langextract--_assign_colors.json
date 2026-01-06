@@ -1,0 +1,78 @@
+{
+  "rlid": "_assign_colors",
+  "github_url": "https://github.com/google/langextract/blob/6e36c378994121c2b8d9a25b32cff149d9bfc61c/./langextract/visualization.py#L179-L193",
+  "name": "_assign_colors",
+  "line_cov": 1.0,
+  "lines": 15,
+  "stats": 6,
+  "cc": 4,
+  "content": "def _assign_colors(extractions: list[data.Extraction]) -> dict[str, str]:\n  \"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"\n  classes = {e.extraction_class for e in extractions if e.char_interval}\n  color_map: dict[str, str] = {}\n  palette_cycle = itertools.cycle(_PALETTE)\n  for cls in sorted(classes):\n    color_map[cls] = next(palette_cycle)\n  return color_map",
+  "header": "def _assign_colors(extractions: list[data.Extraction]) -> dict[str, str]:\n  \"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"",
+  "file": "./langextract/visualization.py",
+  "start_line": 179,
+  "end_line": 193,
+  "body_start_line": 188,
+  "comment": "\"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"",
+  "test_time": 1.9905986785888672,
+  "cover_tests": [
+    "tests/visualization_test.py::VisualizationTest::test_assign_colors_basic_assignment",
+    "tests/visualization_test.py::VisualizationTest::test_visualize_basic_document_renders_correctly"
+  ],
+  "repo": {
+    "github_path": "google/langextract",
+    "commit": "6e36c378994121c2b8d9a25b32cff149d9bfc61c",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=67.0.0\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"langextract\"\nversion = \"1.0.9\"\ndescription = \"LangExtract: A library for extracting structured data from language models\"\nreadme = \"README.md\"\nrequires-python = \">=3.10\"\nlicense = \"Apache-2.0\"\ndependencies = [ \"absl-py (>=1.0.0)\", \"aiohttp (>=3.8.0)\", \"async-timeout (>=4.0.0)\", \"exceptiongroup (>=1.1.0)\", \"google-genai (>=0.1.0)\", \"ml-collections (>=0.1.0)\", \"more-itertools (>=8.0.0)\", \"numpy (>=1.20.0)\", \"pandas (>=1.3.0)\", \"pydantic (>=1.8.0)\", \"python-dotenv (>=0.19.0)\", \"pyyaml (>=6.0)\", \"requests (>=2.25.0)\", \"tqdm (>=4.64.0)\", \"typing-extensions (>=4.0.0)\",]\n[[project.authors]]\nname = \"Akshay Goel\"\nemail = \"goelak@google.com\"\n\n[project.urls]\nHomepage = \"https://github.com/google/langextract\"\nRepository = \"https://github.com/google/langextract\"\nDocumentation = \"https://github.com/google/langextract/blob/main/README.md\"\n\"Bug Tracker\" = \"https://github.com/google/langextract/issues\"\nChangelog = \"https://github.com/google/langextract/releases\"\nDOI = \"https://doi.org/10.5281/zenodo.17015089\"\n\n[project.optional-dependencies]\nopenai = [ \"openai>=1.50.0\",]\nall = [ \"openai>=1.50.0\",]\ndev = [ \"pyink~=24.3.0\", \"isort>=5.13.0\", \"pylint>=3.0.0\", \"pytype>=2024.10.11\", \"tox>=4.0.0\", \"import-linter>=2.0\",]\ntest = [ \"pytest>=7.4.0\", \"tomli>=2.0.0\",]\nnotebook = [ \"ipython>=7.0.0\", \"notebook>=6.0.0\",]\n\n[tool.setuptools]\npackages = [ \"langextract\", \"langextract._compat\", \"langextract.core\", \"langextract.providers\", \"langextract.providers.schemas\",]\ninclude-package-data = true\n\n[tool.pyink]\nline-length = 80\nunstable = true\npyink-indentation = 2\npyink-use-majority-quotes = true\n\n[tool.isort]\nprofile = \"google\"\nline_length = 80\nforce_sort_within_sections = true\nsingle_line_exclusions = [ \"typing\", \"typing_extensions\", \"collections.abc\",]\n\n[tool.importlinter]\nroot_package = \"langextract\"\n[[tool.importlinter.contracts]]\nname = \"Providers must not import inference\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.providers\",]\nforbidden_modules = [ \"langextract.inference\",]\n\n[[tool.importlinter.contracts]]\nname = \"Core must not import providers\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.core\",]\nforbidden_modules = [ \"langextract.providers\",]\n\n[[tool.importlinter.contracts]]\nname = \"Core must not import high-level modules\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.core\",]\nforbidden_modules = [ \"langextract.annotation\", \"langextract.chunking\", \"langextract.prompting\", \"langextract.resolver\",]\n\n[project.entry-points.\"langextract.providers\"]\ngemini = \"langextract.providers.gemini:GeminiLanguageModel\"\nollama = \"langextract.providers.ollama:OllamaLanguageModel\"\nopenai = \"langextract.providers.openai:OpenAILanguageModel\"\n\n[tool.setuptools.package-data]\nlangextract = [ \"py.typed\",]\n\n[tool.setuptools.exclude-package-data]\n\"*\" = [ \"docs*\", \"tests*\", \"kokoro*\", \"*.gif\", \"*.svg\",]\n\n[tool.pytest.ini_options]\ntestpaths = [ \"tests\",]\npython_files = \"*_test.py\"\npython_classes = \"Test*\"\npython_functions = \"test_*\"\naddopts = \"-ra\"\nmarkers = [ \"live_api: marks tests as requiring live API access\", \"requires_pip: marks tests that perform pip install/uninstall operations\", \"integration: marks integration tests that test multiple components together\",]\n\n[tool.poetry.group.dev.dependencies]\nopenai = \">=1.50.0\"\npyink = \">=24.3.0,<24.4.0\"\nisort = \">=5.13.0\"\npylint = \">=3.0.0\"\npytype = \">=2024.10.11\"\ntox = \">=4.0.0\"\nimport-linter = \">=2.0\"\npytest = \">=7.4.0\"\ntomli = \">=2.0.0\"\nipython = \">=7.0.0\"\nnotebook = \">=6.0.0\"\nicontract = \"^2.7.1\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\n",
+    "failed_tests": [],
+    "test_time": 22.83636784553528
+  },
+  "mutants": [
+    "def _assign_colors(extractions: list[data.Extraction]) -> dict[str, str]:\n  \"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"\n  classes = {e.extraction_class for e in extractions if e.char_interval}\n  color_map: dict[str, str] = {}\n  palette_cycle = itertools.cycle(_PALETTE[::-1])  # Cycles through the colors in reverse order, which may not be intended\n  for cls in sorted(classes):\n    color_map[cls] = next(palette_cycle)\n  return color_map",
+    "def _assign_colors(extractions: list[data.Extraction]) -> dict[str, str]:\n  \"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"\n  classes = {e.extraction_class for e in extractions if e.char_interval}\n  color_map: dict[str, str] = {}\n  palette_cycle = itertools.cycle(_PALETTE)\n  for cls in itertools.chain(classes, ['default']):  # Adds a 'default' class, potentially leading to unexpected color assignments\n    color_map[cls] = next(palette_cycle)\n  return color_map",
+    "def _assign_colors(extractions: list[data.Extraction]) -> dict[str, str]:\n  \"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"\n  classes = {e.extraction_class for e in extractions if e.char_interval}\n  color_map: dict[str, str] = {}\n  palette_cycle = itertools.cycle(_PALETTE)\n  for cls in sorted(classes, reverse=True):  # Sorts in reverse order, causing color assignments to be incorrect\n    color_map[cls] = next(palette_cycle)\n  return color_map",
+    "def _assign_colors(extractions: list[data.Extraction]) -> dict[str, str]:\n  \"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"\n  classes = {e.extraction_class for e in extractions if e.char_interval}\n  color_map: dict[str, str] = {}\n  palette_cycle = itertools.cycle(_PALETTE)\n  for cls in sorted(classes):\n    color_map[cls] = '#ff00ff'  # Assigning a fixed color instead of cycling through the palette\n  return color_map",
+    "def _assign_colors(extractions: list[data.Extraction]) -> dict[str, str]:\n  \"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"\n  classes = {e.extraction_class for e in extractions if e.char_interval}\n  color_map: dict[str, str] = {}\n  palette_cycle = itertools.cycle(_PALETTE)\n  for cls in sorted(classes):\n    color_map[cls] = next(palette_cycle) if cls in color_map else '#ffffff'\n  return color_map",
+    "def _assign_colors(extractions: list[data.Extraction]) -> dict[str, str]:\n  \"\"\"Assigns a background colour to each extraction class.\n\n  Args:\n    extractions: list of extractions.\n\n  Returns:\n    Mapping from extraction_class to a hex colour string.\n  \"\"\"\n  classes = {e.extraction_class for e in extractions if e.char_interval}\n  color_map: dict[str, str] = {}\n  palette_cycle = itertools.cycle(_PALETTE)\n  for cls in sorted(classes):\n    color_map[cls] = next(palette_cycle) if cls.startswith('A') else '#ff0000'\n  return color_map"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda extractions: sorted({e.extraction_class for e in extractions if e.char_interval}), name=\"sorted_classes\")\n@icontract.snapshot(lambda extractions: list(_PALETTE), name=\"palette\")\n@icontract.ensure(lambda result, extractions, OLD: set(result.keys()) == set(OLD.sorted_classes))\n@icontract.ensure(lambda result, extractions, OLD: all(result[cls] == OLD.palette[i % len(OLD.palette)] for i, cls in enumerate(OLD.sorted_classes)))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 366
+}

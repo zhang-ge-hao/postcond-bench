@@ -1,0 +1,114 @@
+{
+  "rlid": "_process",
+  "github_url": "https://github.com/fwkz/riposte/blob/174bded8ccd665556b163e5c5633d0900715740f/./riposte/riposte.py#L219-L231",
+  "name": "_process",
+  "line_cov": 1.0,
+  "lines": 13,
+  "stats": 6,
+  "cc": 3,
+  "content": "    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n        user_input = next(self.input_stream)()\n        if not user_input:\n            return\n\n        for line in self._split_inline_commands(user_input):\n            command_name, *args = self._parse_line(line)\n            self._get_command(command_name).execute(*args)",
+  "header": "    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"",
+  "file": "./riposte/riposte.py",
+  "start_line": 219,
+  "end_line": 231,
+  "body_start_line": 225,
+  "comment": "\"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"",
+  "test_time": 2.50335955619812,
+  "cover_tests": [
+    "tests/test_guides.py::test_guides[foobar-str-foobar]",
+    "tests/test_guides.py::test_guides['foobar'-str-foobar]",
+    "tests/test_guides.py::test_guides['foo bar'-str-foo bar]",
+    "tests/test_guides.py::test_guides[foobar-bytes-foobar]",
+    "tests/test_guides.py::test_guides['foobar'-bytes-foobar]",
+    "tests/test_guides.py::test_guides['foo bar'-bytes-foo bar]",
+    "tests/test_guides.py::test_guides[1-int-1]",
+    "tests/test_guides.py::test_guides['1'-int-1]",
+    "tests/test_guides.py::test_guides[\"[1, 'foo']\"-list-expected8]",
+    "tests/test_guides.py::test_guides[\"{'foo': 'bar'}\"-dict-expected9]",
+    "tests/test_riposte.py::test_process",
+    "tests/test_riposte.py::test_process_no_input",
+    "tests/test_riposte.py::test_process_multi_line"
+  ],
+  "repo": {
+    "github_path": "fwkz/riposte",
+    "commit": "174bded8ccd665556b163e5c5633d0900715740f",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=64\", \"setuptools_scm>=8\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"riposte\"\ndescription = \"Package for wrapping applications inside a tailored interactive shell.\"\ndynamic = [ \"version\",]\nrequires-python = \">= 3.10\"\nreadme = \"README.md\"\nclassifiers = [ \"Development Status :: 4 - Beta\", \"Environment :: Console\", \"Operating System :: POSIX\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3 :: Only\", \"Topic :: Software Development :: Libraries :: Python Modules\", \"Topic :: System :: Shells\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Mariusz Kupidura\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.urls]\nHomepage = \"https://github.com/fwkz/riposte\"\n\n[project.optional-dependencies]\ndev = [ \"black\", \"isort\", \"pytest\", \"ruff\", \"setuptools_scm\", \"twine\", \"wheel\",]\n\n[tool.setuptools_scm]\nwrite_to = \"riposte/_version.py\"\nwrite_to_template = \"version = \\\"{version}\\\"\\n\"\n\n[tool.ruff]\nline-length = 80\n\n[tool.black]\nline-length = 80\ntarget-version = [ \"py38\", \"py39\", \"py310\", \"py311\", \"py312\",]\ninclude = \"\\\\.pyi?$\"\nexclude = \"/(\\n    \\\\.git\\n  | \\\\.hg\\n  | \\\\.mypy_cache\\n  | \\\\.tox\\n  | \\\\.venv\\n  | _build\\n  | buck-out\\n  | build\\n  | dist\\n)/\\n\"\n\n[tool.isort]\ncombine_as_imports = true\nforce_grid_wrap = false\nforce_sort_within_sections = true\ninclude_trailing_comma = true\nknown_first_party = \"riposte\"\nline_length = 80\nmulti_line_output = 3\nuse_parentheses = true\n\n[tool.poetry.group.dev.dependencies]\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\ndocutils = \"^0.22.2\"\n",
+    "failed_tests": [],
+    "test_time": 1.4127612113952637
+  },
+  "mutants": [
+    "    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n        user_input = None\n        if not user_input:\n            return\n\n        for line in self._split_inline_commands(user_input):\n            command_name, *args = self._parse_line(line)\n            self._get_command(command_name).execute(*args)\n",
+    "    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n        user_input = next(self.input_stream)()\n        if user_input == \" \":\n            return\n\n        for line in self._split_inline_commands(user_input):\n            command_name, *args = self._parse_line(line)\n            self._get_command(command_name).execute(*args)",
+    "    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n        user_input = next(self.input_stream)()\n        if user_input is None:\n            return\n\n        for line in self._split_inline_commands(user_input):\n            command_name, *args = self._parse_line(line)\n            self._get_command(command_name).execute(*args)",
+    "    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n        user_input = next(self.input_stream)()\n        if user_input:\n            return\n\n        for line in self._split_inline_commands(user_input):\n            command_name, *args = self._parse_line(line)\n            self._get_command(command_name).execute(*args)\n",
+    "    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n        user_input = next(self.input_stream)()\n        if not user_input:\n            return\n\n        for line in [user_input]:  # Treating the entire input as a single command\n            command_name, *args = self._parse_line(line)\n            self._get_command(command_name).execute(*args)",
+    "    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n        user_input = next(self.input_stream)()\n        if not user_input:\n            return\n\n        for line in self._split_inline_commands(user_input)[:-1]:\n            command_name, *args = self._parse_line(line)\n            self._get_command(command_name).execute(*args)"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: {name: getattr(cmd._func, \"call_count\", None) for name, cmd in self._commands.items()}, name=\"old_calls\")\n@icontract.ensure(lambda OLD, self: (all(v is None for v in OLD.old_calls.values())) or (sum((getattr(cmd._func, \"call_count\", 0) if getattr(cmd._func, \"call_count\", None) is not None else 0) for cmd in self._commands.values()) > sum((v or 0) for v in OLD.old_calls.values())))\n@icontract.snapshot(lambda self: {\"split\": getattr(self._split_inline_commands, \"call_count\", None), \"parse\": getattr(self._parse_line, \"call_count\", None), \"get\": getattr(self._get_command, \"call_count\", None)}, name=\"old_mocks\")\n@icontract.ensure(lambda OLD, self: (not (OLD.old_mocks[\"split\"] is not None and OLD.old_mocks[\"parse\"] is not None and OLD.old_mocks[\"get\"] is not None)) or (self._split_inline_commands.call_count == OLD.old_mocks[\"split\"] and self._parse_line.call_count == OLD.old_mocks[\"parse\"] and self._get_command.call_count == OLD.old_mocks[\"get\"]))\n@icontract.snapshot(lambda self: getattr(__import__(\"builtins\"), \"input\").return_value if hasattr(getattr(__import__(\"builtins\"), \"input\"), \"return_value\") else None, name=\"input_value\")\n@icontract.ensure(lambda OLD, self: (OLD.input_value is None) or (getattr(self._split_inline_commands, \"call_count\", None) is not None) or (getattr(self._get_command, \"call_count\", None) is None) or (len(self._split_inline_commands(OLD.input_value)) == self._get_command.call_count == getattr(self._get_command.return_value, \"execute\").call_count))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport argparse\nimport atexit\nfrom pathlib import Path\nimport readline\nimport shlex\nfrom typing import Callable, Dict, Iterable, List, Optional, Sequence\n\nfrom . import input_streams\nfrom .command import Command\nfrom .exceptions import CommandError, RiposteException, StopRiposteException\nfrom .printer.mixins import PrinterMixin\nfrom .printer.thread import PrinterThread\n\n\ndef is_libedit():\n...\nclass Riposte(PrinterMixin):\n    def __init__(\n        self,\n        prompt: str = \"riposte:~ $ \",\n        banner: Optional[str] = None,\n        history_file: Path = Path.home() / \".riposte\",\n        history_length: int = 100,\n    ):\n...\n    @staticmethod\n    def _setup_history(history_file: Path, history_length: int) -> None:\n...\n    def _setup_completer(self) -> None:\n...\n    def _complete(self, text: str, state: int) -> Optional[Sequence[str]]:\n        \"\"\"Return the next possible completion for `text`.\n\n        If a command has not been entered, then complete against command list.\n        Otherwise try to call specific command completer function to get list\n        of completions.\n        \"\"\"\n...\n    def contextual_complete(self) -> List[str]:\n        \"\"\"Entry point for contextual tab completion.\n\n        Entry point for contextual tab completion depending on `Riposte` app\n        state. Overwrite this method to suggest suitable commands.\n        \"\"\"\n...\n    def _raw_command_completer(\n        self, text, line, start_index, end_index\n    ) -> List[str]:\n        \"\"\"Complete command w/o any argument\"\"\"\n...\n    @staticmethod\n    def _split_inline_commands(line: str) -> List[str]:\n        \"\"\"Split multiple inline commands.\"\"\"\n...\n    @staticmethod\n    def _parse_line(line: str) -> List[str]:\n        \"\"\"Split input line into command's name and its arguments.\"\"\"\n...\n    def _get_command(self, command_name: str) -> Command:\n        \"\"\"Resolve command name into registered `Command` object.\"\"\"\n...\n    def setup_cli(self):\n        \"\"\"Initialize CLI\n\n        Overwrite this method in case of adding custom arguments.\n        \"\"\"\n...\n    def parse_cli_arguments(self) -> None:\n        \"\"\"Parse passed CLI arguments\n\n        Overwrite this method in order to parse custom CLI arguments.\n        \"\"\"\n...\n    @property\n    def prompt(self):\n        \"\"\"Entrypoint for customizing prompt\n\n        Please overwrite this method to provide contextual prompt depending on\n        different state of `Riposte` app.\n        \"\"\"\n...\n    def command(\n        self,\n        name: str,\n        description: str = \"\",\n        guides: Dict[str, Iterable[Callable]] = None,\n    ) -> Callable:\n        \"\"\"Decorator for bounding command with handling function.\"\"\"\n...\n    def complete(self, command: str) -> Callable:\n        \"\"\"Decorator for bounding complete function with `Command`.\"\"\"\n...\n    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n...\n    def run(self) -> None:\n...\n```\n## Target Method\n```\n    def _process(self) -> None:\n        \"\"\"Process input provided by the input stream.\n\n        Get provided input, parse it, pick appropriate handling\n        function and execute it.\n        \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `_process`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(self._input_stream, name=\"input_stream\")\n@icontract.snapshot(self._commands, name=\"commands\")\n@icontract.ensure(lambda _: self._input_stream == _.input_stream, message=\"Input stream should remain unchanged after processing\")\n@icontract.ensure(lambda _: self._commands == _.commands, message=\"Registered commands should remain unchanged after processing\")\n@icontract.ensure(lambda _: _.history_file.exists() or _.history_file.write_text(\"\"), message=\"History file should exist or be created if it didn't\")\n@icontract.ensure(lambda _: len(_.history) <= _.history_length, message=\"Command history should not exceed the specified history length\")",
+    "@icontract.ensure(\n    lambda result: result is None,\n    \"The _process method should not return any value.\"\n)\n@icontract.snapshot(self, \"self_before\")\n@icontract.ensure(\n    lambda self_before, self: self.exit_flag == self_before.exit_flag,\n    \"The exit_flag should remain unchanged unless a StopRiposteException is raised.\"\n)\n@icontract.ensure(\n    lambda self_before, self: self.command_history == self_before.command_history or len(self.command_history) == self_before.command_history + 1,\n    \"The command history should either remain the same or increase by one after processing.\"\n)\n@icontract.ensure(\n    lambda: True,\n    \"If a StopRiposteException is raised, the processing should terminate gracefully.\"\n)",
+    "@icontract.snapshot(self._input_stream, name=\"input_stream_before\")\n@icontract.snapshot(self._commands, name=\"commands_before\")\n@icontract.ensure(\n    lambda input_stream_before, commands_before: self._input_stream == input_stream_before\n    and self._commands == commands_before,\n    \"The input stream and command registry should remain unchanged after processing.\"\n)\n@icontract.ensure(\n    lambda: self._input_stream.eof or self._input_stream.current_line is None,\n    \"After processing, the input stream should have either reached EOF or have no current line left to process.\"\n)\n@icontract.ensure(\n    lambda: not hasattr(self, \"_current_command\") or self._current_command is None,\n    \"After processing, there should be no lingering '_current_command' attribute.\"\n)\n@icontract.ensure(\n    lambda: not hasattr(self, \"_current_args\") or self._current_args is None,\n    \"After processing, there should be no lingering '_current_args' attribute.\"\n)\n@icontract.ensure(\n    lambda: self._history is not None and len(self._history) <= self._history_length,\n    \"The command history should not exceed the specified history length.\"\n)",
+    "@icontract.snapshot(self._input_stream, name=\"input_stream\")\n@icontract.snapshot(self._commands, name=\"commands\")\n@icontract.ensure(lambda _: self._input_stream == _.input_stream, message=\"Input stream should remain unchanged after processing\")\n@icontract.ensure(lambda _: self._commands == _.commands, message=\"Command registry should remain unchanged after processing\")\n@icontract.ensure(lambda _: not hasattr(_, \"command_error\") or isinstance(_, _.command_error, CommandError), message=\"Any raised error should be a CommandError\")\n@icontract.ensure(lambda _: not hasattr(_, \"riposte_exception\") or isinstance(_, _.riposte_exception, RiposteException), message=\"Any raised error should be a RiposteException\")\n@icontract.ensure(lambda _: not hasattr(_, \"stop_exception\") or isinstance(_, _.stop_exception, StopRiposteException), message=\"Processing should stop if StopRiposteException is raised\")",
+    "@icontract.ensure(\n    lambda result: result is None,\n    \"The _process method should not return any value.\"\n)\n@icontract.snapshot(self._input_stream, name=\"input_stream_before\")\n@icontract.snapshot(self._commands, name=\"commands_before\")\n@icontract.snapshot(self._history, name=\"history_before\")\n@icontract.snapshot(self._history_file, name=\"history_file_before\")\n@icontract.snapshot(self._history_length, name=\"history_length_before\")\n@icontract.snapshot(self._completer, name=\"completer_before\")\n@icontract.snapshot(self._parser, name=\"parser_before\")"
+  ],
+  "responses": [
+    "```python\n@icontract.snapshot(self._input_stream, name=\"input_stream\")\n@icontract.snapshot(self._commands, name=\"commands\")\n@icontract.ensure(lambda _: self._input_stream == _.input_stream, message=\"Input stream should remain unchanged after processing\")\n@icontract.ensure(lambda _: self._commands == _.commands, message=\"Registered commands should remain unchanged after processing\")\n@icontract.ensure(lambda _: _.history_file.exists() or _.history_file.write_text(\"\"), message=\"History file should exist or be created if it didn't\")\n@icontract.ensure(lambda _: len(_.history) <= _.history_length, message=\"Command history should not exceed the specified history length\")\n```",
+    "```python\n@icontract.ensure(\n    lambda result: result is None,\n    \"The _process method should not return any value.\"\n)\n@icontract.snapshot(self, \"self_before\")\n@icontract.ensure(\n    lambda self_before, self: self.exit_flag == self_before.exit_flag,\n    \"The exit_flag should remain unchanged unless a StopRiposteException is raised.\"\n)\n@icontract.ensure(\n    lambda self_before, self: self.command_history == self_before.command_history or len(self.command_history) == self_before.command_history + 1,\n    \"The command history should either remain the same or increase by one after processing.\"\n)\n@icontract.ensure(\n    lambda: True,\n    \"If a StopRiposteException is raised, the processing should terminate gracefully.\"\n)\n```",
+    "```python\n@icontract.snapshot(self._input_stream, name=\"input_stream_before\")\n@icontract.snapshot(self._commands, name=\"commands_before\")\n@icontract.ensure(\n    lambda input_stream_before, commands_before: self._input_stream == input_stream_before\n    and self._commands == commands_before,\n    \"The input stream and command registry should remain unchanged after processing.\"\n)\n@icontract.ensure(\n    lambda: self._input_stream.eof or self._input_stream.current_line is None,\n    \"After processing, the input stream should have either reached EOF or have no current line left to process.\"\n)\n@icontract.ensure(\n    lambda: not hasattr(self, \"_current_command\") or self._current_command is None,\n    \"After processing, there should be no lingering '_current_command' attribute.\"\n)\n@icontract.ensure(\n    lambda: not hasattr(self, \"_current_args\") or self._current_args is None,\n    \"After processing, there should be no lingering '_current_args' attribute.\"\n)\n@icontract.ensure(\n    lambda: self._history is not None and len(self._history) <= self._history_length,\n    \"The command history should not exceed the specified history length.\"\n)\n```",
+    "```python\n@icontract.snapshot(self._input_stream, name=\"input_stream\")\n@icontract.snapshot(self._commands, name=\"commands\")\n@icontract.ensure(lambda _: self._input_stream == _.input_stream, message=\"Input stream should remain unchanged after processing\")\n@icontract.ensure(lambda _: self._commands == _.commands, message=\"Command registry should remain unchanged after processing\")\n@icontract.ensure(lambda _: not hasattr(_, \"command_error\") or isinstance(_, _.command_error, CommandError), message=\"Any raised error should be a CommandError\")\n@icontract.ensure(lambda _: not hasattr(_, \"riposte_exception\") or isinstance(_, _.riposte_exception, RiposteException), message=\"Any raised error should be a RiposteException\")\n@icontract.ensure(lambda _: not hasattr(_, \"stop_exception\") or isinstance(_, _.stop_exception, StopRiposteException), message=\"Processing should stop if StopRiposteException is raised\")\n```",
+    "```python\n@icontract.ensure(\n    lambda result: result is None,\n    \"The _process method should not return any value.\"\n)\n@icontract.snapshot(self._input_stream, name=\"input_stream_before\")\n@icontract.snapshot(self._commands, name=\"commands_before\")\n@icontract.snapshot(self._history, name=\"history_before\")\n@icontract.snapshot(self._history_file, name=\"history_file_before\")\n@icontract.snapshot(self._history_length, name=\"history_length_before\")\n@icontract.snapshot(self._completer, name=\"completer_before\")\n@icontract.snapshot(self._parser, name=\"parser_before\")\n```"
+  ],
+  "postcond_corr": [
+    "reports_not_exist",
+    "reports_not_exist",
+    "reports_not_exist",
+    "reports_not_exist",
+    "reports_not_exist"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 20
+}

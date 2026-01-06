@@ -1,0 +1,186 @@
+{
+  "rlid": "write_npz",
+  "github_url": "https://github.com/daavoo/pyntcloud/blob/8368c6a22f8060aeafacf2964276e8704d732145/./src/pyntcloud/io/npz.py#L27-L46",
+  "name": "write_npz",
+  "line_cov": 1.0,
+  "lines": 20,
+  "stats": 5,
+  "cc": 3,
+  "content": "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True",
+  "header": "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"",
+  "file": "./src/pyntcloud/io/npz.py",
+  "start_line": 27,
+  "end_line": 46,
+  "body_start_line": 41,
+  "comment": "\"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"",
+  "test_time": 2.4460666179656982,
+  "cover_tests": [
+    "tests/integration/io/test_to_file.py::test_to_file[.npz-True-True-False]"
+  ],
+  "repo": {
+    "github_path": "daavoo/pyntcloud",
+    "commit": "8368c6a22f8060aeafacf2964276e8704d732145",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=48\", \"setuptools_scm[toml]>=6.3.1\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"pyntcloud\"\ndynamic = [ \"version\",]\ndescription = \"Python library for working with 3D point clouds.\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\nclassifiers = [ \"Programming Language :: Python :: 3\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\",]\ndependencies = [ \"numpy\", \"scipy>=1.6.0\", \"pandas\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"David de la Iglesia Castro\"\nemail = \"daviddelaiglesiacastro@gmail.com\"\n\n[project.license]\ntext = \"The MIT License\"\n\n[project.optional-dependencies]\nlas = [ \"laspy\", \"lazrs\",]\nplot = [ \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\",]\nnumba = [ \"numba\",]\nall = [ \"laspy\", \"lazrs\", \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\", \"numba\", \"open3d\",]\n\n[project.urls]\nrepository = \"https://github.com/daavoo/pyntcloud\"\n\n[tool.setuptools_scm]\n\n[tool.pytest.ini_options]\npythonpath = [ \"tests/integration/io\",]\naddopts = \"--import-mode=importlib\"\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\", \"tests.*\",]\nwhere = [ \"src\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nlaspy = \"^2.6.1\"\nlazrs = \"^0.8.0\"\n",
+    "failed_tests": [
+      "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_points_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centers]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centroids]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_nearest]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_max]"
+    ],
+    "test_time": 7.65758204460144
+  },
+  "mutants": [
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(None, pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True\n",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], list):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame) and 'index' in kwargs[k]:\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame) and kwargs[k].empty:\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.Series):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if not isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = None\n    np.savez_compressed(filename, **kwargs)\n    return True\n",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].astype(str)\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].iloc[:, 0]  # Only keep the first column\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_dict()\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_numpy()\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].values\n    np.savez_compressed(filename, **kwargs)\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, )\n    return True\n",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **{k: v for k, v in kwargs.items() if k != 'mesh'})\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, *kwargs.values())\n    return True",
+    "def write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, points=kwargs.get('points'))\n    return True"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(\n    lambda _KWARGS: {k: v for k, v in _KWARGS.items() if k != \"filename\"},\n    name=\"old_kwargs\",\n)\n@icontract.ensure(\n    lambda filename, OLD, result: result is True,\n)\n@icontract.ensure(\n    lambda filename, OLD, result:\n        set(\n            np.load(\n                filename if filename.endswith(\".npz\") else filename + \".npz\",\n                allow_pickle=True,\n            ).files\n        )\n        == set(OLD.old_kwargs.keys()),\n)\n@icontract.ensure(\n    lambda filename, OLD, result:\n        all(\n            np.array_equal(\n                np.load(\n                    filename if filename.endswith(\".npz\") else filename + \".npz\",\n                    allow_pickle=True,\n                )[name],\n                (\n                    value.to_records(index=False)\n                    if isinstance(value, pd.DataFrame)\n                    else np.asarray(value)\n                ),\n            )\n            for name, value in OLD.old_kwargs.items()\n        ),\n)\n@icontract.ensure(\n    lambda filename, OLD, result:\n        all(\n            not isinstance(OLD.old_kwargs[name], pd.DataFrame)\n            or (\n                name in np.load(\n                    filename if filename.endswith(\".npz\") else filename + \".npz\",\n                    allow_pickle=True,\n                ).files\n                and (\n                    np.load(\n                        filename if filename.endswith(\".npz\") else filename + \".npz\",\n                        allow_pickle=True,\n                    )[name].shape != ()\n                    or np.load(\n                        filename if filename.endswith(\".npz\") else filename + \".npz\",\n                        allow_pickle=True,\n                    )[name][()]\n                    is not None\n                )\n            )\n            for name in OLD.old_kwargs.keys()\n        ) and \n        all(\n            (not isinstance(value, pd.DataFrame))\n            or (\n                np.load(\n                    filename if filename.endswith(\".npz\") else filename + \".npz\",\n                    allow_pickle=True,\n                )[name].dtype.names is not None\n                and len(\n                    np.load(\n                        filename\n                        if filename.endswith(\".npz\")\n                        else filename + \".npz\",\n                        allow_pickle=True,\n                    )[name].dtype.names\n                )\n                == len(value.columns)\n            )\n            for name, value in OLD.old_kwargs.items()\n        ),\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n#       HAKUNA MATATA\n\nimport numpy as np\nimport pandas as pd\n\n\ndef read_npz(filename, points_name=\"points\", mesh_name=\"mesh\"):\n    \"\"\"Read a .npz file and store all possible elements in pandas DataFrame\n    Parameters\n    ----------\n    filename: str\n        Path to the filename\n    Returns\n    -------\n    data: dict\n        If possible, elements as pandas DataFrames else input format\n    \"\"\"\n\n    data = {}\n    with np.load(filename) as npz:\n        data[\"points\"] = pd.DataFrame(npz[points_name])\n        if mesh_name in npz:\n            data[\"mesh\"] = pd.DataFrame(npz[mesh_name])\n    return data\n\n\ndef write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True\n\n```\n## Target Method\n```\ndef write_npz(filename, **kwargs):\n    \"\"\"\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n\n    kwargs: Elements of the pyntcloud to be saved\n\n    Returns\n    -------\n    boolean\n        True if no problems\n    \"\"\"\n\n    for k in kwargs:\n        if isinstance(kwargs[k], pd.DataFrame):\n            kwargs[k] = kwargs[k].to_records(index=False)\n    np.savez_compressed(filename, **kwargs)\n    return True\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `write_npz`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-all",
+  "postconds": [
+    "@icontract.ensure(\n    lambda result: result is True,\n    \"The method should return True if no problems occur during file writing.\"\n)\n@icontract.snapshot(kwargs, name=\"input_kwargs\")\n@icontract.ensure(\n    lambda input_kwargs, filename: _file_exists(filename),\n    \"The file should be created successfully after the method is called.\"\n)\n@icontract.ensure(\n    lambda input_kwargs, filename: _check_data_integrity(filename, input_kwargs),\n    \"The data written to the file should match the input data in structure and content.\"\n)\ndef write_npz(filename, **kwargs): ... \n\ndef _file_exists(filename):\n    import os\n    return os.path.exists(filename)\n\ndef _check_data_integrity(filename, input_kwargs):\n    import numpy as np\n    loaded = np.load(filename)\n    for k in input_kwargs:\n        if isinstance(input_kwargs[k], pd.DataFrame):\n            original_data = input_kwargs[k].to_records(index=False)\n        else:\n            original_data = input_kwargs[k]\n        if not np.array_equal(original_data, loaded[k]):\n            return False\n    return True",
+    "@icontract.ensure(\n    lambda result: result is True,\n    \"The method should return True if no problems occur during file writing.\"\n)\n@icontract.snapshot(kwargs, name=\"original_kwargs\")\n@icontract.ensure(\n    lambda original_kwargs, filename: len(original_kwargs) > 0 and\n    all(k in np.load(filename).files for k in original_kwargs),\n    \"All elements provided in kwargs should be saved in the .npz file.\"\n)\n@icontract.ensure(\n    lambda original_kwargs, filename: all(\n        isinstance(np.load(filename)[k], np.ndarray)\n        for k in original_kwargs\n    ),\n    \"All elements in the saved .npz file should be stored as numpy ndarrays.\"\n)",
+    "@icontract.snapshot(kwargs, name=\"original_kwargs\")\n@icontract.ensure(lambda _: all(not isinstance(_, pd.DataFrame) for _ in _.kwargs.values()), \"All DataFrames in kwargs should be converted to numpy records\")\n@icontract.ensure(lambda _: _.return_value is True, \"The method should return True if no problems occur\")",
+    "@icontract.ensure(\n    lambda result: result is True,\n    \"The method should return True if no problems occur during the save.\"\n)\n@icontract.snapshot(kwargs, name=\"original_kwargs\")\n@icontract.ensure(\n    lambda original_kwargs, filename: np.load(filename).files == list(original_kwargs.keys()),\n    \"The saved .npz file should contain all keys from the original kwargs.\"\n)\n@icontract.ensure(\n    lambda original_kwargs, filename: all(\n        isinstance(np.load(filename)[k], np.ndarray) for k in original_kwargs\n    ),\n    \"All elements in the saved .npz file should be numpy arrays.\"\n)",
+    "@icontract.ensure(\n    lambda result, filename, **kwargs: result is True,\n    \"The method should return True if no problems occur.\"\n)\n@icontract.ensure(\n    lambda filename, **kwargs: os.path.exists(filename),\n    \"The file should be created after the method is called.\"\n)\n@icontract.snapshot(\n    lambda filename: os.path.exists(filename),\n    name=\"file_exists_before\",\n    description=\"Whether the file existed before the method call.\"\n)\n@icontract.snapshot(\n    lambda filename: os.path.getsize(filename) if os.path.exists(filename) else 0,\n    name=\"file_size_before\",\n    description=\"The size of the file before the method call.\"\n)\n@icontract.ensure(\n    lambda file_exists_before, file_size_before, filename: (\n        (not file_exists_before and os.path.getsize(filename) > 0) or\n        (file_exists_before and os.path.getsize(filename) > file_size_before)\n    ),\n    \"The file should be created or updated with new content.\"\n)"
+  ],
+  "responses": [
+    "@icontract.ensure(\n    lambda result: result is True,\n    \"The method should return True if no problems occur during file writing.\"\n)\n@icontract.snapshot(kwargs, name=\"input_kwargs\")\n@icontract.ensure(\n    lambda input_kwargs, filename: _file_exists(filename),\n    \"The file should be created successfully after the method is called.\"\n)\n@icontract.ensure(\n    lambda input_kwargs, filename: _check_data_integrity(filename, input_kwargs),\n    \"The data written to the file should match the input data in structure and content.\"\n)\ndef write_npz(filename, **kwargs): ... \n\ndef _file_exists(filename):\n    import os\n    return os.path.exists(filename)\n\ndef _check_data_integrity(filename, input_kwargs):\n    import numpy as np\n    loaded = np.load(filename)\n    for k in input_kwargs:\n        if isinstance(input_kwargs[k], pd.DataFrame):\n            original_data = input_kwargs[k].to_records(index=False)\n        else:\n            original_data = input_kwargs[k]\n        if not np.array_equal(original_data, loaded[k]):\n            return False\n    return True",
+    "@icontract.ensure(\n    lambda result: result is True,\n    \"The method should return True if no problems occur during file writing.\"\n)\n@icontract.snapshot(kwargs, name=\"original_kwargs\")\n@icontract.ensure(\n    lambda original_kwargs, filename: len(original_kwargs) > 0 and\n    all(k in np.load(filename).files for k in original_kwargs),\n    \"All elements provided in kwargs should be saved in the .npz file.\"\n)\n@icontract.ensure(\n    lambda original_kwargs, filename: all(\n        isinstance(np.load(filename)[k], np.ndarray)\n        for k in original_kwargs\n    ),\n    \"All elements in the saved .npz file should be stored as numpy ndarrays.\"\n)",
+    "```python\n@icontract.snapshot(kwargs, name=\"original_kwargs\")\n@icontract.ensure(lambda _: all(not isinstance(_, pd.DataFrame) for _ in _.kwargs.values()), \"All DataFrames in kwargs should be converted to numpy records\")\n@icontract.ensure(lambda _: _.return_value is True, \"The method should return True if no problems occur\")\n```",
+    "@icontract.ensure(\n    lambda result: result is True,\n    \"The method should return True if no problems occur during the save.\"\n)\n@icontract.snapshot(kwargs, name=\"original_kwargs\")\n@icontract.ensure(\n    lambda original_kwargs, filename: np.load(filename).files == list(original_kwargs.keys()),\n    \"The saved .npz file should contain all keys from the original kwargs.\"\n)\n@icontract.ensure(\n    lambda original_kwargs, filename: all(\n        isinstance(np.load(filename)[k], np.ndarray) for k in original_kwargs\n    ),\n    \"All elements in the saved .npz file should be numpy arrays.\"\n)",
+    "```python\n@icontract.ensure(\n    lambda result, filename, **kwargs: result is True,\n    \"The method should return True if no problems occur.\"\n)\n@icontract.ensure(\n    lambda filename, **kwargs: os.path.exists(filename),\n    \"The file should be created after the method is called.\"\n)\n@icontract.snapshot(\n    lambda filename: os.path.exists(filename),\n    name=\"file_exists_before\",\n    description=\"Whether the file existed before the method call.\"\n)\n@icontract.snapshot(\n    lambda filename: os.path.getsize(filename) if os.path.exists(filename) else 0,\n    name=\"file_size_before\",\n    description=\"The size of the file before the method call.\"\n)\n@icontract.ensure(\n    lambda file_exists_before, file_size_before, filename: (\n        (not file_exists_before and os.path.getsize(filename) > 0) or\n        (file_exists_before and os.path.getsize(filename) > file_size_before)\n    ),\n    \"The file should be created or updated with new content.\"\n)\n```"
+  ],
+  "postcond_corr": [
+    "compile_failure",
+    "reports_not_exist",
+    "reports_not_exist",
+    "reports_not_exist",
+    "reports_not_exist"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 11
+}

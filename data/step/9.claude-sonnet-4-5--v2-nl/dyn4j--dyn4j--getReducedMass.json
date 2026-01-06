@@ -1,0 +1,287 @@
+{
+  "rlid": "getReducedMass",
+  "github_url": "https://github.com/dyn4j/dyn4j/blob/1a3a5872dca5bc65fd9a2376100e33bed5d3cde6/./src/main/java/org/dyn4j/dynamics/joint/AbstractPairedBodyJoint.java#L153-L175",
+  "name": "getReducedMass",
+  "line_cov": 1.0,
+  "lines": 23,
+  "stats": 7,
+  "cc": 4,
+  "content": "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+  "header": "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {",
+  "file": "./src/main/java/org/dyn4j/dynamics/joint/AbstractPairedBodyJoint.java",
+  "start_line": 153,
+  "end_line": 175,
+  "body_start_line": 163,
+  "comment": "/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */",
+  "test_time": 4.926596641540527,
+  "cover_tests": [
+    "org.dyn4j.dynamics.joint.AbstractPairedBodyJointTest#getReducedMass",
+    "org.dyn4j.dynamics.joint.DistanceJointTest#computeSpringStiffnessFrequency",
+    "org.dyn4j.dynamics.joint.PrismaticJointTest#computeSpringStiffnessFrequency",
+    "org.dyn4j.dynamics.joint.WheelJointTest#computeSpringStiffnessFrequency",
+    "org.dyn4j.simulation.DistanceJointSimulationTest#limitsWithSpring",
+    "org.dyn4j.simulation.DistanceJointSimulationTest#lowerLimitWithSpring",
+    "org.dyn4j.simulation.DistanceJointSimulationTest#springOnly",
+    "org.dyn4j.simulation.DistanceJointSimulationTest#springWithMaxForce",
+    "org.dyn4j.simulation.DistanceJointSimulationTest#upperLimitWithSpring",
+    "org.dyn4j.simulation.PrismaticJointSimulationTest#springOnly",
+    "org.dyn4j.simulation.WheelJointSimulationTest#motorOnly",
+    "org.dyn4j.simulation.WheelJointSimulationTest#noLimitsNoMotor",
+    "org.dyn4j.simulation.WheelJointSimulationTest#springDamperWithLimits",
+    "org.junit.runner.manipulation.Filter#initializationError"
+  ],
+  "repo": {
+    "github_path": "dyn4j/dyn4j",
+    "commit": "1a3a5872dca5bc65fd9a2376100e33bed5d3cde6",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n\n  <groupId>org.dyn4j</groupId>\n  <artifactId>dyn4j</artifactId>\n  <version>5.0.2</version>\n\n  <name>dyn4j</name>\n  <url>http://www.dyn4j.org</url>\n  <description>Java Collision Detection and Physics Engine</description>\n  <inceptionYear>2010</inceptionYear>\n  <packaging>bundle</packaging>\n\n  <properties>\n\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n\n    \n\n    <dyn4j.maven-clean-plugin.version>3.2.0</dyn4j.maven-clean-plugin.version>\n    <dyn4j.maven-resources-plugin.version>3.3.0</dyn4j.maven-resources-plugin.version>\n    <dyn4j.maven-deploy-plugin.version>3.0.0</dyn4j.maven-deploy-plugin.version>\n    <dyn4j.maven-install-plugin.version>3.1.0</dyn4j.maven-install-plugin.version>\n    <dyn4j.maven-compiler-plugin.version>3.10.1</dyn4j.maven-compiler-plugin.version>\n    <dyn4j.maven-surefire-plugin.version>3.0.0-M7</dyn4j.maven-surefire-plugin.version>\n    <dyn4j.maven-source-plugin.version>3.2.1</dyn4j.maven-source-plugin.version>\n    <dyn4j.maven-bundle-plugin.version>5.1.8</dyn4j.maven-bundle-plugin.version>\n    <dyn4j.maven-javadoc-plugin.version>3.4.1</dyn4j.maven-javadoc-plugin.version>\n    <dyn4j.nexus-staging-maven-plugin.version>1.6.13</dyn4j.nexus-staging-maven-plugin.version>\n    <dyn4j.maven-gpg-plugin.version>3.0.1</dyn4j.maven-gpg-plugin.version>\n    <dyn4j.maven-enforcer-plugin.version>3.1.0</dyn4j.maven-enforcer-plugin.version>\n  </properties>\n\n  <organization>\n  \t<url>http://www.dyn4j.org</url>\n  \t<name>dyn4j</name>\n  </organization>\n  <scm>\n  \t<url>https://github.com/dyn4j/dyn4j</url>\n  \t<connection>scm:git:https://github.com/dyn4j/dyn4j</connection>\n  \t<developerConnection>scm:git:https://github.com/wnbittle</developerConnection>\n  </scm>\n  <issueManagement>\n  \t<system>GitHub Issues</system>\n  \t<url>https://github.com/dyn4j/dyn4j/issues</url>\n  </issueManagement>\n  <licenses>\n    <license>\n      <name>BSD-3 License</name>\n      <url>http://www.opensource.org/licenses/BSD-3-Clause</url>\n    </license>\n  </licenses>\n    <developers>\n    <developer>\n      <id>wnbittle</id>\n      <name>William Bittle</name>\n      <email>wjbittle@gmail.com</email>\n      <url>http://www.dyn4j.org</url>\n    </developer>\n  </developers>\n  <distributionManagement>\n    <site>\n      <id>GitHub</id>\n      <name>GitHub</name>\n      <url>https://github.com/dyn4j/dyn4j</url>\n    </site>\n  </distributionManagement>\n  \n  <build>\n    <pluginManagement>\n      <plugins>\n        \n\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-clean-plugin</artifactId>\n          <version>${dyn4j.maven-clean-plugin.version}</version>\n        </plugin>\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-install-plugin</artifactId>\n          <version>${dyn4j.maven-install-plugin.version}</version>\n        </plugin>\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-resources-plugin</artifactId>\n          <version>${dyn4j.maven-resources-plugin.version}</version>\n        </plugin>\n\n        \n\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-enforcer-plugin</artifactId>\n          <version>${dyn4j.maven-enforcer-plugin.version}</version>\n        </plugin>\n\n        \n\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-compiler-plugin</artifactId>\n          <version>${dyn4j.maven-compiler-plugin.version}</version>\n          <executions>\n\n            \n\n            <execution>\n              <id>default-compile</id>\n              <configuration>\n                <release>10</release>\n              </configuration>\n            </execution>\n\n            \n\n            </executions>\n\n          \n          <configuration>\n            <release>10</release>\n          </configuration>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-surefire-plugin</artifactId>\n          <version>${dyn4j.maven-surefire-plugin.version}</version>\n          <configuration>\n            <redirectTestOutputToFile>true</redirectTestOutputToFile>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-source-plugin</artifactId>\n          <version>${dyn4j.maven-source-plugin.version}</version>\n          <executions>\n            <execution>\n              <phase>package</phase>\n              <goals>\n                <goal>jar-no-fork</goal>\n              </goals>\n              <configuration>\n                <archive>\n                  <manifestEntries>\n                    <Specification-Title>${project.name}</Specification-Title>\n                    <Specification-Version>${project.version}</Specification-Version>\n                    <Specification-Vendor>dyn4j.org</Specification-Vendor>\n                    <Implementation-Title>${project.name}</Implementation-Title>\n                    <Implementation-Version>${project.version}</Implementation-Version>\n                    <Implementation-Vendor>dyn4j.org</Implementation-Vendor>\n                    <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>\n                  </manifestEntries>\n                </archive>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.apache.felix</groupId>\n          <artifactId>maven-bundle-plugin</artifactId>\n          <version>${dyn4j.maven-bundle-plugin.version}</version>\n          <extensions>true</extensions>\n          <configuration>\n          \t<archive>\n          \t\t<addMavenDescriptor>false</addMavenDescriptor>\n          \t\t<compress>true</compress>\n          \t\t<manifest>\n          \t\t\t<addDefaultImplementationEntries>true</addDefaultImplementationEntries>\n          \t\t\t<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>\n          \t\t\t\n          \t\t\t<addExtensions>false</addExtensions>\n          \t\t\t<mainClass>org.dyn4j.Version</mainClass>\n          \t\t</manifest>\n          \t\t<manifestEntries>\n          \t\t\t<Built-By>William Bittle</Built-By>\n          \t\t</manifestEntries>\n          \t</archive>\n            <instructions>\n              <Specification-Title>${project.name}</Specification-Title>\n              <Specification-Version>${project.version}</Specification-Version>\n              <Specification-Vendor>dyn4j.org</Specification-Vendor>\n              <Implementation-Title>${project.name}</Implementation-Title>\n              <Implementation-Version>${project.version}</Implementation-Version>\n              <Implementation-Vendor>dyn4j.org</Implementation-Vendor>\n              <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>\n              <Bundle-DocURL>${project.url}</Bundle-DocURL>\n              \n              <Require-Capability>osgi.ee;filter:=\"(&amp;(osgi.ee=JavaSE)(version=1.6))\"</Require-Capability>\n            </instructions>\n          </configuration>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-javadoc-plugin</artifactId>\n          <version>${dyn4j.maven-javadoc-plugin.version}</version>\n          <executions>\n            <execution>\n              <id>attach-javadocs</id>\n              <phase>package</phase>\n              <goals>\n                <goal>jar</goal>\n              </goals>\n              <configuration>\n                <sourceFileExcludes>\n                \t<sourceFileExclude>module-info.java</sourceFileExclude>\n                </sourceFileExcludes>\n                <overview>${basedir}/overview.html</overview>\n                <doctitle>dyn4j v${project.version}</doctitle>\n                <show>protected</show>\n                <doclint>all</doclint>\n                <noqualifier>all</noqualifier>\n                <excludePackageNames>org.dyn4j.resources</excludePackageNames>\n                <archive>\n                  <manifestEntries>\n                    <Specification-Title>${project.name}</Specification-Title>\n                    <Specification-Version>${project.version}</Specification-Version>\n                    <Specification-Vendor>dyn4j.org</Specification-Vendor>\n                    <Implementation-Title>${project.name}</Implementation-Title>\n                    <Implementation-Version>${project.version}</Implementation-Version>\n                    <Implementation-Vendor>dyn4j.org</Implementation-Vendor>\n                    <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>\n                  </manifestEntries>\n                </archive>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.sonatype.plugins</groupId>\n          <artifactId>nexus-staging-maven-plugin</artifactId>\n          <version>${dyn4j.nexus-staging-maven-plugin.version}</version>\n          <extensions>true</extensions>\n          <configuration>\n            <serverId>ossrh</serverId>\n            <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n            <autoReleaseAfterClose>true</autoReleaseAfterClose>\n          </configuration>\n        </plugin>\n      </plugins>\n    </pluginManagement>\n\n    <plugins>\n\n      \n      <plugin>\n        <artifactId>maven-enforcer-plugin</artifactId>\n        <executions>\n          <execution>\n          <id>enforce-rules</id>\n          <phase>validate</phase>\n          <goals>\n            <goal>enforce</goal>\n          </goals>\n          <configuration>\n            <rules><requireJavaVersion><version>[10,)</version></requireJavaVersion></rules></configuration>\n          </execution>\n        </executions>\n      </plugin>\n\n      \n      <plugin>\n        <artifactId>maven-source-plugin</artifactId>\n      </plugin>\n\n      \n      <plugin>\n        <artifactId>maven-javadoc-plugin</artifactId>\n      </plugin>\n\n      \n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n      <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n\n      \n      <plugin>\n        <groupId>org.apache.felix</groupId>\n        <artifactId>maven-bundle-plugin</artifactId>\n      </plugin>\n    <plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.9</version><executions><execution><id>prepare-agent</id><phase>initialize</phase><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>test</phase><goals><goal>report</goal></goals><configuration><outputDirectory>${project.build.directory}/site/jacoco</outputDirectory><reports><xml>true</xml></reports></configuration></execution></executions></plugin></plugins>\n  </build>\n\n  <profiles>\n\n    \n    <profile>\n      <id>dyn4j-release-central</id>\n      \n\t  <distributionManagement>\n\t\t<repository>\n\t\t  <id>sonatype-nexus-staging</id>\n\t\t  <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n\t\t</repository>\n\t\t<snapshotRepository>\n\t\t  <id>ossrh</id>\n\t\t  <url>https://oss.sonatype.org/content/repositories/snapshots/</url>\n\t\t</snapshotRepository>\n\t  </distributionManagement>\n\t  \n      <build>\n        <plugins>\n        \n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-deploy-plugin</artifactId>\n            <version>${dyn4j.maven-deploy-plugin.version}</version>\n            <configuration>\n              <skip>true</skip>\n            </configuration>\n          </plugin>\n        \n          \n\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>${dyn4j.maven-gpg-plugin.version}</version>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <configuration>\n                \t<gpgArguments>\n                \t\t<arg>--pinentry-mode</arg>\n                \t\t<arg>loopback</arg>\n                \t</gpgArguments>\n              \t</configuration>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n        \n          <plugin>\n            <groupId>org.sonatype.plugins</groupId>\n            <artifactId>nexus-staging-maven-plugin</artifactId>\n            <extensions>true</extensions>\n            <executions>\n              <execution>\n                <id>deploy-packages</id>\n                <phase>deploy</phase>\n                <goals>\n                  <goal>deploy</goal>\n                </goals>\n                <configuration>\n                \t<serverId>ossrh</serverId>\n                \t<nexusUrl>https://oss.sonatype.org/</nexusUrl>\n                \t<autoReleaseAfterClose>true</autoReleaseAfterClose>\n                </configuration>\n              </execution>\n            </executions>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n    \n    <profile>\n      <id>dyn4j-release-github</id>\n      \n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-deploy-plugin</artifactId>\n            <version>${dyn4j.maven-deploy-plugin.version}</version>\n          </plugin>\n        </plugins>\n      </build>\n      \n\t  <distributionManagement>\n\t\t<repository>\n\t\t  <id>github</id>\n\t\t  <name>GitHub dyn4j Apache Maven Packages</name>\n\t\t  <url>https://maven.pkg.github.com/dyn4j/dyn4j</url>\n\t\t</repository>\n\t  </distributionManagement>\n      \n    </profile>\n  </profiles>\n  <dependencies>\n  \t<dependency>\n  \t\t<groupId>junit</groupId>\n  \t\t<artifactId>junit</artifactId>\n  \t\t<version>4.13.1</version>\n  \t\t<scope>test</scope>\n  \t</dependency>\n  </dependencies>\n</project>",
+    "failed_tests": [
+      "org.junit.runner.manipulation.Filter#initializationError"
+    ],
+    "test_time": 5.833406209945679
+  },
+  "mutants": [
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getInertia();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass() * 0.0; // Sets mass to zero\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass() + 1.0; // Introduces an incorrect mass\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass() - 5.0; // Subtracts an arbitrary value from mass\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass() / 2.0; // Halves the mass incorrectly\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = 0.0; // Sets m2 to zero, leading to incorrect reduced mass calculation\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body1.getMass().getMass(); // Incorrectly uses body1's mass instead of body2's\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getInertia(); // Incorrectly uses inertia instead of mass\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass() * 2.0; // Doubles the mass of body2, leading to incorrect calculations\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass() + 1.0; // Introduces an arbitrary increment to m2\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 < 0.0 && m2 < 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 < 0.0 || m2 < 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 <= 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 == 0.0 && m2 == 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 <= 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 >= 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 || m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 >= 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 >= 0.0 || m2 >= 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn 0;\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 * (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 - m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 / m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 < 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 <= 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 == 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 >= 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn 0;\n\t\t} else {\n\t\t\treturn m2;\n\t\t}\n\t}",
+    "\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n\t\t// https://en.wikipedia.org/wiki/Reduced_mass\n\t\tdouble m1 = this.body1.getMass().getMass();\n\t\tdouble m2 = this.body2.getMass().getMass();\n\t\t\n\t\t// compute the mass\n\t\tif (m1 > 0.0 && m2 > 0.0) {\n\t\t\treturn m1 * m2 / (m1 + m2);\n\t\t} else if (m1 > 0.0) {\n\t\t\treturn m1;\n\t\t} else {\n\t\t\treturn 0;\n\t\t}\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\old(this.body1.getMass().getMass()) > 0.0 && \\old(this.body2.getMass().getMass()) > 0.0 ==> \\result == (\\old(this.body1.getMass().getMass()) * \\old(this.body2.getMass().getMass())) / (\\old(this.body1.getMass().getMass()) + \\old(this.body2.getMass().getMass()));\n//@ ensures \\old(this.body1.getMass().getMass()) > 0.0 && \\old(this.body2.getMass().getMass()) <= 0.0 ==> \\result == \\old(this.body1.getMass().getMass());\n//@ ensures \\old(this.body1.getMass().getMass()) <= 0.0 ==> \\result == \\old(this.body2.getMass().getMass());",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n/*\n * Copyright (c) 2010-2024 William Bittle  http://www.dyn4j.org/\n * All rights reserved.\n * \n * Redistribution and use in source and binary forms, with or without modification, are permitted \n * provided that the following conditions are met:\n * \n *   * Redistributions of source code must retain the above copyright notice, this list of conditions \n *     and the following disclaimer.\n *   * Redistributions in binary form must reproduce the above copyright notice, this list of conditions \n *     and the following disclaimer in the documentation and/or other materials provided with the \n *     distribution.\n *   * Neither the name of the copyright holder nor the names of its contributors may be used to endorse or \n *     promote products derived from this software without specific prior written permission.\n * \n * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR \n * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND \n * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR \n * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL \n * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, \n * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER \n * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT \n * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n */\npackage org.dyn4j.dynamics.joint;\n\nimport java.util.Arrays;\nimport java.util.List;\n\nimport org.dyn4j.DataContainer;\nimport org.dyn4j.Ownable;\nimport org.dyn4j.Unsafe;\nimport org.dyn4j.collision.CollisionBody;\nimport org.dyn4j.dynamics.PhysicsBody;\nimport org.dyn4j.exception.InvalidIndexException;\nimport org.dyn4j.exception.SameObjectException;\nimport org.dyn4j.geometry.Shiftable;\n\n/**\n * Represents an abstract implementation of constrained motion between two \n * {@link PhysicsBody}s.\n * @author William Bittle\n * @version 6.0.0\n * @since 5.0.0\n * @param <T> the {@link PhysicsBody} type\n */\npublic abstract class AbstractPairedBodyJoint<T extends PhysicsBody> extends AbstractJoint<T> implements PairedBodyJoint<T>, Joint<T>, Shiftable, DataContainer, Ownable {\n\t/** The first linked body */\n\tprotected final T body1;\n\t\n\t/** The second linked body */\n\tprotected final T body2;\n\t\n\t/**\n\t * Optional constructor.\n\t * <p>\n\t * Assumes that the joined bodies do not participate \n\t * in collision detection and resolution.\n\t * @param body1 the first {@link PhysicsBody}\n\t * @param body2 the second {@link PhysicsBody}\n\t * @throws NullPointerException if body1 or body2 is null\n\t * @throws IllegalArgumentException if body1 and body2 are the same object reference\n\t */\n\tpublic AbstractPairedBodyJoint(T body1, T body2) {\n\t\tsuper(Arrays.asList(body1, body2));\n\t\t\n\t\t// verify the bodies are not the same instance\n\t\tif (body1 == body2) \n\t\t\tthrow new SameObjectException(\"body1\", \"body2\", body1);\n\t\t\n\t\tthis.body1 = body1;\n\t\tthis.body2 = body2;\n\t}\n\t\n\t/**\n\t * Copy constructor that uses the given bodies instead of the\n\t * bodies on the joint being copied.\n\t * @param joint the joint to copy\n\t * @param body1 the first body\n\t * @param body2 the second body\n\t * @since 6.0.0\n\t */\n\tprotected AbstractPairedBodyJoint(AbstractPairedBodyJoint<T> joint, T body1, T body2) {\n\t\tsuper(joint, buildBodyList(joint, body1, body2));\n\t\tthis.body1 = this.bodies.get(0);\n\t\tthis.body2 = this.bodies.get(1);\n\t}\n\t\n\t/**\n\t * Builds the body list based on the given bodies.\n\t * <p>\n\t * If null is given for body1 or body2, the corresponding body in \n\t * the given joint will be copied and used instead.\n\t * @param <T> the body type\n\t * @param joint the joint to copy\n\t * @param body1 the first body or null\n\t * @param body2 the second body or null\n\t * @return T\n\t */\n\tprivate static final <T extends PhysicsBody> List<T> buildBodyList(AbstractPairedBodyJoint<T> joint, T body1, T body2) {\n...\n\t/**\n\t * Returns a deep copy of this joint, but uses the given bodies\n\t * instead of the bodies associated to this joint.\n\t * <p>\n\t * Imagine the following scenario:\n\t * <p style=\"white-space: pre;\"> Body b1 = ...;\n\t * Body b2 = ...;\n\t * Body b3 = ...;\n\t * Joint j1 = new Joint(b1, b2);\n\t * Joint j2 = new Joint(b2, b3);\n\t * Joint j1copy = j1.copy();\n\t * Joint j2copy = j2.copy();</p>\n\t * In this scenario, <code>j1</code> and <code>j2</code> have copied their related bodies, but this\n\t * means that we now have two copies of <code>b2</code>, since it was referenced by both\n\t * <code>j1</code> and <code>j2</code>.  Instead, this method allows you to do this:\n\t * <p style=\"white-space: pre;\"> Body b1 = ...;\n\t * Body b2 = ...;\n\t * Body b3 = ...;\n\t * Joint j1 = new Joint(b1, b2);\n\t * Joint j2 = new Joint(b2, b3);\n\t * Body b1copy = b1.copy();\n\t * Body b2copy = b2.copy();\n\t * Body b3copy = b3.copy();\n\t * Joint j1copy = j1.copy(b1copy, b2copy);\n\t * Joint j2copy = j2.copy(b2copy, b3copy);</p>\n\t * In this modified code, you manually copy <code>b1</code>, <code>b2</code>, and <code>b3</code> first.\n\t * Then you supply them to the copy method of the joints so that <code>b2</code> isn't copied twice.\n\t * @param body1 the first body\n\t * @param body2 the second body\n\t * @return {@link AbstractPairedBodyJoint}\n\t * @since 6.0.0\n\t */\n\tpublic abstract AbstractPairedBodyJoint<T> copy(T body1, T body2);\n\t\n\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n...\n\t/**\n\t * Returns the reduced inertia of this pair of bodies.\n\t * @return double\n\t * @see #getReducedMass()\n\t */\n\tprotected final double getReducedInertia() {\n...\n\t/* (non-Javadoc)\n\t * @see org.dyn4j.dynamics.joint.Joint#isEnabled()\n\t */\n\tpublic final boolean isEnabled() {\n...\n\t/* (non-Javadoc)\n\t * @see org.dyn4j.dynamics.joint.Joint#getBody(int)\n\t */\n\t@Override\n\tpublic final T getBody(int i) {\n...\n\t/* (non-Javadoc)\n\t * @see org.dyn4j.dynamics.joint.Joint#getBodyCount()\n\t */\n\t@Override\n\tpublic final int getBodyCount() {\n...\n\t/* (non-Javadoc)\n\t * @see org.dyn4j.dynamics.joint.Joint#isMember(org.dyn4j.collision.CollisionBody)\n\t */\n\t@Override\n\tpublic final boolean isMember(CollisionBody<?> body) {\n...\n\t/* (non-Javadoc)\n\t * @see org.dyn4j.dynamics.joint.AbstractJoint#setCollisionAllowed(boolean)\n\t */\n\t@Override\n\tpublic final void setCollisionAllowed(boolean flag) {\n...\n\t/* (non-Javadoc)\n\t * @see org.dyn4j.dynamics.joint.BinaryJoint#getOtherBody(org.dyn4j.collision.CollisionBody)\n\t */\n\tpublic final T getOtherBody(CollisionBody<?> body) {\n...\n\t/* (non-Javadoc)\n\t * @see org.dyn4j.dynamics.joint.BinaryJoint#getBody1()\n\t */\n\tpublic final T getBody1() {\n...\n\t/* (non-Javadoc)\n\t * @see org.dyn4j.dynamics.joint.BinaryJoint#getBody2()\n\t */\n\tpublic final T getBody2() {\n...\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Returns the reduced mass of this pair of bodies.\n\t * <p>\n\t * The reduced mass is used to solve spring/damper problems as a single body rather\n\t * than as a system of two bodies.\n\t * <p>\n\t * <a href=\"https://en.wikipedia.org/wiki/Reduced_mass\">https://en.wikipedia.org/wiki/Reduced_mass</a>\n\t * @return double\n\t */\n\tprotected final double getReducedMass() {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `getReducedMass`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures \\result >= 0.0;\n//@ ensures this.body1.getMass().getMass() > 0.0 && this.body2.getMass().getMass() > 0.0 && !this.body1.getMass().isInfinite() && !this.body2.getMass().isInfinite() ==> \\result <= this.body1.getMass().getMass();\n//@ ensures this.body1.getMass().getMass() > 0.0 && this.body2.getMass().getMass() > 0.0 && !this.body1.getMass().isInfinite() && !this.body2.getMass().isInfinite() ==> \\result <= this.body2.getMass().getMass();\n//@ ensures this.body1.getMass().getMass() > 0.0 && this.body2.getMass().getMass() > 0.0 && !this.body1.getMass().isInfinite() && !this.body2.getMass().isInfinite() ==> Math.abs(\\result - (this.body1.getMass().getMass() * this.body2.getMass().getMass()) / (this.body1.getMass().getMass() + this.body2.getMass().getMass())) < 1e-9;",
+    "//@ ensures \\result >= 0.0;\n//@ ensures body1.getMass() > 0.0 && body2.getMass() > 0.0 && body1.getMass() + body2.getMass() > 0.0 ==> \\result == (body1.getMass() * body2.getMass()) / (body1.getMass() + body2.getMass());\n//@ ensures body1.getMass() > 0.0 && body2.getMass() > 0.0 ==> \\result <= Math.min(body1.getMass(), body2.getMass());\n//@ ensures body1.getMass() == 0.0 || body2.getMass() == 0.0 ==> \\result == 0.0;",
+    "//@ ensures \\result >= 0.0;\n//@ ensures Double.isFinite(body1.getMass().getMass()) && Double.isFinite(body2.getMass().getMass()) && body1.getMass().getMass() > 0.0 && body2.getMass().getMass() > 0.0 ==> \\result <= body1.getMass().getMass();\n//@ ensures Double.isFinite(body1.getMass().getMass()) && Double.isFinite(body2.getMass().getMass()) && body1.getMass().getMass() > 0.0 && body2.getMass().getMass() > 0.0 ==> \\result <= body2.getMass().getMass();\n//@ ensures body1.getMass().isInfinite() && Double.isFinite(body2.getMass().getMass()) ==> \\result == body2.getMass().getMass();\n//@ ensures body2.getMass().isInfinite() && Double.isFinite(body1.getMass().getMass()) ==> \\result == body1.getMass().getMass();\n//@ ensures body1.getMass().isInfinite() && body2.getMass().isInfinite() ==> Double.isInfinite(\\result);",
+    "//@ ensures \\result >= 0;\n//@ ensures this.body1.getMass() > 0 && this.body2.getMass() > 0 ==> \\result == (this.body1.getMass() * this.body2.getMass()) / (this.body1.getMass() + this.body2.getMass());\n//@ ensures this.body1.getMass() == 0 && this.body2.getMass() == 0 ==> \\result == 0;\n//@ ensures this.body1.getMass() == 0 && this.body2.getMass() > 0 ==> \\result == this.body2.getMass();\n//@ ensures this.body1.getMass() > 0 && this.body2.getMass() == 0 ==> \\result == this.body1.getMass();\n//@ ensures this.body1.getMass() > 0 && this.body2.getMass() > 0 ==> \\result <= this.body1.getMass();\n//@ ensures this.body1.getMass() > 0 && this.body2.getMass() > 0 ==> \\result <= this.body2.getMass();",
+    "//@ ensures \\result >= 0.0;\n//@ ensures !Double.isNaN(\\result);"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "compile_failure",
+    "jml_fail",
+    "compile_failure",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [],
+    [],
+    [],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 99
+}

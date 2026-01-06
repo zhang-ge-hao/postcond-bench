@@ -1,0 +1,235 @@
+{
+  "rlid": "handle_oneof",
+  "github_url": "https://github.com/liiight/notifiers/blob/351c048eb1d8fefae7d638cf1ac667a69815c79a/./notifiers_cli/utils/dynamic_click.py#L25-L47",
+  "name": "handle_oneof",
+  "line_cov": 1.0,
+  "lines": 23,
+  "stats": 14,
+  "cc": 6,
+  "content": "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description",
+  "header": "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"",
+  "file": "./notifiers_cli/utils/dynamic_click.py",
+  "start_line": 25,
+  "end_line": 47,
+  "body_start_line": 33,
+  "comment": "\"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"",
+  "test_time": 6.437107086181641,
+  "cover_tests": [
+    "tests/providers/test_join.py::TestJoinCLI::test_join_devices_negative",
+    "tests/providers/test_pushover.py::TestPushoverCLI::test_pushover_sounds_negative",
+    "tests/providers/test_pushover.py::TestPushoverCLI::test_pushover_limits",
+    "tests/providers/test_telegram.py::TestTelegramCLI::test_telegram_updates_negative",
+    "tests/test_cli.py::TestCLI::test_bad_notify",
+    "tests/test_cli.py::TestCLI::test_notify_sanity",
+    "tests/test_cli.py::TestCLI::test_providers",
+    "tests/test_cli.py::TestCLI::test_metadata",
+    "tests/test_cli.py::TestCLI::test_required",
+    "tests/test_cli.py::TestCLI::test_help",
+    "tests/test_cli.py::TestCLI::test_no_defaults",
+    "tests/test_cli.py::TestCLI::test_defaults",
+    "tests/test_cli.py::TestCLI::test_resources",
+    "tests/test_cli.py::TestCLI::test_piping_input",
+    "tests/test_cli.py::TestCLI::test_environ[None-command0]",
+    "tests/test_cli.py::TestCLI::test_environ[FOO_-command1]",
+    "tests/test_cli.py::TestCLI::test_version_command",
+    "tests/test_cli.py::TestCLI::test_multiple_option"
+  ],
+  "repo": {
+    "github_path": "liiight/notifiers",
+    "commit": "351c048eb1d8fefae7d638cf1ac667a69815c79a",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"hatchling\",]\nbuild-backend = \"hatchling.build\"\n\n[project]\nname = \"notifiers\"\nversion = \"1.3.6\"\ndescription = \"The easy way to send notifications\"\nrequires-python = \">=3.8\"\nreadme = \"README.md\"\nlicense = \"MIT\"\nkeywords = [ \"notifications\", \"messaging\", \"email\", \"push\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Intended Audience :: Developers\", \"Intended Audience :: End Users/Desktop\",]\ndependencies = [ \"click>=8.0.3\", \"importlib-metadata>=3.6\", \"jsonschema>=4.4.0\", \"requests>=2.27.1,<3\", \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"liiight\"\nemail = \"python.notifiers@gmail.com\"\n\n[dependency-groups]\ndev = [ \"pytest\", \"codecov\", \"pytest-cov\", \"sphinx-autodoc-annotation~=1.0.post1\", \"sphinx-rtd-theme\", \"hypothesis\", \"pre-commit\", \"retry\", \"Sphinx\",]\n\n[project.urls]\nHomepage = \"https://github.com/liiight/notifiers\"\nRepository = \"https://github.com/liiight/notifiers\"\nDocumentation = \"https://notifiers.readthedocs.io/en/latest/\"\n\n[project.scripts]\nnotifiers = \"notifiers_cli.core:entry_point\"\n\n[tool.pytest.ini_options]\nmarkers = [ \"online: marks tests running online\",]\n\n[tool.hatch.build.targets.wheel]\ninclude = [ \"notifiers\", \"notifiers_cli\", \"LICENSE\",]\n\n[tool.hatch.build.targets.sdist]\ninclude = [ \"notifiers\", \"notifiers_cli\", \"LICENSE\",]\nexclude = [ \"tests\",]\n\n[tool.poetry.group.dev.dependencies]\nretry = \"^0.9.2\"\n\n[tool.poetry.group.dev.dependencies.pytest]\nversion = \">=8.4.2\"\nmarkers = \"python_version >= \\\"3.9\\\"\"\n\n[tool.poetry.group.dev.dependencies.pytest-cov]\nversion = \">=7.0.0\"\nmarkers = \"python_version >= \\\"3.9\\\"\"\n\n[tool.poetry.group.dev.dependencies.pytest-reportlog]\nversion = \">=0.4.0\"\nmarkers = \"python_version >= \\\"3.9\\\"\"\n\n[tool.poetry.group.dev.dependencies.hypothesis]\nversion = \">=6.142.4\"\nmarkers = \"python_version >= \\\"3.10\\\"\"\n\n[tool.poetry.group.dev.dependencies.pre-commit]\nversion = \">=2.20.0\"\nmarkers = \"python_version >= \\\"3.9\\\"\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nversion = \">=1.2.0,<2.0.0\"\nmarkers = \"python_version >= \\\"3.10\\\"\"\n",
+    "failed_tests": [
+      "tests/providers/test_pagerduty.py::TestPagerDuty::test_pagerduty_sanity",
+      "tests/providers/test_pagerduty.py::TestPagerDuty::test_pagerduty_all_options",
+      "tests/providers/test_pushover.py::TestPushover::test_pushover_priority_2_restrictions[data0-expire]",
+      "tests/providers/test_pushover.py::TestPushover::test_pushover_priority_2_restrictions[data1-retry]",
+      "tests/providers/test_pushover.py::TestPushover::test_sanity",
+      "tests/providers/test_pushover.py::TestPushover::test_all_options",
+      "tests/providers/test_pushover.py::TestPushover::test_attachment_positive",
+      "tests/providers/test_pushover.py::TestPushoverSoundsResource::test_pushover_sounds_positive",
+      "tests/providers/test_pushover.py::TestPushoverLimitsResource::test_pushover_limits_positive",
+      "tests/providers/test_pushover.py::TestPushoverCLI::test_pushover_sounds_positive",
+      "tests/providers/test_pushover.py::TestPushoverCLI::test_pushover_limits_positive",
+      "tests/providers/test_simplepush.py::TestSimplePush::test_simplepush_sanity",
+      "tests/providers/test_slack.py::TestSlack::test_sanity",
+      "tests/providers/test_slack.py::TestSlack::test_all_options",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_metadata",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_missing_required[data0-message]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_missing_required[data1-api_key]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_missing_required[data2-page_id]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_data_dependencies[added_data0-Cannot set both 'backfill' and 'scheduled' incident properties in the same notification!]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_data_dependencies[added_data1-is a realtime incident status! Please choose one of]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_data_dependencies[added_data2-Cannot set 'status' when setting 'backfill'!]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_errors",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_success[data0]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_success[data1]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_success[data2]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_success[data3]",
+      "tests/providers/test_statuspage.py::TestStatuspageComponents::test_statuspage_components_attribs",
+      "tests/providers/test_statuspage.py::TestStatuspageComponents::test_statuspage_components_negative",
+      "tests/providers/test_telegram.py::TestTelegram::test_missing_chat_id",
+      "tests/providers/test_telegram.py::TestTelegram::test_sanity",
+      "tests/providers/test_telegram.py::TestTelegram::test_all_options",
+      "tests/providers/test_telegram.py::TestTelegramResources::test_telegram_updates_positive",
+      "tests/providers/test_telegram.py::TestTelegramCLI::test_telegram_updates_positive",
+      "tests/providers/test_twilio.py::TestTwilio::test_sanity",
+      "tests/providers/test_zulip.py::TestZulip::test_sanity",
+      "tests/providers/test_zulip.py::TestZulip::test_private_message"
+    ],
+    "test_time": 30.230427503585815
+  },
+  "mutants": [
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key != \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key != \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description\n",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"string\" or key == \"integer\":\n            continue\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            break\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description\n",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP and key != \"string\":\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP and key == \"integer\":\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP and value.get(\"required\", False):\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key not in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key not in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description\n",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = None\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description\n",
+    "def handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            return\n    return click_type, multiple, description\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda oneof_schema: (lambda l: [x for i,x in enumerate(l) if x not in l[:i]])([s[\"type\"] for s in oneof_schema]), name=\"unique_types\")\n@icontract.snapshot(lambda oneof_schema: [t for t in (lambda l: [x for i,x in enumerate(l) if x not in l[:i]])([s[\"type\"] for s in oneof_schema]) if t in SCHEMA_BASE_MAP], name=\"primitives_order\")\n@icontract.snapshot(lambda oneof_schema: next((s.get(\"items\", {}).get(\"type\") for s in oneof_schema if s.get(\"type\") == \"array\" and isinstance(s.get(\"items\"), dict) and \"type\" in s.get(\"items\")), None), name=\"array_items_type\")\n@icontract.snapshot(lambda oneof_schema: {s[\"type\"]: s.get(\"title\") for s in oneof_schema}, name=\"type_to_title\")\n@icontract.ensure(\n    lambda result, OLD: \n        isinstance(result, tuple) and len(result) == 3\n        and\n        (result[0] is None or result[0] in set(SCHEMA_BASE_MAP.values()))\n        and\n        (not OLD.primitives_order) == (result[0] is None and result[1] is False and result[2] is None)\n        and\n        ((not OLD.primitives_order) or (result[0] == SCHEMA_BASE_MAP[OLD.primitives_order[0]]))\n        and\n        ((not OLD.primitives_order) or (result[2] == OLD.type_to_title.get(OLD.primitives_order[0])))\n        and\n        ((not OLD.primitives_order) or (result[1] is (OLD.array_items_type == OLD.primitives_order[0])))\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nHelper module with tools to dynamically convert :class:`~notifiers.core.Provider` and\n:class:`~notifiers.core.ProviderResource` classes to :mod:`click` data types\n\"\"\"\n\nfrom functools import partial\n\nimport click\n\nCORE_COMMANDS = {\n    \"required\": \"'{}' required schema\",\n    \"schema\": \"'{}' full schema\",\n    \"metadata\": \"'{}' metadata\",\n    \"defaults\": \"'{}' default values\",\n}\nSCHEMA_BASE_MAP = {\n    \"string\": click.STRING,\n    \"integer\": click.INT,\n    \"number\": click.FLOAT,\n    \"boolean\": click.BOOL,\n}\nCOMPLEX_TYPES = [\"object\", \"array\"]\n\n\ndef handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description\n\n\ndef json_schema_to_click_type(schema: dict) -> tuple:\n    \"\"\"\n    A generic handler of a single property JSON schema to :class:`click.ParamType` converter\n\n    :param schema: JSON schema property to operate on\n    :return: Tuple of :class:`click.ParamType`, `description`` of option and optionally a :class:`click.Choice`\n     if the allowed values are a closed list (JSON schema ``enum``)\n    \"\"\"\n    choices = None\n    if isinstance(schema[\"type\"], list) and \"string\" in schema[\"type\"]:\n        schema[\"type\"] = \"string\"\n    click_type = SCHEMA_BASE_MAP[schema[\"type\"]]\n    description = schema.get(\"title\")\n    if schema.get(\"enum\"):\n        # todo handle multi type enums better (or at all)\n        enum = [value for value in schema[\"enum\"] if isinstance(value, str)]\n        choices = click.Choice(enum)\n    return click_type, description, choices\n\n\ndef clean_data(data: dict) -> dict:\n    \"\"\"Removes all empty values and converts tuples into lists\"\"\"\n    new_data = {}\n    for key, value in data.items():\n        # Verify that only explicitly passed args get passed on\n        if not isinstance(value, bool) and not value:\n            continue\n\n        # Multiple choice command are passed as tuples, convert to list to match schema\n        if isinstance(value, tuple):\n            value = list(value)  # noqa: PLW2901\n        new_data[key] = value\n    return new_data\n\n\ndef params_factory(schema: dict, add_message: bool) -> list:\n    \"\"\"\n    Generates list of :class:`click.Option` based on a JSON schema\n\n    :param schema:  JSON schema to operate on\n    :return: Lists of created :class:`click.Option` object to be added to a :class:`click.Command`\n    \"\"\"\n\n    # Immediately create message as an argument\n    params = []\n    if add_message:\n        params.append(click.Argument([\"message\"], required=False))\n\n    for property, prpty_schema in schema.items():\n        multiple = False\n        choices = None\n\n        if any(char in property for char in [\"@\"]):\n            continue\n        if prpty_schema.get(\"type\") in COMPLEX_TYPES:\n            continue\n        if prpty_schema.get(\"duplicate\"):\n            continue\n        if property == \"message\":\n            continue\n\n        if not prpty_schema.get(\"oneOf\"):\n            click_type, description, choices = json_schema_to_click_type(prpty_schema)\n        else:\n            click_type, multiple, description = handle_oneof(prpty_schema[\"oneOf\"])\n            # Not all oneOf schema can be handled by click\n            if not click_type:\n                continue\n\n        # Convert bool values into flags\n        if click_type == click.BOOL:\n            param_decls = [get_flag_param_decals_from_bool(property)]\n            click_type = None\n        else:\n            param_decls = [get_param_decals_from_name(property)]\n\n        if description:\n            description = description.capitalize()\n\n            if multiple:\n                if not description.endswith(\".\"):\n                    description += \".\"\n                description += \" Multiple usages of this option are allowed\"\n        # Construct the base command options\n        option = partial(click.Option, param_decls=param_decls, help=description, multiple=multiple)\n\n        if choices:\n            option = option(type=choices)\n        elif click_type:\n            option = option(type=click_type)\n        else:\n            option = option()\n        params.append(option)\n    return params\n\n\ndef schema_to_command(p, name: str, callback: callable, add_message: bool) -> click.Command:\n    \"\"\"\n    Generates a ``notify`` :class:`click.Command` for :class:`~notifiers.core.Provider`\n\n    :param p: Relevant Provider\n    :param name: Command name\n    :return: A ``notify`` :class:`click.Command`\n    \"\"\"\n    params = params_factory(p.schema[\"properties\"], add_message=add_message)\n    help = p.__doc__\n    return click.Command(name=name, callback=callback, params=params, help=help)\n\n\ndef get_param_decals_from_name(option_name: str) -> str:\n    \"\"\"Converts a name to a param name\"\"\"\n    name = option_name.replace(\"_\", \"-\")\n    return f\"--{name}\"\n\n\ndef get_flag_param_decals_from_bool(option_name: str) -> str:\n    \"\"\"Return a '--do/not-do' style flag param\"\"\"\n    name = option_name.replace(\"_\", \"-\")\n    return f\"--{name}/--no-{name}\"\n\n```\n## Target Method\n```\ndef handle_oneof(oneof_schema: list) -> tuple:\n    \"\"\"\n    Custom handle of `oneOf` JSON schema validator. Tried to match primitive type and see if it should be allowed\n     to be passed multiple timns into a command\n\n    :param oneof_schema: `oneOf` JSON schema\n    :return: Tuple of :class:`click.ParamType`, ``multiple`` flag and ``description`` of option\n    \"\"\"\n    oneof_dict = {schema[\"type\"]: schema for schema in oneof_schema}\n    click_type = None\n    multiple = False\n    description = None\n    for key, value in oneof_dict.items():\n        if key == \"array\":\n            continue\n        if key in SCHEMA_BASE_MAP:\n            if oneof_dict.get(\"array\") and oneof_dict[\"array\"][\"items\"][\"type\"] == key:\n                multiple = True\n            # Found a match to a primitive type\n            click_type = SCHEMA_BASE_MAP[key]\n            description = value.get(\"title\")\n            break\n    return click_type, multiple, description\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `handle_oneof`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-all",
+  "postconds": [
+    "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 3, \"Result must be a tuple of length 3\")\n@icontract.ensure(lambda result: result[0] is None or result[0] in SCHEMA_BASE_MAP.values(), \"click_type must be None or a valid click type from SCHEMA_BASE_MAP\")\n@icontract.ensure(lambda result: isinstance(result[1], bool), \"multiple flag must be a boolean\")\n@icontract.ensure(lambda result: not result[1] or result[0] is not None, \"If multiple is True, click_type must not be None\")\n@icontract.ensure(lambda result: result[2] is None or isinstance(result[2], str), \"description must be None or a string\")",
+    "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 3)\n@icontract.ensure(lambda result: result[0] is None or result[0] in SCHEMA_BASE_MAP.values())\n@icontract.ensure(lambda result: isinstance(result[1], bool))\n@icontract.ensure(lambda result: result[2] is None or isinstance(result[2], str))\n@icontract.ensure(lambda result: not result[1] or result[0] is not None, \"If multiple is True, click_type must not be None\")",
+    "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 3)\n@icontract.ensure(lambda result: result[0] is None or result[0] in SCHEMA_BASE_MAP.values())\n@icontract.ensure(lambda result: isinstance(result[1], bool))\n@icontract.ensure(lambda result: result[2] is None or isinstance(result[2], str))\n@icontract.ensure(lambda result: not result[1] or result[0] is not None, \"If multiple is True, click_type must not be None\")\n@icontract.ensure(lambda result: result[2] is None or result[0] is not None, \"If description is set, click_type must not be None\")",
+    "@icontract.ensure(lambda result: len(result) == 3, \"Result must be a tuple of 3 elements\")\n@icontract.ensure(lambda result: isinstance(result[1], bool), \"Multiple flag must be a boolean\")\n@icontract.ensure(lambda result: result[0] is None or result[0] in SCHEMA_BASE_MAP.values(), \"click_type must be None or a valid SCHEMA_BASE_MAP value\")\n@icontract.ensure(lambda result: not result[1] or result[0] is not None, \"If multiple is True, click_type must not be None\")\n@icontract.ensure(lambda result: result[2] is None or isinstance(result[2], str), \"Description must be None or a string\")",
+    "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 3)\n@icontract.ensure(lambda result: isinstance(result[1], bool))\n@icontract.ensure(lambda result: result[0] is None or result[0] in SCHEMA_BASE_MAP.values())\n@icontract.ensure(lambda result: not result[1] or result[0] is not None)\n@icontract.ensure(lambda result: result[2] is None or isinstance(result[2], str))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash"
+    ]
+  ],
+  "traversal_rank": 223
+}

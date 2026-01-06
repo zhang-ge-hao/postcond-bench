@@ -1,0 +1,142 @@
+{
+  "rlid": "isConstant-2",
+  "github_url": "https://github.com/yinlou/mltk/blob/f50c42986fdd016e7da38d5e381ed24d8fe87e41/./src/main/java/mltk/util/ArrayUtils.java#L179-L195",
+  "name": "isConstant",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 5,
+  "cc": 3,
+  "content": "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] != c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}",
+  "header": "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {",
+  "file": "./src/main/java/mltk/util/ArrayUtils.java",
+  "start_line": 179,
+  "end_line": 195,
+  "body_start_line": 189,
+  "comment": "/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */",
+  "test_time": 3.336970090866089,
+  "cover_tests": [
+    "mltk.util.ArrayUtilsTest#testIsConstant"
+  ],
+  "repo": {
+    "github_path": "yinlou/mltk",
+    "commit": "f50c42986fdd016e7da38d5e381ed24d8fe87e41",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.yinlou</groupId>\n  <artifactId>mltk</artifactId>\n  <version>0.1.1-SNAPSHOT</version>\n\n  <name>mltk</name>\n  <description>Machine Learning Tool Kit</description>\n  <url>https://github.com/yinlou/mltk</url>\n\n  <licenses>\n    <license>\n      <name>BSD 3-Clause</name>\n      <url>https://opensource.org/licenses/BSD-3-Clause</url>\n    </license>\n  </licenses>\n\n   <developers>\n    <developer>\n      <name>Yin Lou</name>\n      <email>machinelearningtoolkit@gmail.com</email>\n    </developer>\n  </developers>\n\n  <scm>\n    <connection>scm:git:git://github.com/yinlou/mltk.git</connection>\n    <developerConnection>scm:git:ssh://github.com:yinlou/mltk.git</developerConnection>\n    <url>https://github.com/yinlou/mltk.git</url>\n  </scm>\n\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n    <maven.compiler.source>10</maven.compiler.source>\n    <maven.compiler.target>10</maven.compiler.target>\n  </properties>\n\n  <profiles>\n    <profile>\n      <id>doclint-java8-disable</id>\n      <activation>\n        <jdk>[1.8,)</jdk>\n      </activation>\n      <properties>\n        <javadoc.opts>-Xdoclint:none</javadoc.opts>\n      </properties>\n    </profile>\n  </profiles>\n\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n  </distributionManagement>\n\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.7</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.5.1</version>\n        <configuration>\n          <showDeprecation>true</showDeprecation>\n          <source>${maven.compiler.source}</source>\n          <target>${maven.compiler.target}</target> \n        </configuration>\n      </plugin>\n      <plugin>\n      <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>2.2.1</version>\n        <executions>\n          <execution>\n           <id>attach-sources</id>\n            <goals>\n              <goal>jar-no-fork</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>2.10.3</version>\n        <configuration>\n          <source>8</source>\n          <doctitle>Machine Learning Tool Kit ${project.version} API</doctitle>\n          <windowtitle>Machine Learning Tool Kit ${project.version} API</windowtitle>\n          <additionalparam>${javadoc.opts}</additionalparam>\n        </configuration>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <phase>package</phase>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n      <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>1.5</version>\n        <executions>\n         <execution>\n            <id>sign-artifacts</id>\n            <phase>verify</phase>\n            <goals>\n             <goal>sign</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.0.0-M7</version></plugin><plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.8</version><executions><execution><id>prepare-agent</id><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>prepare-package</phase><goals><goal>report</goal></goals><configuration><formats><format>html</format><format>xml</format></formats></configuration></execution></executions></plugin></plugins>\n  </build>\n\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n    </dependency>\n  </dependencies>\n\n  <repositories>\n  </repositories>\n\n</project>",
+    "failed_tests": [],
+    "test_time": 1.3728833198547363
+  },
+  "mutants": [
+    "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i >= end; i++) {\n\t\t\tif (a[i] != c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] < c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] <= c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] == c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] >= c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] != c) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] != c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result <==> java.util.stream.IntStream.range(begin, end).allMatch(i -> a[i] == c);\n//@ ensures begin >= end ==> \\result",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage mltk.util;\n\nimport java.util.Arrays;\nimport java.util.List;\n\n/**\n * Class for utility functions for arrays.\n * \n * @author Yin Lou\n * \n */\npublic class ArrayUtils {\n\t\n\t/**\n\t * Converts an integer list to int array.\n\t * \n\t * @param list the list.\n\t * @return an int array.\n\t */\n\tpublic static int[] toIntArray(List<Integer> list) {\n\t\tint[] a = new int[list.size()];\n\t\tfor (int i = 0; i < list.size(); i++) {\n\t\t\ta[i] = list.get(i);\n\t\t}\n\t\treturn a;\n\t}\n\t\n\t/**\n\t * Converts a double list to double array.\n\t * \n\t * @param list the list.\n\t * @return a double array.\n\t */\n\tpublic static double[] toDoubleArray(List<Double> list) {\n\t\tdouble[] a = new double[list.size()];\n\t\tfor (int i = 0; i < list.size(); i++) {\n\t\t\ta[i] = list.get(i);\n\t\t}\n\t\treturn a;\n\t}\n\t\n\t/**\n\t * Converts a double array to an int array.\n\t * \n\t * @param a the double array.\n\t * @return an int array.\n\t */\n\tpublic static int[] toIntArray(double[] a) {\n\t\tint[] b = new int[a.length];\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tb[i] = (int) a[i];\n\t\t}\n\t\treturn b;\n\t}\n\t\n\t/**\n\t * Returns a string representation of the contents of the specified sub-array.\n\t * \n\t * @param a the array.\n\t * @param start the starting index (inclusive).\n\t * @param end the ending index (exclusive).\n\t * @return Returns a string representation of the contents of the specified sub-array.\n\t */\n\tpublic static String toString(double[] a, int start, int end) {\n\t\tStringBuilder sb = new StringBuilder();\n\t\tsb.append(\"[\").append(a[start]);\n\t\tfor (int i = start + 1; i < end; i++) {\n\t\t\tsb.append(\", \").append(a[i]);\n\t\t}\n\t\tsb.append(\"]\");\n\t\treturn sb.toString();\n\t}\n\n\t/**\n\t * Parses a double array from a string (default delimiter: \",\").\n\t * \n\t * @param str the string representation of a double array.\n\t * @return a double array.\n\t */\n\tpublic static double[] parseDoubleArray(String str) {\n\t\treturn parseDoubleArray(str, \",\");\n\t}\n\n\t/**\n\t * Parses a double array from a string.\n\t * \n\t * @param str the string representation of a double array.\n\t * @param delimiter the delimiter.\n\t * @return a double array.\n\t */\n\tpublic static double[] parseDoubleArray(String str, String delimiter) {\n\t\tif (str == null || str.equalsIgnoreCase(\"null\")) {\n\t\t\treturn null;\n\t\t}\n\t\tString[] data = str.substring(1, str.length() - 1).split(delimiter);\n\t\tdouble[] a = new double[data.length];\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\ta[i] = Double.parseDouble(data[i].trim());\n\t\t}\n\t\treturn a;\n\t}\n\n\t/**\n\t * Parses an int array from a string (default delimiter: \",\").\n\t * \n\t * @param str the string representation of an int array.\n\t * @return an int array.\n\t */\n\tpublic static int[] parseIntArray(String str) {\n\t\treturn parseIntArray(str, \",\");\n\t}\n\n\t/**\n\t * Parses an int array from a string.\n\t * \n\t * @param str the string representation of an int array.\n\t * @param delimiter the delimiter.\n\t * @return an int array.\n\t */\n\tpublic static int[] parseIntArray(String str, String delimiter) {\n\t\tif (str == null || str.equalsIgnoreCase(\"null\")) {\n\t\t\treturn null;\n\t\t}\n\t\tString[] data = str.substring(1, str.length() - 1).split(delimiter);\n\t\tint[] a = new int[data.length];\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\ta[i] = Integer.parseInt(data[i].trim());\n\t\t}\n\t\treturn a;\n\t}\n\t\n\t/**\n\t * Parses a long array from a string (default delimiter: \",\").\n\t * \n\t * @param str the string representation of a long array.\n\t * @return an long array.\n\t */\n\tpublic static long[] parseLongArray(String str) {\n\t\treturn parseLongArray(str, \",\");\n\t}\n\t\n\t/**\n\t * Parses a long array from a string.\n\t * \n\t * @param str the string representation of a long array.\n\t * @param delimiter the delimiter.\n\t * @return a long array.\n\t */\n\tpublic static long[] parseLongArray(String str, String delimiter) {\n\t\tif (str == null || str.equalsIgnoreCase(\"null\")) {\n\t\t\treturn null;\n\t\t}\n\t\tString[] data = str.substring(1, str.length() - 1).split(delimiter);\n\t\tlong[] a = new long[data.length];\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\ta[i] = Long.parseLong(data[i].trim());\n\t\t}\n\t\treturn a;\n\t}\n\n\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(double[] a, int begin, int end, double c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (!MathUtils.equals(a[i], c)) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] != c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(byte[] a, int begin, int end, byte c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] != c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t/**\n\t * Returns the median of an array.\n\t * \n\t * @param a the array.\n\t * @return the median of an array.\n\t */\n\tpublic static double getMedian(double[] a) {\n\t\tif (a.length == 0) {\n\t\t\treturn 0;\n\t\t}\n\t\tdouble[] ary = Arrays.copyOf(a, a.length);\n\t\tArrays.sort(ary);\n\t\tint mid = ary.length / 2;\n\t\tif (ary.length % 2 == 1) {\n\t\t\treturn ary[mid];\n\t\t} else {\n\t\t\treturn (ary[mid - 1] + ary[mid]) / 2;\n\t\t}\n\t}\n\t\n\t/**\n\t * Returns the index of the search key if it is contained in the array, otherwise returns the insertion point.\n\t * \n\t * @param a the array.\n\t * @param key the search key.\n\t * @return the index of the search key if it is contained in the array, otherwise returns the insertion point.\n\t */\n\tpublic static int findInsertionPoint(double[] a, double key) {\n\t\tint idx = Arrays.binarySearch(a, key);\n\t\tif (idx < 0) {\n\t\t\tidx = -idx - 1;\n\t\t}\n\t\treturn idx;\n\t}\n\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Returns {@code true} if the specified range of an array is constant c.\n\t * \n\t * @param a the array.\n\t * @param begin the index of first element (inclusive).\n\t * @param end the index of last element (exclusive).\n\t * @param c the constant to test.\n\t * @return {@code true} if the specified range of an array is constant c.\n\t */\n\tpublic static boolean isConstant(int[] a, int begin, int end, int c) {\n\t\tfor (int i = begin; i < end; i++) {\n\t\t\tif (a[i] != c) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `isConstant`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "// @ ensures \\result <==> java.util.stream.IntStream.range(begin, end).allMatch(i -> a[i] == c);\n// @ ensures !\\result ==> java.util.stream.IntStream.range(begin, end).anyMatch(i -> a[i] != c);\n// @ ensures (begin >= end) ==> \\result;",
+    "// @ ensures \\result <==> java.util.stream.IntStream.range(begin, end).allMatch(i -> a[i] == c);\n// @ ensures \\result ==> java.util.stream.IntStream.range(begin, end).noneMatch(i -> a[i] != c);\n// @ ensures !\\result ==> java.util.stream.IntStream.range(begin, end).anyMatch(i -> a[i] != c);\n// @ ensures begin >= end ==> \\result;\n// @ ensures java.util.Arrays.equals(a, \\old(a));\n// @ ensures begin == \\old(begin) && end == \\old(end) && c == \\old(c);",
+    "// @ ensures begin >= end ==> \\result;\n// @ ensures \\result <==> java.util.stream.IntStream.range(begin, end).allMatch(i -> a[i] == c);\n// @ ensures !\\result ==> java.util.stream.IntStream.range(begin, end).anyMatch(i -> a[i] != c);\n// @ ensures java.util.Arrays.equals(a, \\old(a));\n// @ ensures begin == \\old(begin) && end == \\old(end) && c == \\old(c);",
+    "// @ ensures a == \\old(a) && begin == \\old(begin) && end == \\old(end) && c == \\old(c);\n// @ ensures (a != null && 0 <= begin && begin <= end && end <= a.length) ==> (\\result <==> java.util.stream.IntStream.range(begin, end).allMatch(i -> a[i] == c));\n// @ ensures (a != null && 0 <= begin && begin <= end && end <= a.length) ==> (!\\result <==> java.util.stream.IntStream.range(begin, end).anyMatch(i -> a[i] != c));",
+    "// @ ensures \\result <==> java.util.stream.IntStream.range(begin, end).allMatch(i -> a[i] == c);\n// @ ensures (!\\result) <==> java.util.stream.IntStream.range(begin, end).anyMatch(i -> a[i] != c);\n// @ ensures (begin >= end) ==> \\result;"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 282
+}

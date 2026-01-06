@@ -1,0 +1,167 @@
+{
+  "rlid": "calculateInDegree",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/datastructures/graphs/KahnsAlgorithm.java#L86-L98",
+  "name": "calculateInDegree",
+  "line_cov": 1.0,
+  "lines": 13,
+  "stats": 5,
+  "cc": 3,
+  "content": "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }",
+  "header": "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {",
+  "file": "./src/main/java/com/thealgorithms/datastructures/graphs/KahnsAlgorithm.java",
+  "start_line": 86,
+  "end_line": 98,
+  "body_start_line": 91,
+  "comment": "/**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */",
+  "test_time": 5.797940492630005,
+  "cover_tests": [
+    "com.thealgorithms.datastructures.graphs.KahnsAlgorithmTest#testBasicGraph",
+    "com.thealgorithms.datastructures.graphs.KahnsAlgorithmTest#testDisconnectedGraph",
+    "com.thealgorithms.datastructures.graphs.KahnsAlgorithmTest#testGraphWithCycle",
+    "com.thealgorithms.datastructures.graphs.KahnsAlgorithmTest#testGraphWithMultipleSources",
+    "com.thealgorithms.datastructures.graphs.KahnsAlgorithmTest#testSingleNodeGraph"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getAdjacents(graph.getVertices().iterator().next())) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            \n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.put(vertex, -1);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.put(vertex, 1);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.put(vertex, inDegree.getOrDefault(vertex, 0) + 1);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.remove(vertex);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getVertices()) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                \n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) - 1);\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) - 1); // This will incorrectly decrement the in-degree, leading to wrong topological sorting.\n            }\n        }\n    }",
+    "    /**\n     * Calculates the in-degree of all vertices in the graph. The in-degree is\n     * the number of edges directed into a vertex.\n     */\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 1) + 1); // This will incorrectly initialize the in-degree of new vertices to 1 instead of 0.\n            }\n        }\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures graph.getVertices().stream().allMatch(v -> inDegree.containsKey(v) && inDegree.get(v) != null && inDegree.get(v).intValue() >= 0);\n//@ ensures graph.getVertices().stream().allMatch(v -> inDegree.get(v).intValue() == graph.getVertices().stream().mapToInt(u -> (int) graph.getAdjacents(u).stream().filter(a -> a.equals(v)).count()).sum());\n//@ ensures inDegree.values().stream().mapToInt(Integer::intValue).sum() == graph.getVertices().stream().mapToInt(v -> graph.getAdjacents(v).size()).sum();",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.datastructures.graphs;\n\nimport java.util.ArrayList;\nimport java.util.HashMap;\nimport java.util.LinkedHashMap;\nimport java.util.LinkedList;\nimport java.util.Map;\nimport java.util.Queue;\nimport java.util.Set;\n\nclass AdjacencyList<E extends Comparable<E>> {\n\n    Map<E, ArrayList<E>> adj;\n\n    AdjacencyList() {\n        adj = new LinkedHashMap<>();\n    }\n\n    void addEdge(E from, E to) {\n        if (!adj.containsKey(from)) {\n            adj.put(from, new ArrayList<>());\n        }\n        adj.get(from).add(to);\n        if (!adj.containsKey(to)) {\n            adj.put(to, new ArrayList<>());\n        }\n    }\n\n    ArrayList<E> getAdjacents(E v) {\n        return adj.get(v);\n    }\n\n    Set<E> getVertices() {\n        return adj.keySet();\n    }\n}\n\nclass TopologicalSort<E extends Comparable<E>> {\n\n    AdjacencyList<E> graph;\n    Map<E, Integer> inDegree;\n\n    TopologicalSort(AdjacencyList<E> graph) {\n        this.graph = graph;\n    }\n\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }\n\n    ArrayList<E> topSortOrder() {\n        calculateInDegree();\n        Queue<E> q = new LinkedList<>();\n\n        for (var entry : inDegree.entrySet()) {\n            if (entry.getValue() == 0) {\n                q.add(entry.getKey());\n            }\n        }\n\n        ArrayList<E> answer = new ArrayList<>();\n        int processedVertices = 0;\n\n        while (!q.isEmpty()) {\n            E current = q.poll();\n            answer.add(current);\n            processedVertices++;\n\n            for (E adjacent : graph.getAdjacents(current)) {\n                inDegree.put(adjacent, inDegree.get(adjacent) - 1);\n                if (inDegree.get(adjacent) == 0) {\n                    q.add(adjacent);\n                }\n            }\n        }\n\n        if (processedVertices != graph.getVertices().size()) {\n            throw new IllegalStateException(\"Graph contains a cycle, topological sort not possible\");\n        }\n\n        return answer;\n    }\n}\n\npublic final class KahnsAlgorithm {\n    private KahnsAlgorithm() {\n    }\n\n    public static void main(String[] args) {\n        AdjacencyList<String> graph = new AdjacencyList<>();\n        graph.addEdge(\"a\", \"b\");\n        graph.addEdge(\"c\", \"a\");\n        graph.addEdge(\"a\", \"d\");\n        graph.addEdge(\"b\", \"d\");\n        graph.addEdge(\"c\", \"u\");\n        graph.addEdge(\"u\", \"b\");\n\n        TopologicalSort<String> topSort = new TopologicalSort<>(graph);\n\n        for (String s : topSort.topSortOrder()) {\n            System.out.print(s + \" \");\n        }\n    }\n}\n\n```\n## Target Method\n```\n    void calculateInDegree() {\n        inDegree = new HashMap<>();\n        for (E vertex : graph.getVertices()) {\n            inDegree.putIfAbsent(vertex, 0);\n            for (E adjacent : graph.getAdjacents(vertex)) {\n                inDegree.put(adjacent, inDegree.getOrDefault(adjacent, 0) + 1);\n            }\n        }\n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `calculateInDegree`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "//@ ensures inDegree != null;\n//@ ensures inDegree.keySet().containsAll(\\old(graph.getVertices()));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> inDegree.containsKey(v));\n//@ ensures inDegree.keySet().stream().allMatch(v -> graph.getVertices().contains(v));\n//@ ensures inDegree.values().stream().allMatch(count -> count >= 0);",
+    "//@ ensures inDegree != null;\n//@ ensures inDegree.keySet().containsAll(\\old(graph.getVertices()));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> inDegree.containsKey(v));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> graph.getAdjacents(v).stream().allMatch(a -> inDegree.containsKey(a)));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> inDegree.get(v) == (\\old(graph.getVertices()).stream().filter(u -> graph.getAdjacents(u).contains(v)).mapToInt(u -> 1).sum()));",
+    "//@ ensures inDegree != null;\n//@ ensures inDegree.keySet().containsAll(\\old(graph.getVertices()));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> inDegree.containsKey(v));\n//@ ensures inDegree.keySet().stream().allMatch(v -> graph.getVertices().contains(v));",
+    "//@ ensures inDegree != null;\n//@ ensures inDegree.keySet().containsAll(\\old(graph.getVertices()));\n//@ ensures \\old(graph.getVertices()).containsAll(inDegree.keySet());\n//@ ensures inDegree.keySet().containsAll(graph.getVertices());\n//@ ensures \\forall E v; inDegree.containsKey(v) ==> (inDegree.get(v) == \\old(calculateInDegreeHelper(v)));",
+    "//@ ensures inDegree != null;\n//@ ensures inDegree.size() == \\old(graph.getVertices().size());\n//@ ensures (\\forall Object o; inDegree.keySet().contains(o); graph.getVertices().contains(o));\n//@ ensures (\\forall E v; graph.getVertices().contains(v); inDegree.get(v) == java.util.stream.Collectors.counting().apply(graph.getVertices().stream().filter(u -> graph.getAdjacents(u).contains(v))));"
+  ],
+  "responses": [
+    "```java\n//@ ensures inDegree != null;\n//@ ensures inDegree.keySet().containsAll(\\old(graph.getVertices()));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> inDegree.containsKey(v));\n//@ ensures inDegree.keySet().stream().allMatch(v -> graph.getVertices().contains(v));\n//@ ensures inDegree.values().stream().allMatch(count -> count >= 0);\n```",
+    "```java\n//@ ensures inDegree != null;\n//@ ensures inDegree.keySet().containsAll(\\old(graph.getVertices()));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> inDegree.containsKey(v));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> graph.getAdjacents(v).stream().allMatch(a -> inDegree.containsKey(a)));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> inDegree.get(v) == (\\old(graph.getVertices()).stream().filter(u -> graph.getAdjacents(u).contains(v)).mapToInt(u -> 1).sum()));\n```",
+    "```java\n//@ ensures inDegree != null;\n//@ ensures inDegree.keySet().containsAll(\\old(graph.getVertices()));\n//@ ensures \\old(graph.getVertices()).stream().allMatch(v -> inDegree.containsKey(v));\n//@ ensures inDegree.keySet().stream().allMatch(v -> graph.getVertices().contains(v));\n```",
+    "```java\n//@ ensures inDegree != null;\n//@ ensures inDegree.keySet().containsAll(\\old(graph.getVertices()));\n//@ ensures \\old(graph.getVertices()).containsAll(inDegree.keySet());\n//@ ensures inDegree.keySet().containsAll(graph.getVertices());\n//@ ensures \\forall E v; inDegree.containsKey(v) ==> (inDegree.get(v) == \\old(calculateInDegreeHelper(v)));\n```",
+    "```java\n//@ ensures inDegree != null;\n//@ ensures inDegree.size() == \\old(graph.getVertices().size());\n//@ ensures (\\forall Object o; inDegree.keySet().contains(o); graph.getVertices().contains(o));\n//@ ensures (\\forall E v; graph.getVertices().contains(v); inDegree.get(v) == java.util.stream.Collectors.counting().apply(graph.getVertices().stream().filter(u -> graph.getAdjacents(u).contains(v))));\n```"
+  ],
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "compile_failure",
+    "compile_failure"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [],
+    []
+  ],
+  "traversal_rank": 76
+}

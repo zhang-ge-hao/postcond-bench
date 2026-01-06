@@ -1,0 +1,113 @@
+{
+  "rlid": "ndarray_to_ptr",
+  "github_url": "https://github.com/siboehm/lleaves/blob/5e977601aec086833f578d03885ca7e6eb6b3499/./lleaves/data_processing.py#L96-L112",
+  "name": "ndarray_to_ptr",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 3,
+  "cc": 3,
+  "content": "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(c_double if use_fp64 else c_float))\n    return ptr",
+  "header": "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"",
+  "file": "./lleaves/data_processing.py",
+  "start_line": 96,
+  "end_line": 112,
+  "body_start_line": 105,
+  "comment": "\"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"",
+  "test_time": 12.055125713348389,
+  "cover_tests": [
+    "tests/test_categoricals.py::test_large_categorical",
+    "tests/test_categoricals.py::test_predict_pandas_categorical",
+    "tests/test_categoricals.py::test_categorical_prediction_llvm_real[pure_cat]"
+  ],
+  "repo": {
+    "github_path": "siboehm/lleaves",
+    "commit": "5e977601aec086833f578d03885ca7e6eb6b3499",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=61\", \"wheel\", \"setuptools_scm[toml]>=6.2\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"lleaves\"\ndescription = \"LLVM-based compiler for LightGBM models\"\nreadme = \"README.md\"\nlicense = \"MIT\"\nrequires-python = \">=3.10\"\nclassifiers = [ \"Development Status :: 4 - Beta\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\",]\ndependencies = [ \"llvmlite>=0.42\", \"numpy>=1.21\", \"icontract (>=2.7.1,<3.0.0)\", \"pytest (>=8.4.2,<9.0.0)\", \"pytest-cov (>=7.0.0,<8.0.0)\", \"pytest-reportlog (>=0.4.0,<0.5.0)\", \"pytest-env (>=1.2.0,<2.0.0)\", \"hypothesis (>=6.142.4,<7.0.0)\", \"lightgbm (>=4.3.0,<5.0.0)\", \"pyarrow (>=22.0.0,<23.0.0)\", \"pandas (>=2.3.3,<3.0.0)\", \"treelite (>=4.5.1,<5.0.0)\", \"treelite-runtime (>=3.9.1,<4.0.0)\", \"onnxruntime (>=1.23.2,<2.0.0)\", \"onnxmltools (>=1.14.0,<2.0.0)\", \"onnxconverter-common (>=1.16.0,<2.0.0)\", \"scikit-learn (>=1.7.2,<2.0.0)\", \"pytest-timeout (>=2.4.0,<3.0.0)\",]\ndynamic = [ \"version\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Simon Boehm\"\nemail = \"simon@siboehm.com\"\n\n[project.urls]\nHomepage = \"https://github.com/siboehm/lleaves\"\nDocumentation = \"https://lleaves.readthedocs.io/en/latest/\"\nRepository = \"https://github.com/siboehm/lleaves\"\nIssues = \"https://github.com/siboehm/lleaves/issues\"\n\n[project.optional-dependencies]\ntest = [ \"pytest\", \"hypothesis\", \"lightgbm>=4.3.0\", \"pyarrow\", \"pandas\",]\ndev = [ \"pre-commit\", \"ruff\",]\ndocs = [ \"sphinx\", \"sphinx_rtd_theme\", \"numpydoc\", \"sphinxcontrib-apidoc\",]\nbenchmark = [ \"treelite\", \"treelite_runtime\", \"onnxruntime\", \"onnxmltools\", \"onnxconverter_common\", \"scikit-learn\",]\n\n[tool.setuptools_scm]\nwrite_to = \"lleaves/_version.py\"\n\n[tool.ruff]\nselect = [ \"E\", \"F\", \"UP\", \"B\", \"SIM\", \"I\",]\nignore = [ \"E501\",]\n\n[tool.pytest.ini_options]\ntimeout = 120\ntimeout_method = \"thread\"\naddopts = \"--ignore=tests/test_benchmark.py  --ignore=tests/test_compile_flags.py --ignore=tests/test_tree_output.py\"\ntestpaths = [ \"tests\",]\npython_files = [ \"test_*.py\",]\npython_classes = [ \"Test*\",]\npython_functions = [ \"test_*\",]\npythonpath = [ \".\",]\n\n[tool.setuptools.packages.find]\n\n[tool.poetry.group.test.dependencies]\n",
+    "failed_tests": [],
+    "test_time": 53.62757897377014
+  },
+  "mutants": [
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=True,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(c_double if use_fp64 else c_float))\n    return ptr",
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=True,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(c_double if use_fp64 else c_float))\n    return ptr\n",
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).copy()\n    ptr = data.ctypes.data_as(POINTER(c_double if use_fp64 else c_float))\n    return ptr",
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).flatten()\n    ptr = data.ctypes.data_as(POINTER(c_double if use_fp64 else c_float))\n    return ptr",
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).transpose()\n    ptr = data.ctypes.data_as(POINTER(c_double if use_fp64 else c_float))\n    return ptr",
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(None))\n    return ptr\n",
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(c_double if not use_fp64 else c_float))  # Reverses the condition\n    return ptr",
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(c_float if use_fp64 else c_double))\n    return ptr",
+    "def ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    \"\"\"\n    Takes a 2D numpy array, converts it to either float64 or float32 depending on the `use_fp64` flag,\n    and returns a pointer to the data.\n\n    :param data: 2D numpy array. Copying is avoided if possible.\n    :param use_fp64: Bool. Casting to float64 if True, otherwise float32.\n    :return: pointer to 1D array of type float64 if `use_fp64` is True, otherwise float32.\n    \"\"\"\n    # ravel makes sure we get a contiguous array in memory and not some strided View\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(c_float))  # Always uses float32 regardless of use_fp64\n    return ptr"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.ensure(\n    lambda result, data, use_fp64:\n        getattr(result, \"_type_\", None)\n        == (c_double if use_fp64 else c_float)\n        and\n        np.ctypeslib.as_array(\n            result,\n            shape=(np.asarray(data).ravel().size,),\n        ).dtype\n        == (np.float64 if use_fp64 else np.float32)\n        and\n        np.ctypeslib.as_array(\n            result,\n            shape=(np.asarray(data).ravel().size,),\n        ).size\n        == np.asarray(data).ravel().size\n        and\n        np.allclose(\n            np.ctypeslib.as_array(\n                result,\n                shape=(np.asarray(data).ravel().size,),\n            ).astype(np.float64),\n            np.asarray(data).ravel().astype(np.float64),\n            equal_nan=True,\n        )\n        and\n        (\n            not (\n                np.asarray(data).dtype\n                == (np.float64 if use_fp64 else np.float32)\n                and np.asarray(data).flags.c_contiguous\n            )\n            or int(\n                np.ctypeslib.as_array(\n                    result,\n                    shape=(np.asarray(data).ravel().size,),\n                ).ctypes.data\n            )\n            == int(np.asarray(data).ctypes.data)\n        )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport json\nimport os\nfrom ctypes import POINTER, c_double, c_float\n\nimport numpy as np\n\ntry:\n    from pandas import DataFrame as pd_DataFrame\nexcept ImportError:\n\n    class pd_DataFrame:\n\n        pass\n\n\ndef _dataframe_to_ndarray(data: pd_DataFrame, pd_traintime_categories: list[list]):\n    cat_cols = list(data.select_dtypes(include=[\"category\"]).columns)\n    if len(cat_cols) != len(pd_traintime_categories):\n        raise ValueError(\n            \"The categorical columns in the dataset don't match the categorical columns during training!\"\n            f\"Train had {len(pd_traintime_categories)} categorical columns, data has {len(cat_cols)}\"\n        )\n    if len(cat_cols):\n        data = data.copy()\n        for col, category in zip(cat_cols, pd_traintime_categories, strict=True):\n            if list(data[col].cat.categories) != list(category):\n                data[col] = data[col].cat.set_categories(category)\n        data[cat_cols] = (\n            data[cat_cols].apply(lambda x: x.cat.codes).replace({-1: np.nan})\n        )\n    data = data.values\n    if data.dtype != np.float64 and data.dtype != np.float32:\n        data = data.astype(np.float64)\n    return data\n\n\ndef data_to_ndarray(data, pd_traintime_categories: list[list] | None = None):\n    if isinstance(data, np.ndarray):\n        data = data\n    elif isinstance(data, pd_DataFrame):\n        data = _dataframe_to_ndarray(data, pd_traintime_categories)\n    elif isinstance(data, list):\n        data = np.array(data, dtype=np.float64)\n    else:\n        raise ValueError(\n            f\"Expecting numpy.ndarray, pandas.DataFrame or Python list, got {type(data)}\"\n        )\n\n    return data\n\n\ndef ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(c_double if use_fp64 else c_float))\n    return ptr\n\n\ndef extract_pandas_traintime_categories(file_path):\n    pandas_key = \"pandas_categorical:\"\n    max_offset = os.path.getsize(file_path)\n    stepsize = min(1024, max_offset - 1)\n    current_offset = stepsize\n    lines = []\n    with open(file_path, \"rb\") as f:\n        while len(lines) < 2 and current_offset < max_offset:\n            if current_offset > max_offset:\n                current_offset = max_offset\n            f.seek(-current_offset, os.SEEK_END)\n            lines = f.readlines()\n            current_offset *= 2\n\n    if len(lines) >= 2:\n        last_line = lines[-1].decode().strip()\n        if not last_line.startswith(pandas_key):\n            last_line = lines[-2].decode().strip()\n        if last_line.startswith(pandas_key):\n            pandas_categorical = json.loads(last_line[len(pandas_key) :])\n            if pandas_categorical is None:\n                pandas_categorical = []\n            return pandas_categorical\n    raise ValueError(\"Ill formatted model file!\")\n\n\ndef extract_model_global_features(file_path):\n    res = {}\n    with open(file_path) as f:\n        for _ in range(3):\n            line = f.readline()\n            while line and not line.startswith(\n                (\"max_feature_idx\", \"num_class\", \"tree_sizes\")\n            ):\n                line = f.readline()\n\n            if line.startswith(\"max_feature_idx\"):\n                res[\"n_feature\"] = int(line.split(\"=\")[1]) + 1\n            elif line.startswith(\"num_class\"):\n                res[\"n_class\"] = int(line.split(\"=\")[1])\n            elif line.startswith(\"tree_sizes\"):\n                res[\"n_trees\"] = len(line.split(\"=\")[1].split(\" \"))\n            else:\n                raise ValueError(\"Ill formatted model file!\")\n    return res\n\n```\n## Target Method\n```\ndef ndarray_to_ptr(data: np.ndarray, use_fp64: bool = True):\n    data = data.astype(\n        np.float64 if use_fp64 else np.float32,\n        copy=False,\n        casting=\"same_kind\",\n    ).ravel()\n    ptr = data.ctypes.data_as(POINTER(c_double if use_fp64 else c_float))\n    return ptr\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `ndarray_to_ptr`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda data: id(data), name=\"id_before\")\n@icontract.snapshot(lambda data: (data.shape, data.dtype.str, data.strides, data.ctypes.data), name=\"state_before\")\n@icontract.ensure(lambda data, OLD: id(data) == OLD.id_before)\n@icontract.ensure(lambda data, OLD: (data.shape, data.dtype.str, data.strides, data.ctypes.data) == OLD.state_before)\n@icontract.ensure(lambda use_fp64, result: result._type_ is (c_double if use_fp64 else c_float))\n@icontract.ensure(lambda result: result is not None)\n@icontract.ensure(lambda result: result.value is not None)",
+    "@icontract.snapshot(lambda data: int(data.size), name=\"data_size\")\n@icontract.snapshot(lambda data: data.dtype, name=\"dtype_before\")\n@icontract.snapshot(lambda data: tuple(data.shape), name=\"shape_before\")\n@icontract.snapshot(lambda data, use_fp64: None if data.size == 0 else data.astype(np.float64 if use_fp64 else np.float32, copy=False, casting=\"same_kind\").ravel()[0], name=\"expected_first\")\n@icontract.ensure(lambda data, dtype_before: data.dtype == dtype_before)\n@icontract.ensure(lambda data, shape_before: tuple(data.shape) == shape_before)\n@icontract.ensure(lambda use_fp64, result: result._type_ is (c_double if use_fp64 else c_float))\n@icontract.ensure(lambda data_size, result: (data_size == 0) == (not bool(result)))\n@icontract.ensure(lambda data_size, expected_first, result: data_size == 0 or bool(np.isclose(result[0], expected_first)))",
+    "@icontract.snapshot(lambda data: data.dtype, name=\"old_dtype\")\n@icontract.snapshot(lambda data: data.shape, name=\"old_shape\")\n@icontract.snapshot(lambda data: data.ndim, name=\"old_ndim\")\n@icontract.ensure(lambda result: result is not None)\n@icontract.ensure(lambda result, use_fp64: isinstance(result, POINTER(c_double)) if use_fp64 else isinstance(result, POINTER(c_float)))\n@icontract.ensure(lambda data, use_fp64: np.can_cast(data.dtype, np.float64 if use_fp64 else np.float32, casting=\"same_kind\"))\n@icontract.ensure(lambda data, OLD: data.dtype == OLD.old_dtype)\n@icontract.ensure(lambda data, OLD: data.shape == OLD.old_shape)\n@icontract.ensure(lambda data, OLD: data.ndim == OLD.old_ndim)",
+    "@icontract.ensure(lambda data, use_fp64: data.dtype == (np.float64 if use_fp64 else np.float32))\n@icontract.ensure(lambda data: data.ndim == 1)\n@icontract.ensure(lambda data: data.flags.c_contiguous)\n@icontract.ensure(lambda result, use_fp64: isinstance(result, POINTER(c_double) if use_fp64 else POINTER(c_float)))\n@icontract.ensure(lambda result, use_fp64: result._type_ is (c_double if use_fp64 else c_float))\n@icontract.ensure(lambda data, result: (data.size == 0) or (np.isnan(data[0]) and np.isnan(result.contents.value)) or (result.contents.value == float(data[0])))",
+    "@icontract.snapshot(lambda data: data.dtype, name=\"dtype_before\")\n@icontract.snapshot(lambda data: data.shape, name=\"shape_before\")\n@icontract.ensure(lambda result: result is not None)\n@icontract.ensure(lambda data, dtype_before: data.dtype == dtype_before)\n@icontract.ensure(lambda data, shape_before: data.shape == shape_before)\n@icontract.ensure(lambda use_fp64, result: isinstance(result, POINTER(c_double)) if use_fp64 else isinstance(result, POINTER(c_float)))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "timeout",
+    "failed",
+    "timeout",
+    "icontract_fail",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 164
+}

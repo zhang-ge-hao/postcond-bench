@@ -1,0 +1,120 @@
+{
+  "rlid": "decode_rle",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/compression/rle_compression.py#L39-L58",
+  "name": "decode_rle",
+  "line_cov": 1.0,
+  "lines": 20,
+  "stats": 8,
+  "cc": 3,
+  "content": "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if not ch.isdigit():\n            # Expand it for the decoding\n            decode_str += ch * int(count)\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str",
+  "header": "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"",
+  "file": "./algorithms/compression/rle_compression.py",
+  "start_line": 39,
+  "end_line": 58,
+  "body_start_line": 46,
+  "comment": "\"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"",
+  "test_time": 1.1503851413726807,
+  "cover_tests": [
+    "tests/test_compression.py::TestRLECompression::test_decode_rle"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = 'XXXX'\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if not ch.isdigit():\n            # Expand it for the decoding\n            decode_str += ch * int(count)\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str\n",
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if ch == ' ':\n            # Expand it for the decoding\n            decode_str += ch * int(count)\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str",
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if ch == '0':\n            # Expand it for the decoding\n            decode_str += ch * int(count)\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str",
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if not ch.isdigit():\n            # Expand it for the decoding\n            decode_str += ch  # Incorrectly adds the character without multiplying by count\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str",
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if not ch.isdigit():\n            # Expand it for the decoding\n            decode_str += ch * (int(count) + 1)  # Incorrectly adds 1 to the count, resulting in one extra character\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str",
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if not ch.isdigit():\n            # Expand it for the decoding\n            decode_str += ch * (int(count) - 1)  # Incorrectly subtracts 1 from the count, resulting in one less character\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str",
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if not ch.isdigit():\n            # Expand it for the decoding\n            decode_str += ch + count  # Incorrectly appends the count as a string instead of multiplying\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str",
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if not ch.isdigit():\n            # Expand it for the decoding\n            decode_str = ch * int(count)\n            count = ''\n        else:\n            # Add it in the counter\n            count += ch\n    return decode_str\n",
+    "def decode_rle(input):\n    \"\"\"\n    Gets a stream of data and decompresses it\n    under a Run-Length Decoding.\n    :param input: The data to be decoded.\n    :return: The decoded string.\n    \"\"\"\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        # If not numerical\n        if not ch.isdigit():\n            # Expand it for the decoding\n            decode_str += ch * int(count)\n            count = ''\n        else:\n            # Add it in the counter\n            count = ch\n    return decode_str\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda input: input, name=\"inp\")\n@icontract.ensure(lambda OLD, input, result: encode_rle(result) == input)\n@icontract.ensure(lambda result: isinstance(result, str))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\ndef encode_rle(input):\n    if not input: return ''\n\n    encoded_str = ''\n    prev_ch = ''\n    count = 1\n\n    for ch in input:\n\n        if ch != prev_ch:\n            if prev_ch:\n                encoded_str += str(count) + prev_ch\n            count = 1\n            prev_ch = ch\n        else:\n            count += 1\n    else:\n        return encoded_str + (str(count) + prev_ch)\n\n\ndef decode_rle(input):\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        if not ch.isdigit():\n            decode_str += ch * int(count)\n            count = ''\n        else:\n            count += ch\n    return decode_str\n\n```\n## Target Method\n```\ndef decode_rle(input):\n    decode_str = ''\n    count = ''\n\n    for ch in input:\n        if not ch.isdigit():\n            decode_str += ch * int(count)\n            count = ''\n        else:\n            count += ch\n    return decode_str\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `decode_rle`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.ensure(\n    lambda result: all(not ch.isdigit() for ch in result),\n    \"The decoded string should not contain any digits.\"\n)\n\n@icontract.ensure(\n    lambda input, result: len(decode_rle(input)) == sum(int(c) for c in count_parts),\n    \"The length of the decoded string should match the sum of all counts from the input.\"\n)\n\n@icontract.snapshot(input, name=\"original_input\")\n\n@icontract.ensure(\n    lambda original_input, result: all(\n        decode_rle(original_input).count(ch) == int(count) for count, ch in re.findall(r'(\\d+)(\\D)', original_input)\n    ),\n    \"Each character in the decoded string should appear the number of times specified in the input.\"\n)",
+    "@icontract.ensure(\n    lambda result: all(\n        not ch.isdigit() for ch in result\n    ),\n    \"The decoded string should not contain any digits.\"\n)\n\n@icontract.ensure(\n    lambda input, result: encode_rle(result) == input,\n    \"Decoding followed by encoding should return the original input string.\"\n)\n\n@icontract.snapshot(input, name=\"original_input\")\n\n@icontract.ensure(\n    lambda original_input, result: len(result) >= len(original_input),\n    \"The decoded string should be at least as long as the original input string.\"\n)",
+    "@icontract.ensure(\n    lambda result: all(\n        not ch.isdigit() for ch in result\n    ),\n    \"The decoded string should not contain any digits.\"\n)\n\n@icontract.ensure(\n    lambda input, result: encode_rle(result) == decode_rle(encode_rle(result)),\n    \"Decoding followed by encoding should return the same RLE input (idempotent property).\"\n)\n\n@icontract.snapshot(\n    lambda input: input,\n    \"input_snapshot\"\n)\n\n@icontract.ensure(\n    lambda input_snapshot, result: len(decode_rle(input_snapshot)) == len(result),\n    \"The decoded string should have the same length as the original string before RLE encoding.\"\n)",
+    "@icontract.ensure(\n    lambda result: all(not ch.isdigit() for ch in result),\n    \"The decoded string should not contain any digits.\"\n)\n\n@icontract.ensure(\n    lambda input, result: len(decode_rle(input)) == sum(int(d) for d in input if d.isdigit()),\n    \"The length of the decoded string should match the sum of all counts in the input.\"\n)\n\n@icontract.snapshot(input, name=\"original_input\")\n\n@icontract.ensure(\n    lambda original_input, result: encode_rle(result) == decode_rle(encode_rle(result)),\n    \"Decoding and then re-encoding the result should give the same input as decoding it directly.\"\n)",
+    "@icontract.ensure(lambda result, input: encode_rle(result) == input, \"Decoding followed by encoding should reconstruct the original input\")\n@icontract.snapshot(lambda input: input, name=\"original_input\")\n@icontract.ensure(lambda result, original_input: decode_rle(encode_rle(result)) == result, \"Encoding followed by decoding should return the original string\")"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(\n    lambda result: all(not ch.isdigit() for ch in result),\n    \"The decoded string should not contain any digits.\"\n)\n\n@icontract.ensure(\n    lambda input, result: len(decode_rle(input)) == sum(int(c) for c in count_parts),\n    \"The length of the decoded string should match the sum of all counts from the input.\"\n)\n\n@icontract.snapshot(input, name=\"original_input\")\n\n@icontract.ensure(\n    lambda original_input, result: all(\n        decode_rle(original_input).count(ch) == int(count) for count, ch in re.findall(r'(\\d+)(\\D)', original_input)\n    ),\n    \"Each character in the decoded string should appear the number of times specified in the input.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: all(\n        not ch.isdigit() for ch in result\n    ),\n    \"The decoded string should not contain any digits.\"\n)\n\n@icontract.ensure(\n    lambda input, result: encode_rle(result) == input,\n    \"Decoding followed by encoding should return the original input string.\"\n)\n\n@icontract.snapshot(input, name=\"original_input\")\n\n@icontract.ensure(\n    lambda original_input, result: len(result) >= len(original_input),\n    \"The decoded string should be at least as long as the original input string.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: all(\n        not ch.isdigit() for ch in result\n    ),\n    \"The decoded string should not contain any digits.\"\n)\n\n@icontract.ensure(\n    lambda input, result: encode_rle(result) == decode_rle(encode_rle(result)),\n    \"Decoding followed by encoding should return the same RLE input (idempotent property).\"\n)\n\n@icontract.snapshot(\n    lambda input: input,\n    \"input_snapshot\"\n)\n\n@icontract.ensure(\n    lambda input_snapshot, result: len(decode_rle(input_snapshot)) == len(result),\n    \"The decoded string should have the same length as the original string before RLE encoding.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: all(not ch.isdigit() for ch in result),\n    \"The decoded string should not contain any digits.\"\n)\n\n@icontract.ensure(\n    lambda input, result: len(decode_rle(input)) == sum(int(d) for d in input if d.isdigit()),\n    \"The length of the decoded string should match the sum of all counts in the input.\"\n)\n\n@icontract.snapshot(input, name=\"original_input\")\n\n@icontract.ensure(\n    lambda original_input, result: encode_rle(result) == decode_rle(encode_rle(result)),\n    \"Decoding and then re-encoding the result should give the same input as decoding it directly.\"\n)\n```",
+    "```python\n@icontract.ensure(lambda result, input: encode_rle(result) == input, \"Decoding followed by encoding should reconstruct the original input\")\n@icontract.snapshot(lambda input: input, name=\"original_input\")\n@icontract.ensure(lambda result, original_input: decode_rle(encode_rle(result)) == result, \"Encoding followed by decoding should return the original string\")\n```"
+  ],
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 190
+}

@@ -1,0 +1,160 @@
+{
+  "rlid": "search_insert",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/search/search_insert.py#L5-L24",
+  "name": "search_insert",
+  "line_cov": 1.0,
+  "lines": 20,
+  "stats": 8,
+  "cc": 3,
+  "content": "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+  "header": "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"",
+  "file": "./algorithms/search/search_insert.py",
+  "start_line": 5,
+  "end_line": 24,
+  "body_start_line": 16,
+  "comment": "\"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"",
+  "test_time": 0.22717547416687012,
+  "cover_tests": [
+    "tests/test_search.py::TestSuite::test_search_insert"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 1\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low\n",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = -1  # Sets high to an invalid index, leading to incorrect search results\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = 0  # Sets high to the start of the array, causing incorrect behavior\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 2\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low\n",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) // 2  # Sets high to the middle index, which is incorrect for the search\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low < high - 1:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low < high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low < high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low\n",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low - (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low\n",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val != array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val < array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val <= array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val == array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val >= array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val >= array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low\n",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 2\n        else:\n            high = mid - 1\n    return low\n",
+    "def search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 2\n    return low\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda array: array[:], name=\"old_array\")\n@icontract.ensure(lambda result: isinstance(result, int))\n@icontract.ensure(lambda result, array: 0 <= result <= len(array))\n@icontract.ensure(lambda result, array, val: all(array[i] < val for i in range(result)))\n@icontract.ensure(lambda result, array, val: (result == len(array)) or (array[result] >= val))\n@icontract.ensure(lambda OLD, array: array == OLD.old_array)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nHelper methods for implementing insertion sort.\n\"\"\"\n\ndef search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low\n\n```\n## Target Method\n```\ndef search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `search_insert`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-all",
+  "postconds": [
+    "@icontract.ensure(0 <= result <= len(array))\n@icontract.ensure(\n    (\n        val in array\n        or (result == 0 or array[result - 1] < val)\n        and (result == len(array) or array[result] > val)\n    )\n)\n@icontract.snapshot(array=array, val=val)",
+    "@icontract.ensure(0 <= return_value <= len(array))\n@icontract.ensure(all(array[i] <= val for i in range(return_value)) if return_value > 0 else True)\n@icontract.ensure(all(val <= array[i] for i in range(return_value, len(array))) if return_value < len(array) else True)\n@icontract.snapshot(array, val)\ndef search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low",
+    "@icontract.ensure(0 <= return_value <= len(array))\n@icontract.ensure(return_value == 0 or array[return_value - 1] <= val)\n@icontract.ensure(return_value == len(array) or array[return_value] >= val)\n@icontract.snapshot(array=array, val=val, return_value=return_value)",
+    "@icontract.ensure(0 <= result <= len(array))\n@icontract.ensure(\n    (\n        val in array\n        or (\n            result < len(array) and (\n                result == 0 or array[result - 1] < val\n            ) and (\n                result == len(array) or array[result] > val\n            )\n        )\n    )\n)",
+    "@icontract.ensure(0 <= result <= len(array))\n@icontract.ensure(all(array[i] <= val for i in range(result)) and (result == len(array) or array[result] <= val))"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(0 <= result <= len(array))\n@icontract.ensure(\n    (\n        val in array\n        or (result == 0 or array[result - 1] < val)\n        and (result == len(array) or array[result] > val)\n    )\n)\n@icontract.snapshot(array=array, val=val)\n```",
+    "```python\n@icontract.ensure(0 <= return_value <= len(array))\n@icontract.ensure(all(array[i] <= val for i in range(return_value)) if return_value > 0 else True)\n@icontract.ensure(all(val <= array[i] for i in range(return_value, len(array))) if return_value < len(array) else True)\n@icontract.snapshot(array, val)\ndef search_insert(array, val):\n    \"\"\"\n    Given a sorted array and a target value, return the index if the target is\n    found. If not, return the index where it would be if it were inserted in order.\n\n    For example:\n    [1,3,5,6], 5 -> 2\n    [1,3,5,6], 2 -> 1\n    [1,3,5,6], 7 -> 4\n    [1,3,5,6], 0 -> 0\n    \"\"\"\n    low = 0\n    high = len(array) - 1\n    while low <=  high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low\n```",
+    "```python\n@icontract.ensure(0 <= return_value <= len(array))\n@icontract.ensure(return_value == 0 or array[return_value - 1] <= val)\n@icontract.ensure(return_value == len(array) or array[return_value] >= val)\n@icontract.snapshot(array=array, val=val, return_value=return_value)\n```",
+    "```python\n@icontract.ensure(0 <= result <= len(array))\n@icontract.ensure(\n    (\n        val in array\n        or (\n            result < len(array) and (\n                result == 0 or array[result - 1] < val\n            ) and (\n                result == len(array) or array[result] > val\n            )\n        )\n    )\n)\n```",
+    "```python\n@icontract.ensure(0 <= result <= len(array))\n@icontract.ensure(all(array[i] <= val for i in range(result)) and (result == len(array) or array[result] <= val))\n```"
+  ],
+  "postcond_corr": [
+    "local_crash",
+    "compile_failure",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 17
+}

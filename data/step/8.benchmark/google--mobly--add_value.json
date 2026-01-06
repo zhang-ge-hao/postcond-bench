@@ -1,0 +1,97 @@
+{
+  "rlid": "add_value",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/base_instrumentation_test.py#L411-L432",
+  "name": "add_value",
+  "line_cov": 1.0,
+  "lines": 22,
+  "stats": 5,
+  "cc": 3,
+  "content": "  def add_value(self, line):\n    \"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"\n    # Don't count whitespace only lines.\n    if line.strip():\n      self._empty = False\n\n    if self.current_key in self.known_keys:\n      self.known_keys[self.current_key].append(line)\n    else:\n      self.unknown_keys[self.current_key].append(line)",
+  "header": "  def add_value(self, line):\n    \"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"",
+  "file": "./mobly/base_instrumentation_test.py",
+  "start_line": 411,
+  "end_line": 432,
+  "body_start_line": 425,
+  "comment": "\"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"",
+  "test_time": 0.7590377330780029,
+  "cover_tests": [
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_logs_correctly",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_assumption_failure_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashed_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_failing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_ignored_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_invalid_syntax",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_missing_runner",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_missing_test_package",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_multiple_tests",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_no_tests",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_passing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_prefix_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_random_whitespace",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_runner_setup_crash",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_runner_teardown_crash"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "  def add_value(self, line):\n    \"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"\n    # Don't count whitespace only lines.\n    if line == '':\n      self._empty = False\n\n    if self.current_key in self.known_keys:\n      self.known_keys[self.current_key].append(line)\n    else:\n      self.unknown_keys[self.current_key].append(line)",
+    "  def add_value(self, line):\n    \"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"\n    # Don't count whitespace only lines.\n    if not line.strip():\n      self._empty = False\n\n    if self.current_key in self.known_keys:\n      self.known_keys[self.current_key].append(line)\n    else:\n      self.unknown_keys[self.current_key].append(line)",
+    "  def add_value(self, line):\n    \"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"\n    # Don't count whitespace only lines.\n    if line.strip():\n      self._empty = False\n\n    if self.current_key in self.known_keys:\n      self.known_keys[self.current_key] = line\n    else:\n      self.unknown_keys[self.current_key].append(line)",
+    "  def add_value(self, line):\n    \"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"\n    # Don't count whitespace only lines.\n    if line.strip():\n      self._empty = False\n\n    if self.current_key in self.known_keys:\n      self.known_keys[self.current_key].append(self.current_key)\n    else:\n      self.unknown_keys[self.current_key].append(line)",
+    "  def add_value(self, line):\n    \"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"\n    # Don't count whitespace only lines.\n    if line.strip():\n      self._empty = False\n\n    if self.current_key in self.known_keys:\n      self.known_keys[self.current_key].insert(0, line)\n    else:\n      self.unknown_keys[self.current_key].append(line)",
+    "  def add_value(self, line):\n    \"\"\"Adds unstructured or multi-line value output to the current parsed\n    instrumentation block for outputting later.\n\n    Usually, this will add extra lines to the value list for the current\n    key-value pair. However, sometimes, such as when instrumentation\n    failed to start, output does not follow the structured prefix format.\n    In this case, adding all of the output is still useful so that a user\n    can debug the issue.\n\n    Args:\n      line: string, the raw instrumentation line to append to the value\n        list.\n    \"\"\"\n    # Don't count whitespace only lines.\n    if line.strip():\n      self._empty = False\n\n    if self.current_key in self.known_keys:\n      self.known_keys[self.current_key].append(line)\n    else:\n      self.unknown_keys[self.current_key].append(None)"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: self.known_keys.get(self.current_key, [])[:], name=\"known_before\")\n@icontract.snapshot(lambda self: self.unknown_keys.get(self.current_key, [])[:], name=\"unknown_before\")\n@icontract.snapshot(lambda self: self._empty, name=\"empty_before\")\n@icontract.snapshot(lambda self: self.current_key, name=\"current_key_before\")\n@icontract.ensure(lambda OLD, self, line: (line.strip() and self._empty is False) or (not line.strip() and self._empty == OLD.empty_before))\n@icontract.ensure(lambda OLD, self, line: (\n    (OLD.current_key_before in self.known_keys and\n     self.known_keys.get(OLD.current_key_before, []) == OLD.known_before + [line] and\n     self.unknown_keys.get(OLD.current_key_before, []) == OLD.unknown_before)\n    or\n    (OLD.current_key_before not in self.known_keys and\n     self.unknown_keys.get(OLD.current_key_before, []) == OLD.unknown_before + [line] and\n     self.known_keys.get(OLD.current_key_before, []) == OLD.known_before)\n))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 337
+}

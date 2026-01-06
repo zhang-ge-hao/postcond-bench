@@ -1,0 +1,382 @@
+{
+  "rlid": "add_record",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/records.py#L588-L609",
+  "name": "add_record",
+  "line_cov": 1.0,
+  "lines": 22,
+  "stats": 9,
+  "cc": 4,
+  "content": "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+  "header": "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"",
+  "file": "./mobly/records.py",
+  "start_line": 588,
+  "end_line": 609,
+  "body_start_line": 599,
+  "comment": "\"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"",
+  "test_time": 7.440160512924194,
+  "cover_tests": [
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_assumption_failure_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashed_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_crashing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_failing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_ignored_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_multiple_tests",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_passing_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_prefix_test",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_random_whitespace",
+    "tests/mobly/base_instrumentation_test_test.py::BaseInstrumentationTestTest::test_run_instrumentation_test_with_runner_teardown_crash",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_on_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_on_fail_from_setup_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_setup_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_setup_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_teardown_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_all_in_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_class_in_on_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_class_in_setup_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_class_in_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_abort_class_setup_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_equal_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_equal_fail_with_msg",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_equal_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_fail_with_noop",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_fail_with_wrong_error",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_fail_with_wrong_regex",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_regex_fail_with_noop",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_regex_fail_with_wrong_error",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_raises_regex_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_assert_true",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_both_teardown_and_test_body_raise_exceptions",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_cli_test_selection_override_self_tests_list",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_cli_test_selection_with_regex",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_cli_test_selection_with_regex_generated_tests",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_current_test_info",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_current_test_name",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_default_execution_of_all_tests",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_default_execution_skip_noncallable_tests",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_exception_objects_in_record",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_equal",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_false",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_setup_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_setup_class_and_on_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_setup_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_teardown_class",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_in_teardown_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_multiple_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_no_op",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_no_raises_custom_msg",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_no_raises_default_msg",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_true",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_true_and_assert_true",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_expect_two_tests",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_explicit_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_explicit_pass_but_teardown_test_raises_an_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_failure_in_procedure_functions_is_recorded",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_failure_to_call_procedure_function_is_recorded",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_call_outside_of_pre_run",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_run",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_selected_run",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_with_none_uid",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_generate_tests_with_uid",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_get_existing_tests_do_not_call_properties",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_implicit_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_cannot_modify_original_record",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_both_test_and_teardown_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_setup_class_fails_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_setup_test_fails_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_teardown_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_executed_if_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_raise_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_fail_triggered_by_setup_class_failure_then_fail_too",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_pass_cannot_modify_original_record",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_on_pass_raise_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_paths",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_procedure_function_gets_correct_record",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_promote_extra_errors_to_termination_signal",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_record_controller_info",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_record_controller_info_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_generated",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_consec_error_at_the_beginning_aborts_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_consec_error_does_not_abort_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_consec_error_in_the_middle_aborts_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_failures",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_repeat_with_uid",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_all_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_first_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_generated_test_last_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_retry_last_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_self_tests_list",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_setup_and_teardown_execution_count",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_setup_class_fail_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_skip",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_skip_if",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_skip_in_setup_test",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_class_fail_by_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_class_raise_abort_all",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_assert_fail",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_executed_if_setup_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_executed_if_test_fails",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_executed_if_test_pass",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_expects_error",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_teardown_test_raise_exception",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_uid",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_uid_not_specified",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_uid_with_repeat",
+    "tests/mobly/base_test_test.py::BaseTestTest::test_write_user_data",
+    "tests/mobly/output_test.py::OutputTest::test_basic_output",
+    "tests/mobly/output_test.py::OutputTest::test_logging_before_run",
+    "tests/mobly/output_test.py::OutputTest::test_run_twice_for_two_sets_of_logs",
+    "tests/mobly/output_test.py::OutputTest::test_teardown_class_output",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass_negative",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass_with_repeat",
+    "tests/mobly/records_test.py::RecordsTest::test_is_all_pass_with_retry",
+    "tests/mobly/records_test.py::RecordsTest::test_is_test_executed",
+    "tests/mobly/records_test.py::RecordsTest::test_result_add_class_error_with_special_error",
+    "tests/mobly/records_test.py::RecordsTest::test_result_add_class_error_with_test_signal",
+    "tests/mobly/records_test.py::RecordsTest::test_result_add_operator_success",
+    "tests/mobly/records_test.py::RecordsTest::test_result_add_operator_type_mismatch",
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_run_suite",
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_run_suite_class",
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_run_suite_class_records_suite_info",
+    "tests/mobly/suite_runner_test.py::SuiteRunnerTest::test_run_suite_class_with_combined_test_selection",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_main",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_twice",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_two_test_classes",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_two_test_classes_different_configs_and_aliases",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_when_terminated",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_with_abort_all",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_run_without_mobly_logger_context",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test_summary_file_entries"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.result = TestResultEnums.TEST_RESULT_PASS  # Incorrectly forces the result to PASS\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    self.error.append(record)  # Incorrectly adds the record to error without checking the result\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    self.executed.append(record)  # Missing update_record call, leading to stale data\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    self.failed.append(record)  # Incorrectly adds the record to failed without checking the result\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    self.passed.append(record)  # Incorrectly adds the record to passed without checking the result\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result != TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_ERROR:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.error.append(record)  # Incorrectly categorizes skipped tests as errors\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.executed.append(record)  # Adds skipped tests to executed, misleading the results\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.failed.append(record)  # Incorrectly categorizes skipped tests as failed\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.passed.append(record)  # Incorrectly categorizes skipped tests as passed\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed = [record]  # This will overwrite the entire executed list with just the new record.\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record) if record.result != TestResultEnums.TEST_RESULT_PASS else None  # This will skip adding the record if it passed.\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record) if record.result == TestResultEnums.TEST_RESULT_FAIL else self.failed.append(record)  # This will incorrectly add passed tests to the failed list.\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.insert(0, record)  # This will add the record to the beginning of the list instead of the end.\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result != TestResultEnums.TEST_RESULT_PASS:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_ERROR:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_PASS or record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.error.append(record)  # Incorrectly adds failed record to error list\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.executed.append(record)  # Incorrectly adds failed record to executed list\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.passed.append(record)  # Incorrectly adds failed record to passed list\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.skipped.append(record)  # Incorrectly adds failed record to skipped list\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed = record  # This overwrites the passed list with a single record instead of appending.\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(None)  # This appends a None value instead of the actual record.\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record.uid)  # This appends the UID of the record instead of the record itself.\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.insert(0, record)  # This inserts the record at the beginning, which may not be the intended behavior.\n    else:\n      self.error.append(record)",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.insert(0, record)  # Incorrectly inserting at the beginning of the error list instead of appending",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.executed.append(record)  # Incorrectly appending to the executed list instead of the error list",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.failed.append(record)  # Incorrectly appending to the failed list instead of the error list",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.passed.append(record)  # Incorrectly appending to the passed list instead of the error list",
+    "  def add_record(self, record):\n    \"\"\"Adds a test record to test result.\n\n    A record is considered executed once it's added to the test result.\n\n    Adding the record finalizes the content of a record, so no change\n    should be made to the record afterwards.\n\n    Args:\n      record: A test record object to add.\n    \"\"\"\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.skipped.append(record)  # Incorrectly appending to the skipped list instead of the error list"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda self: self.skipped[:], name=\"old_skipped\")\n@icontract.snapshot(lambda self: self.executed[:], name=\"old_executed\")\n@icontract.snapshot(lambda self: self.failed[:], name=\"old_failed\")\n@icontract.snapshot(lambda self: self.passed[:], name=\"old_passed\")\n@icontract.snapshot(lambda self: self.error[:], name=\"old_error\")\n@icontract.snapshot(lambda self, record: copy.deepcopy(record.extra_errors), name=\"old_extra_errors\")\n@icontract.snapshot(lambda self, record: record.result, name=\"old_result\")\n@icontract.ensure(\n    lambda OLD, self, record:\n        (\n            record.result == TestResultEnums.TEST_RESULT_SKIP\n            and self.skipped == OLD.old_skipped + [record]\n            and self.executed == OLD.old_executed\n            and self.failed == OLD.old_failed\n            and self.passed == OLD.old_passed\n            and self.error == OLD.old_error\n        ) or (\n            record.result == TestResultEnums.TEST_RESULT_FAIL\n            and self.executed == OLD.old_executed + [record]\n            and self.failed == OLD.old_failed + [record]\n            and self.passed == OLD.old_passed\n            and self.error == OLD.old_error\n            and self.skipped == OLD.old_skipped\n        ) or (\n            record.result == TestResultEnums.TEST_RESULT_PASS\n            and self.executed == OLD.old_executed + [record]\n            and self.passed == OLD.old_passed + [record]\n            and self.failed == OLD.old_failed\n            and self.error == OLD.old_error\n            and self.skipped == OLD.old_skipped\n        ) or (\n            record.result not in (\n                TestResultEnums.TEST_RESULT_SKIP,\n                TestResultEnums.TEST_RESULT_FAIL,\n                TestResultEnums.TEST_RESULT_PASS,\n            )\n            and self.executed == OLD.old_executed + [record]\n            and self.error == OLD.old_error + [record]\n            and self.failed == OLD.old_failed\n            and self.passed == OLD.old_passed\n            and self.skipped == OLD.old_skipped\n        )\n)\n@icontract.ensure(\n    lambda OLD, self, record:\n        (\n            (not OLD.old_extra_errors and record.result == OLD.old_result)\n        )\n        or (\n            OLD.old_extra_errors and (\n                (\n                    OLD.old_result == TestResultEnums.TEST_RESULT_FAIL\n                    and record.result == TestResultEnums.TEST_RESULT_FAIL\n                )\n                or\n                (\n                    OLD.old_result != TestResultEnums.TEST_RESULT_FAIL\n                    and record.result == TestResultEnums.TEST_RESULT_ERROR\n                )\n            )\n        )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\nimport collections\nimport copy\nimport enum\nimport functools\nimport io\nimport logging\nimport threading\nimport time\nimport traceback\nimport yaml\n\nfrom mobly import signals\nfrom mobly import utils\n\nOUTPUT_FILE_INFO_LOG = 'test_log.INFO'\nOUTPUT_FILE_DEBUG_LOG = 'test_log.DEBUG'\nOUTPUT_FILE_SUMMARY = 'test_summary.yaml'\n\n\nclass Error(Exception):\n\n\nclass TestParentType(enum.Enum):\n\n  REPEAT = 'repeat'\n  RETRY = 'retry'\n\n\ndef uid(uid):\n  if uid is None:\n    raise ValueError('UID cannot be None.')\n\n  def decorate(test_func):\n    @functools.wraps(test_func)\n    def wrapper(*args, **kwargs):\n      return test_func(*args, **kwargs)\n\n    setattr(wrapper, 'uid', uid)\n    return wrapper\n\n  return decorate\n\n\nclass TestSummaryEntryType(enum.Enum):\n\n  TEST_NAME_LIST = 'TestNameList'\n  RECORD = 'Record'\n  SUMMARY = 'Summary'\n  CONTROLLER_INFO = 'ControllerInfo'\n  USER_DATA = 'UserData'\n\n\nclass TestSummaryWriter:\n\n  def __init__(self, path):\n    self._path = path\n    self._lock = threading.Lock()\n\n  def __copy__(self):\n    return self\n\n  def __deepcopy__(self, *args):\n    return self.__copy__()\n\n  def dump(self, content, entry_type):\n    new_content = copy.deepcopy(content)\n    new_content['Type'] = entry_type.value\n    with self._lock:\n      with io.open(self._path, 'a', encoding='utf-8') as f:\n        yaml.safe_dump(\n            new_content,\n            f,\n            explicit_start=True,\n            explicit_end=True,\n            allow_unicode=True,\n            indent=4,\n        )\n\n\nclass TestResultEnums:\n\n  RECORD_NAME = 'Test Name'\n  RECORD_CLASS = 'Test Class'\n  RECORD_BEGIN_TIME = 'Begin Time'\n  RECORD_END_TIME = 'End Time'\n  RECORD_RESULT = 'Result'\n  RECORD_UID = 'UID'\n  RECORD_EXTRAS = 'Extras'\n  RECORD_EXTRA_ERRORS = 'Extra Errors'\n  RECORD_DETAILS = 'Details'\n  RECORD_TERMINATION_SIGNAL_TYPE = 'Termination Signal Type'\n  RECORD_STACKTRACE = 'Stacktrace'\n  RECORD_SIGNATURE = 'Signature'\n  RECORD_RETRY_PARENT = 'Retry Parent'\n  RECORD_PARENT = 'Parent'\n  RECORD_POSITION = 'Position'\n  TEST_RESULT_PASS = 'PASS'\n  TEST_RESULT_FAIL = 'FAIL'\n  TEST_RESULT_SKIP = 'SKIP'\n  TEST_RESULT_ERROR = 'ERROR'\n\n\nclass ControllerInfoRecord:\n\n  KEY_TEST_CLASS = TestResultEnums.RECORD_CLASS\n  KEY_CONTROLLER_NAME = 'Controller Name'\n  KEY_CONTROLLER_INFO = 'Controller Info'\n  KEY_TIMESTAMP = 'Timestamp'\n\n  def __init__(self, test_class, controller_name, info):\n    self.test_class = test_class\n    self.controller_name = controller_name\n    self.controller_info = info\n    self.timestamp = time.time()\n\n  def to_dict(self):\n    result = {}\n    result[self.KEY_TEST_CLASS] = self.test_class\n    result[self.KEY_CONTROLLER_NAME] = self.controller_name\n    result[self.KEY_CONTROLLER_INFO] = self.controller_info\n    result[self.KEY_TIMESTAMP] = self.timestamp\n    return result\n\n  def __repr__(self):\n    return str(self.to_dict())\n\n\nclass ExceptionRecord:\n\n  def __init__(self, e, position=None):\n    self.exception = e\n    self.type = type(e).__name__\n    self.stacktrace = None\n    self.extras = None\n    self.position = position\n    self.is_test_signal = isinstance(e, signals.TestSignal)\n    exc_traceback = e.__traceback__\n    if exc_traceback:\n      self.stacktrace = ''.join(\n          traceback.format_exception(e.__class__, e, exc_traceback)\n      )\n    if self.is_test_signal:\n      self._set_details(e.details)\n      self.extras = e.extras\n    else:\n      self._set_details(e)\n\n  def _set_details(self, content):\n    try:\n      self.details = str(content)\n    except UnicodeEncodeError:\n      logging.error('Unable to decode \"%s\" in Py3, encoding in utf-8.', content)\n      self.details = content.encode('utf-8')\n\n  def to_dict(self):\n    result = {}\n    result[TestResultEnums.RECORD_DETAILS] = self.details\n    result[TestResultEnums.RECORD_POSITION] = self.position\n    result[TestResultEnums.RECORD_STACKTRACE] = self.stacktrace\n    result[TestResultEnums.RECORD_EXTRAS] = copy.deepcopy(self.extras)\n    return result\n\n  def __deepcopy__(self, memo):\n    try:\n      exception = copy.deepcopy(self.exception)\n    except (TypeError, RecursionError):\n      exception = self.exception\n    result = ExceptionRecord(exception, self.position)\n    result.stacktrace = self.stacktrace\n    result.details = self.details\n    result.extras = copy.deepcopy(self.extras)\n    result.position = self.position\n    return result\n\n\nclass TestResultRecord:\n\n  def __init__(self, t_name, t_class=None):\n    self.test_name = t_name\n    self.test_class = t_class\n    self.begin_time = None\n    self.end_time = None\n    self.uid = None\n    self.signature = None\n    self.retry_parent = None\n    self.parent = None\n    self.termination_signal = None\n    self.extra_errors = collections.OrderedDict()\n    self.result = None\n\n  @property\n  def details(self):\n    if self.termination_signal:\n      return self.termination_signal.details\n\n  @property\n  def termination_signal_type(self):\n    if self.termination_signal:\n      return self.termination_signal.type\n\n  @property\n  def stacktrace(self):\n    if self.termination_signal:\n      return self.termination_signal.stacktrace\n\n  @property\n  def extras(self):\n    if self.termination_signal:\n      return self.termination_signal.extras\n\n  def test_begin(self):\n    self.begin_time = utils.get_current_epoch_time()\n    self.signature = '%s-%s' % (self.test_name, self.begin_time)\n\n  def _test_end(self, result, e):\n    if self.begin_time is not None:\n      self.end_time = utils.get_current_epoch_time()\n    self.result = result\n    if e:\n      self.termination_signal = ExceptionRecord(e)\n\n  def update_record(self):\n    if self.extra_errors:\n      if self.result != TestResultEnums.TEST_RESULT_FAIL:\n        self.result = TestResultEnums.TEST_RESULT_ERROR\n    if not self.termination_signal and self.extra_errors:\n      _, self.termination_signal = self.extra_errors.popitem(last=False)\n\n  def test_pass(self, e=None):\n    self._test_end(TestResultEnums.TEST_RESULT_PASS, e)\n\n  def test_fail(self, e=None):\n    self._test_end(TestResultEnums.TEST_RESULT_FAIL, e)\n\n  def test_skip(self, e=None):\n    self._test_end(TestResultEnums.TEST_RESULT_SKIP, e)\n\n  def test_error(self, e=None):\n    self._test_end(TestResultEnums.TEST_RESULT_ERROR, e)\n\n  def add_error(self, position, e):\n    if self.result != TestResultEnums.TEST_RESULT_FAIL:\n      self.result = TestResultEnums.TEST_RESULT_ERROR\n    if position in self.extra_errors:\n      raise Error(\n          'An exception is already recorded with position \"%s\", cannot reuse.'\n          % position\n      )\n    if isinstance(e, ExceptionRecord):\n      self.extra_errors[position] = e\n    else:\n      self.extra_errors[position] = ExceptionRecord(e, position=position)\n\n  def __str__(self):\n    d = self.to_dict()\n    kv_pairs = ['%s = %s' % (k, v) for k, v in d.items()]\n    s = ', '.join(kv_pairs)\n    return s\n\n  def __repr__(self):\n    t = utils.epoch_to_human_time(self.begin_time)\n    return f'{t} {self.test_name} {self.result}'\n\n  def to_dict(self):\n    d = {}\n    d[TestResultEnums.RECORD_NAME] = self.test_name\n    d[TestResultEnums.RECORD_CLASS] = self.test_class\n    d[TestResultEnums.RECORD_BEGIN_TIME] = self.begin_time\n    d[TestResultEnums.RECORD_END_TIME] = self.end_time\n    d[TestResultEnums.RECORD_RESULT] = self.result\n    d[TestResultEnums.RECORD_UID] = self.uid\n    d[TestResultEnums.RECORD_SIGNATURE] = self.signature\n    d[TestResultEnums.RECORD_RETRY_PARENT] = (\n        self.retry_parent.signature if self.retry_parent else None\n    )\n    d[TestResultEnums.RECORD_PARENT] = (\n        {\n            'parent': self.parent[0].signature,\n            'type': self.parent[1].value,\n        }\n        if self.parent\n        else None\n    )\n    d[TestResultEnums.RECORD_EXTRAS] = self.extras\n    d[TestResultEnums.RECORD_DETAILS] = self.details\n    d[TestResultEnums.RECORD_TERMINATION_SIGNAL_TYPE] = (\n        self.termination_signal_type\n    )\n    d[TestResultEnums.RECORD_EXTRA_ERRORS] = {\n        key: value.to_dict() for (key, value) in self.extra_errors.items()\n    }\n    d[TestResultEnums.RECORD_STACKTRACE] = self.stacktrace\n    return d\n\n\nclass TestResult:\n\n  def __init__(self):\n    self.requested = []\n    self.failed = []\n    self.executed = []\n    self.passed = []\n    self.skipped = []\n    self.error = []\n    self.controller_info = []\n\n  def __add__(self, r):\n    if not isinstance(r, TestResult):\n      raise TypeError(\n          'Operand %s of type %s is not a TestResult.' % (r, type(r))\n      )\n    sum_result = TestResult()\n    for name in sum_result.__dict__:\n      r_value = getattr(r, name)\n      l_value = getattr(self, name)\n      if isinstance(r_value, list):\n        setattr(sum_result, name, l_value + r_value)\n    return sum_result\n\n  def add_record(self, record):\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)\n\n  def add_controller_info_record(self, controller_info_record):\n    self.controller_info.append(controller_info_record)\n\n  def add_class_error(self, test_record):\n    test_record.update_record()\n    self.error.append(test_record)\n\n  def is_test_executed(self, test_name):\n    for record in self.executed:\n      if record.test_name == test_name:\n        return True\n    return False\n\n  def _count_eventually_passing_retries(self):\n    count = 0\n    for record in self.passed:\n      r = record\n      while r.parent is not None and r.parent[1] == TestParentType.RETRY:\n        count += 1\n        r = r.parent[0]\n    return count\n\n  @property\n  def is_all_pass(self):\n    num_of_result_altering_errors = (\n        len(self.failed)\n        + len(self.error)\n        - self._count_eventually_passing_retries()\n    )\n    if num_of_result_altering_errors == 0:\n      return True\n    return False\n\n  def requested_test_names_dict(self):\n    return {'Requested Tests': copy.deepcopy(self.requested)}\n\n  def summary_str(self):\n    kv_pairs = ['%s %d' % (k, v) for k, v in self.summary_dict().items()]\n    msg = ', '.join(sorted(kv_pairs))\n    return msg\n\n  def summary_dict(self):\n    d = {}\n    d['Requested'] = len(self.requested)\n    d['Executed'] = len(self.executed)\n    d['Passed'] = len(self.passed)\n    d['Failed'] = len(self.failed)\n    d['Skipped'] = len(self.skipped)\n    d['Error'] = len(self.error)\n    return d\n\n```\n## Target Method\n```\n  def add_record(self, record):\n    record.update_record()\n    if record.result == TestResultEnums.TEST_RESULT_SKIP:\n      self.skipped.append(record)\n      return\n    self.executed.append(record)\n    if record.result == TestResultEnums.TEST_RESULT_FAIL:\n      self.failed.append(record)\n    elif record.result == TestResultEnums.TEST_RESULT_PASS:\n      self.passed.append(record)\n    else:\n      self.error.append(record)\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `add_record`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(self.requested, 'requested')\n@icontract.snapshot(self.failed, 'failed')\n@icontract.snapshot(self.executed, 'executed')\n@icontract.snapshot(self.passed, 'passed')\n@icontract.snapshot(self.skipped, 'skipped')\n@icontract.snapshot(self.error, 'error')\n@icontract.snapshot(record, 'record')\n@icontract.ensure(lambda _: record in self.executed or record in self.passed or record in self.failed or record in self.skipped or record in self.error)\n@icontract.ensure(lambda _: _.executed == _.executed_before + [record] if record not in (_.passed_before + _.failed_before + _.skipped_before + _.error_before) else _.executed_before)\n@icontract.ensure(lambda _: _.passed == _.passed_before + [record] if record.result == TestResultEnums.TEST_RESULT_PASS else _.passed_before)\n@icontract.ensure(lambda _: _.failed == _.failed_before + [record] if record.result == TestResultEnums.TEST_RESULT_FAIL else _.failed_before)\n@icontract.ensure(lambda _: _.skipped == _.skipped_before + [record] if record.result == TestResultEnums.TEST_RESULT_SKIP else _.skipped_before)\n@icontract.ensure(lambda _: _.error == _.error_before + [record] if record.result not in [TestResultEnums.TEST_RESULT_PASS, TestResultEnums.TEST_RESULT_FAIL, TestResultEnums.TEST_RESULT_SKIP] else _.error_before)",
+    "@icontract.snapshot(self.requested, 'requested')\n@icontract.snapshot(self.failed, 'failed')\n@icontract.snapshot(self.executed, 'executed')\n@icontract.snapshot(self.passed, 'passed')\n@icontract.snapshot(self.skipped, 'skipped')\n@icontract.snapshot(self.error, 'error')\n@icontract.ensure(lambda SELF, record: record in getattr(SELF, 'executed', []) or\n                  record in getattr(SELF, 'passed', []) or\n                  record in getattr(SELF, 'failed', []) or\n                  record in getattr(SELF, 'skipped', []) or\n                  record in getattr(SELF, 'error', []))\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'executed', []) or\n                  len(SELF.executed) == len(getattr(SELF, 'executed_snapshot', [])) + 1)\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'passed', []) or\n                  len(SELF.passed) == len(getattr(SELF, 'passed_snapshot', [])) + 1)\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'failed', []) or\n                  len(SELF.failed) == len(getattr(SELF, 'failed_snapshot', [])) + 1)\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'skipped', []) or\n                  len(SELF.skipped) == len(getattr(SELF, 'skipped_snapshot', [])) + 1)\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'error', []) or\n                  len(SELF.error) == len(getattr(SELF, 'error_snapshot', [])) + 1)",
+    "@icontract.snapshot(self.requested, 'requested')\n@icontract.snapshot(self.failed, 'failed')\n@icontract.snapshot(self.executed, 'executed')\n@icontract.snapshot(self.passed, 'passed')\n@icontract.snapshot(self.skipped, 'skipped')\n@icontract.snapshot(self.error, 'error')\n@icontract.ensure(lambda SELF, record: record in SELF.executed or record in SELF.skipped or record in SELF.error)\n@icontract.ensure(lambda SELF, record: record in SELF.executed and record.result == TestResultEnums.TEST_RESULT_SKIP or record in SELF.skipped)\n@icontract.ensure(lambda SELF, record: record in SELF.failed if record.result == TestResultEnums.TEST_RESULT_FAIL else True)\n@icontract.ensure(lambda SELF, record: record in SELF.passed if record.result == TestResultEnums.TEST_RESULT_PASS else True)\n@icontract.ensure(lambda SELF, record: record in SELF.error if record.result != TestResultEnums.TEST_RESULT_PASS and record.result != TestResultEnums.TEST_RESULT_FAIL and record.result != TestResultEnums.TEST_RESULT_SKIP else True)\n@icontract.ensure(lambda SELF: len(SELF.executed) == len(SELF.failed) + len(SELF.passed) + len(SELF.error))\n@icontract.ensure(lambda SELF: len(SELF.requested) >= len(SELF.executed) + len(SELF.skipped))",
+    "@icontract.snapshot(self, 'self')\n@icontract.ensure(lambda self, record: record in self.executed or record in self.skipped or record in self.error)\n@icontract.ensure(lambda self, record: record in self.executed or record not in self.failed)\n@icontract.ensure(lambda self, record: record in self.executed or record not in self.passed)\n@icontract.ensure(lambda self: len(self.executed) + len(self.skipped) + len(self.error) == len(self.requested))",
+    "@icontract.snapshot(self, 'self_before')\n@icontract.ensure(\n    lambda self: all(r in self.executed or r in self.failed or r in self.passed or r in self.error for r in self_before.executed + self_before.failed + self_before.passed + self_before.error),\n    \"All previous records should still be in the appropriate list.\"\n)\n@icontract.ensure(\n    lambda self, record: record in self.executed or record in self.failed or record in self.passed or record in self.error,\n    \"The provided record should be added to one of the result lists.\"\n)\n@icontract.ensure(\n    lambda self: self.executed == self_before.executed + [record] if record.result != TestResultEnums.TEST_RESULT_SKIP else self.executed == self_before.executed,\n    \"The executed list should be updated correctly.\"\n)\n@icontract.ensure(\n    lambda self: self.failed == self_before.failed + [record] if record.result == TestResultEnums.TEST_RESULT_FAIL else self.failed == self_before.failed,\n    \"The failed list should be updated correctly.\"\n)\n@icontract.ensure(\n    lambda self: self.passed == self_before.passed + [record] if record.result == TestResultEnums.TEST_RESULT_PASS else self.passed == self_before.passed,\n    \"The passed list should be updated correctly.\"\n)\n@icontract.ensure(\n    lambda self: self.error == self_before.error + [record] if record.result not in [TestResultEnums.TEST_RESULT_PASS, TestResultEnums.TEST_RESULT_FAIL, TestResultEnums.TEST_RESULT_SKIP] else self.error == self_before.error,\n    \"The error list should be updated correctly.\"\n)\n@icontract.ensure(\n    lambda self: self.skipped == self_before.skipped + [record] if record.result == TestResultEnums.TEST_RESULT_SKIP else self.skipped == self_before.skipped,\n    \"The skipped list should be updated correctly.\"\n)"
+  ],
+  "responses": [
+    "```python\n@icontract.snapshot(self.requested, 'requested')\n@icontract.snapshot(self.failed, 'failed')\n@icontract.snapshot(self.executed, 'executed')\n@icontract.snapshot(self.passed, 'passed')\n@icontract.snapshot(self.skipped, 'skipped')\n@icontract.snapshot(self.error, 'error')\n@icontract.snapshot(record, 'record')\n@icontract.ensure(lambda _: record in self.executed or record in self.passed or record in self.failed or record in self.skipped or record in self.error)\n@icontract.ensure(lambda _: _.executed == _.executed_before + [record] if record not in (_.passed_before + _.failed_before + _.skipped_before + _.error_before) else _.executed_before)\n@icontract.ensure(lambda _: _.passed == _.passed_before + [record] if record.result == TestResultEnums.TEST_RESULT_PASS else _.passed_before)\n@icontract.ensure(lambda _: _.failed == _.failed_before + [record] if record.result == TestResultEnums.TEST_RESULT_FAIL else _.failed_before)\n@icontract.ensure(lambda _: _.skipped == _.skipped_before + [record] if record.result == TestResultEnums.TEST_RESULT_SKIP else _.skipped_before)\n@icontract.ensure(lambda _: _.error == _.error_before + [record] if record.result not in [TestResultEnums.TEST_RESULT_PASS, TestResultEnums.TEST_RESULT_FAIL, TestResultEnums.TEST_RESULT_SKIP] else _.error_before)\n```",
+    "```python\n@icontract.snapshot(self.requested, 'requested')\n@icontract.snapshot(self.failed, 'failed')\n@icontract.snapshot(self.executed, 'executed')\n@icontract.snapshot(self.passed, 'passed')\n@icontract.snapshot(self.skipped, 'skipped')\n@icontract.snapshot(self.error, 'error')\n@icontract.ensure(lambda SELF, record: record in getattr(SELF, 'executed', []) or\n                  record in getattr(SELF, 'passed', []) or\n                  record in getattr(SELF, 'failed', []) or\n                  record in getattr(SELF, 'skipped', []) or\n                  record in getattr(SELF, 'error', []))\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'executed', []) or\n                  len(SELF.executed) == len(getattr(SELF, 'executed_snapshot', [])) + 1)\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'passed', []) or\n                  len(SELF.passed) == len(getattr(SELF, 'passed_snapshot', [])) + 1)\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'failed', []) or\n                  len(SELF.failed) == len(getattr(SELF, 'failed_snapshot', [])) + 1)\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'skipped', []) or\n                  len(SELF.skipped) == len(getattr(SELF, 'skipped_snapshot', [])) + 1)\n@icontract.ensure(lambda SELF, record: record not in getattr(SELF, 'error', []) or\n                  len(SELF.error) == len(getattr(SELF, 'error_snapshot', [])) + 1)\n```",
+    "```python\n@icontract.snapshot(self.requested, 'requested')\n@icontract.snapshot(self.failed, 'failed')\n@icontract.snapshot(self.executed, 'executed')\n@icontract.snapshot(self.passed, 'passed')\n@icontract.snapshot(self.skipped, 'skipped')\n@icontract.snapshot(self.error, 'error')\n@icontract.ensure(lambda SELF, record: record in SELF.executed or record in SELF.skipped or record in SELF.error)\n@icontract.ensure(lambda SELF, record: record in SELF.executed and record.result == TestResultEnums.TEST_RESULT_SKIP or record in SELF.skipped)\n@icontract.ensure(lambda SELF, record: record in SELF.failed if record.result == TestResultEnums.TEST_RESULT_FAIL else True)\n@icontract.ensure(lambda SELF, record: record in SELF.passed if record.result == TestResultEnums.TEST_RESULT_PASS else True)\n@icontract.ensure(lambda SELF, record: record in SELF.error if record.result != TestResultEnums.TEST_RESULT_PASS and record.result != TestResultEnums.TEST_RESULT_FAIL and record.result != TestResultEnums.TEST_RESULT_SKIP else True)\n@icontract.ensure(lambda SELF: len(SELF.executed) == len(SELF.failed) + len(SELF.passed) + len(SELF.error))\n@icontract.ensure(lambda SELF: len(SELF.requested) >= len(SELF.executed) + len(SELF.skipped))\n```",
+    "```python\n@icontract.snapshot(self, 'self')\n@icontract.ensure(lambda self, record: record in self.executed or record in self.skipped or record in self.error)\n@icontract.ensure(lambda self, record: record in self.executed or record not in self.failed)\n@icontract.ensure(lambda self, record: record in self.executed or record not in self.passed)\n@icontract.ensure(lambda self: len(self.executed) + len(self.skipped) + len(self.error) == len(self.requested))\n```",
+    "```python\n@icontract.snapshot(self, 'self_before')\n@icontract.ensure(\n    lambda self: all(r in self.executed or r in self.failed or r in self.passed or r in self.error for r in self_before.executed + self_before.failed + self_before.passed + self_before.error),\n    \"All previous records should still be in the appropriate list.\"\n)\n@icontract.ensure(\n    lambda self, record: record in self.executed or record in self.failed or record in self.passed or record in self.error,\n    \"The provided record should be added to one of the result lists.\"\n)\n@icontract.ensure(\n    lambda self: self.executed == self_before.executed + [record] if record.result != TestResultEnums.TEST_RESULT_SKIP else self.executed == self_before.executed,\n    \"The executed list should be updated correctly.\"\n)\n@icontract.ensure(\n    lambda self: self.failed == self_before.failed + [record] if record.result == TestResultEnums.TEST_RESULT_FAIL else self.failed == self_before.failed,\n    \"The failed list should be updated correctly.\"\n)\n@icontract.ensure(\n    lambda self: self.passed == self_before.passed + [record] if record.result == TestResultEnums.TEST_RESULT_PASS else self.passed == self_before.passed,\n    \"The passed list should be updated correctly.\"\n)\n@icontract.ensure(\n    lambda self: self.error == self_before.error + [record] if record.result not in [TestResultEnums.TEST_RESULT_PASS, TestResultEnums.TEST_RESULT_FAIL, TestResultEnums.TEST_RESULT_SKIP] else self.error == self_before.error,\n    \"The error list should be updated correctly.\"\n)\n@icontract.ensure(\n    lambda self: self.skipped == self_before.skipped + [record] if record.result == TestResultEnums.TEST_RESULT_SKIP else self.skipped == self_before.skipped,\n    \"The skipped list should be updated correctly.\"\n)\n```"
+  ],
+  "postcond_corr": [
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 94
+}

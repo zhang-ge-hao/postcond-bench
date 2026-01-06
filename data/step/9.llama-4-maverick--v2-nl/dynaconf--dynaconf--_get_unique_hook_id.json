@@ -1,0 +1,218 @@
+{
+  "rlid": "_get_unique_hook_id",
+  "github_url": "https://github.com/dynaconf/dynaconf/blob/09c10d1a91854894986da19fb70f1b54a47cd865/./dynaconf/loaders/__init__.py#L150-L163",
+  "name": "_get_unique_hook_id",
+  "line_cov": 1.0,
+  "lines": 14,
+  "stats": 7,
+  "cc": 3,
+  "content": "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+  "header": "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"",
+  "file": "./dynaconf/loaders/__init__.py",
+  "start_line": 150,
+  "end_line": 163,
+  "body_start_line": 156,
+  "comment": "\"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"",
+  "test_time": 2.5229616165161133,
+  "cover_tests": [
+    "tests/test_inspect.py::test_get_debug_info",
+    "tests/test_py_loader.py::test_decorated_hooks",
+    "tests/test_py_loader.py::test_post_load_hooks"
+  ],
+  "repo": {
+    "github_path": "dynaconf/dynaconf",
+    "commit": "09c10d1a91854894986da19fb70f1b54a47cd865",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=42\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"dynaconf\"\ndynamic = [ \"version\",]\ndescription = \"The dynamic configurator for your Python Project\"\nreadme = \"README.md\"\nrequires-python = \">=3.9,<3.14\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Framework :: Django\", \"Framework :: Flask\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Topic :: Utilities\", \"Topic :: Software Development :: Libraries\", \"Topic :: Software Development :: Libraries :: Python Modules\",]\ndependencies = []\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Bruno Rocha\"\nemail = \"rochacbruno@gmail.com\"\n\n[project.license]\ntext = \"MIT\"\n\n[project.urls]\nHomepage = \"https://github.com/dynaconf/dynaconf\"\n\n[project.optional-dependencies]\nredis = [ \"redis\",]\nvault = [ \"hvac\",]\nyaml = [ \"ruamel.yaml\",]\ntoml = [ \"toml\",]\nini = [ \"configobj\",]\nconfigobj = [ \"configobj\",]\n\n[tool.pytest.ini_options]\nmarkers = [ \"integration: marks tests as integration (deselect with '-m \\\"not integration\\\"')\",]\ntestpaths = [ \"tests\",]\nnorecursedirs = [ \"tests_functional\",]\naddopts = \"--ignore=tests_functional\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nflask = \"^3.1.2\"\nhvac = \">=1.1.0\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nversion = \">=1.2.0\"\nmarkers = \"python_version >= \\\"3.10\\\"\"\n",
+    "failed_tests": [
+      "tests/test_base.py::test_load_file__validate_on_update_is_false[load-ini]",
+      "tests/test_base.py::test_load_file__validate_on_update_is_true[load-ini]",
+      "tests/test_base.py::test_load_file__validate_on_update_is_str_all[load-ini]",
+      "tests/test_cli.py::test_init_with_path[ini]",
+      "tests/test_cli.py::test_help_dont_require_instance",
+      "tests/test_cli.py::test_write[True-default-ini]",
+      "tests/test_cli.py::test_write[True-development-ini]",
+      "tests/test_cli.py::test_write[False-default-ini]",
+      "tests/test_cli.py::test_write[False-development-ini]",
+      "tests/test_django.py::test_djdt_382",
+      "tests/test_django.py::test_override_settings_596",
+      "tests/test_ini_loader.py::test_load_from_ini",
+      "tests/test_ini_loader.py::test_load_from_multiple_ini",
+      "tests/test_ini_loader.py::test_key_error_on_invalid_env",
+      "tests/test_ini_loader.py::test_load_single_key",
+      "tests/test_ini_loader.py::test_cleaner",
+      "tests/test_ini_loader.py::test_using_env",
+      "tests/test_ini_loader.py::test_load_dunder",
+      "tests/test_ini_loader.py::test_envless",
+      "tests/test_ini_loader.py::test_prefix",
+      "tests/test_loaders.py::test_loaders_raise_on_syntax_error[f.ini-True]",
+      "tests/test_loaders.py::test_loaders_raise_on_syntax_error[f.ini-False]",
+      "tests/test_nested_loading.py::test_load_nested_different_types[ini]",
+      "tests/test_nested_loading.py::test_load_nested_different_types_with_merge",
+      "tests/test_redis.py::test_write_redis_without_data",
+      "tests/test_redis.py::test_write_to_redis",
+      "tests/test_redis.py::test_load_from_redis_with_key",
+      "tests/test_redis.py::test_write_and_load_from_redis_without_key",
+      "tests/test_redis.py::test_delete_from_redis",
+      "tests/test_redis.py::test_delete_all_from_redis",
+      "tests/test_redis.py::test_redis_has_proper_source_metadata",
+      "tests/test_validators.py::test_no_reload_on_single_env",
+      "tests/test_vault.py::test_write_vault_without_data",
+      "tests/test_vault.py::test_list_envs_in_vault",
+      "tests/test_vault.py::test_write_to_vault",
+      "tests/test_vault.py::test_load_from_vault_with_key",
+      "tests/test_vault.py::test_write_and_load_from_vault_without_key",
+      "tests/test_vault.py::test_read_from_vault_kv2_with_different_environments",
+      "tests/test_vault.py::test_vault_has_proper_source_metadata"
+    ],
+    "test_time": 32.326640129089355
+  },
+  "mutants": [
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = None\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id != \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id != \"<lambda>\":  # Negation introduces a logical error\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<LAMBDA>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\" and hook_source == \"default\":  # Additional condition that may prevent correct execution\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda_function>\":  # Incorrect string that will never match\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"XX<lambda>XX\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"lambda\":  # Missing the angle brackets\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id.startswith(\"lambda_\"):  # Incorrect condition that may not match the intended case\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = None\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(None, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"XX__code__XX\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__CODE__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__annotations__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__closure__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info == 0:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info and frame_info.co_name == \"main\":\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info is None:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info is True:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if not frame_info:\n            hook_unique_id = f\"lambda_{hash(frame_info.co_code)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = None\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\"\n",
+    "def _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n    hook_unique_id = hook_func.__name__\n    if hook_unique_id == \"<lambda>\":\n        frame_info = getattr(hook_func, \"__code__\", None)\n        if frame_info:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n        else:\n            hook_unique_id = f\"lambda_{id(hook_func)}\"\n    return f\"{hook_unique_id}@{hook_source}\""
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, hook_func, hook_source: (hook_func.__name__ != \"<lambda>\" and result == f\"{hook_func.__name__}@{hook_source}\") or (hook_func.__name__ == \"<lambda>\" and getattr(hook_func, \"__code__\", None) is not None and result == f\"lambda_{hash(getattr(hook_func, '__code__').co_code)}@{hook_source}\") or (hook_func.__name__ == \"<lambda>\" and getattr(hook_func, \"__code__\", None) is None and result == f\"lambda_{id(hook_func)}@{hook_source}\"))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom __future__ import annotations\n\nimport importlib\nimport os\nfrom contextlib import suppress\nfrom typing import Callable\nfrom typing import TYPE_CHECKING\n\nfrom dynaconf import constants as ct\nfrom dynaconf import default_settings\nfrom dynaconf.loaders import ini_loader\nfrom dynaconf.loaders import json_loader\nfrom dynaconf.loaders import py_loader\nfrom dynaconf.loaders import toml_loader\nfrom dynaconf.loaders import yaml_loader\nfrom dynaconf.loaders.base import SourceMetadata\nfrom dynaconf.nodes import DataDict\nfrom dynaconf.utils import deduplicate\nfrom dynaconf.utils import ensure_a_list\nfrom dynaconf.utils.files import get_local_filename\nfrom dynaconf.utils.files import glob\nfrom dynaconf.utils.files import has_magic\nfrom dynaconf.utils.parse_conf import false_values\n\nif TYPE_CHECKING:\n    from dynaconf.base import Settings\n\n\ndef default_loader(obj, defaults=None):\n    \"\"\"Initial loader for the initialization process.\n\n    Steps:\n    - Load default settings (from static module) + kwargs overrides (together)\n    - Load envvar overrides\n    \"\"\"\n...\ndef execute_instance_hooks(\n    obj: Settings, hook_type: str, hook_functions: list[Callable]\n):\n    \"\"\"Execute hooks provided by Setting instance\"\"\"\n...\ndef execute_module_hooks(\n    hook, obj, env=None, silent=True, key=None, modules=None, files=None\n):\n    \"\"\"Execute dynaconf_hooks from module or filepath.\"\"\"\n...\n# alias\nexecute_hooks = execute_module_hooks\n\n\ndef _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n...\ndef _run_hook_module(hook_type, hook_module, obj, key=\"\"):\n    \"\"\"\n    Run a hook function from hook_module.\n\n    Given a @hook_type, a @hook_module and a settings @obj, load the function\n    and execute it if found.\n    \"\"\"\n...\ndef _run_hook_function(\n    obj: Settings,\n    hook_type: str,\n    hook_func: Callable,\n    hook_source: str = \"default\",\n    key: str = \"\",\n):\n    \"\"\"\n    Run a hook function:\n\n    It execute @hook_func, update the results into settings @obj and\n    add it to _loaded_hook registry ([@hook_source][@hook_type])\n    \"\"\"\n...\ndef settings_loader(\n    obj,\n    settings_module=None,\n    env=None,\n    silent=True,\n    key=None,\n    filename=None,\n    validate=False,\n    identifier=\"settings_loader\",\n):\n    \"\"\"Loads from defined settings module\n\n    :param obj: A dynaconf instance\n    :param settings_module: A path or a list of paths e.g settings.toml\n    :param env: Env to look for data defaults: development\n    :param silent: Boolean to raise loading errors\n    :param key: Load a single key if provided\n    :param filename: optional filename to override the settings_module\n    :param validate: Validate the loaded data\n    :param identifier: Loader identifier\n    \"\"\"\n...\ndef load_from_env_named_file(obj, env, key, validate, identifier, mod_file):\n    \"\"\"Load from env named file e.g: development_settings.py\"\"\"\n...\ndef enable_external_loaders(obj):\n    \"\"\"Enable external service loaders like `VAULT_` and `REDIS_`\n    looks forenv variables like `REDIS_ENABLED_FOR_DYNACONF`\n    \"\"\"\n...\ndef write(filename, data, env=None, merge=False):\n    \"\"\"Writes `data` to `filename` infers format by file extension.\"\"\"\n...\n```\n## Target Method\n```\ndef _get_unique_hook_id(hook_func, hook_source):\n    \"\"\"get unique identifier for a hook function.\n    in most of cases this will be the function name@source_file\n    however, if the function is a lambda, it will be a hash of the code object.\n    because lambda functions are not hashable itself and we can't rely on its id.\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `_get_unique_hook_id`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(lambda hook_func: hook_func.__code__, name=\"hook_func_code\")\n@icontract.ensure(\n    lambda hook_func, hook_source, result: \n    result == f\"{hook_func.__name__}@{hook_source}\" \n    if not hasattr(hook_func, '__code__') or not hasattr(hook_func.__code__, 'co_code') or hook_func.__code__.co_code.strip() != b''\n    else True, \n    \"Return value should be 'function_name@source_file' for non-lambda functions\"\n)\n@icontract.ensure(\n    lambda hook_func, result: \n    isinstance(result, str) and \"@\" in result,\n    \"Return value should be a string containing '@'\"\n)",
+    "@icontract.snapshot(lambda hook_func: hook_func.__code__)\n@icontract.ensure(\n    lambda hook_func, hook_source, result: \n    result == f\"{hook_func.__name__}@{hook_source}\" \n    if not hook_func.__code__.co_name == \"<lambda>\" \n    else result == f\"{hash(hook_func.__code__)}@{hook_source}\"\n)",
+    "@icontract.snapshot(lambda hook_func: hook_func.__code__)\n@icontract.ensure(\n    lambda hook_func, hook_source, result: \n    result == f\"{hook_func.__name__}@{hook_source}\" \n    if not hook_func.__code__.co_name == \"<lambda>\" \n    else result == f\"{hash(hook_func.__code__)}@{hook_source}\"\n)",
+    "@icontract.snapshot(lambda hook_func: hook_func.__code__)\n@icontract.ensure(\n    lambda hook_func, hook_source, result: \n    result == f\"{hook_func.__name__}@{hook_source}\" \n    if not hook_func.__code__.co_name.startswith(\"<\") \n    else result == str(hash(hook_func.__code__))\n)",
+    "@icontract.snapshot(lambda hook_func: hook_func.__code__)\n@icontract.ensure(\n    lambda hook_func, hook_source, result: \n    result == f\"{hook_func.__name__}@{hook_source}\" \n    if not hook_func.__code__.co_name == \"<lambda>\" \n    else result == f\"{hash(hook_func.__code__)}@{hook_source}\"\n)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 179
+}

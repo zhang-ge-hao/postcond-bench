@@ -1,0 +1,133 @@
+{
+  "rlid": "file_list_for_request",
+  "github_url": "https://github.com/liiight/notifiers/blob/351c048eb1d8fefae7d638cf1ac667a69815c79a/./notifiers/utils/requests.py#L84-L95",
+  "name": "file_list_for_request",
+  "line_cov": 1.0,
+  "lines": 12,
+  "stats": 3,
+  "cc": 4,
+  "content": "def file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n    if mimetype:\n        return [(key_name, (file, open(file, mode=\"rb\"), mimetype)) for file in list_of_paths]\n    return [(key_name, (file, open(file, mode=\"rb\"))) for file in list_of_paths]",
+  "header": "def file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"",
+  "file": "./notifiers/utils/requests.py",
+  "start_line": 84,
+  "end_line": 95,
+  "body_start_line": 93,
+  "comment": "\"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"",
+  "test_time": 1.5370194911956787,
+  "cover_tests": [
+    "tests/test_utils.py::TestHelpers::test_file_list_for_request"
+  ],
+  "repo": {
+    "github_path": "liiight/notifiers",
+    "commit": "351c048eb1d8fefae7d638cf1ac667a69815c79a",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"hatchling\",]\nbuild-backend = \"hatchling.build\"\n\n[project]\nname = \"notifiers\"\nversion = \"1.3.6\"\ndescription = \"The easy way to send notifications\"\nrequires-python = \">=3.8\"\nreadme = \"README.md\"\nlicense = \"MIT\"\nkeywords = [ \"notifications\", \"messaging\", \"email\", \"push\",]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Intended Audience :: Developers\", \"Intended Audience :: End Users/Desktop\",]\ndependencies = [ \"click>=8.0.3\", \"importlib-metadata>=3.6\", \"jsonschema>=4.4.0\", \"requests>=2.27.1,<3\", \"icontract (>=2.7.1,<3.0.0)\",]\n[[project.authors]]\nname = \"liiight\"\nemail = \"python.notifiers@gmail.com\"\n\n[dependency-groups]\ndev = [ \"pytest\", \"codecov\", \"pytest-cov\", \"sphinx-autodoc-annotation~=1.0.post1\", \"sphinx-rtd-theme\", \"hypothesis\", \"pre-commit\", \"retry\", \"Sphinx\",]\n\n[project.urls]\nHomepage = \"https://github.com/liiight/notifiers\"\nRepository = \"https://github.com/liiight/notifiers\"\nDocumentation = \"https://notifiers.readthedocs.io/en/latest/\"\n\n[project.scripts]\nnotifiers = \"notifiers_cli.core:entry_point\"\n\n[tool.pytest.ini_options]\nmarkers = [ \"online: marks tests running online\",]\n\n[tool.hatch.build.targets.wheel]\ninclude = [ \"notifiers\", \"notifiers_cli\", \"LICENSE\",]\n\n[tool.hatch.build.targets.sdist]\ninclude = [ \"notifiers\", \"notifiers_cli\", \"LICENSE\",]\nexclude = [ \"tests\",]\n\n[tool.poetry.group.dev.dependencies]\nretry = \"^0.9.2\"\n\n[tool.poetry.group.dev.dependencies.pytest]\nversion = \">=8.4.2\"\nmarkers = \"python_version >= \\\"3.9\\\"\"\n\n[tool.poetry.group.dev.dependencies.pytest-cov]\nversion = \">=7.0.0\"\nmarkers = \"python_version >= \\\"3.9\\\"\"\n\n[tool.poetry.group.dev.dependencies.pytest-reportlog]\nversion = \">=0.4.0\"\nmarkers = \"python_version >= \\\"3.9\\\"\"\n\n[tool.poetry.group.dev.dependencies.hypothesis]\nversion = \">=6.142.4\"\nmarkers = \"python_version >= \\\"3.10\\\"\"\n\n[tool.poetry.group.dev.dependencies.pre-commit]\nversion = \">=2.20.0\"\nmarkers = \"python_version >= \\\"3.9\\\"\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nversion = \">=1.2.0,<2.0.0\"\nmarkers = \"python_version >= \\\"3.10\\\"\"\n",
+    "failed_tests": [
+      "tests/providers/test_pagerduty.py::TestPagerDuty::test_pagerduty_sanity",
+      "tests/providers/test_pagerduty.py::TestPagerDuty::test_pagerduty_all_options",
+      "tests/providers/test_pushover.py::TestPushover::test_pushover_priority_2_restrictions[data0-expire]",
+      "tests/providers/test_pushover.py::TestPushover::test_pushover_priority_2_restrictions[data1-retry]",
+      "tests/providers/test_pushover.py::TestPushover::test_sanity",
+      "tests/providers/test_pushover.py::TestPushover::test_all_options",
+      "tests/providers/test_pushover.py::TestPushover::test_attachment_positive",
+      "tests/providers/test_pushover.py::TestPushoverSoundsResource::test_pushover_sounds_positive",
+      "tests/providers/test_pushover.py::TestPushoverLimitsResource::test_pushover_limits_positive",
+      "tests/providers/test_pushover.py::TestPushoverCLI::test_pushover_sounds_positive",
+      "tests/providers/test_pushover.py::TestPushoverCLI::test_pushover_limits_positive",
+      "tests/providers/test_simplepush.py::TestSimplePush::test_simplepush_sanity",
+      "tests/providers/test_slack.py::TestSlack::test_sanity",
+      "tests/providers/test_slack.py::TestSlack::test_all_options",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_metadata",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_missing_required[data0-message]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_missing_required[data1-api_key]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_missing_required[data2-page_id]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_data_dependencies[added_data0-Cannot set both 'backfill' and 'scheduled' incident properties in the same notification!]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_data_dependencies[added_data1-is a realtime incident status! Please choose one of]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_data_dependencies[added_data2-Cannot set 'status' when setting 'backfill'!]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_errors",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_success[data0]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_success[data1]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_success[data2]",
+      "tests/providers/test_statuspage.py::TestStatusPage::test_success[data3]",
+      "tests/providers/test_statuspage.py::TestStatuspageComponents::test_statuspage_components_attribs",
+      "tests/providers/test_statuspage.py::TestStatuspageComponents::test_statuspage_components_negative",
+      "tests/providers/test_telegram.py::TestTelegram::test_missing_chat_id",
+      "tests/providers/test_telegram.py::TestTelegram::test_sanity",
+      "tests/providers/test_telegram.py::TestTelegram::test_all_options",
+      "tests/providers/test_telegram.py::TestTelegramResources::test_telegram_updates_positive",
+      "tests/providers/test_telegram.py::TestTelegramCLI::test_telegram_updates_positive",
+      "tests/providers/test_twilio.py::TestTwilio::test_sanity",
+      "tests/providers/test_zulip.py::TestZulip::test_sanity",
+      "tests/providers/test_zulip.py::TestZulip::test_private_message"
+    ],
+    "test_time": 30.230427503585815
+  },
+  "mutants": [
+    "def file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n    if mimetype == \"\":\n        return [(key_name, (file, open(file, mode=\"rb\"), mimetype)) for file in list_of_paths]\n    return [(key_name, (file, open(file, mode=\"rb\"))) for file in list_of_paths]",
+    "def file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n    if mimetype == \"application/octet-stream\":\n        return [(key_name, (file, open(file, mode=\"rb\"), mimetype)) for file in list_of_paths]\n    return [(key_name, (file, open(file, mode=\"rb\"))) for file in list_of_paths]",
+    "def file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n    if not mimetype:\n        return [(key_name, (file, open(file, mode=\"rb\"), mimetype)) for file in list_of_paths]\n    return [(key_name, (file, open(file, mode=\"rb\"))) for file in list_of_paths]",
+    "def file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n    if mimetype:\n        return [(key_name, (file, open(file, mode=\"rb\"))) for file in list_of_paths]  # Missing mimetype\n    return [(key_name, (file, open(file, mode=\"rb\"))) for file in list_of_paths]",
+    "def file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n    if mimetype:\n        return [(key_name, (file, open(file, mode=\"rb\"), mimetype)) for file in list_of_paths]\n    return [(key_name, (file, open(file, mode=\"rb\"), \"application/octet-stream\")) for file in list_of_paths]",
+    "def file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n    if mimetype:\n        return [(key_name, (file, open(file, mode=\"rb\"), mimetype)) for file in list_of_paths]\n    return [(key_name, (file, open(file, mode=\"rb\"), None)) for file in list_of_paths]"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda list_of_paths: list(list_of_paths), name=\"paths\")\n@icontract.snapshot(lambda key_name: key_name, name=\"key\")\n@icontract.snapshot(lambda mimetype: mimetype, name=\"mimetype\")\n@icontract.ensure(lambda result, OLD: isinstance(result, list) and len(result) == len(OLD.paths))\n@icontract.ensure(lambda result, OLD: all(item[0] == OLD.key for item in result))\n@icontract.ensure(lambda result, OLD: all(item[1][0] == OLD.paths[i] for i, item in enumerate(result)))\n@icontract.ensure(lambda result, OLD: (not OLD.mimetype) or all(len(item[1]) == 3 and item[1][2] == OLD.mimetype for item in result))\n@icontract.ensure(lambda result, OLD: (OLD.mimetype) or all(len(item[1]) == 2 for item in result))\n@icontract.ensure(lambda result: all(hasattr(item[1][1], \"mode\") and getattr(item[1][1], \"mode\") == \"rb\" and not getattr(item[1][1], \"closed\", False) for item in result))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom __future__ import annotations\n\nimport json\nimport logging\n\nimport requests\n\nlog = logging.getLogger(\"notifiers\")\n\n\nclass RequestsHelper:\n    \"\"\"A wrapper around :class:`requests.Session` which enables generically handling HTTP requests\"\"\"\n\n    @classmethod\n    def request(\n        self,\n        url: str,\n        method: str,\n        raise_for_status: bool = True,\n        path_to_errors: tuple | None = None,\n        *args,\n        **kwargs,\n    ) -> tuple:\n        \"\"\"\n        A wrapper method for :meth:`~requests.Session.request``, which adds some defaults and logging\n\n        :param url: The URL to send the reply to\n        :param method: The method to use\n        :param raise_for_status: Should an exception be raised for a failed response. Default is **True**\n        :param args: Additional args to be sent to the request\n        :param kwargs: Additional args to be sent to the request\n        :return: Dict of response body or original :class:`requests.Response`\n        \"\"\"\n...\ndef get(url: str, *args, **kwargs) -> tuple:\n    \"\"\"Send a GET request. Returns a dict or :class:`requests.Response <Response>`\"\"\"\n...\ndef post(url: str, *args, **kwargs) -> tuple:\n    \"\"\"Send a POST request. Returns a dict or :class:`requests.Response <Response>`\"\"\"\n...\ndef file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n...\n```\n## Target Method\n```\ndef file_list_for_request(list_of_paths: list, key_name: str, mimetype: str | None = None) -> list:\n    \"\"\"\n    Convenience function to construct a list of files for multiple files upload by :mod:`requests`\n\n    :param list_of_paths: Lists of strings to include in files. Should be pre validated for correctness\n    :param key_name: The key name to use for the file list in the request\n    :param mimetype: If specified, will be included in the requests\n    :return: List of open files ready to be used in a request\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `file_list_for_request`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(\n    lambda list_of_paths, result: len(result) == len(list_of_paths),\n    \"The length of the result is equal to the length of list_of_paths\"\n)\n@icontract.ensure(\n    lambda key_name, result: all(isinstance(item, tuple) and len(item) == 3 and item[0] == key_name for item in result),\n    \"All items in the result are tuples of length 3 with the first element being key_name\"\n)\n@icontract.ensure(\n    lambda mimetype, result: all(item[2] == mimetype for item in result) if mimetype is not None else True,\n    \"If mimetype is specified, it is used for all files in the result\"\n)\n@icontract.snapshot(\n    lambda list_of_paths: list(list_of_paths),\n    name=\"initial_list_of_paths\"\n)\n@icontract.ensure(\n    lambda initial_list_of_paths, result: all(path in str(item[1]) for path, item in zip(initial_list_of_paths, result)),\n    \"All paths in the initial list_of_paths are used in the result\"\n)",
+    "@icontract.snapshot(lambda list_of_paths: list(list_of_paths), name=\"list_of_paths\")\n@icontract.ensure(\n    lambda list_of_paths, key_name, result: all(\n        isinstance(item, tuple) and len(item) == 3 and item[0] == key_name for item in result\n    ),\n    \"All items in the result are tuples with three elements and the first element is 'key_name'\",\n)\n@icontract.ensure(\n    lambda list_of_paths, result: len(list_of_paths) == len(result),\n    \"The length of the result is equal to the length of 'list_of_paths'\",\n)\n@icontract.ensure(\n    lambda list_of_paths, result: all(\n        item[1] == path.split(\"/\")[-1] for item, path in zip(result, list_of_paths)\n    ),\n    \"The filename in each tuple is correct\",\n)\n@icontract.ensure(\n    lambda mimetype, result: all(item[2] == mimetype for item in result) if mimetype is not None else True,\n    \"If 'mimetype' is specified, it is used for all files\",\n)",
+    "@icontract.snapshot(lambda list_of_paths: list(list_of_paths))\n@icontract.ensure(lambda result: all(isinstance(item, tuple) for item in result))\n@icontract.ensure(lambda result: all(len(item) == 3 for item in result))\n@icontract.ensure(lambda result: all(isinstance(item[0], str) for item in result))\n@icontract.ensure(lambda result: all(isinstance(item[1], str) or item[1] is None for item in result))\n@icontract.ensure(lambda result: all(isinstance(item[2], str) or item[2] is None for item in result))\n@icontract.ensure(lambda list_of_paths, result: len(list_of_paths) == len(result))\n@icontract.ensure(lambda key_name, result: all(item[0] == key_name for item in result))",
+    "@icontract.snapshot(lambda list_of_paths: list(list_of_paths), name=\"list_of_paths\")\n@icontract.ensure(\n    lambda list_of_paths, key_name, result: all(\n        isinstance(item, tuple) and len(item) == 3 and item[0] == key_name for item in result\n    ),\n    \"All items in result are tuples of length 3 with the first element being 'key_name'\",\n)\n@icontract.ensure(\n    lambda list_of_paths, result: len(list_of_paths) == len(result),\n    \"The length of the result is the same as the length of 'list_of_paths'\",\n)\n@icontract.ensure(\n    lambda list_of_paths, result: all(\n        item[1] in (path, path.split(\"/\")[-1]) for item, path in zip(result, list_of_paths)\n    ),\n    \"The filename in each tuple is either the original path or the basename of the path\",\n)\n@icontract.ensure(\n    lambda mimetype, result: all(item[2] == mimetype for item in result) if mimetype is not None else True,\n    \"If 'mimetype' is specified, it is used for all files in the result\",\n)",
+    "@icontract.snapshot(lambda list_of_paths: list(list_of_paths))\n@icontract.ensure(lambda result: all(isinstance(item, tuple) for item in result))\n@icontract.ensure(lambda result: all(len(item) == 3 for item in result))\n@icontract.ensure(lambda key_name, result: all(item[0] == key_name for item in result))\n@icontract.ensure(lambda list_of_paths, result: len(list_of_paths) == len(result))\n@icontract.ensure(lambda list_of_paths, result: all(path in str(item) for path, item in zip(list_of_paths, result)))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 65
+}

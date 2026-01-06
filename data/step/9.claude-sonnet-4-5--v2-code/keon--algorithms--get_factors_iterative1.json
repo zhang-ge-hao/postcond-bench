@@ -1,0 +1,154 @@
+{
+  "rlid": "get_factors_iterative1",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/dfs/all_factors.py#L63-L84",
+  "name": "get_factors_iterative1",
+  "line_cov": 1.0,
+  "lines": 22,
+  "stats": 9,
+  "cc": 4,
+  "content": "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+  "header": "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"",
+  "file": "./algorithms/dfs/all_factors.py",
+  "start_line": 63,
+  "end_line": 84,
+  "body_start_line": 75,
+  "comment": "\"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"",
+  "test_time": 1.3476247787475586,
+  "cover_tests": [
+    "tests/test_dfs.py::TestAllFactors::test_get_factors_iterative1"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i < n:  # This will miss the case where i * i equals n, potentially skipping valid factors.\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i < n // 2:  # This will limit the range of i too much, missing valid factors that are greater than n/2.\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i < n:  # This will continue checking beyond the necessary range, leading to incorrect results.\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i <= n:  # This will allow i to exceed the square root of n, leading to incorrect factor combinations.\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if i * i == n:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % (i + 1) == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i != 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 1:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n // i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i + 1, combi + [i])),  # Incrementing the divisor instead of keeping it the same\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i + 2, combi + [i])),  # Skipping the next divisor by incrementing by 2\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi + [1])),  # Adding 1 to the combination instead of the factor\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi + [n//i])),  # Adding the quotient instead of the factor\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi)),  # Not including the current factor in the combination\n            i += 1\n    return res"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda n: get_factors(n), name=\"expected\")\n@icontract.ensure(lambda OLD, result: {tuple(x) for x in result} == {tuple(x) for x in OLD.expected})\n@icontract.ensure(lambda result: all(isinstance(combi, list) for combi in result))\n@icontract.ensure(lambda result: all(len(combi) >= 2 for combi in result))\n@icontract.ensure(lambda result: all(all(isinstance(x, int) and x >= 2 for x in combi) for combi in result))\n@icontract.ensure(lambda result, n: all(__import__('functools').reduce(lambda a, b: a * b, combi, 1) == n for combi in result))\n@icontract.ensure(lambda result: all(combi == sorted(combi) for combi in result))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\ndef get_factors(n):\n\n    def factor(n, i, combi, res):\n\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, int(n/i)],\n                factor(n/i, i, combi+[i], res)\n            i += 1\n        return res\n    return factor(n, 2, [], [])\n\n\ndef get_factors_iterative1(n):\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res\n\n\ndef get_factors_iterative2(n):\n\n    ans, stack, x = [], [], 2\n    while True:\n        if x > n // x:\n            if not stack:\n                return ans\n            ans.append(stack + [n])\n            x = stack.pop()\n            n *= x\n            x += 1\n        elif n % x == 0:\n            stack.append(x)\n            n //= x\n        else:\n            x += 1\n\n```\n## Target Method\n```\ndef get_factors_iterative1(n):\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `get_factors_iterative1`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda n: n, name=\"original_n\")\n@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(factors, list) for factors in result))\n@icontract.ensure(lambda result: all(len(factors) >= 2 for factors in result))\n@icontract.ensure(lambda result: all(all(f > 1 for f in factors) for factors in result))\n@icontract.ensure(lambda result, original_n: all(\n    __import__('functools').reduce(lambda a, b: a * b, factors, 1) == original_n\n    for factors in result\n))\n@icontract.ensure(lambda result: all(\n    all(factors[i] <= factors[i+1] for i in range(len(factors)-1))\n    for factors in result if len(factors) > 1\n))",
+    "@icontract.snapshot(lambda n: n, name=\"original_n\")\n@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(factors, list) for factors in result))\n@icontract.ensure(lambda result: all(len(factors) >= 2 for factors in result))\n@icontract.ensure(lambda result: all(all(isinstance(f, int) and f >= 2 for f in factors) for factors in result))\n@icontract.ensure(lambda original_n, result: all(all(f <= original_n for f in factors) for factors in result))\n@icontract.ensure(lambda original_n, result: len(result) == 0 or all(eval('*'.join(map(str, factors))) == original_n for factors in result))\n@icontract.ensure(lambda result: all(factors == sorted(factors) for factors in result))",
+    "@icontract.snapshot(lambda n: n, name=\"original_n\")\n@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(factors, (list, tuple)) for factors in result))\n@icontract.ensure(lambda result: all(len(factors) >= 2 for factors in result))\n@icontract.ensure(lambda result, original_n: all(\n    all(isinstance(f, int) for f in factors) and \n    eval('*'.join(map(str, factors))) == original_n if len(factors) > 0 else True\n    for factors in result\n))\n@icontract.ensure(lambda result: all(all(f > 1 for f in factors) for factors in result))\n@icontract.ensure(lambda result: all(\n    all(factors[i] <= factors[i+1] for i in range(len(factors)-1)) if len(factors) > 1 else True\n    for factors in result\n))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(factorization, list) for factorization in result))\n@icontract.ensure(lambda result: all(len(factorization) >= 2 for factorization in result))\n@icontract.ensure(lambda n, result: all(\n    all(isinstance(f, int) and f > 1 for f in factorization)\n    for factorization in result\n))\n@icontract.ensure(lambda n, result: all(\n    eval('*'.join(map(str, factorization))) == n\n    for factorization in result\n) if result else True)\n@icontract.ensure(lambda result: all(\n    all(factorization[i] <= factorization[i+1] for i in range(len(factorization)-1))\n    for factorization in result if len(factorization) > 1\n))",
+    "@icontract.snapshot(lambda n: n, name=\"original_n\")\n@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(factorization, list) for factorization in result))\n@icontract.ensure(lambda result: all(len(factorization) >= 2 for factorization in result))\n@icontract.ensure(lambda result: all(all(isinstance(f, int) and f >= 2 for f in factorization) for factorization in result))\n@icontract.ensure(lambda result: all(factorization == sorted(factorization) for factorization in result))\n@icontract.ensure(lambda result, original_n: all(\n    functools.reduce(lambda x, y: x * y, factorization, 1) == original_n \n    for factorization in result\n) if result else True)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "passed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    []
+  ],
+  "traversal_rank": 293
+}

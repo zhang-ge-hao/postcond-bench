@@ -48,11 +48,12 @@ with open("data/step/0.append/dep_anno_java.txt") as file:
 DEP_ANNO = {**dep_anno_python, **dep_anno_java}
 
 ORDERED_MODELS = [
+    "gpt-5",
+    "gpt-4.1", 
+    "gpt-4o-mini", 
     "claude-sonnet-4-5", 
     "claude-sonnet-4", 
     "claude-3-5-haiku",
-    "gpt-4.1", 
-    "gpt-4o-mini", 
     "Qwen3-32B", 
     "Qwen3-8B",
     "phi-4", 
@@ -61,6 +62,7 @@ ORDERED_MODELS = [
 ]
 
 MODEL_NAME_MAP = {
+    "gpt-5": "gpt-5", 
     "gpt-4.1": "gpt-4.1", 
     "gpt-4o-mini": "gpt-4o-mini", 
     "claude-sonnet-4": "Claude 4", 
@@ -191,7 +193,8 @@ def get_mutator_precision(methods: List[Method]):
     exist_list = {t: [] for t in tags}
     for method in methods:
         for corr_res, comp_res in zip(method.postcond_corr, method.mutant_kill):
-            res_list.append((corr_res, comp_res, method.mutant_tags))
+            res_list.append((
+                corr_res, comp_res, method.mutant_tags, method.ref_mutant_kill))
         
         method_mut_tags = set()
         for __tags in method.mutant_tags:
@@ -201,16 +204,20 @@ def get_mutator_precision(methods: List[Method]):
             exist_list[tag].append(1 if tag in method_mut_tags else 0)
 
     precision_list = {t: [] for t in tags}
-    for corr_res, comp_res, mutant_tags in res_list:
+    for corr_res, comp_res, mutant_tags, ref_mutant_kill in res_list:
         if corr_res == "passed":
-            comp_res_bool = all([f in KFS for f in comp_res])
+            assert len(comp_res) == 0 or len(comp_res) == len(ref_mutant_kill)
+            comp_res_bool = all([r_f not in KFS or f in KFS 
+                                 for f, r_f in zip(comp_res, ref_mutant_kill)])
             for tag in tags:
                 tag_comp_res = [
-                    f for f, mutant_tag in zip(comp_res, mutant_tags) 
+                    (f, r_f) 
+                    for f, mutant_tag, r_f in zip(comp_res, mutant_tags, ref_mutant_kill) 
                     if tag in mutant_tag]
                 if len(tag_comp_res) == 0:
                     continue
-                tag_comp_res_bool = all([f in KFS for f in tag_comp_res])
+                tag_comp_res_bool = all([
+                    r_f not in KFS or f in KFS for f, r_f in tag_comp_res])
                 if tag_comp_res_bool:
                     precision_list[tag].append(1 if comp_res_bool else 0)
             pass
@@ -242,7 +249,9 @@ def cal_metrics(methods: List[Method], res: ExpRes) -> ExpRes:
         for corr_res, comp_res in zip(method.postcond_corr, method.mutant_kill):
             if corr_res == "passed":
                 corr_count += 1
-                if all(f in KFS for f in comp_res):
+                assert len(comp_res) == 0 or len(comp_res) == len(method.ref_mutant_kill)
+                if all(r_f not in KFS or f in KFS 
+                       for f, r_f in zip(comp_res, method.ref_mutant_kill)):
                     comp_count += 1
                 if all(f not in KFS for f in comp_res):
                     vacu_count += 1
@@ -276,7 +285,7 @@ def get_exp_res_list(model_name: str) -> List[ExpRes]:
     """
     step_dir = "data/step"
 
-    promptings = [None, "no_gram", "fsl_1", "fsl_3", "fsl_5"]
+    promptings = [None, "no_gram", "fsl_1", "fsl_3", "fsl_5", "fsl_10"]
     method_ranges = ["dep__0", "dep__1", 
                      "line__00_20", 
                      "line__20_40", 
@@ -330,6 +339,7 @@ def get_exp_res_list(model_name: str) -> List[ExpRes]:
 def get_exp_res():
     output_dir = "data"
     all_model_names = [
+        "gpt-5", 
         "gpt-4.1", 
         "gpt-4o-mini", 
         "claude-sonnet-4-5",
@@ -341,7 +351,7 @@ def get_exp_res():
         # "gemma-3-4b",
         "phi-4", 
         "phi-4-mini",
-        "deepseek-coder-v2",
+        # "deepseek-coder-v2",
         # "Llama-3.1-70B",
         # "Llama-3.1-8B",
     ]
@@ -428,7 +438,7 @@ def analyze_dep():
             print("WARN: comp ", lang, w_code, model_name, ori_res.comp_1)
 
         def should_bold(this_n, that_n):
-            return this_n > that_n and this_n >= 0.01
+            return this_n > that_n # and this_n >= 0.01
 
         numbers.append(
             _number(
@@ -556,6 +566,154 @@ def analyze_dep():
     # avg_list = [f"{f:.4f}" for f in avg_list]
     # print(" & ".join(avg_list))
 
+
+def analyze_no_gram():
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [
+        r for r in exp_res_list 
+        if r.method_range is None and \
+            (r.prompting is None or r.prompting == "no_gram")]
+    model_names = list(set([r.model_name for r in exp_res_list]))
+    model_names = [m for m in ORDERED_MODELS if m in model_names]
+
+    @dataclass
+    class _number:
+        model_name: str
+        language: str
+        w_code: bool
+        metric: str
+        w_gram: bool
+        number: float
+        should_bold: bool
+
+    numbers: List[_number] = []
+
+    def _find(numbers: List[_number], 
+              model_name, language, w_code, metric, w_gram) -> _number:
+        for number in numbers:
+            if model_name != number.model_name:
+                continue
+            if language != number.language:
+                continue
+            if w_code != number.w_code:
+                continue
+            if metric != number.metric:
+                continue
+            if w_gram != number.w_gram:
+                continue
+            return number
+        return None
+
+    __iter = product(LANGUAGES, [True, False], model_names)
+    for lang, w_code, model_name in __iter:
+        __exp_res_list = [
+            r for r in exp_res_list if 
+            model_name == r.model_name and lang == r.language \
+                and w_code == r.w_code]
+        assert len(__exp_res_list) == 2
+        ori_res = [r for r in __exp_res_list if r.prompting is None][0]
+        no_gram_res = [r for r in __exp_res_list if r.prompting == "no_gram"][0]
+
+        def should_bold(this_n, that_n):
+            return this_n > that_n # and this_n >= 0.01
+
+        numbers.append(
+            _number(
+                model_name=model_name, language=lang, w_code=w_code,
+                metric="corr",
+                w_gram=True,
+                number=ori_res.corr_1,
+                should_bold=should_bold(ori_res.corr_1, no_gram_res.corr_1)
+            )
+        )
+        numbers.append(
+            _number(
+                model_name=model_name, language=lang, w_code=w_code,
+                metric="corr",
+                w_gram=False,
+                number=no_gram_res.corr_1,
+                should_bold=should_bold(no_gram_res.corr_1, ori_res.corr_1)
+            )
+        )
+        numbers.append(
+            _number(
+                model_name=model_name, language=lang, w_code=w_code,
+                metric="comp",
+                w_gram=True,
+                number=ori_res.comp_1,
+                should_bold=should_bold(ori_res.comp_1, no_gram_res.comp_1)
+            )
+        )
+        numbers.append(
+            _number(
+                model_name=model_name, language=lang, w_code=w_code,
+                metric="comp",
+                w_gram=False,
+                number=no_gram_res.comp_1,
+                should_bold=should_bold(no_gram_res.comp_1, ori_res.comp_1)
+            )
+        )
+
+    w_code_map = {
+        True: "C2P",
+        False: "N2P",
+    }
+
+    width = 8
+    merge_row = 2
+
+    avg_list = [[] for _ in range(width)]
+    __iter = product(model_names, [True, False])
+    for row_idx, (model_name, w_code) in enumerate(__iter):
+        number_str_list = []
+        ___iter = product(LANGUAGES, ["corr", "comp"], [True, False])
+        for col_idx, (lang, metric, w_gram) in enumerate(___iter):
+            number = _find(numbers, model_name, lang, w_code, metric, w_gram)
+            if number is None:
+                continue
+            avg_list[col_idx].append(number.number)
+            number_str = _f2s(number.number)
+            if number.should_bold:
+                # number_str = f"\033[1m{number_str}\033[0m"
+                # number_str = f"\033[7m{number_str}\033[0m"
+                number_str = _bold(number_str)
+            number_str_list.append(number_str)
+        assert len(number_str_list) == width
+
+        if row_idx % merge_row == 0:
+            # if row_idx != 0:
+            #     print("\\midrule")
+            la_model_name = MODEL_NAME_MAP[model_name]
+            la_model_name = f"\multirow{{2}}{{*}}{{{la_model_name}}}"
+        else:
+            la_model_name = ""
+
+        print(f"{la_model_name} & {w_code_map[w_code]} & ", end="")
+        print(" & ".join(number_str_list) + f" \\\\")
+
+    avg_list = [np.mean(l).item() for l in avg_list]
+    avg_str_list = []
+    for idx, avg in enumerate(avg_list):
+        that_idx = idx ^ 1
+        that_avg = avg_list[that_idx]
+        avg_str = _f2s(avg)
+        if should_bold(avg, that_avg):
+            avg_str = _bold(avg_str)
+        avg_str_list.append(avg_str)
+    print("\\midrule")
+    print("\\multicolumn{2}{c|}{\\textbf{Avg}} & ", end="")
+    print(" & ".join(avg_str_list) + "\\\\")
+
+    w_code_map = {
+        True: "C2P",
+        False: "N2P",
+    }
+
+
+
 def main_res():
     exp_res_list: List[ExpRes] = []
     with open("data/res.jsonl") as file:
@@ -608,6 +766,7 @@ def main_res():
                 n = getattr(r, field_name)
                 if field_name == "vacu_r":
                     should_bold = all(n <= getattr(rr, field_name) for rr in __exp_res_list)
+                    should_bold = False
                 else:
                     should_bold = all(n >= getattr(rr, field_name) for rr in __exp_res_list)
                 numbers.append(_number(
@@ -618,6 +777,70 @@ def main_res():
                     number=n,
                     should_bold=should_bold
                 ))
+
+    # =====
+
+    # model_metrics = {model_name: [] for model_name in model_names}
+    # for _n in numbers:
+    #     if _n.metric != "vacu_r":
+    #         model_metrics[_n.model_name].append(_n.number)
+    # avgs = []
+    # for mn, ms in model_metrics.items():
+    #     avg = sum(ms) / len(ms)
+    #     avgs.append((avg, mn, len(ms)))
+    # avgs.sort()
+    # for avg, mn, length in avgs:
+    #     print(f"{avg:.3f} {mn} {length}")
+    
+    # =====
+
+    # C2P_vs_N2P_map = {}
+    # for _n in numbers:
+    #     if _n.metric != "vacu_r":
+    #         key = (_n.model_name, _n.language, _n.metric)
+    #         if key not in C2P_vs_N2P_map:
+    #             C2P_vs_N2P_map[key] = [None, None]
+    #         C2P_vs_N2P_map[key][1 if _n.w_code else 0] = _n.number
+
+    # count = [0, 0, 0]
+    # for key, ns in C2P_vs_N2P_map.items():
+    #     assert all(n is not None for n in ns)
+    #     wo_code_n, w_code_n = ns
+    #     if wo_code_n < w_code_n:
+    #         count[0] += 1
+    #     elif wo_code_n == w_code_n:
+    #         count[1] += 1
+    #     else:
+    #         count[2] += 1
+    # print(count)
+
+    # =====
+
+    # proprietary_map = {"prop": [], "os": []}
+    # for _n in numbers:
+    #     if _n.metric != "vacu_r":
+    #         if "gpt" in _n.model_name.lower() or "claude" in _n.model_name.lower():
+    #             proprietary_map["prop"].append(_n.number)
+    #         else:
+    #             proprietary_map["os"].append(_n.number)
+
+    # for key, ns in proprietary_map.items():
+    #     avg = sum(ns) / len(ns)
+    #     print(f"{avg:.3f} {key} {len(ns)}")
+
+    # =====
+
+    # model_vacus = {model_name: [] for model_name in model_names}
+    # for _n in numbers:
+    #     if _n.metric == "vacu_r":
+    #         model_vacus[_n.model_name].append(_n.number)
+    # model_vacus = [(sum(ns) / len(ns), key, len(ns)) 
+    #                for key, ns in model_vacus.items()]
+    # model_vacus.sort()
+    # for avg, key, length in model_vacus:
+    #     print(f"{avg:.3f} {key} {length}")
+
+    # =====
 
     width = 10
 
@@ -710,6 +933,17 @@ def code_line_line_chart():
                     number=n,
                 )
             )
+    
+    map_for_avg = {r: [] for r in ranges}
+    for n in numbers:
+        if n.metric in ["corr_1", "comp_1"]:
+            map_for_avg[n.line_range].append(n.number)
+    for r in ranges:
+        print(r)
+        print(map_for_avg[r])
+        print(f"{sum(map_for_avg[r]) / len(map_for_avg[r]):.3f}")
+        print(len(map_for_avg[r]))
+        print()
 
     # ============ 画图部分 ============
 
@@ -817,8 +1051,8 @@ def code_line_line_chart():
             ax.set_title(f"{lang.capitalize()} {task_name}", fontsize=15)
         else:
             ax.set_xlabel("#LoC", fontsize=15)
-        ax.set_xticks([2, 4])
-        ax.set_xticklabels([20, 40])
+        ax.set_xticks([1, 3, 5])
+        ax.set_xticklabels(["[0,20)", "[20,40)", "[40,$\infty$)"])
         ax.tick_params(axis="both", labelsize=15)
 
         if i == 0:
@@ -878,6 +1112,7 @@ def fsl_line_chart():
         "fsl_1", 
         "fsl_3", 
         "fsl_5", 
+        # "fsl_10", 
     ]
     exp_res_list: List[ExpRes] = []
     with open("data/res.jsonl") as file:
@@ -1106,7 +1341,7 @@ def fsl_line_chart():
     plt.savefig("data/fsl.pdf", bbox_inches="tight")
 
 
-def no_gram():
+def mutation_FDR():
     exp_res_list: List[ExpRes] = []
     with open("data/res.jsonl") as file:
         for line in file:
@@ -1155,7 +1390,9 @@ def no_gram():
         exp_res = __exp_res_list[0]
         for field_name in metric_field_names:
             n = getattr(exp_res, field_name)
-            should_bold = all(n > getattr(exp_res, field_name) 
+            if n is None:
+                continue
+            should_bold = all(n >= getattr(exp_res, field_name) 
                               for field_name in metric_field_names)
             numbers.append(_number(
                 model_name=exp_res.model_name,
@@ -1166,45 +1403,81 @@ def no_gram():
                 should_bold=should_bold
             ))
 
-    width = 10
+    __iter = product(LANGUAGES, [True, False], metric_field_names)
+    avg_numbers: List[_number] = []
+    for lang, w_code, field_name in __iter:
+        __exp_res_list = [
+            r for r in exp_res_list if 
+            lang == r.language and w_code == r.w_code]
+        assert len(__exp_res_list) == len(model_names)
+        avg = [getattr(exp_res, field_name) for exp_res in __exp_res_list]
+        avg = [n for n in avg if n is not None]
+        avg = sum(avg) / len(avg)
+        pal_numbers = [_n for _n in avg_numbers 
+                       if _n.language == lang and _n.w_code == w_code]
+        assert len(pal_numbers) in [0, 1]
+        cur =_number(
+            model_name="Avg",
+            language=lang,
+            w_code=w_code,
+            metric=field_name,
+            number=avg,
+            should_bold=None
+        )
+        avg_numbers.append(cur)
+        if len(pal_numbers) > 0:
+            pal = pal_numbers[0]
+            pal.should_bold = pal.number >= cur.number
+            cur.should_bold = cur.number >= pal.number
+    numbers.extend(avg_numbers)
 
-    for lang_idx, lang in enumerate(LANGUAGES):
-        print("\\midrule")
-        print(f"\\multicolumn{{{width+1}}}{{c}}{{{_bold(lang.capitalize())}}} \\\\")
-        print("\\midrule")
-        for row_idx, model_name in enumerate(model_names):
-            number_str_list = []
-            ___iter = product([True, False], metric_field_names)
-            for col_idx, (w_code, field_name) in enumerate(___iter):
-                number = _find(numbers, model_name, lang, w_code, field_name)
-                number_str = _f2s(number.number)
+    width = 8
+
+    for row_idx, model_name in enumerate(model_names + ["Avg"]):
+        if model_name == "Avg":
+            print("\\midrule")
+        number_str_list = []
+        ___iter = product(["python", "java"], [True, False], metric_field_names)
+        for col_idx, (lang, w_code, field_name) in enumerate(___iter):
+            number = _find(numbers, model_name, lang, w_code, field_name)
+            if number is not None:
+                # NOTE: FDR = 1 - precision !!!
+                fdr = 1 - number.number
+                number_str = _f2s(fdr)
                 if number.should_bold:
                     number_str = _bold(number_str)
-                number_str_list.append(number_str)
-            assert len(number_str_list) == width
+            else:
+                number_str = "-"
+            number_str_list.append(number_str)
+        assert len(number_str_list) == width, f"{len(number_str_list)} != {width}"
 
+        if model_name == "Avg":
+            la_model_name = "\\textbf{Avg}"
+        else:
             la_model_name = MODEL_NAME_MAP[model_name]
 
-            print(f"{la_model_name} & ", end="")
-            print(" & ".join(number_str_list) + f" \\\\")
+        print(f"{la_model_name} & ", end="")
+        print(" & ".join(number_str_list) + f" \\\\")
 
 
 if __name__ == "__main__":
-    data = []
-    for file_name in os.listdir("data/batch--gpt-5--out--1st-run"):
-        with open(f"data/batch--gpt-5--out--1st-run/{file_name}") as file:
-            data.extend([json.loads(l) for l in file])
-    lengths = [i["response"]["body"]["usage"]["input_tokens"] for i in data]
-    token_sum = sum(lengths)
-    print(token_sum / len(data))
-    print(token_sum)
-    print(len([l for l in lengths if l > 8000]))
-    print(len(data))
-    exit()
+    # data = []
+    # for file_name in os.listdir("data/batch--gpt-5--out--1st-run"):
+    #     with open(f"data/batch--gpt-5--out--1st-run/{file_name}") as file:
+    #         data.extend([json.loads(l) for l in file])
+    # lengths = [i["response"]["body"]["usage"]["input_tokens"] for i in data]
+    # token_sum = sum(lengths)
+    # print(token_sum / len(data))
+    # print(token_sum)
+    # print(len([l for l in lengths if l > 8000]))
+    # print(len(data))
+    # exit()
 
-    get_exp_res()
-    # main_res()
+    # get_exp_res()
+    main_res()
     # analyze_dep()
     # code_line_line_chart()
-    # fsl_line_chart()
+    # analyze_no_gram()
+    fsl_line_chart()
+    # mutation_FDR()
     print("done")

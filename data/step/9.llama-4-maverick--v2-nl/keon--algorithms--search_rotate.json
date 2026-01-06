@@ -1,0 +1,155 @@
+{
+  "rlid": "search_rotate",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/search/search_rotate.py#L39-L61",
+  "name": "search_rotate",
+  "line_cov": 0.9285714285714286,
+  "lines": 23,
+  "stats": 13,
+  "cc": 6,
+  "content": "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val == array[mid]:\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+  "header": "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"",
+  "file": "./algorithms/search/search_rotate.py",
+  "start_line": 39,
+  "end_line": 61,
+  "body_start_line": 44,
+  "comment": "\"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"",
+  "test_time": 0.6948609352111816,
+  "cover_tests": [
+    "tests/test_search.py::TestSuite::test_search_rotate"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) // 2\n    while low <= high:\n        mid = (low + high) // 2\n        if val == array[mid]:\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low - high) // 2\n        if val == array[mid]:\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1\n",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if array[mid] < val:  # Incorrect logic, may lead to wrong search direction\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if array[mid] == array[low]:  # Only checks if mid equals low, not the target\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val != array[mid]:\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1\n",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val != array[mid]:  # Inverts the condition, will never find the target\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val < array[mid]:  # Incorrect comparison, may skip the correct index\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val > array[mid]:  # Incorrect comparison, may skip the correct index\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val == array[mid]:\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] >= val:  # This will incorrectly search the right side when val is less than or equal to array[mid]\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val == array[mid]:\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if val < array[mid]:  # This will incorrectly search the right side when val is actually in the left half\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -1",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val == array[mid]:\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return +1\n",
+    "def search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if val == array[mid]:\n            return mid\n\n        if array[low] <= array[mid]:\n            if array[low] <= val <= array[mid]:\n                high = mid - 1\n            else:\n                low = mid + 1\n        else:\n            if array[mid] <= val <= array[high]:\n                low = mid + 1\n            else:\n                high = mid - 1\n\n    return -2\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda array: array[:])\n@icontract.ensure(lambda result, array, val: (result == -1) == (val not in array))\n@icontract.ensure(lambda result, array, val: (result == -1) or (0 <= result < len(array) and array[result] == val))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nSearch in Rotated Sorted Array\nSuppose an array sorted in ascending order is rotated at some pivot unknown\nto you beforehand. (i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).\n\nYou are given a target value to search. If found in the array return its index,\notherwise return -1.\n\nYour algorithm's runtime complexity must be in the order of O(log n).\n---------------------------------------------------------------------------------\nExplanation algorithm:\n\nIn classic binary search, we compare val with the midpoint to figure out if\nval belongs on the low or the high side. The complication here is that the\narray is rotated and may have an inflection point. Consider, for example:\n\nArray1: [10, 15, 20, 0, 5]\nArray2: [50, 5, 20, 30, 40]\n\nNote that both arrays have a midpoint of 20, but 5 appears on the left side of\none and on the right side of the other. Therefore, comparing val with the\nmidpoint is insufficient.\n\nHowever, if we look a bit deeper, we can see that one half of the array must be\nordered normally(increasing order). We can therefore look at the normally ordered\nhalf to determine whether we should search the low or hight side.\n\nFor example, if we are searching for 5 in Array1, we can look at the left element (10)\nand middle element (20). Since 10 < 20, the left half must be ordered normally. And, since 5\nis not between those, we know that we must search the right half\n\nIn array2, we can see that since 50 > 20, the right half must be ordered normally. We turn to\nthe middle 20, and right 40 element to check if 5 would fall between them. The value 5 would not\nTherefore, we search the left half.\n\nThere are 2 possible solution: iterative and recursion.\nRecursion helps you understand better the above algorithm explanation\n\"\"\"\ndef search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n...\n# Recursion technique\ndef search_rotate_recur(array, low, high, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n...\n```\n## Target Method\n```\ndef search_rotate(array, val):\n    \"\"\"\n    Finds the index of the given value in an array that has been sorted in\n    ascending order and then rotated at some unknown pivot.\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `search_rotate`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(lambda array: list(array), name=\"array_input\")\n@icontract.ensure(\n    lambda array, val, result: (result == -1 and val not in array) or (0 <= result < len(array) and array[result] == val),\n    \"Return index if val is in array, otherwise return -1\"\n)\n@icontract.ensure(\n    lambda array, result: result == -1 or (0 <= result < len(array)),\n    \"Return index within the bounds of the array\"\n)",
+    "@icontract.ensure(lambda result: result == -1 or array[result] == val)\n@icontract.ensure(lambda result: result in range(-1, len(array)))\n@icontract.snapshot(lambda array: len(array))\n@icontract.ensure(lambda result, OLD: (result == -1 and val not in OLD.array) or (result != -1 and val in OLD.array))",
+    "@icontract.snapshot(lambda array: list(array), name=\"array_input\")\n@icontract.ensure(\n    lambda array, val, result: (result == -1 and val not in array) \n    or (result != -1 and array[result] == val),\n    \"Return the index of val if it is in the array, otherwise return -1.\"\n)\n@icontract.ensure(\n    lambda result: isinstance(result, int) and -1 <= result < len(array),\n    \"Return an integer within the valid index range or -1.\"\n)",
+    "@icontract.snapshot(lambda array: list(array), name=\"array_input\")\n@icontract.ensure(\n    lambda array, val, result: (result == -1 and val not in array) \n    or (result != -1 and array[result] == val),\n    \"Return the index of val if it exists in the array, otherwise return -1.\"\n)\n@icontract.ensure(\n    lambda result: isinstance(result, int) and (result >= -1),\n    \"The return value is an integer greater than or equal to -1.\"\n)",
+    "@icontract.snapshot(lambda array: list(array), name=\"array_snapshot\")\n@icontract.ensure(\n    lambda array, val, result: (result == -1 and val not in array) \n    or (result != -1 and array[result] == val),\n    \"The function returns the correct index or -1 if the value is not found.\"\n)\n@icontract.ensure(\n    lambda array_snapshot, array: array == array_snapshot,\n    \"The input array is not modified.\"\n)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "local_crash",
+    "local_crash",
+    "passed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [],
+    [],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    []
+  ],
+  "traversal_rank": 121
+}

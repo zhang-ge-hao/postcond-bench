@@ -1,0 +1,208 @@
+{
+  "rlid": "cartesian",
+  "github_url": "https://github.com/daavoo/pyntcloud/blob/8368c6a22f8060aeafacf2964276e8704d732145/./src/pyntcloud/utils/array.py#L4-L50",
+  "name": "cartesian",
+  "line_cov": 1.0,
+  "lines": 47,
+  "stats": 10,
+  "cc": 5,
+  "content": "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=dtype)\n\n    for n, arr in enumerate(arrays):\n        out[:, n] = arrays[n][ix[:, n]]\n\n    return out",
+  "header": "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"",
+  "file": "./src/pyntcloud/utils/array.py",
+  "start_line": 4,
+  "end_line": 50,
+  "body_start_line": 37,
+  "comment": "\"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"",
+  "test_time": 4.1583569049835205,
+  "cover_tests": [
+    "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_centers_expected_values[2-2-2-2-expected_point0]",
+    "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_centers_expected_values[2-1-1-2-expected_point1]",
+    "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_centroids_expected_values[2-2-2-2-expected_point0]",
+    "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_centroids_expected_values[2-1-1-2-expected_point1]",
+    "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_nearest_expected_values[2-2-2-1-2-expected_point0]",
+    "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_nearest_expected_values[2-2-2-2-4-expected_point1]",
+    "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_nearest_expected_values[2-1-1-1-2-expected_point2]",
+    "tests/integration/scalar_fields/test_voxlegrid_scalar_fields.py::test_voxelgrid_scalar_fields_bounds[voxel_n-0-64]",
+    "tests/integration/scalar_fields/test_voxlegrid_scalar_fields.py::test_voxelgrid_scalar_fields_bounds[voxel_x-0-4]",
+    "tests/integration/scalar_fields/test_voxlegrid_scalar_fields.py::test_voxelgrid_scalar_fields_bounds[voxel_y-0-4]",
+    "tests/integration/scalar_fields/test_voxlegrid_scalar_fields.py::test_voxelgrid_scalar_fields_bounds[voxel_z-0-4]",
+    "tests/integration/scalar_fields/test_voxlegrid_scalar_fields.py::test_euclidean_clusters_values",
+    "tests/integration/structures/test_voxelgrid_structures.py::test_default_number_of_voxels_per_axis",
+    "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-1-1-expected_voxel_n0]",
+    "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-2-1-expected_voxel_n1]",
+    "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-2-expected_voxel_n2]",
+    "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-2-2-expected_voxel_n3]",
+    "tests/integration/structures/test_voxelgrid_structures.py::test_regular_bounding_box_changes_the_shape_of_the_bounding_box[x0-y0-z0]",
+    "tests/integration/structures/test_voxelgrid_structures.py::test_regular_bounding_box_changes_the_shape_of_the_bounding_box[x1-y1-z1]",
+    "tests/integration/structures/test_voxelgrid_structures.py::test_regular_bounding_box_changes_the_shape_of_the_bounding_box[x2-y2-z2]",
+    "tests/integration/test_core_class.py::test_points",
+    "tests/integration/test_core_class.py::test_split_on",
+    "tests/unit/ransac/test_samplers_ransac.py::test_voxelgrid_sampler_return_points_in_the_same_voxel",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridCentersSampler_expected_values[2-2-2-2-expected_point0]",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridCentersSampler_expected_values[2-1-1-2-expected_point1]",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridCentroidsSampler_expected_values[2-2-2-2-expected_point0]",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridCentroidsSampler_expected_values[2-1-1-2-expected_point1]",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridNearestSampler_expected_values[2-2-2-1-2-expected_point0]",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridNearestSampler_expected_values[2-2-2-2-4-expected_point1]",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridNearestSampler_expected_values[2-1-1-1-2-expected_point2]",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridNearestSampler_keeps_original_scalar_fields",
+    "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_keeps_original_scalar_fields",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_raises_KeyError_if_id_is_not_valid[FOO]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_raises_KeyError_if_id_is_not_valid[V([2, 2, 3],None,True)]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_raises_KeyError_if_id_is_not_valid[V([2, 2, 2],True,True))]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_raises_KeyError_if_id_is_not_valid[V([2, 2, 2],None,False)]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_raises_KeyError_if_id_is_not_valid[V([2, 2, 2])]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_raises_KeyError_if_id_is_not_valid[V(None,True)]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_bounds[VoxelN-0-64]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_bounds[VoxelX-0-4]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_bounds[VoxelY-0-4]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_VoxelgridScalarField_bounds[VoxelZ-0-4]",
+    "tests/unit/scalar_fields/test_voxlegrid_scalar_fields.py::test_EuclideanClusters_values",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_default_number_of_voxels_per_axis",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-1-1-expected_voxel_n0]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-2-1-expected_voxel_n1]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-2-expected_voxel_n2]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-2-2-expected_voxel_n3]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_regular_bounding_box_changes_the_shape_of_the_bounding_box[x0-y0-z0]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_regular_bounding_box_changes_the_shape_of_the_bounding_box[x1-y1-z1]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_regular_bounding_box_changes_the_shape_of_the_bounding_box[x2-y2-z2]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[binary]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[density]",
+    "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[TDF]"
+  ],
+  "repo": {
+    "github_path": "daavoo/pyntcloud",
+    "commit": "8368c6a22f8060aeafacf2964276e8704d732145",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=48\", \"setuptools_scm[toml]>=6.3.1\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"pyntcloud\"\ndynamic = [ \"version\",]\ndescription = \"Python library for working with 3D point clouds.\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\nclassifiers = [ \"Programming Language :: Python :: 3\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\",]\ndependencies = [ \"numpy\", \"scipy>=1.6.0\", \"pandas\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"David de la Iglesia Castro\"\nemail = \"daviddelaiglesiacastro@gmail.com\"\n\n[project.license]\ntext = \"The MIT License\"\n\n[project.optional-dependencies]\nlas = [ \"laspy\", \"lazrs\",]\nplot = [ \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\",]\nnumba = [ \"numba\",]\nall = [ \"laspy\", \"lazrs\", \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\", \"numba\", \"open3d\",]\n\n[project.urls]\nrepository = \"https://github.com/daavoo/pyntcloud\"\n\n[tool.setuptools_scm]\n\n[tool.pytest.ini_options]\npythonpath = [ \"tests/integration/io\",]\naddopts = \"--import-mode=importlib\"\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\", \"tests.*\",]\nwhere = [ \"src\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nlaspy = \"^2.6.1\"\nlazrs = \"^0.8.0\"\n",
+    "failed_tests": [
+      "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_points_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centers]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centroids]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_nearest]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_max]"
+    ],
+    "test_time": 7.65758204460144
+  },
+  "mutants": [
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x, dtype=np.float32) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=dtype)\n\n    for n, arr in enumerate(arrays):\n        out[:, n] = arrays[n][ix[:, n]]\n\n    return out",
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x, dtype=object) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=dtype)\n\n    for n, arr in enumerate(arrays):\n        out[:, n] = arrays[n][ix[:, n]]\n\n    return out",
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = None\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=dtype)\n\n    for n, arr in enumerate(arrays):\n        out[:, n] = arrays[n][ix[:, n]]\n\n    return out\n",
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, )\n\n    for n, arr in enumerate(arrays):\n        out[:, n] = arrays[n][ix[:, n]]\n\n    return out\n",
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=None)\n\n    for n, arr in enumerate(arrays):\n        out[:, n] = arrays[n][ix[:, n]]\n\n    return out\n",
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=dtype)\n\n    for n in range(len(arrays) - 1):  # This will miss the last array entirely.\n        out[:, n] = arrays[n][ix[:, n]]\n\n    return out",
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=dtype)\n\n    for n, arr in enumerate(arrays[:-1]):  # This will only iterate over all but the last array.\n        out[:, n] = arrays[n][ix[:, n]]\n\n    return out",
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=dtype)\n\n    for n, arr in enumerate(arrays):\n        out[:, n] = arrays[n][ix[:, n] // 2]  # Incorrect integer division causing loss of data\n\n    return out",
+    "def cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n    arrays = [np.asarray(x) for x in arrays]\n    shape = (len(x) for x in arrays)\n    dtype = arrays[0].dtype\n\n    ix = np.indices(shape)\n    ix = ix.reshape(len(arrays), -1).T\n\n    if out is None:\n        out = np.empty_like(ix, dtype=dtype)\n\n    for n, arr in enumerate(arrays):\n        out[:, n] = arrays[n][ix[:, n][::-1]]  # Reversing the order of indices, leading to incorrect output\n\n    return out"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda arrays: [np.asarray(x) for x in arrays], name=\"orig_arrays\")\n@icontract.ensure(lambda result, arrays, OLD: isinstance(result, np.ndarray))\n@icontract.ensure(lambda result, arrays, OLD: result.ndim == 2)\n@icontract.ensure(lambda result, arrays, OLD: result.shape[1] == len(OLD.orig_arrays))\n@icontract.ensure(lambda result, arrays, OLD: result.shape[0] == int(np.prod([len(a) for a in OLD.orig_arrays])))\n@icontract.ensure(lambda result, arrays, OLD: result.dtype == np.asarray(OLD.orig_arrays[0]).dtype)\n@icontract.ensure(lambda result, arrays, OLD: np.array_equal(result, np.vstack([v.ravel() for v in np.meshgrid(*[np.asarray(a) for a in OLD.orig_arrays], indexing='ij')]).T))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport numpy as np\n\n\ndef cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n...\ndef PCA(data, correlation=False, sort=True):\n    \"\"\"Applies Principal Component Analysis to the data\n\n    Parameters\n    ----------\n    data: array\n        The array containing the data. The array must have NxM dimensions, where each\n        of the N rows represents a different individual record and each of the M columns\n        represents a different variable recorded for that individual record.\n            array([\n            [V11, ... , V1m],\n            ...,\n            [Vn1, ... , Vnm]])\n\n    correlation(Optional) : bool\n            Set the type of matrix to be computed (see Notes):\n                If True compute the correlation matrix.\n                If False(Default) compute the covariance matrix.\n\n    sort(Optional) : bool\n            Set the order that the eigenvalues/vectors will have\n                If True(Default) they will be sorted (from higher value to less).\n                If False they won't.\n    Returns\n    -------\n    eigenvalues: (1,M) array\n        The eigenvalues of the corresponding matrix.\n\n    eigenvector: (M,M) array\n        The eigenvectors of the corresponding matrix.\n\n    Notes\n    -----\n    The correlation matrix is a better choice when there are different magnitudes\n    representing the M variables. Use covariance matrix in other cases.\n\n    \"\"\"\n...\ndef point_in_array_2D(point, array_2D):\n...\ndef cov3D(k_neighbors):\n    \"\"\"(N,K,3)\"\"\"\n...\n```\n## Target Method\n```\ndef cartesian(arrays, out=None):\n    \"\"\"Generate a cartesian product of input arrays.\n\n    Parameters\n    ----------\n    arrays : list of array-like\n        1-D arrays to form the cartesian product of.\n    out : ndarray\n        Array to place the cartesian product in.\n\n    Returns\n    -------\n    out : ndarray\n        2-D array of shape (M, len(arrays)) containing cartesian products\n        formed of input arrays.\n\n    Examples\n    --------\n    >>> cartesian(([1, 2, 3], [4, 5], [6, 7]))\n    array([[1, 4, 6],\n           [1, 4, 7],\n           [1, 5, 6],\n           [1, 5, 7],\n           [2, 4, 6],\n           [2, 4, 7],\n           [2, 5, 6],\n           [2, 5, 7],\n           [3, 4, 6],\n           [3, 4, 7],\n           [3, 5, 6],\n           [3, 5, 7]])\n\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `cartesian`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(lambda arrays: tuple(len(np.asarray(a)) for a in arrays), name=\"lens\")\n@icontract.snapshot(lambda arrays: len(arrays), name=\"n_arrays\")\n@icontract.snapshot(lambda arrays: tuple(tuple(np.asarray(a).tolist()) for a in arrays), name=\"arrays_vals\")\n@icontract.ensure(lambda result: isinstance(result, np.ndarray))\n@icontract.ensure(lambda result: result.ndim == 2)\n@icontract.ensure(lambda result, n_arrays: result.shape[1] == n_arrays)\n@icontract.ensure(lambda result, lens, n_arrays: result.shape == (int(np.prod(lens)), n_arrays))\n@icontract.ensure(lambda result, arrays_vals: all(all(result[i, j] in arrays_vals[j] for j in range(result.shape[1])) for i in range(result.shape[0])))\n@icontract.ensure(lambda result: len({tuple(np.asarray(result[i, :]).tolist()) for i in range(result.shape[0])}) == result.shape[0])\n@icontract.ensure(lambda result, out: (out is None) or (result is out))",
+    "@icontract.snapshot(lambda arrays: [len(a) for a in arrays], name=\"lens\")\n@icontract.snapshot(lambda arrays: int(np.prod([len(a) for a in arrays])), name=\"n_rows_expected\")\n@icontract.ensure(lambda result: isinstance(result, np.ndarray), \"Result must be a NumPy ndarray.\")\n@icontract.ensure(lambda arrays, n_rows_expected, result: result.ndim == 2 and result.shape == (n_rows_expected, len(arrays)), \"Result must be 2-D with expected shape (product of input lengths, number of input arrays).\")\n@icontract.ensure(lambda out, result: (out is None) or (result is out), \"If an output array is provided, the function writes into it and returns the same object.\")\n@icontract.ensure(lambda arrays, result: (len(arrays) != 0) or (result.shape == (1, 0)), \"For zero input arrays, the Cartesian product is a single empty row.\")\n@icontract.ensure(lambda lens, result: (0 not in lens) or (result.size == 0), \"If any input array is empty, the result is empty.\")",
+    "@icontract.snapshot(lambda arrays: tuple(len(a) for a in arrays), name=\"pre_lens\")\n@icontract.snapshot(lambda arrays: len(arrays), name=\"pre_n_arrays\")\n@icontract.snapshot(lambda arrays: tuple(tuple(np.asarray(a).tolist()) for a in arrays), name=\"pre_vals\")\n@icontract.snapshot(lambda out: out, name=\"pre_out\")\n@icontract.ensure(lambda result: isinstance(result, np.ndarray))\n@icontract.ensure(lambda result: result.ndim == 2)\n@icontract.ensure(lambda result, pre_n_arrays: result.shape[1] == pre_n_arrays)\n@icontract.ensure(lambda result, pre_lens: result.shape[0] == (1 if len(pre_lens) == 0 else int(np.prod(pre_lens))))\n@icontract.ensure(lambda result, pre_lens: (len(pre_lens) != 0) or (result.shape == (1, 0)))\n@icontract.ensure(lambda result, pre_out: (pre_out is None) or (result is pre_out))\n@icontract.ensure(\n    lambda result, pre_vals, pre_lens:\n        all(\n            result[:, j].tolist()\n            ==\n            np.tile(\n                np.repeat(\n                    np.array(pre_vals[j], dtype=object),\n                    (1 if j + 1 >= len(pre_lens) else int(np.prod(pre_lens[j + 1:])))\n                ),\n                (1 if j == 0 else int(np.prod(pre_lens[:j])))\n            ).tolist()\n            for j in range(len(pre_lens))\n        )\n)",
+    "@icontract.snapshot(lambda arrays: len(arrays), name=\"arrays_len\")\n@icontract.snapshot(lambda arrays: tuple(len(np.asarray(a)) for a in arrays), name=\"arrays_lengths\")\n@icontract.snapshot(lambda arrays: tuple(np.asarray(a).copy() for a in arrays), name=\"arrays_values\")\n@icontract.ensure(lambda result: isinstance(result, np.ndarray))\n@icontract.ensure(lambda result: result.ndim == 2)\n@icontract.ensure(lambda result, arrays_len: result.shape[1] == arrays_len)\n@icontract.ensure(lambda result, arrays_lengths: result.shape[0] == int(np.prod(arrays_lengths)))\n@icontract.ensure(lambda result, out: (out is None) or (result is out))\n@icontract.ensure(lambda result, arrays_len, arrays_values: all(np.isin(result[:, j], arrays_values[j]).all() for j in range(arrays_len)))",
+    "@icontract.ensure(lambda arrays, out, result: isinstance(result, np.ndarray))\n@icontract.ensure(lambda arrays, out, result: result.ndim == 2)\n@icontract.ensure(lambda arrays, out, result: result.shape[1] == len(arrays))\n@icontract.ensure(lambda arrays, out, result: result.shape[0] == int(np.prod([len(np.asarray(a)) for a in arrays])))\n@icontract.ensure(lambda arrays, out, result: (out is None) or (result is out))\n@icontract.ensure(\n    lambda arrays, out, result:\n    __import__('collections').Counter(\n        tuple(result[i, :].tolist()) for i in range(result.shape[0])\n    ) == __import__('collections').Counter(\n        __import__('itertools').product(*[list(np.asarray(a)) for a in arrays])\n    )\n)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "failed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    [
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 195
+}

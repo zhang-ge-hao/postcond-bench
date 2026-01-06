@@ -1,0 +1,422 @@
+{
+  "rlid": "pip_install_extras",
+  "github_url": "https://github.com/pypyr/pypyr/blob/b3e8f8c6063c11e37c1c762b89b4cd8620460c79/./pypyr/venv.py#L212-L238",
+  "name": "pip_install_extras",
+  "line_cov": 1.0,
+  "lines": 27,
+  "stats": 11,
+  "cc": 4,
+  "content": "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+  "header": "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"",
+  "file": "./pypyr/venv.py",
+  "start_line": 212,
+  "end_line": 238,
+  "body_start_line": 218,
+  "comment": "\"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"",
+  "test_time": 1.1415436267852783,
+  "cover_tests": [
+    "tests/unit/pypyr/venv_test.py::test_env_builder_install_pip_list_input",
+    "tests/unit/pypyr/venv_test.py::test_env_builder_install_pip_extras",
+    "tests/unit/pypyr/venv_test.py::test_env_builder_install_pip_extras_quiet"
+  ],
+  "repo": {
+    "github_path": "pypyr/pypyr",
+    "commit": "b3e8f8c6063c11e37c1c762b89b4cd8620460c79",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"flit_core.buildapi\"\nrequires = [ \"flit_core >=3.2,<4\",]\n\n[project]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Topic :: Software Development :: Build Tools\", \"Topic :: Software Development :: Libraries :: Python Modules\", \"Topic :: Utilities\", \"License :: OSI Approved :: Apache Software License\", \"Programming Language :: Python :: 3.7\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Typing :: Typed\",]\ndependencies = [ \"python-dateutil\", \"ruamel.yaml >= 0.17.32\", \"tomli >= 1.1.0 ; python_version < '3.11'\", \"tomli-w\",]\ndescription = \"task-runner for automation pipelines defined in yaml. cli & api.\"\ndynamic = [ \"version\",]\nkeywords = [ \"task-runner\", \"automation\", \"devops\", \"ci/cd\", \"pipeline runner\",]\nname = \"pypyr\"\nreadme = \"README.md\"\nrequires-python = \">=3.9\"\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Thomas Gaigher\"\nemail = \"info@pypyr.io\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\ndev = [ \"bumpversion\", \"coverage\", \"flake8\", \"flake8-docstrings\", \"flit\", \"pyfakefs\", \"pytest\",]\n\n[project.scripts]\npypyr = \"pypyr.cli:main\"\n\n[project.urls]\nHome = \"https://pypyr.io\"\nDocumentation = \"https://pypyr.io/docs/\"\n\"Release Notes\" = \"https://pypyr.io/updates/releases/\"\nSource = \"https://github.com/pypyr/pypyr/\"\nTracker = \"https://github.com/pypyr/pypyr/issues\"\nTwitter = \"https://twitter.com/pypyrpipes\"\n\n[tool.coverage.report]\nexclude_lines = [ \"pragma: no cover\", \"if 0:\", \"if __name__ == .__main__.:\",]\nfail_under = 100\n\n[tool.coverage.run]\nbranch = true\nsource = [ \"pypyr\",]\n\n[tool.flit.sdist]\nexclude = [ \"docs\",]\n\n[tool.pypyr.vars]\npackage_name = \"pypyr\"\nversion_cmd = \"pypyr pypyrversion\"\nversion_index = 1\n\n[tool.pytest.ini_options]\njunit_family = \"xunit2\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\ndocutils = \"^0.22.2\"\npyfakefs = \"^5.10.1\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nmarkers = \"python_version >= \\\"3.10\\\"\"\nversion = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_pass",
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_pass_with_encoding",
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_parse_not_mapping_at_root",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_yaml_pass",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_yaml_pass_with_encoding",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_list_yaml_fails",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_string",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_path_substitution",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_encoding_from_input",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass_with_string",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass_with_path_substitution",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass_with_substitution",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass_with_substitution_string",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_list_fails",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding_in_to_out",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_to_out_dir",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_with_encoding",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_edit_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding_ut32",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_no_matches",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_with_replacements",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_with_substitutions",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_out_is_dir",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_out_encoding_in_to_out",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_posix",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_windows_slash",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_windows_backslash"
+    ],
+    "test_time": 21.236268997192383
+  },
+  "mutants": [
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-M', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'PIP', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'XXpipXX', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'INSTALL']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'XXinstallXX']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, 'XX-mXX', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if not self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet == False:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet is None:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet or True:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('--quiet')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('--silent')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-Q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q -q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-quiet')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('XX-qXX')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('quiet')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append(None)\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = None\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.abspath(v)  # This line converts the path to an absolute path but does not handle user home expansion.\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.join(os.getcwd(), v)  # This line incorrectly joins the current working directory with the dependency path instead of expanding the user path.\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.append(shlexed_deps)  # Incorrectly appends the entire list as a single argument\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps * 2)  # Duplicates the dependencies, which may lead to redundant installations\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps[:1])  # Only adds the first dependency, ignoring the rest\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.call(cmd, shell=True)  # Using shell=True can introduce security risks and may not work as intended.\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.check_output(cmd)  # This will return the output instead of checking for success, potentially masking errors.\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(None, check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(check=True)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd)  # Missing check=True, which may allow failures to go unnoticed.\n\n        logger.debug(\"done\")",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, )\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=False)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=None)\n\n        logger.debug(\"done\")\n",
+    "    def pip_install_extras(self, pip_args: str) -> None:\n        \"\"\"Run python -m pip install {pip_args} in venv.\n\n        You can ONLY call this AFTER post_setup() has run, which in practice\n        means you have to have called create().\n        \"\"\"\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        # if input is a list already, no need to shlex split\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        # each arg could contain a path, thus run expand on all args\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, timeout=5)  # Adding a timeout may cause the command to fail if it takes longer than expected.\n\n        logger.debug(\"done\")"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(\n    lambda self, pip_args: [\n        os.path.expanduser(v)\n        for v in (\n            shlex.split(pip_args)\n            if isinstance(pip_args, str)\n            else list(pip_args)\n        )\n    ],\n    name=\"expected_deps\",\n)\n@icontract.snapshot(\n    lambda self, pip_args: [\n        self.context.env_exec_cmd,\n        \"-m\",\n        \"pip\",\n        \"install\",\n    ]\n    + ([\"-q\"] if self.is_quiet else [])\n    + [\n        os.path.expanduser(v)\n        for v in (\n            shlex.split(pip_args)\n            if isinstance(pip_args, str)\n            else list(pip_args)\n        )\n    ],\n    name=\"expected_cmd\",\n)\n@icontract.ensure(lambda result: result is None)\n@icontract.ensure(\n    lambda OLD: (\n        not hasattr(subprocess.run, \"call_count\")\n        or (\n            subprocess.run.call_count == 1\n            and len(subprocess.run.call_args[0]) >= 1\n            and subprocess.run.call_args[0][0] == OLD.expected_cmd\n            and subprocess.run.call_args[1].get(\"check\") is True\n        )\n    )\n)\n@icontract.ensure(\n    lambda: (\n        not hasattr(subprocess.check_output, \"call_count\")\n        or subprocess.check_output.call_count == 0\n    )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "failed",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom __future__ import annotations\nfrom collections.abc import Iterable, Mapping, Sequence\nfrom concurrent.futures import Executor, Future\nimport logging\nimport os\nfrom os import PathLike\nimport os.path\nfrom pathlib import Path\nimport shlex\nimport subprocess\nimport sys\nfrom types import SimpleNamespace\nfrom venv import EnvBuilder\n\nfrom pypyr.errors import ContextError, Error\n\nlogger = logging.getLogger(__name__)\n\nCORE_VENV_DEPS = ('pip', 'setuptools')\nSIMPLE_INPUT_TYPE = (str, PathLike)\nIS_BEFORE_PY_3_9 = sys.version_info < (3, 9)\n\n\nclass VenvCreator():\n\n    DEFAULT_USE_SYMLINKS = False if os.name == 'nt' else True\n    EXCEPTION_UPGRADE_CLEAR = \"\"\"Error creating {path!s}.\nYou cannot set both upgrade and clear together for a venv.\"\"\"\n\n    EXCEPTION_NO_PIP = \"\"\"Error creating {path!s}.\nYou cannot set `pip` or `upgrade_pip` when `with_pip` is False.\"\"\"\n\n    def __init__(self,\n                 path: str | PathLike,\n                 pip_extras: str = None,\n                 system_site_packages: bool = False,\n                 clear: bool = False,\n                 symlinks: bool | None = None,\n                 upgrade: bool = False,\n                 with_pip: bool = True,\n                 prompt: str = None,\n                 upgrade_pip: bool = True,\n                 is_quiet: bool = False) -> None:\n        if upgrade and clear:\n            raise ContextError(\n                VenvCreator.EXCEPTION_UPGRADE_CLEAR.format(path=path))\n\n        if with_pip is False:\n            upgrade_pip = False\n\n            if pip_extras:\n                raise ContextError(\n                    VenvCreator.EXCEPTION_NO_PIP.format(path=path))\n\n        self.path = str(Path(path).expanduser().resolve())\n        self.pip_extras = pip_extras\n        self.upgrade_pip = upgrade_pip\n        self.with_pip = with_pip\n        self.is_quiet = is_quiet\n        if symlinks is None:\n            symlinks = VenvCreator.DEFAULT_USE_SYMLINKS\n            logger.debug(\"venv using symlinks: %s\", symlinks)\n\n        self._env_builder = EnvBuilderWithExtraDeps(\n            system_site_packages=system_site_packages,\n            clear=clear,\n            symlinks=symlinks,\n            upgrade=upgrade,\n            with_pip=with_pip,\n            prompt=prompt,\n            upgrade_deps=False,\n            is_quiet=is_quiet)\n\n        self._future: Future | None = None\n        self._is_done = False\n\n    def check_result(self) -> Exception | None:\n        if self._future:\n            ex = self._future.exception()\n            if ex is None or isinstance(ex, Exception):\n                return ex\n            else:\n                raise ex\n        else:\n            raise Error(\n                \"You can only call check_result after create_in_executor. \"\n                + f\"Error creating venv {self.path!s}\"\n            )\n\n    def create(self) -> None:\n        logger.debug(\"started\")\n        self._env_builder.create(self.path)\n        self._is_done = True\n        logger.debug(\"done create venv path %s\", self.path)\n\n    def create_in_executor(self, executor: Executor) -> None:\n        logger.debug(\"starting venv creation: %s\", self.path)\n        self._future = executor.submit(self.create)\n\n    def install_dependencies(self) -> None:\n        logger.debug(\"started\")\n        if not self._is_done:\n            raise Error(\n                \"you can't call install_dependencies before the environment \"\n                + f\"is installed successfully for {self.path!s}.\")\n\n        env_builder = self._env_builder\n        if not env_builder.with_pip:\n            raise Error(\n                f\"you can't install extra dependencies into {self.path!s} \"\n                + \"because with_pip is False.\")\n\n        if self.upgrade_pip:\n            logger.debug(\"upgrading pip & setuptools in %s\", self.path)\n            env_builder.upgrade_dependencies(self._env_builder.context)\n\n        if not self.pip_extras:\n            logger.debug(\n                \"done - no extra dependencies to install for path %s\",\n                self.path)\n            return\n\n        env_builder.pip_install_extras(self.pip_extras)\n\n        logger.debug(\"done\")\n\n    @classmethod\n    def from_mapping(cls, mapping: Mapping) -> Iterable[VenvCreator]:\n        raw_dirs = mapping.get('path')\n\n        if not raw_dirs:\n            raise ContextError(\n                \"path is mandatory on mapping input for venv create.\")\n\n        if not isinstance(raw_dirs, (Sequence, set)):\n            raise ContextError(\n                \"venv.path input should be a string or list. \"\n                + f\"Current input is: {raw_dirs}\")\n\n        dirs = ([raw_dirs] if isinstance(\n            raw_dirs, SIMPLE_INPUT_TYPE) else raw_dirs)\n\n        system_site_packages = mapping.get('system_site_packages', False)\n        clear = mapping.get('clear', False)\n        symlinks = mapping.get('symlinks')\n        upgrade = mapping.get('upgrade', False)\n        with_pip = mapping.get('with_pip', True)\n        prompt = mapping.get('prompt')\n        upgrade_pip = mapping.get('upgrade_pip', True)\n        pip_extras = mapping.get('pip')\n        is_quiet = mapping.get('quiet', False)\n\n        for path in dirs:\n            yield cls(path=path,\n                      pip_extras=pip_extras,\n                      system_site_packages=system_site_packages,\n                      clear=clear,\n                      symlinks=symlinks,\n                      upgrade=upgrade,\n                      with_pip=with_pip,\n                      prompt=prompt,\n                      upgrade_pip=upgrade_pip,\n                      is_quiet=is_quiet)\n\n\nclass EnvBuilderWithExtraDeps(EnvBuilder):\n\n    def __init__(self, **kwargs):\n        self.is_quiet: bool = kwargs.pop('is_quiet', False)\n        if IS_BEFORE_PY_3_9:\n            self.upgrade_deps = kwargs.pop('upgrade_deps', False)\n\n        super().__init__(**kwargs)\n\n    def pip_install_extras(self, pip_args: str) -> None:\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n\n    def post_setup(self, context: SimpleNamespace) -> None:\n        logger.debug(\"started - saving EnvBuilder context...\")\n        self.context = context\n        logger.debug(\"done\")\n\n    def upgrade_dependencies(self, context: SimpleNamespace) -> None:\n        logger.debug('Upgrading %s packages in %s',\n                     CORE_VENV_DEPS,\n                     context.bin_path)\n        cmd = [context.env_exec_cmd, '-m', 'pip', 'install', '--upgrade']\n\n        if self.is_quiet:\n            cmd.append('-q')\n\n        cmd.extend(CORE_VENV_DEPS)\n        subprocess.check_call(cmd)\n\n```\n## Target Method\n```\n    def pip_install_extras(self, pip_args: str) -> None:\n        logger.debug(\"installing extra dependencies for path %s\",\n                     self.context.env_dir)\n\n        cmd = [self.context.env_exec_cmd, '-m', 'pip', 'install']\n        if self.is_quiet:\n            cmd.append('-q')\n\n        shlexed_deps = shlex.split(pip_args) if isinstance(pip_args,\n                                                           str) else pip_args\n\n        for i, v in enumerate(shlexed_deps):\n            shlexed_deps[i] = os.path.expanduser(v)\n\n        cmd.extend(shlexed_deps)\n\n        logger.debug(\"running %s\", cmd)\n        subprocess.run(cmd, check=True)\n\n        logger.debug(\"done\")\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `pip_install_extras`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda self: self.is_quiet, name=\"is_quiet\")\n@icontract.snapshot(lambda pip_args: pip_args, name=\"pip_args\")\n@icontract.snapshot(lambda self: id(self.context) if hasattr(self, \"context\") else None, name=\"context_id\")\n@icontract.snapshot(lambda self: self.context.env_dir if hasattr(self, \"context\") and hasattr(self.context, \"env_dir\") else None, name=\"context_env_dir\")\n@icontract.ensure(lambda result: result is None)\n@icontract.ensure(lambda self, OLD: self.is_quiet == OLD.is_quiet)\n@icontract.ensure(lambda pip_args, OLD: pip_args == OLD.pip_args)\n@icontract.ensure(lambda self, OLD: (id(self.context) if hasattr(self, \"context\") else None) == OLD.context_id)\n@icontract.ensure(lambda self, OLD: OLD.context_env_dir is None or (hasattr(self, \"context\") and getattr(self.context, \"env_dir\", None) == OLD.context_env_dir))",
+    "@icontract.snapshot(lambda self, pip_args: self.context, name=\"old_context\")\n@icontract.snapshot(lambda self, pip_args: self.is_quiet, name=\"old_is_quiet\")\n@icontract.snapshot(lambda self, pip_args: pip_args, name=\"old_pip_args\")\n@icontract.snapshot(lambda self, pip_args: list(pip_args) if not isinstance(pip_args, str) else None, name=\"old_pip_args_list\")\n@icontract.ensure(lambda self, old_context: self.context is old_context)\n@icontract.ensure(lambda self, old_is_quiet: self.is_quiet == old_is_quiet)\n@icontract.ensure(lambda pip_args, old_pip_args: (isinstance(old_pip_args, str) and pip_args == old_pip_args) or not isinstance(old_pip_args, str))\n@icontract.ensure(lambda pip_args, old_pip_args_list: old_pip_args_list is None or (len(pip_args) == len(old_pip_args_list) and all(a == os.path.expanduser(b) for a, b in zip(pip_args, old_pip_args_list))))",
+    "@icontract.snapshot(lambda pip_args: pip_args if isinstance(pip_args, str) else None, name=\"pip_args_str_before\")\n@icontract.snapshot(lambda pip_args: tuple(pip_args) if not isinstance(pip_args, str) else tuple(), name=\"pip_args_seq_before\")\n@icontract.snapshot(lambda self: self.context.env_exec_cmd, name=\"env_exec_cmd_before\")\n@icontract.snapshot(lambda self: self.context.env_dir, name=\"env_dir_before\")\n@icontract.snapshot(lambda self: self.is_quiet, name=\"is_quiet_before\")\n@icontract.ensure(lambda pip_args, OLD: (not isinstance(pip_args, str)) or pip_args == OLD.pip_args_str_before)\n@icontract.ensure(lambda pip_args, OLD: (isinstance(pip_args, str)) or (len(pip_args) == len(OLD.pip_args_seq_before) and all(a == os.path.expanduser(b) for a, b in zip(pip_args, OLD.pip_args_seq_before))))\n@icontract.ensure(lambda self, OLD: self.context.env_exec_cmd == OLD.env_exec_cmd_before)\n@icontract.ensure(lambda self, OLD: self.context.env_dir == OLD.env_dir_before)\n@icontract.ensure(lambda self, OLD: self.is_quiet == OLD.is_quiet_before)",
+    "@icontract.snapshot(lambda self: getattr(self, \"context\", None), name=\"old_context\")\n@icontract.snapshot(lambda self: getattr(self.context, \"env_dir\", None) if getattr(self, \"context\", None) is not None else None, name=\"old_env_dir\")\n@icontract.snapshot(lambda self: self.is_quiet, name=\"old_is_quiet\")\n@icontract.snapshot(lambda self, pip_args: pip_args, name=\"old_pip_args\")\n@icontract.ensure(lambda self, OLD: getattr(self, \"context\", None) is OLD.old_context)\n@icontract.ensure(lambda self, OLD: (OLD.old_context is None) or (self.context.env_dir == OLD.old_env_dir))\n@icontract.ensure(lambda self, OLD: self.is_quiet == OLD.old_is_quiet)\n@icontract.ensure(lambda pip_args, OLD: (not isinstance(pip_args, str)) or (pip_args == OLD.old_pip_args))\n@icontract.ensure(lambda result: result is None)",
+    "@icontract.snapshot(lambda self, pip_args: id(self.context), name=\"context_id\")\n@icontract.snapshot(lambda self, pip_args: getattr(self.context, \"env_dir\", None), name=\"old_env_dir\")\n@icontract.snapshot(lambda self, pip_args: getattr(self.context, \"env_exec_cmd\", None), name=\"old_env_exec_cmd\")\n@icontract.snapshot(lambda self, pip_args: self.is_quiet, name=\"old_is_quiet\")\n@icontract.snapshot(lambda self, pip_args: pip_args, name=\"old_pip_args\")\n@icontract.ensure(lambda self, pip_args, OLD: id(self.context) == OLD.context_id)\n@icontract.ensure(lambda self, pip_args, OLD: getattr(self.context, \"env_dir\", None) == OLD.old_env_dir)\n@icontract.ensure(lambda self, pip_args, OLD: getattr(self.context, \"env_exec_cmd\", None) == OLD.old_env_exec_cmd)\n@icontract.ensure(lambda self, pip_args, OLD: self.is_quiet == OLD.old_is_quiet)\n@icontract.ensure(lambda self, pip_args, OLD: (not isinstance(OLD.old_pip_args, str)) or (pip_args == OLD.old_pip_args))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "failed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 298
+}

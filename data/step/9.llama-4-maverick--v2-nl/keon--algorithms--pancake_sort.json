@@ -1,0 +1,204 @@
+{
+  "rlid": "pancake_sort",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/sort/pancake_sort.py#L1-L25",
+  "name": "pancake_sort",
+  "line_cov": 0.9090909090909091,
+  "lines": 25,
+  "stats": 10,
+  "cc": 5,
+  "content": "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+  "header": "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"",
+  "file": "./algorithms/sort/pancake_sort.py",
+  "start_line": 1,
+  "end_line": 25,
+  "body_start_line": 11,
+  "comment": "\"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"",
+  "test_time": 0.3712422847747803,
+  "cover_tests": [
+    "tests/test_sort.py::TestSuite::test_pancake_sort"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = 0\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr > 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr >= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(1, len(arr) + 1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -2):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, 1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur-1]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur])) + 1\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(min(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = cur - 1\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max == 0:  # This will incorrectly assume no reversal is needed when the max is at the start\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max == cur:  # This will skip the necessary reversal when the max is at the end\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max > 0:  # This will skip the reversal when the max is at the start, leading to incorrect sorting\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max < cur // 2:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max == 0 or index_max == cur - 1:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max == 1:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max == cur - 1:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max == len(arr) - 1:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:cur] = reversed(arr[:cur])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max] = reversed(arr[:index_max])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[index_max+1:cur] = reversed(arr[index_max+1:cur])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[index_max:cur+1] = reversed(arr[index_max:cur+1])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[index_max:cur] = reversed(arr[index_max:cur])\n            # Reverse list\n            arr[:cur] = reversed(arr[:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[cur-1:cur+1] = reversed(arr[cur-1:cur+1])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[cur-1:cur] = reversed(arr[cur-1:cur])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[cur:] = reversed(arr[cur:])\n    return arr",
+    "def pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n\n    len_arr = len(arr)\n    if len_arr <= 1:\n        return arr\n    for cur in range(len(arr), 1, -1):\n        #Finding index of maximum number in arr\n        index_max = arr.index(max(arr[0:cur]))\n        if index_max+1 != cur:\n            #Needs moving\n            if index_max != 0:\n                #reverse from 0 to index_max\n                arr[:index_max+1] = reversed(arr[:index_max+1])\n            # Reverse list\n            arr[index_max:cur] = reversed(arr[index_max:cur])\n    return arr"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda arr: arr[:], name=\"old\")\n@icontract.ensure(lambda OLD, arr: sorted(arr) == sorted(OLD.old))\n@icontract.ensure(lambda arr: all(arr[i] <= arr[i+1] for i in range(len(arr)-1)))\n@icontract.ensure(lambda result, arr: result is arr)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\ndef pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n...\n```\n## Target Method\n```\ndef pancake_sort(arr):\n    \"\"\"\n    Pancake_sort\n    Sorting a given array\n    mutation of selection sort\n\n    reference: https://www.geeksforgeeks.org/pancake-sorting/\n    \n    Overall time complexity : O(N^2)\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `pancake_sort`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(lambda arr: list(arr), name=\"arr_snapshot\")\n@icontract.ensure(lambda arr: all(arr[i] <= arr[i + 1] for i in range(len(arr) - 1)), \"Array is sorted\")\n@icontract.ensure(lambda arr, arr_snapshot: sorted(arr_snapshot) == sorted(arr), \"Array elements are preserved\")",
+    "@icontract.snapshot(lambda arr: list(arr), name=\"arr_snapshot\")\n@icontract.ensure(lambda arr, arr_snapshot: sorted(arr) == sorted(arr_snapshot))\n@icontract.ensure(lambda arr: all(arr[i] <= arr[i + 1] for i in range(len(arr) - 1)))",
+    "@icontract.snapshot(lambda arr: list(arr), name=\"arr_snapshot\")\n@icontract.ensure(lambda arr, arr_snapshot: sorted(arr) == sorted(arr_snapshot))\n@icontract.ensure(lambda arr: all(arr[i] <= arr[i + 1] for i in range(len(arr) - 1)))",
+    "@icontract.snapshot(lambda arr: list(arr), name=\"arr_snapshot\")\n@icontract.ensure(lambda arr, arr_snapshot: sorted(arr) == sorted(arr_snapshot))\n@icontract.ensure(lambda arr: all(arr[i] <= arr[i + 1] for i in range(len(arr) - 1)))",
+    "@icontract.snapshot(lambda arr: list(arr), name=\"arr_snapshot\")\n@icontract.ensure(lambda arr, arr_snapshot: sorted(arr) == sorted(arr_snapshot))\n@icontract.ensure(lambda arr: all(arr[i] <= arr[i + 1] for i in range(len(arr) - 1)))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 131
+}

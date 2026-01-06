@@ -1,0 +1,89 @@
+{
+  "rlid": "_scan_fields",
+  "github_url": "https://github.com/gouline/dbt-metabase/blob/cf581fd3bbe9472d2aaa7ed5725b8c34372089cc/./dbtmetabase/manifest.py#L351-L371",
+  "name": "_scan_fields",
+  "line_cov": 1.0,
+  "lines": 21,
+  "stats": 6,
+  "cc": 4,
+  "content": "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"\n\n        vals = {}\n        for field in fields:\n            if f\"{ns}.{field}\" in t:\n                value = t[f\"{ns}.{field}\"]\n                vals[field] = value if value is not None else NullValue\n        return vals",
+  "header": "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"",
+  "file": "./dbtmetabase/manifest.py",
+  "start_line": 351,
+  "end_line": 371,
+  "body_start_line": 365,
+  "comment": "\"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"",
+  "test_time": 2.8431637287139893,
+  "cover_tests": [
+    "tests/test_exposures.py::test_exposures_default",
+    "tests/test_exposures.py::test_exposures_collection_grouping",
+    "tests/test_exposures.py::test_exposures_grouping_type",
+    "tests/test_manifest.py::test_v11_disabled",
+    "tests/test_manifest.py::test_v12",
+    "tests/test_manifest.py::test_v2",
+    "tests/test_models.py::test_export",
+    "tests/test_models.py::test_export_hidden_table"
+  ],
+  "repo": {
+    "github_path": "gouline/dbt-metabase",
+    "commit": "cf581fd3bbe9472d2aaa7ed5725b8c34372089cc",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools~=75.3.0\", \"setuptools-scm~=8.1.0\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"dbt-metabase\"\ndescription = \"dbt + Metabase integration.\"\nreadme = \"README.md\"\nrequires-python = \">=3.10\"\ndependencies = [ \"PyYAML>=5.4.1\", \"requests>=2.26.0\", \"click>=8.0.0\", \"rich>=12.0.0\",]\ndynamic = [ \"version\",]\nclassifiers = [ \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Topic :: Software Development :: Libraries\", \"Topic :: Software Development :: Libraries :: Python Modules\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Mike Gouline\"\n\n[dependency-groups]\ndev = [ \"build>=1.0.3\", \"twine>=4.0.2\", \"ruff>=0.5.5\", \"pyright>=1.1.405\", \"pytest>=8.3.1\", \"molot~=1.0.0\", \"dbt-core~=1.10.1\", \"dbt-postgres~=1.9.0\", \"python-dotenv~=1.0.1\", \"types-requests\", \"types-PyYAML\",]\n\n[project.license]\ntext = \"MIT License\"\n\n[project.scripts]\ndbt-metabase = \"dbtmetabase.__main__:cli\"\n\n[project.urls]\nHomepage = \"https://github.com/gouline/dbt-metabase\"\n\n[tool.setuptools]\npackages = [ \"dbtmetabase\",]\n\n[tool.setuptools_scm]\nversion_file = \"dbtmetabase/_version.py\"\n\n[tool.poetry]\n[[tool.poetry.packages]]\ninclude = \"dbtmetabase\"\n\n[tool.ruff.lint]\nselect = [ \"E\", \"W\", \"F\", \"I\", \"A\", \"B\", \"C4\", \"FIX001\",]\nignore = [ \"E501\", \"F403\",]\n\n[tool.poetry.group.dev.dependencies]\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\npython-dotenv = \"^1.2.1\"\n",
+    "failed_tests": [],
+    "test_time": 27.16758704185486
+  },
+  "mutants": [
+    "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"\n\n        vals = None\n        for field in fields:\n            if f\"{ns}.{field}\" in t:\n                value = t[f\"{ns}.{field}\"]\n                vals[field] = value if value is not None else NullValue\n        return vals\n",
+    "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"\n\n        vals = {}\n        for field in fields:\n            if f\"{field}\" in t:  # Missing namespace, may lead to incorrect field access\n                value = t[f\"{ns}.{field}\"]\n                vals[field] = value if value is not None else NullValue\n        return vals",
+    "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"\n\n        vals = {}\n        for field in fields:\n            if f\"{ns}.{field}\" in t and t[f\"{ns}.{field}\"] == NullValue:  # Incorrectly filters out NullValue, leading to missing fields\n                value = t[f\"{ns}.{field}\"]\n                vals[field] = value if value is not None else NullValue\n        return vals",
+    "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"\n\n        vals = {}\n        for field in fields:\n            if field in t:  # Omits the namespace, leading to potential key errors or incorrect values\n                value = t[f\"{ns}.{field}\"]\n                vals[field] = value if value is not None else NullValue\n        return vals",
+    "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"\n\n        vals = {}\n        for field in fields:\n            if f\"{ns}.{field}\" in t:\n                value = None\n                vals[field] = value if value is not None else NullValue\n        return vals\n",
+    "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"\n\n        vals = {}\n        for field in fields:\n            if f\"{ns}.{field}\" in t:\n                value = t[f\"{ns}.{field}\"]\n                vals[field] = None\n        return vals\n",
+    "    @staticmethod\n    def _scan_fields(\n        t: Mapping, fields: Iterable[str], ns: str\n    ) -> MutableMapping[str, Any]:\n        \"\"\"Reads meta fields from a schem object.\n\n        Args:\n            t (Mapping): Target to scan for fields.\n            fields (Iterable): List of fields to accept.\n            ns (str): Field namespace (separated by .).\n\n        Returns:\n            Mapping: Field values.\n        \"\"\"\n\n        vals = {}\n        for field in fields:\n            if f\"{ns}.{field}\" in t:\n                value = t[f\"{ns}.{field}\"]\n                vals[field] = value if value is None else NullValue\n        return vals\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda t: dict(t), name=\"t_orig\")\n@icontract.snapshot(lambda fields: list(fields), name=\"fields_orig\")\n@icontract.ensure(\n    lambda OLD, result, ns: \n        result is not None and isinstance(result, dict)\n        and\n        set(result.keys()) == {f for f in OLD.fields_orig if f\"{ns}.{f}\" in OLD.t_orig}\n        and\n        all(((OLD.t_orig[f\"{ns}.{field}\"] is None and result[field] is NullValue) or (OLD.t_orig[f\"{ns}.{field}\"] is not None and result[field] == OLD.t_orig[f\"{ns}.{field}\"])) for field in result)\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 187
+}

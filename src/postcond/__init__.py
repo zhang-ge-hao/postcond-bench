@@ -4,11 +4,14 @@ import os
 import re
 from src.ds import *
 
+from copy import deepcopy
+
 from src.runner import testsuite_run
 from src.postcond.prompt.infile import prompt_infile
 from src.postcond.prompt.cot import prompt_cot
 from src.postcond.prompt.fsl import prompt_fsl
 from src.postcond.prompt.no_gram import prompt_no_gram
+from src.postcond.prompt.v2 import prompt_v2
 from src.util import get_uuid7, read_code
 from src.inject import postcond_inj
 from src.clone import repository_reproduct
@@ -273,7 +276,10 @@ def postcond_generation_pool(
         tn = f"{rn}--{m.rlid}"
         out_path = f"{output_dir}/{tn}.json"
         if os.path.exists(out_path):
-            continue
+            with open(out_path) as file:
+                m = Method.from_dict(json.load(file))
+            if m.postcond_corr is not None:
+                continue
         params_list.append((m, out_path, all_methods))
         task_names.append(tn)
         # log_paths.append(None)
@@ -291,3 +297,286 @@ def postcond_generation_pool(
         summary_path=summary_path,
         refresh_interval=1,
     )
+
+
+def read_benchmark(p, save_mem=False) -> List[Method]:
+    print(f"Reading {p}.")
+    methods: List[Method] = []
+    for fn in os.listdir(p):
+        with open(f"{p}/{fn}") as f:
+            method = Method.from_dict(json.load(f))
+            if save_mem:
+                method.repo.env_config = None
+                method.repo.failed_tests = None
+                method.cover_tests = None
+                method.mutants = None
+                method.postconds = None
+                method.responses = None
+            methods.append(method)
+    return methods
+
+def rerun_eval_pool(
+        bench_dir, result_dirs, method_fns, task_num=None, task_idx=None):
+    
+    task_name = "postcond_gen"
+    pi_workdir = os.getenv("PI_WORKDIR")
+    log_base = os.path.join(pi_workdir, "sb_tmp__log")
+    log_dir = f"{log_base}/{task_name}--{get_uuid7()}"
+
+    bench_methods = read_benchmark(bench_dir)
+    bench_map = {(m.repo.github_path, m.rlid): m for m in bench_methods}
+    methods: List[Method] = []
+    for result_dir in result_dirs:
+        result_methods = read_benchmark(result_dir)
+        for method in result_methods:
+            rn = method.repo.github_path.replace("/", "--")
+            fn = f"{rn}--{method.rlid}.json"
+            if fn not in method_fns:
+                continue
+            exp_method: Method = deepcopy(
+                bench_map[(method.repo.github_path, method.rlid)])
+            
+            exp_method.prompt = method.prompt
+            exp_method.postconds = method.postconds
+            exp_method.responses = method.responses
+            exp_method.model_name = method.model_name
+            exp_method.generate_num = method.generate_num
+            exp_method.w_code = method.w_code
+            exp_method.prompting = method.prompting
+            exp_method.port = method.port
+
+            methods.append((exp_method, f"{result_dir}/{fn}"))
+    
+    methods.sort(key=lambda t: (
+        -t[0].test_time * len(t[0].mutants) * t[0].generate_num, 
+        t[0].repo.github_path, 
+        t[0].rlid,
+        t[0].model_name,
+        -t[0].generate_num,
+        t[0].w_code,
+        str(t[0].prompting),
+        t[0].port
+    ))
+    if task_num is not None and task_idx is not None:
+        methods = [m for i, m in enumerate(methods) 
+                   if i % task_num == task_idx]
+
+    params_list = []
+    task_names = []
+    log_paths = []
+    for m, out_path in methods:
+        rn = m.repo.github_path.replace("/", "--")
+        tn = out_path
+        params_list.append((m, out_path, bench_methods))
+        task_names.append(tn)
+        # log_paths.append(None)
+        log_paths.append(f"{log_dir}/{rn}.log")
+    
+    print(len(params_list))
+
+    summary_path = f"{log_dir}/__summary.md"
+    _, ret = run_with_pool_file_monitor(
+        func=postcond_generation,
+        task_names=task_names,
+        log_paths=log_paths,
+        params_list=params_list,
+        processes=30,
+        summary_path=summary_path,
+        refresh_interval=1,
+    )
+
+
+def postcond_generation_v2(
+        method: Method, 
+        output_path: str=None,
+        methods: List[Method]=None) -> Method:
+    assert method.task_version == "v2"
+    assert method.model_name is not None
+    assert method.generate_num is not None
+    assert method.w_code is None
+    assert method.prompting is not None and method.prompting.startswith("v2")
+
+    lang = method.repo.language
+
+    import logging
+
+    logging.info(f"{method.rlid} started.")
+
+    lang = method.repo.language
+    excluded_tests = method.repo.failed_tests
+    with repository_reproduct(method.repo) as repo_dir:
+        if method.postconds is None:
+
+            prompt = prompt_v2(method)
+
+            method.prompt = prompt
+
+            logging.info(f"{method.rlid} generation start.")
+            
+            responses = model_generate(
+                model_name=method.model_name,
+                prompt=prompt, 
+                n=method.generate_num,
+                port=method.port)
+
+            postconditions = [
+                response_post_process(r) for r in responses]
+
+            logging.info(f"{method.rlid} generated.")
+
+            method.postconds = postconditions
+            method.responses = responses
+
+        code_str, code_bytes = read_code(method.file)
+        method.postcond_corr = []
+        method.mutant_kill = []
+        for p_idx, postcond in enumerate(method.postconds):
+            logging.info(f"{method.rlid} postcond {p_idx} eval start.")
+            if not postcond_checking(method, postcond):
+                postcond_code_src, hot_range = None, None
+            elif not postcond.strip():
+                postcond_code_src, hot_range = None, None
+            else:
+                postcond_code_src, hot_range = postcond_inj(
+                    method=method,
+                    code_str=code_str,
+                    postcond=postcond,
+                    need_hot_range=True
+                )
+            # 会为 None 的情况 1) JML 翻译失败 2) 空生成结果 3) 后置校验没通过
+            if not postcond_code_src:
+                corr_flag = "compile_failure"
+            else:
+                run_result = testsuite_run(
+                    lang=lang,
+                    included_tests=method.cover_tests,
+                    excluded_tests=excluded_tests,
+                    replace_file_path=method.file,
+                    replace_file_content=postcond_code_src,
+                    need_coverage=False,
+                    timeout=30)
+                corr_flag = run_result.to_flag()
+                # 判断是否 local_crash
+                if corr_flag == "failed" and hot_range is not None:
+                    local_crash = is_local_crash(
+                        run_result.stdout, hot_range, method.file)
+                    if local_crash:
+                        corr_flag = "local_crash"
+            
+            logging.info(f"{method.rlid} postcond {p_idx} is {corr_flag}.")
+
+            method.postcond_corr.append(corr_flag)
+
+            mutant_kill = []
+            method.mutant_kill.append(mutant_kill)
+            if corr_flag != "passed":
+                continue
+            for mut_idx, mutant in enumerate(method.mutants):
+                logging.info(f"{method.rlid} postcond {p_idx} mutant {mut_idx} eval start.")
+
+                postcond_code_src, hot_range = postcond_inj(
+                    method=method,
+                    code_str=code_str,
+                    postcond=postcond,
+                    mutant=mutant,
+                    need_hot_range=True
+                )
+                if not postcond_code_src: # 目前应该只有在java的情况下会出现为None
+                    comp_flag = "compile_failure"
+                else:
+                    run_result = testsuite_run(
+                        lang=lang,
+                        included_tests=method.cover_tests,
+                        excluded_tests=excluded_tests,
+                        replace_file_path=method.file,
+                        replace_file_content=postcond_code_src,
+                        need_coverage=False,
+                        timeout=30)
+                    comp_flag = run_result.to_flag()
+                    # 判断是否 local_crash
+                    if comp_flag == "failed" and hot_range is not None:
+                        local_crash = is_local_crash(
+                            run_result.stdout, hot_range, method.file)
+                        if local_crash:
+                            comp_flag = "local_crash"
+
+                logging.info(f"{method.rlid} postcond {p_idx} mutant {mut_idx} is {comp_flag}.")
+
+                mutant_kill.append(comp_flag)
+            pass
+    if output_path is not None:
+        with open(output_path, "w") as file:
+            json.dump(method.to_dict(), file, indent=2)
+    return method
+
+
+def postcond_generation_v2_pool(
+        input_dir=None, output_dir=None, 
+        model_name=None, generate_num=None, prompting=None,
+        task_num=None, task_idx=None, lang=None, port=None):
+    task_name = "postcond_gen"
+
+    pi_workdir = os.getenv("PI_WORKDIR")
+    log_base = os.path.join(pi_workdir, "sb_tmp__log")
+
+    log_dir = f"{log_base}/{task_name}--{get_uuid7()}"
+    output_dir = os.path.abspath(output_dir)
+    os.makedirs(log_dir, exist_ok=True)
+
+    methods: List[Method] = []
+    for file_name in os.listdir(input_dir):
+        if file_name.endswith(".json"):
+            with open(f"{input_dir}/{file_name}") as file:
+                methods.append(Method.from_dict(json.load(file)))
+    all_methods = [m for m in methods]
+
+    for m in methods:
+        m.task_version = "v2"
+        m.model_name = model_name
+        m.generate_num = generate_num
+        m.w_code = None
+        m.prompting = prompting
+        if port is not None:
+            m.port = port
+        else:
+            m.port = f"1999{task_idx}"
+
+    methods.sort(key=lambda m: (-m.test_time * len(m.mutants), 
+                                m.repo.github_path, 
+                                m.rlid))
+    if task_num is not None and task_idx is not None:
+        methods = [m for i, m in enumerate(methods) 
+                   if i % task_num == task_idx]
+    if lang is not None:
+        methods = [m for m in methods if m.repo.language == lang]
+
+    params_list = []
+    task_names = []
+    log_paths = []
+    for m in methods:
+        rn = m.repo.github_path.replace("/", "--")
+        tn = f"{rn}--{m.rlid}"
+        out_path = f"{output_dir}/{tn}.json"
+        if os.path.exists(out_path):
+            with open(out_path) as file:
+                m = Method.from_dict(json.load(file))
+            if m.postcond_corr is not None:
+                continue
+        params_list.append((m, out_path, all_methods))
+        task_names.append(tn)
+        # log_paths.append(None)
+        log_paths.append(f"{log_dir}/{rn}.log")
+    
+    print(len(params_list))
+
+    summary_path = f"{log_dir}/__summary.md"
+    _, ret = run_with_pool_file_monitor(
+        func=postcond_generation_v2,
+        task_names=task_names,
+        log_paths=log_paths,
+        params_list=params_list,
+        processes=30,
+        summary_path=summary_path,
+        refresh_interval=1,
+    )
+

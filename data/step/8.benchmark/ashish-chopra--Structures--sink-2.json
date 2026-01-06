@@ -1,0 +1,116 @@
+{
+  "rlid": "sink-2",
+  "github_url": "https://github.com/ashish-chopra/Structures/blob/ce0a8f131568368bec3110f4ffddcb74d0b9ca0f/./src/main/java/com/sorting/Heap.java#L106-L121",
+  "name": "sink",
+  "line_cov": 1.0,
+  "lines": 16,
+  "stats": 9,
+  "cc": 5,
+  "content": "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+  "header": "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {",
+  "file": "./src/main/java/com/sorting/Heap.java",
+  "start_line": 106,
+  "end_line": 121,
+  "body_start_line": 111,
+  "comment": "/*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */",
+  "test_time": 4.579341888427734,
+  "cover_tests": [
+    "com.sorting.HeapSortTest#testSortWithIntegersWithComparator",
+    "com.sorting.HeapSortTest#testSortWithStringWithComparator"
+  ],
+  "repo": {
+    "github_path": "ashish-chopra/Structures",
+    "commit": "ce0a8f131568368bec3110f4ffddcb74d0b9ca0f",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.types.adt</groupId>\n  <artifactId>Structures</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <name>Structures</name>\n  <url>https://github.com/ashish-chopra/Structures</url>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    </properties>\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.11</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.googlecode.princeton-java-introduction</groupId>\n      <artifactId>stdlib</artifactId>\n      <version>1.0.1</version>\n      </dependency>\n    </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>2.10.3</version>\n        <configuration>\n        </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.3</version>\n        <configuration>\n          <source>10</source><target>10</target></configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            <configuration>\n              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n              <formats><format>XML</format></formats></configuration>\n            </execution>\n          </executions>\n        </plugin>\n      </plugins>\n    </build>\n  </project>",
+    "failed_tests": [
+      "com.graph.BFSTest#testBFSOperations",
+      "com.graph.ConnectedComponentsTest#testConnectedComponents",
+      "com.graph.CycleTest#testBasicCycleDetection",
+      "com.graph.DFSTest#testDFSQueries",
+      "com.graph.GraphTest#testBasicOperationsOfGraph",
+      "com.graph.GraphTest#testGraphAPI"
+    ],
+    "test_time": 2.620187997817993
+  },
+  "mutants": [
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice < 1) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice < len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice < len) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice > len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c) || less(A, j + 1, j, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j - 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if (j < len && !less(A, j, j + 1, c))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if (j < len && (less(A, j, j + 1, c) || j % 2 == 0))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j--;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (less(A, indice, j, c)) // This will incorrectly allow sinking when it shouldn't.\n                break;\n            exch(A, indice, j);\n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            \n            indice = j;\n        }\n    }",
+    "    /*\n     * eliminate the violation in the heap in case when a parent key becomes\n     * smaller than one or both of is children's using a comparator.\n     */\n    private static void sink(Comparable[] A, int indice, int len, Comparator c) {\n        int j;\n        while (indice <= len / 2) {\n            j = 2 * indice;\n            if ((j < len) && (less(A, j, j + 1, c)))\n                j++;\n            if (!less(A, indice, j, c))\n                break;\n            exch(A, indice, indice); // Swaps the element with itself, causing no change\n            indice = j;\n        }\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures A.length == \\old(A.length);\n//@ ensures (2 * \\old(indice) <= len) ==> ( (c == null ? ((Comparable)A[\\old(indice) - 1]).compareTo(A[2 * \\old(indice) - 1]) >= 0 : c.compare(A[\\old(indice) - 1], A[2 * \\old(indice) - 1]) >= 0) );\n//@ ensures (2 * \\old(indice) + 1 <= len) ==> ( (c == null ? ((Comparable)A[\\old(indice) - 1]).compareTo(A[2 * \\old(indice)]) >= 0 : c.compare(A[\\old(indice) - 1], A[2 * \\old(indice)]) >= 0) );",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 280
+}

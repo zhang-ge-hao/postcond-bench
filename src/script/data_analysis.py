@@ -236,23 +236,32 @@ def exp_res():
     # model_names = ["gpt-4.1", "gpt-4o-mini"]
     model_names = [
         "gpt-5", 
-        # "gpt-4.1", 
-        # "gpt-4o-mini", 
-        # "claude-sonnet-4", 
+        "gpt-4.1", 
+        "gpt-4o-mini", 
+        "claude-sonnet-4", 
         "claude-sonnet-4-5", 
-        # "claude-3-5-haiku", 
+        "claude-3-5-haiku", 
         # "Qwen3-32B", 
         # "Qwen3-8B",
-        # "gemma-3-27b", 
-        # "gemma-3-4b",
+        # # "gemma-3-27b", 
+        # # "gemma-3-4b",
         # "phi-4", 
         # "phi-4-mini",
         # "deepseek-coder-v2",
-        # "Llama-3.1-70B",
-        # "Llama-3.1-8B",
+        # # "Llama-3.1-70B",
+        # # "Llama-3.1-8B",
     ]
-    task_names = ["w_code", "wo_code"]
-    promptings = [None, "no_gram", "fsl_1", "fsl_3", "fsl_5"]
+    task_names = [
+        "w_code", 
+        "wo_code"
+    ]
+    promptings = [
+        None, 
+        "no_gram", 
+        # "fsl_1", 
+        # "fsl_3", 
+        # "fsl_5"
+    ]
     # promptings = [None]
 
     tn_map = {"w_code": "[code to postcond]", "wo_code": "[nl to postcond]"}
@@ -279,8 +288,10 @@ def exp_res():
                 if len(methods) == 0:
                     continue
 
-                py_ms = [m for m in methods if m.repo.language == "python"]
-                java_ms = [m for m in methods if m.repo.language == "java"]
+                py_ms = [m for m in methods if m.repo.language == "python" \
+                         and m.postcond_corr is not None]
+                java_ms = [m for m in methods if m.repo.language == "java" \
+                           and m.postcond_corr is not None]
 
                 _, _, py_comp_count, py_corr_rate, py_comp_rate = cal_metrics(py_ms)
                 _, _, java_comp_count, java_corr_rate, java_comp_rate = cal_metrics(java_ms)
@@ -324,25 +335,25 @@ def exp_res():
                     java_w_dep_count, _, _, java_corr_rate_w_dep, java_comp_rate_w_dep = cal_metrics(java_ms_w_dep)
                     # print(f"    With dep count: {java_w_dep_count}; Wo dep count: {java_wo_dep_count}")
                     
-                    print(f"With dep: \nPython corr: {py_corr_rate_w_dep:.4f} comp: {py_comp_rate_w_dep:.4f}  "
-                          f"Java corr: {java_corr_rate_w_dep:.4f} comp: {java_comp_rate_w_dep:.4f}")
-                    print(f"Without dep: \nPython corr: {py_corr_rate_wo_dep:.4f} comp: {py_comp_rate_wo_dep:.4f}  "
-                          f"Java corr: {java_corr_rate_wo_dep:.4f} comp: {java_comp_rate_wo_dep:.4f}")
+                    # print(f"With dep: \nPython corr: {py_corr_rate_w_dep:.4f} comp: {py_comp_rate_w_dep:.4f}  "
+                    #       f"Java corr: {java_corr_rate_w_dep:.4f} comp: {java_comp_rate_w_dep:.4f}")
+                    # print(f"Without dep: \nPython corr: {py_corr_rate_wo_dep:.4f} comp: {py_comp_rate_wo_dep:.4f}  "
+                    #       f"Java corr: {java_corr_rate_wo_dep:.4f} comp: {java_comp_rate_wo_dep:.4f}")
                     
                     if py_comp_count > 0:
                         py_mut_prec, py_mut_exi = mutator_precision(py_ms)
-                        print(f"  Python mutator "
-                            #   f"exist: rule: {py_mut_exi['rule']:.4f} "
-                            #   f"llm: {py_mut_exi['llm']:.4f} "
-                            f"precision: rule: {py_mut_prec['rule']:.4f} "
-                            f"llm: {py_mut_prec['llm']:.4f} ")
+                        # print(f"  Python mutator "
+                        #     #   f"exist: rule: {py_mut_exi['rule']:.4f} "
+                        #     #   f"llm: {py_mut_exi['llm']:.4f} "
+                        #     f"precision: rule: {py_mut_prec['rule']:.4f} "
+                        #     f"llm: {py_mut_prec['llm']:.4f} ")
                     if java_comp_count > 0:
                         java_mut_prec, java_mut_exi = mutator_precision(java_ms)
-                        print(f"  Java mutator "
-                            #   f"exist: rule: {java_mut_exi['rule']:.4f} "
-                            #   f"llm: {java_mut_exi['llm']:.4f} "
-                            f"precision: rule: {java_mut_prec['rule']:.4f} "
-                            f"llm: {java_mut_prec['llm']:.4f} ")
+                        # print(f"  Java mutator "
+                        #     #   f"exist: rule: {java_mut_exi['rule']:.4f} "
+                        #     #   f"llm: {java_mut_exi['llm']:.4f} "
+                        #     f"precision: rule: {java_mut_prec['rule']:.4f} "
+                        #     f"llm: {java_mut_prec['llm']:.4f} ")
                     pass
 
 
@@ -450,7 +461,7 @@ def select_suv_mutants(k=20):
 
 
 if __name__ == "__main__":
-    # exp_res()
+    exp_res()
     # update_ref()
     # sample_suv_mutants()
-    select_suv_mutants()
+    # select_suv_mutants()

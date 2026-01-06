@@ -1,0 +1,175 @@
+{
+  "rlid": "_load_byte",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/compression/huffman_coding.py#L87-L102",
+  "name": "_load_byte",
+  "line_cov": 1.0,
+  "lines": 16,
+  "stats": 7,
+  "cc": 3,
+  "content": "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+  "header": "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"",
+  "file": "./algorithms/compression/huffman_coding.py",
+  "start_line": 87,
+  "end_line": 102,
+  "body_start_line": 93,
+  "comment": "\"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"",
+  "test_time": 0.3575601577758789,
+  "cover_tests": [
+    "tests/test_compression.py::TestHuffmanCoding::test_huffman_coding"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) < 0:  # This condition is always false, preventing any loading from occurring.\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) < buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True\n",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) < buff_limit:  # This will allow one less byte to be loaded, potentially causing issues.\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) == buff_limit:  # This will only load when the buffer is exactly at the limit, which is incorrect.\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) > buff_limit:  # This will incorrectly trigger loading when the buffer exceeds the limit.\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) >= buff_limit:  # This will prevent loading when the buffer is full, causing data loss.\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = None\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True\n",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(0)  # Reads zero bytes, resulting in no data being loaded\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1).strip()  # Strips whitespace, which is not applicable for binary data\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(2)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True\n",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(2)  # Reads two bytes instead of one\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(None)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True\n",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if byte != b'\\x01':\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if byte == b'\\x00':\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True\n",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return True\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True\n",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = 0  # Always setting i to zero, losing the actual byte value\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\") + 1  # Off-by-one error\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\") // 2  # Incorrect value due to integer division\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.append(\"{0:08b}\".format(i)[0])  # Only appends the first bit of the binary representation\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"XX{0:08b}XX\".format(i)))\n\n        return True\n",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i).replace('0', '1')))  # Replaces all '0's with '1's, corrupting the data\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)[1:]))  # Omits the first bit of the binary representation\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)[:6]))  # Only appends the first 6 bits of the binary representation\n\n        return True",
+    "    def _load_byte(self, buff_limit=8) -> bool:\n        \"\"\"\n        Load next byte is buffer is less than buff_limit\n        :param buff_limit:\n        :return: True if there is enough bits in buffer to read\n        \"\"\"\n        if len(self.buffer) <= buff_limit:\n            byte = self.file.read(1)\n\n            if not byte:\n                return False\n\n            i = int.from_bytes(byte, \"big\")\n            self.buffer.extend(list(\"{0:08b}\".format(i)))\n\n        return False\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: self.buffer[:], name=\"old_buf\")\n@icontract.snapshot(lambda self: len(self.buffer), name=\"old_len\")\n@icontract.snapshot(lambda self: (lambda pos=self.file.tell(): (self.file.read(1), self.file.seek(pos))[0])(), name=\"peek\")\n@icontract.ensure(lambda OLD, self, result: result or self.buffer == OLD.old_buf)\n@icontract.ensure(lambda OLD, self, buff_limit, result: (not (OLD.old_len <= buff_limit and OLD.peek != b'')) or (result and self.buffer == OLD.old_buf + list(\"{0:08b}\".format(int.from_bytes(OLD.peek, \"big\")))))\n@icontract.ensure(lambda OLD, self, buff_limit, result: (not (OLD.old_len > buff_limit)) or (result and self.buffer == OLD.old_buf))\n@icontract.ensure(lambda OLD, self, buff_limit, result: (not (OLD.old_len <= buff_limit and OLD.peek == b'')) or (not result))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 243
+}

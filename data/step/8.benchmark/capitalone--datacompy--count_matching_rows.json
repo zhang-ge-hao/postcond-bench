@@ -1,0 +1,142 @@
+{
+  "rlid": "count_matching_rows",
+  "github_url": "https://github.com/capitalone/datacompy/blob/2600d7c93f2656de63b108cdb8d37cbec8eb8bbf/./datacompy/core.py#L452-L464",
+  "name": "count_matching_rows",
+  "line_cov": 1.0,
+  "lines": 13,
+  "stats": 5,
+  "cc": 3,
+  "content": "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.join_columns:\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].all(axis=1).sum()",
+  "header": "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"",
+  "file": "./datacompy/core.py",
+  "start_line": 452,
+  "end_line": 464,
+  "body_start_line": 460,
+  "comment": "\"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"",
+  "test_time": 1.7900385856628418,
+  "cover_tests": [
+    "tests/test_core.py::test_categorical_column",
+    "tests/test_core.py::test_compare_df_setter_bad",
+    "tests/test_core.py::test_compare_df_setter_good",
+    "tests/test_core.py::test_compare_df_setter_different_cases",
+    "tests/test_core.py::test_compare_df_setter_good_index",
+    "tests/test_core.py::test_columns_overlap",
+    "tests/test_core.py::test_10k_rows",
+    "tests/test_core.py::test_subset",
+    "tests/test_core.py::test_not_subset",
+    "tests/test_core.py::test_large_subset",
+    "tests/test_core.py::test_string_joiner",
+    "tests/test_core.py::test_decimal_with_joins",
+    "tests/test_core.py::test_decimal_with_nulls",
+    "tests/test_core.py::test_strings_with_joins",
+    "tests/test_core.py::test_index_joining",
+    "tests/test_core.py::test_index_joining_strings_i_guess",
+    "tests/test_core.py::test_index_joining_non_overlapping",
+    "tests/test_core.py::test_simple_dupes_one_field",
+    "tests/test_core.py::test_simple_dupes_two_fields",
+    "tests/test_core.py::test_simple_dupes_index",
+    "tests/test_core.py::test_simple_dupes_one_field_two_vals_1",
+    "tests/test_core.py::test_simple_dupes_one_field_two_vals_2",
+    "tests/test_core.py::test_simple_dupes_one_field_three_to_two_vals",
+    "tests/test_core.py::test_dupes_from_real_data",
+    "tests/test_core.py::test_strings_with_joins_with_ignore_spaces",
+    "tests/test_core.py::test_strings_with_joins_with_ignore_case",
+    "tests/test_core.py::test_decimal_with_joins_with_ignore_spaces",
+    "tests/test_core.py::test_decimal_with_joins_with_ignore_case",
+    "tests/test_core.py::test_index_with_joins_with_ignore_spaces",
+    "tests/test_core.py::test_index_with_joins_with_ignore_case",
+    "tests/test_core.py::test_full_join_counts_all_matches",
+    "tests/test_core.py::test_strings_with_ignore_spaces_and_join_columns",
+    "tests/test_core.py::test_integers_with_ignore_spaces_and_join_columns",
+    "tests/test_core.py::test_sample_mismatch_with_nans",
+    "tests/test_core.py::test_dupes_with_nulls",
+    "tests/test_core.py::test_lower",
+    "tests/test_core.py::test_integer_column_names",
+    "tests/test_core.py::test_save_html",
+    "tests/test_core.py::test_custom_template_usage",
+    "tests/test_core.py::test_template_without_extension",
+    "tests/test_core.py::test_nonexistent_template",
+    "tests/test_core.py::test_template_context_variables",
+    "tests/test_core.py::test_html_report_generation",
+    "tests/test_core.py::test_full_join_counts_no_matches",
+    "tests/test_core.py::test_full_join_counts_some_matches",
+    "tests/test_core.py::test_non_full_join_counts_no_matches",
+    "tests/test_core.py::test_non_full_join_counts_some_matches",
+    "tests/test_core.py::test_merge_date_ignore_spaces",
+    "tests/test_core.py::test_per_column_tolerances",
+    "tests/test_core.py::test_default_tolerance",
+    "tests/test_core.py::test_mixed_tolerances"
+  ],
+  "repo": {
+    "github_path": "capitalone/datacompy",
+    "commit": "2600d7c93f2656de63b108cdb8d37cbec8eb8bbf",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"setuptools.build_meta\"\nrequires = [ \"setuptools>=64\",]\n\n[project]\nname = \"datacompy\"\ndescription = \"Dataframe comparison in Python\"\nreadme = \"README.md\"\nrequires-python = \">=3.10.0\"\nclassifiers = [ \"Intended Audience :: Developers\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\",]\ndynamic = [ \"version\",]\ndependencies = [ \"jinja2>=3\", \"numpy>=1.22,<=2.2.6; python_version=='3.10'\", \"numpy>=1.22,<=2.3.3; python_version>='3.11'\", \"ordered-set>=4.0.2,<=4.1\", \"pandas>=0.25,<=2.3.3\", \"polars[pandas]>=0.20.4,<=1.33.1\",]\nversion = \"0.1.0\"\n[[project.maintainers]]\nname = \"Faisal Dosani\"\nemail = \"faisal.dosani@capitalone.com\"\n\n[[project.maintainers]]\nname = \"Jacob Dawang\"\nemail = \"jacob.dawang@capitalone.com\"\n\n[[project.maintainers]]\nname = \"Raymond Haffar\"\nemail = \"raymond.haffar@capitalone.com\"\n\n[[project.authors]]\nname = \"Faisal Dosani\"\nemail = \"faisal.dosani@capitalone.com\"\n\n[[project.authors]]\nname = \"Raymond Haffar\"\nemail = \"raymond.haffar@capitalone.com\"\n\n[[project.authors]]\nname = \"Jacob Dawang\"\nemail = \"jacob.dawang@capitalone.com\"\n\n[project.license]\ntext = \"Apache Software License\"\n\n[project.optional-dependencies]\nbuild = [ \"build\", \"twine\", \"wheel\",]\ndev = []\ndev_no_snowflake = []\ndocs = [ \"furo\", \"myst-parser\", \"sphinx\",]\nedgetest = [ \"edgetest\", \"edgetest-conda\",]\nfugue = [ \"duckdb<1.4\", \"fugue[dask,duckdb,ray]>=0.8.7,<=0.9.1\",]\nqa = [ \"mypy\", \"pandas-stubs\", \"pre-commit\", \"ruff==0.5.7\",]\nsnowflake = [ \"snowflake-connector-python\",]\nspark = [ \"pyspark[connect]>=3.4,<=3.5.6\",]\ntests = [ \"pytest\", \"pytest-cov\", \"pytest-reportlog\", \"pytest-env\", \"icontract\",]\ntests-spark = [ \"pytest\", \"pytest-cov\", \"pytest-spark\",]\n\n[project.urls]\n\"Bug Tracker\" = \"https://github.com/capitalone/datacompy/issues\"\nDocumentation = \"https://capitalone.github.io/datacompy/\"\nHomepage = \"https://github.com/capitalone/datacompy\"\nRepository = \"https://github.com/capitalone/datacompy.git\"\n\"Source Code\" = \"https://github.com/capitalone/datacompy\"\n\n[tool.setuptools]\npackages = [ \"datacompy\", \"datacompy.spark\",]\nzip-safe = false\ninclude-package-data = true\n\n[tool.ruff]\ntarget-version = \"py310\"\nsrc = [ \"src\",]\nextend-include = [ \"*.ipynb\",]\n\n[tool.pyproject-fmt]\ncolumn_width = 88\n\n[tool.mypy]\nstrict = true\n[[tool.mypy.overrides]]\nmodule = [ \"fugue.*\", \"triad.*\",]\nimplicit_reexport = true\n\n[[tool.mypy.overrides]]\nmodule = \"pyarrow\"\nignore_missing_imports = true\n\n[tool.setuptools.package-data]\n\"*\" = [ \"templates/*.j2\", \"templates/*.txt\",]\n\n[tool.ruff.lint]\nselect = [ \"B\", \"C4\", \"D\", \"E\", \"F\", \"I\", \"LOG\", \"NPY\", \"RUF\", \"SIM\", \"T20\", \"TID252\", \"UP\", \"W\",]\nignore = [ \"D206\", \"D300\", \"E111\", \"E114\", \"E117\", \"E203\", \"E501\", \"SIM105\", \"SIM108\", \"UP006\", \"UP035\",]\npreview = true\n\n[tool.distutils.bdist_wheel]\npython-tag = \"py3\"\n\n[edgetest.envs.core]\npython_version = \"3.10\"\nconda_install = [ \"openjdk=8\",]\nextras = [ \"dev\",]\ncommand = \"pytest tests/ --ignore=tests/test_snowflake.py\"\nupgrade = [ \"pandas\", \"numpy\", \"ordered-set\", \"polars[pandas]\",]\n\n[tool.setuptools.dynamic.version]\nattr = \"datacompy.__version__\"\n\n[tool.ruff.lint.per-file-ignores]\n\"**/{tests,docs}/*\" = [ \"ARG\", \"D\", \"E402\", \"F841\",]\n\"__init__.py\" = [ \"E402\",]\n\n[tool.ruff.lint.flake8-tidy-imports]\nban-relative-imports = \"all\"\n\n[tool.ruff.lint.pydocstyle]\nconvention = \"numpy\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [],
+    "test_time": 13.431532621383667
+  },
+  "mutants": [
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.join_columns:  # This will only iterate over the join columns, ignoring other intersecting columns\n            if column not in self.join_columns:\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].all(axis=1).sum()",
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.df1.columns:  # Incorrectly checks against df1 columns instead of join_columns\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].all(axis=1).sum()",
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.intersect_columns():  # Incorrectly checks against intersecting columns instead of join_columns\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].all(axis=1).sum()",
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.join_columns:\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].all(axis=0).sum()",
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.join_columns:\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].all(axis=None).sum()\n",
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.join_columns:\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].any(axis=0).sum()",
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.join_columns:\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].any(axis=1).sum()",
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.join_columns:\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].count(axis=1).sum()",
+    "    def count_matching_rows(self) -> int:\n        \"\"\"Count the number of rows match (on overlapping fields).\n\n        Returns\n        -------\n        int\n            Number of matching rows\n        \"\"\"\n        match_columns = []\n        for column in self.intersect_columns():\n            if column not in self.join_columns:\n                match_columns.append(column + \"_match\")\n        return self.intersect_rows[match_columns].sum()"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda self: list(self.intersect_columns()), name=\"intersect_cols\")\n@icontract.snapshot(lambda self: list(self.join_columns), name=\"join_cols\")\n@icontract.ensure(lambda result, OLD, self: 0 <= result <= self.intersect_rows.shape[0])\n@icontract.ensure(lambda OLD, self: all((col + \"_match\") in self.intersect_rows.columns for col in OLD.intersect_cols if col not in OLD.join_cols))\n@icontract.ensure(lambda result, OLD, self: result == self.intersect_rows[[col + \"_match\" for col in OLD.intersect_cols if col not in OLD.join_cols]].all(axis=1).sum())\n@icontract.ensure(lambda result, OLD, self: (len([c for c in OLD.intersect_cols if c not in OLD.join_cols]) == 0) or result <= min(self.intersect_rows[col + \"_match\"].sum() for col in (c for c in OLD.intersect_cols if c not in OLD.join_cols)))\n@icontract.ensure(lambda result, OLD, self: (len([c for c in OLD.intersect_cols if c not in OLD.join_cols]) == 0) or result * len([c for c in OLD.intersect_cols if c not in OLD.join_cols]) <= self.intersect_rows[[col + \"_match\" for col in OLD.intersect_cols if col not in OLD.join_cols]].sum().sum())\n@icontract.ensure(lambda result, self: isinstance(result, (int, np.integer)) and 0 <= result <= self.intersect_rows.shape[0])\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 221
+}

@@ -1,0 +1,228 @@
+{
+  "rlid": "updateHeader-2",
+  "github_url": "https://github.com/Mastercard/client-encryption-java/blob/f91ae60c3de7660fc9d8ce7b38adba751b2ed304/./src/main/java/com/mastercard/developer/utils/FeignUtils.java#L36-L57",
+  "name": "updateHeader",
+  "line_cov": 0.9230769230769231,
+  "lines": 22,
+  "stats": 10,
+  "cc": 5,
+  "content": "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+  "header": "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {",
+  "file": "./src/main/java/com/mastercard/developer/utils/FeignUtils.java",
+  "start_line": 36,
+  "end_line": 57,
+  "body_start_line": 40,
+  "comment": "/**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */",
+  "test_time": 8.436461925506592,
+  "cover_tests": [
+    "com.mastercard.developer.interceptors.OpenFeignFieldLevelEncryptionDecoderTest#testDecode_ShouldDecryptResponsePayloadAndRemoveEncryptionHttpHeaders_WhenRequestedInConfig",
+    "com.mastercard.developer.interceptors.OpenFeignFieldLevelEncryptionDecoderTest#testDecode_ShouldDecryptResponsePayloadAndUpdateContentLengthHeader",
+    "com.mastercard.developer.interceptors.OpenFeignJweDecoderTest#testDecode_ShouldDecryptResponsePayloadAndUpdateContentLengthHeader",
+    "com.mastercard.developer.interceptors.OpenFeignJweDecoderTest#testDecode_ShouldDecryptWithA128CBC_HS256Encryption"
+  ],
+  "repo": {
+    "github_path": "Mastercard/client-encryption-java",
+    "commit": "f91ae60c3de7660fc9d8ce7b38adba751b2ed304",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.mastercard.developer</groupId>\n  <artifactId>client-encryption</artifactId>\n  <version>1.8.7</version>\n  <packaging>jar</packaging>\n  <description>Library for Mastercard API compliant payload encryption/decryption</description>\n  <url>https://github.com/Mastercard/client-encryption-java</url>\n  <name>client-encryption</name>\n  <properties>\n    <okhttp3-version>4.12.0</okhttp3-version>\n    <google-api-client-version>2.4.0</google-api-client-version>\n    <feign-version>13.2.1</feign-version>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <gpg.signature.skip>false</gpg.signature.skip>\n    </properties>\n  <scm>\n    <connection>scm:git:git://github.com/Mastercard/client-encryption-java.git</connection>\n    <developerConnection>scm:git:git@github.com:Mastercard/client-encryption-java.git</developerConnection>\n    <url>https://github.com/Mastercard/client-encryption-java</url>\n    </scm>\n  <developers>\n    <developer>\n      <organization>Mastercard</organization>\n      <organizationUrl>https://developer.mastercard.com</organizationUrl>\n      </developer>\n    </developers>\n  <licenses>\n    <license>\n      <name>MIT License</name>\n      <url>https://opensource.org/licenses/MIT</url>\n      </license>\n    </licenses>\n  <dependencies>\n    <dependency>\n      <groupId>com.jayway.jsonpath</groupId>\n      <artifactId>json-path</artifactId>\n      <version>2.9.0</version>\n      </dependency>\n    <dependency>\n      <groupId>org.apache.httpcomponents</groupId>\n      <artifactId>httpclient</artifactId>\n      <version>4.5.13</version>\n      <scope>provided</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.squareup.okhttp3</groupId>\n      <artifactId>okhttp</artifactId>\n      <version>${okhttp3-version}</version>\n      <scope>provided</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.google.api-client</groupId>\n      <artifactId>google-api-client</artifactId>\n      <version>${google-api-client-version}</version>\n      <scope>provided</scope>\n      </dependency>\n    <dependency>\n      <groupId>io.github.openfeign</groupId>\n      <artifactId>feign-core</artifactId>\n      <version>${feign-version}</version>\n      <scope>provided</scope>\n      </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-params</artifactId>\n      <version>5.7.0</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.10.0</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>commons-io</groupId>\n      <artifactId>commons-io</artifactId>\n      <version>2.14.0</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.google.code.gson</groupId>\n      <artifactId>gson</artifactId>\n      <version>2.8.9</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.fasterxml.jackson.core</groupId>\n      <artifactId>jackson-databind</artifactId>\n      <version>2.13.4.2</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>net.minidev</groupId>\n      <artifactId>json-smart</artifactId>\n      <version>2.5.2</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.codehaus.jettison</groupId>\n      <artifactId>jettison</artifactId>\n      <version>1.5.4</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.json</groupId>\n      <artifactId>json</artifactId>\n      <version>20231013</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.skyscreamer</groupId>\n      <artifactId>jsonassert</artifactId>\n      <version>1.5.0</version>\n      <scope>test</scope>\n      </dependency>\n    </dependencies>\n  <profiles>\n    <profile>\n      <id>java11</id>\n      <activation>\n        <jdk>11</jdk>\n        </activation>\n      <properties>\n        <maven.javadoc.skip>true</maven.javadoc.skip>\n        </properties>\n      </profile>\n    <profile>\n      <id>java17</id>\n      <activation>\n        <jdk>17</jdk>\n        </activation>\n      <properties>\n        <maven.javadoc.skip>true</maven.javadoc.skip>\n        </properties>\n      </profile>\n    </profiles>\n  <build>\n    <pluginManagement>\n      <plugins>\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-compiler-plugin</artifactId>\n          <version>3.12.1</version>\n          <configuration>\n            <source>11</source>\n            <target>11</target>\n            </configuration>\n          </plugin>\n        </plugins>\n      </pluginManagement>\n    <plugins>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.7</version>\n        <executions>\n          <execution>\n            <id>pre-unit-test</id>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>post-unit-test</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            <configuration>\n              <xml>true</xml>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>3.1.0</version>\n        <executions>\n          <execution>\n            <id>sign-artifacts</id>\n            <phase>verify</phase>\n            <goals>\n              <goal>sign</goal>\n              </goals>\n            <configuration>\n              <skip>${gpg.signature.skip}</skip>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.3.0</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>3.6.3</version>\n        <executions>\n          <execution>\n            <id>generate-javadoc</id>\n            <phase>package</phase>\n            <goals>\n              <goal>jar</goal>\n              </goals>\n            <configuration>\n              <nodeprecated>true</nodeprecated>\n              <additionalOptions>-Xdoclint:none</additionalOptions>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.sonatype.central</groupId>\n        <artifactId>central-publishing-maven-plugin</artifactId>\n        <version>0.7.0</version>\n        <extensions>true</extensions>\n        <configuration>\n          <publishingServerId>central</publishingServerId>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <useFile>true</useFile>\n          <disableXmlReport>false</disableXmlReport></configuration>\n        </plugin>\n      </plugins>\n    </build>\n  </project>",
+    "failed_tests": [
+      "com.mastercard.developer.encryption.FieldLevelEncryptionWithJsonOrgJsonEngineTest#testDecryptPayload_ShouldMergeJsonObjects_WhenOutPathAlreadyContainData",
+      "com.mastercard.developer.encryption.FieldLevelEncryptionWithJsonOrgJsonEngineTest#testDecryptPayload_ShouldOverwriteInputObject_WhenOutPathSameAsInPath_ObjectData",
+      "com.mastercard.developer.encryption.FieldLevelEncryptionWithJsonOrgJsonEngineTest#testDecryptPayload_ShouldSupportRootAsInputPath",
+      "com.mastercard.developer.encryption.FieldLevelEncryptionWithJsonOrgJsonEngineTest#testEncryptPayload_Nominal",
+      "com.mastercard.developer.encryption.JweEncryptionWithJsonOrgJsonEngineTest#testDecryptPayload_ShouldRemoveParentEncryptedFieldIfEmpty"
+    ],
+    "test_time": 6.314192533493042
+  },
+  "mutants": [
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name != null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (value == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(Arrays.asList(\"header1\", \"header2\", \"header3\"));\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(Collections.singletonList(\"dummyHeader\"));\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name) && value != null) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                \n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.put(headerName, Arrays.asList(\"default-value\"));\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.put(headerName, Collections.emptyList());\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value == null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            \n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.emptyList()); // This sets the header to an empty list, effectively removing it without indication.\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(Collections.emptyMap())\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(Collections.singletonMap(\"dummyHeader\", Collections.singleton(\"dummyValue\")))\n                .build();\n    }",
+    "    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(null)\n                .build();\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures name == null ==> \\result == \\old(response);\n//@ ensures name != null && value != null ==> \\result != \\old(response);\n//@ ensures name != null && value != null ==> (\\result.headers().get(name) != null && \\result.headers().get(name).size() == 1 && \\result.headers().get(name).iterator().next().equals(value));\n//@ ensures name != null && value == null ==> \\result.headers().get(name) == null;\n//@ ensures name != null && value == null ==> \\result.headers().keySet().stream().noneMatch(h -> h != null && h.equalsIgnoreCase(name));\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.mastercard.developer.utils;\n\nimport feign.RequestTemplate;\nimport feign.Response;\n\nimport java.util.*;\n\n/**\n * Utility class for working with Feign objects.\n */\npublic class FeignUtils {\n\n    private FeignUtils() {\n    }\n\n    /**\n     * Update the value of an HTTP request header. Delete the header if the value is null.\n     */\n    public static void updateHeader(RequestTemplate request, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return;\n        }\n        Map<String, Collection<String>> headers = request.headers();\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                request.header(name, (String)null);\n            }\n        }\n        if (value != null) {\n            request.header(name, value);\n        }\n    }\n\n    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }\n\n    /**\n     * Return the value of an HTTP request header.\n     */\n    public static String readHeader(Response response, String name) {\n        if (name == null) {\n            // Do nothing\n            return null;\n        }\n        Map<String, Collection<String>> headers = response.headers();\n        Set<String> headerNames = headers.keySet();\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                return (String) headers.get(headerName).toArray()[0];\n            }\n        }\n        return null;\n    }\n\n    /**\n     * Delete an HTTP response header.\n     */\n    public static Response removeHeader(Response response, String name) {\n        return updateHeader(response, name, null);\n    }\n}\n\n```\n## Target Method\n```\n    /**\n     * Update the value of an HTTP response header and return the updated response. Delete the header if the value is null.\n     */\n    public static Response updateHeader(Response response, String name, String value) {\n        if (name == null) {\n            // Do nothing\n            return response;\n        }\n        Map<String, Collection<String>> headers = new HashMap<>(response.headers()); // Headers is an UnmodifiableMap\n        Set<String> headerNames = new HashSet<>(headers.keySet());\n        for (String headerName : headerNames) {\n            if (headerName.equalsIgnoreCase(name)) {\n                headers.remove(headerName);\n            }\n        }\n        if (value != null) {\n            headers.put(name, Collections.singleton(value));\n        }\n        return response.toBuilder()\n                .headers(headers)\n                .build();\n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `updateHeader`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures (name == null) ==> (\\result == response);\n//@ ensures (name != null) ==> (\\result.headers().get(name.toLowerCase()) == null <==> value == null);\n//@ ensures (name != null && value != null) ==> (\\result.headers().get(name.toLowerCase()) != null && \\result.headers().get(name.toLowerCase()).contains(value));",
+    "//@ ensures \\result != null ==> \\old(response) != null;\n//@ ensures name == null ==> \\result == response;\n//@ ensures value == null ==> (\\result.headers().get(name.toLowerCase()) == null || \\result.headers().get(name.toLowerCase()).isEmpty());\n//@ ensures value != null ==> \\result.headers().get(name.toLowerCase()) != null && \\result.headers().get(name.toLowerCase()).contains(value);",
+    "//@ ensures (\\old(response) == null) ==> \\result == null;\n//@ ensures (\\old(response.headers().containsKey(name.toLowerCase())) && value == null) ==> !\\result.headers().containsKey(name.toLowerCase());\n//@ ensures (\\old(response.headers().containsKey(name.toLowerCase())) && value != null) ==> \\result.headers().get(name.toLowerCase()).contains(value);\n//@ ensures (\\old(!response.headers().containsKey(name.toLowerCase())) && value != null) ==> \\result.headers().get(name.toLowerCase()).contains(value);",
+    "//@ ensures (name == null) ==> \\result == response;\n//@ ensures (name != null) ==> (\\result.headers().containsKey(name) <==> value != null);\n//@ ensures (name != null && value != null) ==> \\result.headers().get(name).contains(value);\n//@ ensures (name != null && value == null) ==> !\\result.headers().containsKey(name);",
+    "//@ ensures \\result != null ==> \\old(response) != null;\n//@ ensures name == null ==> \\result == response;\n//@ ensures value == null ==> \\result.headers().get(name) == null;\n//@ ensures value != null ==> \\result.headers().get(name) != null && \\result.headers().get(name).contains(value);"
+  ],
+  "responses": [
+    "```jml\n//@ ensures (name == null) ==> (\\result == response);\n//@ ensures (name != null) ==> (\\result.headers().get(name.toLowerCase()) == null <==> value == null);\n//@ ensures (name != null && value != null) ==> (\\result.headers().get(name.toLowerCase()) != null && \\result.headers().get(name.toLowerCase()).contains(value));\n```",
+    "```jml\n//@ ensures \\result != null ==> \\old(response) != null;\n//@ ensures name == null ==> \\result == response;\n//@ ensures value == null ==> (\\result.headers().get(name.toLowerCase()) == null || \\result.headers().get(name.toLowerCase()).isEmpty());\n//@ ensures value != null ==> \\result.headers().get(name.toLowerCase()) != null && \\result.headers().get(name.toLowerCase()).contains(value);\n```",
+    "```jml\n//@ ensures (\\old(response) == null) ==> \\result == null;\n//@ ensures (\\old(response.headers().containsKey(name.toLowerCase())) && value == null) ==> !\\result.headers().containsKey(name.toLowerCase());\n//@ ensures (\\old(response.headers().containsKey(name.toLowerCase())) && value != null) ==> \\result.headers().get(name.toLowerCase()).contains(value);\n//@ ensures (\\old(!response.headers().containsKey(name.toLowerCase())) && value != null) ==> \\result.headers().get(name.toLowerCase()).contains(value);\n```",
+    "```jml\n//@ ensures (name == null) ==> \\result == response;\n//@ ensures (name != null) ==> (\\result.headers().containsKey(name) <==> value != null);\n//@ ensures (name != null && value != null) ==> \\result.headers().get(name).contains(value);\n//@ ensures (name != null && value == null) ==> !\\result.headers().containsKey(name);\n```",
+    "```jml\n//@ ensures \\result != null ==> \\old(response) != null;\n//@ ensures name == null ==> \\result == response;\n//@ ensures value == null ==> \\result.headers().get(name) == null;\n//@ ensures value != null ==> \\result.headers().get(name) != null && \\result.headers().get(name).contains(value);\n```"
+  ],
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 118
+}

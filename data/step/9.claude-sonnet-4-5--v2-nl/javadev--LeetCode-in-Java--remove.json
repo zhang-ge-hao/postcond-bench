@@ -1,0 +1,221 @@
+{
+  "rlid": "remove",
+  "github_url": "https://github.com/javadev/LeetCode-in-Java/blob/bd921712f2d317b9cdb0a6067edb6b6513c8d1cc/./src/main/java/g0301_0400/s0380_insert_delete_getrandom_o1/RandomizedSet.java#L36-L49",
+  "name": "remove",
+  "line_cov": 1.0,
+  "lines": 14,
+  "stats": 10,
+  "cc": 2,
+  "content": "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+  "header": "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {",
+  "file": "./src/main/java/g0301_0400/s0380_insert_delete_getrandom_o1/RandomizedSet.java",
+  "start_line": 36,
+  "end_line": 49,
+  "body_start_line": 38,
+  "comment": "/* Removes a value from the set. Returns true if the set contained the specified element. */",
+  "test_time": 8.23588228225708,
+  "cover_tests": [
+    "g0301_0400.s0380_insert_delete_getrandom_o1.RandomizedSetTest#randomizedSet"
+  ],
+  "repo": {
+    "github_path": "javadev/LeetCode-in-Java",
+    "commit": "bd921712f2d317b9cdb0a6067edb6b6513c8d1cc",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n    <groupId>com.github.javadev</groupId>\n    <artifactId>leetcode-in-java</artifactId>\n    <packaging>jar</packaging>\n    <version>1.49-SNAPSHOT</version>\n    <name>leetcode-in-java</name>\n    <description>Java-based LeetCode algorithm problem solutions, regularly updated</description>\n    <url>https://github.com/javadev/LeetCode-in-Java</url>\n    <developers>\n        <developer>\n            <name>Valentyn Kolesnikov</name>\n        </developer>\n    </developers>\n    <licenses>\n        <license>\n            <name>The MIT License</name>\n            <url>http://opensource.org/licenses/MIT</url>\n            <distribution>repo</distribution>\n        </license>\n    </licenses>\n    <scm>\n        <connection>scm:git:git://github.com/javadev/LeetCode-in-Java.git</connection>\n        <developerConnection>scm:git:git://github.com/javadev/LeetCode-in-Java.git</developerConnection>\n        <url>https://github.com/javadev/LeetCode-in-Java</url>\n    </scm>\n    <properties>\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    </properties>\n    <ciManagement>\n        <system>GitHub Actions</system>\n        <url>https://github.com/javadev/LeetCode-in-Java/actions</url>\n    </ciManagement>\n    <issueManagement>\n        <system>GitHub Issues</system>\n        <url>https://github.com/javadev/LeetCode-in-Java/issues</url>\n    </issueManagement>\n    <build>\n        <plugins>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-compiler-plugin</artifactId>\n                <version>3.14.1</version>\n                <configuration>\n                    <source>17</source>\n                    <target>17</target>\n                    <encoding>UTF-8</encoding>\n                    <compilerArgs>\n                        <arg>-Xlint:unchecked</arg>\n                        <arg>-Xlint:deprecation</arg>\n                    </compilerArgs>\n                </configuration>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-surefire-plugin</artifactId>\n                <version>3.5.4</version>\n                <dependencies>\n                    <dependency>\n                        <groupId>org.junit.jupiter</groupId>\n                        <artifactId>junit-jupiter-engine</artifactId>\n                        <version>[5.13.3,)</version>\n                    </dependency>\n                </dependencies>\n            <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-jar-plugin</artifactId>\n                <version>3.4.2</version>\n                <configuration>\n                    <archive>\n                        <manifestEntries>\n                            <Built-By />\n                            <Created-By />\n                            <Build-Jdk />\n                        </manifestEntries>\n                    </archive>\n                </configuration>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-checkstyle-plugin</artifactId>\n                <version>2.17</version>\n                <executions>\n                    <execution>\n                        <id>checkstyle</id>\n                        <phase>validate</phase>\n                        <goals>\n                            <goal>check</goal>\n                        </goals>\n                        <configuration>\n                            <configLocation>${basedir}/checkstyle.xml</configLocation>\n                            <includeTestSourceDirectory>true</includeTestSourceDirectory>\n                            <failOnViolation>true</failOnViolation>\n                        </configuration>\n                    </execution>\n                </executions>\n            </plugin>\n            <plugin>\n                <groupId>org.jacoco</groupId>\n                <artifactId>jacoco-maven-plugin</artifactId>\n                <version>0.8.14</version>\n                <executions>\n                    <execution>\n                        <id>prepare-agent</id>\n                        <goals>\n                            <goal>prepare-agent</goal>\n                        </goals>\n                    </execution>\n                <execution><id>report</id><phase>test</phase><goals><goal>report</goal></goals></execution></executions>\n            <configuration><xml>true</xml><outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration></plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-project-info-reports-plugin</artifactId>\n                <version>3.9.0</version>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-site-plugin</artifactId>\n                <version>3.21.0</version>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-source-plugin</artifactId>\n                <version>3.3.1</version>\n                <executions>\n                    <execution>\n                        <id>attach-sources</id>\n                        <goals>\n                            <goal>jar</goal>\n                            <goal>test-jar</goal>\n                        </goals>\n                    </execution>\n                </executions>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-javadoc-plugin</artifactId>\n                <version>3.12.0</version>\n                <executions>\n                    <execution>\n                        <id>attach-sources</id>\n                        <goals>\n                            <goal>jar</goal>\n                            <goal>test-jar</goal>\n                        </goals>\n                    </execution>\n                </executions>\n                <configuration>\n                    <failOnError>false</failOnError>\n                    <detectJavaApiLink>false</detectJavaApiLink>\n                </configuration>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-gpg-plugin</artifactId>\n                <version>3.2.8</version>\n                <executions>\n                    <execution>\n                        <id>sign-artifacts</id>\n                        <phase>verify</phase>\n                        <goals>\n                            <goal>sign</goal>\n                        </goals>\n                    </execution>\n                </executions>\n            </plugin>\n        </plugins>\n    </build>\n    <dependencies>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter-api</artifactId>\n            <version>[5.13.3,)</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter-engine</artifactId>\n            <version>[5.13.3,)</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.junit.platform</groupId>\n            <artifactId>junit-platform-launcher</artifactId>\n            <version>[1.13.3,)</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.hamcrest</groupId>\n            <artifactId>hamcrest-core</artifactId>\n            <version>[3.0,)</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.zapodot</groupId>\n            <artifactId>embedded-db-junit-jupiter</artifactId>\n            <version>[2.2.3,)</version>\n            <scope>test</scope>\n        </dependency>\n    </dependencies>\n</project>",
+    "failed_tests": [],
+    "test_time": 13.60979437828064
+  },
+  "mutants": [
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return true;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = rand.nextInt(list.size()); // Incorrect: This introduces randomness and may not correspond to the correct index of the value.\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = 0; // This will always swap with the first element, potentially losing the last element.\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(0);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(list.size() - 2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap1);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2 - 1);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.remove(val2);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val2);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        \n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.remove(swap1);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val); // Incorrectly sets the value to the original value instead of val2\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap2, val2);\n        list.remove(list.size() - 1);\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.clear();\n        return true;\n    }",
+    "    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n        if (!map.containsKey(val)) {\n            return false;\n        }\n        int swap1 = map.get(val);\n        int swap2 = list.size() - 1;\n        int val2 = list.get(swap2);\n        map.put(val2, swap1);\n        map.remove(val);\n        list.set(swap1, val2);\n        list.remove(list.size() - 1);\n        return false;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures \\old(!map.containsKey(val)) ==> \\result == false;\n//@ ensures \\old(!map.containsKey(val)) ==> map.equals(\\old(map));\n//@ ensures \\old(!map.containsKey(val)) ==> list.equals(\\old(list));\n//@ ensures \\old(map.containsKey(val)) ==> \\result == true;\n//@ ensures \\old(map.containsKey(val)) ==> list.size() == \\old(list.size()) - 1;\n//@ ensures \\old(map.containsKey(val)) ==> !map.containsKey(val);\n//@ ensures \\old(map.containsKey(val)) ==> map.size() == \\old(map.size()) - 1;\n//@ ensures \\old(map.containsKey(val)) && \\old(map.get(val)) != \\old(list.size()) - 1 ==> list.get(\\old(map.get(val))) == \\old(list.get(list.size() - 1));\n//@ ensures \\old(map.containsKey(val)) && \\old(map.get(val)) != \\old(list.size()) - 1 ==> map.get(\\old(list.get(list.size() - 1))) == \\old(map.get(val));\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage g0301_0400.s0380_insert_delete_getrandom_o1;\n\n// #Medium #Array #Hash_Table #Math #Design #Randomized #Programming_Skills_II_Day_20\n// #Top_Interview_150_Array/String #2022_07_13_Time_27_ms_(93.44%)_Space_92.2_MB_(91.11%)\n\nimport java.util.ArrayList;\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\nimport java.util.Random;\n\n@SuppressWarnings(\"java:S2245\")\npublic class RandomizedSet {\n    private final Random rand;\n    private final List<Integer> list;\n    private final Map<Integer, Integer> map;\n\n    /* Initialize your data structure here. */\n    public RandomizedSet() {\n        this.rand = new Random();\n        this.list = new ArrayList<>();\n        this.map = new HashMap<>();\n    }\n\n    /* Inserts a value to the set. Returns true if the set did not already contain the specified element. */\n    public boolean insert(int val) {\n...\n    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n...\n    /* Get a random element from the set. */\n    public int getRandom() {\n...\n}\n\n/*\n * Your RandomizedSet object will be instantiated and called as such:\n * RandomizedSet obj = new RandomizedSet();\n * boolean param_1 = obj.insert(val);\n * boolean param_2 = obj.remove(val);\n * int param_3 = obj.getRandom();\n */\n\n```\n## Target Method\n```\n    /* Removes a value from the set. Returns true if the set contained the specified element. */\n    public boolean remove(int val) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `remove`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures \\result <==> \\old(map.containsKey(val));\n//@ ensures \\result ==> !map.containsKey(val);\n//@ ensures \\result ==> !list.contains(val);\n//@ ensures \\result ==> list.size() == \\old(list.size()) - 1;\n//@ ensures \\result ==> map.size() == \\old(map.size()) - 1;\n//@ ensures !\\result ==> list.size() == \\old(list.size());\n//@ ensures !\\result ==> map.size() == \\old(map.size());",
+    "//@ ensures \\result == \\old(map.containsKey(val));\n//@ ensures \\old(map.containsKey(val)) ==> !map.containsKey(val);\n//@ ensures \\old(map.containsKey(val)) ==> !list.contains(val);\n//@ ensures \\old(map.containsKey(val)) ==> map.size() == \\old(map.size()) - 1;\n//@ ensures \\old(map.containsKey(val)) ==> list.size() == \\old(list.size()) - 1;\n//@ ensures !\\old(map.containsKey(val)) ==> map.size() == \\old(map.size());\n//@ ensures !\\old(map.containsKey(val)) ==> list.size() == \\old(list.size());",
+    "//@ ensures \\result == \\old(map.containsKey(val));\n//@ ensures \\result ==> (map.size() == \\old(map.size()) - 1);\n//@ ensures \\result ==> (list.size() == \\old(list.size()) - 1);\n//@ ensures !\\result ==> (map.size() == \\old(map.size()));\n//@ ensures !\\result ==> (list.size() == \\old(list.size()));\n//@ ensures !map.containsKey(val);\n//@ ensures !list.contains(val);\n//@ ensures \\old(map.keySet().stream().filter(k -> k != val).allMatch(k -> map.containsKey(k)));",
+    "//@ ensures \\result == \\old(map.containsKey(val));\n//@ ensures \\result ==> !map.containsKey(val);\n//@ ensures \\result ==> !list.contains(val);\n//@ ensures \\result ==> list.size() == \\old(list.size()) - 1;\n//@ ensures \\result ==> map.size() == \\old(map.size()) - 1;\n//@ ensures !\\result ==> list.size() == \\old(list.size());\n//@ ensures !\\result ==> map.size() == \\old(map.size());",
+    "//@ ensures \\result == \\old(map.containsKey(val));\n//@ ensures \\result ==> !map.containsKey(val);\n//@ ensures \\result ==> map.size() == \\old(map.size()) - 1;\n//@ ensures \\result ==> list.size() == \\old(list.size()) - 1;\n//@ ensures !\\result ==> map.size() == \\old(map.size());\n//@ ensures !\\result ==> list.size() == \\old(list.size());\n//@ ensures !map.containsKey(val);\n//@ ensures !list.contains(val);"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "passed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 12
+}

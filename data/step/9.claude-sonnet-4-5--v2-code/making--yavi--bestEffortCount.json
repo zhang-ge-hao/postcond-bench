@@ -1,0 +1,390 @@
+{
+  "rlid": "bestEffortCount",
+  "github_url": "https://github.com/making/yavi/blob/d8a15ed764980eeb3ecd8d01fec42f6ecaf01899/./src/main/java/am/ik/yavi/constraint/charsequence/Emoji.java#L58-L81",
+  "name": "bestEffortCount",
+  "line_cov": 0.9090909090909091,
+  "lines": 24,
+  "stats": 4,
+  "cc": 3,
+  "content": "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+  "header": "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {",
+  "file": "./src/main/java/am/ik/yavi/constraint/charsequence/Emoji.java",
+  "start_line": 58,
+  "end_line": 81,
+  "body_start_line": 66,
+  "comment": "/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */",
+  "test_time": 3.7369086742401123,
+  "cover_tests": [
+    "am.ik.yavi.constraint.charsequence.EmojiTest#elf",
+    "am.ik.yavi.constraint.charsequence.EmojiTest#emoji",
+    "am.ik.yavi.constraint.charsequence.EmojiTest#emoji11All",
+    "am.ik.yavi.constraint.charsequence.EmojiTest#emoji12All",
+    "am.ik.yavi.constraint.charsequence.EmojiTest#emoji14All",
+    "am.ik.yavi.constraint.charsequence.EmojiTest#family",
+    "am.ik.yavi.constraint.charsequence.EmojiTest#heart",
+    "am.ik.yavi.constraint.charsequence.EmojiTest#subdivisionFlags",
+    "am.ik.yavi.core.ValidatorTest#emojiInValid",
+    "am.ik.yavi.core.ValidatorTest#emojiValid"
+  ],
+  "repo": {
+    "github_path": "making/yavi",
+    "commit": "d8a15ed764980eeb3ecd8d01fec42f6ecaf01899",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n\n    <groupId>am.ik.yavi</groupId>\n    <artifactId>yavi</artifactId>\n    <version>0.17.0-SNAPSHOT</version>\n    <name>yavi</name>\n    <description>Yet Another Validation (lambda based type safe validation)</description>\n\n    <properties>\n        <java.version>10</java.version>\n        <maven.compiler.source>${java.version}</maven.compiler.source>\n        <maven.compiler.target>${java.version}</maven.compiler.target>\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n        <kotlin.version>1.9.24</kotlin.version>\n        <kotlin-coroutines.version>1.8.1</kotlin-coroutines.version>\n        <junit.version>5.13.3</junit.version>\n        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>\n        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>\n        <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>\n        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>\n    </properties>\n    <licenses>\n        <license>\n            <name>Apache License, Version 2.0</name>\n            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n            <distribution>repo</distribution>\n        </license>\n    </licenses>\n    <scm>\n        <url>https://github.com/making/yavi</url>\n        <connection>scm:git:git@github.com:making/yavi.git</connection>\n        <developerConnection>scm:git:git@github.com:making/yavi.git</developerConnection>\n    </scm>\n    <url>https://github.com/making/yavi</url>\n\n    <developers>\n        <developer>\n            <id>making</id>\n            <name>Toshiaki Maki</name>\n            <email>makingx@gmail.com</email>\n            <url>https://twitter.com/making</url>\n        </developer>\n    </developers>\n    <dependencies>\n        <dependency>\n            <groupId>org.jetbrains.kotlin</groupId>\n            <artifactId>kotlin-stdlib</artifactId>\n            <version>${kotlin.version}</version>\n            <optional>true</optional>\n        </dependency>\n        <dependency>\n            <groupId>org.jetbrains.kotlin</groupId>\n            <artifactId>kotlin-reflect</artifactId>\n            <version>${kotlin.version}</version>\n            <optional>true</optional>\n        </dependency>\n        <dependency>\n            <groupId>org.jetbrains.kotlinx</groupId>\n            <artifactId>kotlinx-coroutines-core</artifactId>\n            <version>${kotlin-coroutines.version}</version>\n            <optional>true</optional>\n        </dependency>\n        <dependency>\n            <groupId>com.google.code.findbugs</groupId>\n            <artifactId>jsr305</artifactId>\n            <version>3.0.2</version>\n            <optional>true</optional>\n        </dependency>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter-api</artifactId>\n            <version>${junit.version}</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter-params</artifactId>\n            <version>${junit.version}</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter-engine</artifactId>\n            <version>${junit.version}</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.assertj</groupId>\n            <artifactId>assertj-core</artifactId>\n            <version>3.27.5</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>com.google.testing.compile</groupId>\n            <artifactId>compile-testing</artifactId>\n            <version>0.19</version>\n            <scope>test</scope>\n        </dependency>\n    </dependencies>\n    <build>\n        <plugins>\n            <plugin>\n                \n                <artifactId>kotlin-maven-plugin</artifactId>\n                <groupId>org.jetbrains.kotlin</groupId>\n                <version>${kotlin.version}</version>\n                <configuration>\n                    <jvmTarget>${java.version}</jvmTarget>\n                </configuration>\n                <executions>\n                    <execution>\n                        <id>compile</id>\n                        <goals>\n                            <goal>compile</goal>\n                        </goals>\n                        <configuration>\n                            <sourceDirs>\n                                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>\n                                <sourceDir>${project.basedir}/src/main/java</sourceDir>\n                            </sourceDirs>\n                        </configuration>\n                    </execution>\n                    <execution>\n                        <id>test-compile</id>\n                        <goals>\n                            <goal>test-compile</goal>\n                        </goals>\n                        <configuration>\n                            <sourceDirs>\n                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>\n                                <sourceDir>${project.basedir}/src/test/java</sourceDir>\n                            </sourceDirs>\n                        </configuration>\n                    </execution>\n                </executions>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-compiler-plugin</artifactId>\n                <version>${maven-compiler-plugin.version}</version>\n                <configuration>\n                    <compilerArgs>\n                        <arg>-parameters</arg>\n                        <arg>-proc:none</arg>\n                    </compilerArgs>\n                </configuration>\n                <executions>\n                    \n                    <execution>\n                        <id>default-compile</id>\n                        <phase>none</phase>\n                    </execution>\n                    \n                    <execution>\n                        <id>default-testCompile</id>\n                        <phase>none</phase>\n                    </execution>\n                    <execution>\n                        <id>java-compile</id>\n                        <phase>compile</phase>\n                        <goals>\n                            <goal>compile</goal>\n                        </goals>\n                    </execution>\n                    <execution>\n                        <id>java-test-compile</id>\n                        <phase>test-compile</phase>\n                        <goals>\n                            <goal>testCompile</goal>\n                        </goals>\n                    </execution>\n                </executions>\n            </plugin>\n            <plugin>\n                <groupId>org.jacoco</groupId>\n                <artifactId>jacoco-maven-plugin</artifactId>\n                <version>${jacoco-maven-plugin.version}</version>\n            <configuration><outputDirectory>${project.build.directory}/site/jacoco</outputDirectory><reports><xml>true</xml></reports></configuration><executions><execution><id>prepare-agent</id><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>test</phase><goals><goal>report</goal></goals></execution></executions></plugin>\n            <plugin>\n                <groupId>com.mycila</groupId>\n                <artifactId>license-maven-plugin</artifactId>\n                <version>5.0.0</version>\n                <configuration>\n                    <header>src/etc/header.txt</header>\n                    <strictCheck>true</strictCheck>\n                    <headerDefinitions>\n                        <headerDefinition>src/etc/header-definition.xml</headerDefinition>\n                    </headerDefinitions>\n                    <includes>\n                        <include>src/**/*.java</include>\n                    </includes>\n                    <excludes>\n                        <exclude>src/main/java/am/ik/yavi/jsr305/*.java</exclude>\n                    </excludes>\n                </configuration>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-surefire-plugin</artifactId>\n                <version>${maven-surefire-plugin.version}</version>\n            <configuration><useFile>true</useFile><reportsDirectory>target/surefire-reports</reportsDirectory></configuration></plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-failsafe-plugin</artifactId>\n                <version>${maven-surefire-plugin.version}</version>\n            </plugin>\n            <plugin>\n                <groupId>io.spring.javaformat</groupId>\n                <artifactId>spring-javaformat-maven-plugin</artifactId>\n                <version>0.0.43</version>\n                <executions>\n                    <execution>\n                        <phase>validate</phase>\n                        <inherited>true</inherited>\n                        <goals>\n                            <goal>validate</goal>\n                        </goals>\n                    </execution>\n                </executions>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-jar-plugin</artifactId>\n                <version>${maven-jar-plugin.version}</version>\n                <configuration>\n                    <archive>\n                        <manifest>\n                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>\n                        </manifest>\n                        <manifestEntries>\n                            <Automatic-Module-Name>am.ik.yavi</Automatic-Module-Name>\n                        </manifestEntries>\n                    </archive>\n                </configuration>\n            </plugin>\n        </plugins>\n    </build>\n\n    <profiles>\n        <profile>\n            <id>jpms-aware</id>\n            <activation>\n                <jdk>[9,)</jdk>\n            </activation>\n            <properties>\n                <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>\n                <argLine>--add-opens jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED</argLine>\n            </properties>\n        </profile>\n    </profiles>\n\n    <distributionManagement>\n        <repository>\n            <id>sonatype-snapshots</id>\n            <name>sonatype-snapshots</name>\n            <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n        </repository>\n    </distributionManagement>\n</project>",
+    "failed_tests": [],
+    "test_time": 6.815978288650513
+  },
+  "mutants": [
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str != null && !str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str != null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", \"\") // This will remove the matched characters instead of replacing them with DUMMY_REPLACEMENT\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{1})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", \"\") //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT + DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{3})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ELF, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT + \"X\") //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(SKIN_TONE_SELECTOR_RANGE, DUMMY_REPLACEMENT + \"Y\") //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, \"\") //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(WHITE_UP_POINTING_INDEX, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(ELF, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, \"\") //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, ELF) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(ELF, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SKUL_AND_CROSSBONES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(ZERO_WIDTH_JOINER, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t.replaceAll(\"[\" + WHITE_UP_POINTING_INDEX + \"]\", \"\") // Remove all white up pointing index emojis\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", \"\");\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT + \"X\");\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn 0;\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.getBytes().length;\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.length();\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.replace(\" \", \"\").length();\n\t}",
+    "\t/**\n\t * Try to return the length of the given string.<br>\n\t * This method does not grantee the exact length.\n\t * @see <a href=\"https://unicode.org/Public/emoji/12.0/emoji-test.txt\">Emoji 12.0</a>\n\t * @param str\n\t * @return the length of the given string which may be true\n\t */\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") //\n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") //\n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) //\n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) //\n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) //\n\t\t\t// Support emojis that contains two skin tone selectors introduced in 12\n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.split(\"\").length;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\old(str) == null || \\old(str).isEmpty() ==> \\result == 0;\n//@ ensures !(\\old(str) == null || \\old(str).isEmpty()) ==> \\result == \\old(str).replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") .replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE + \"])\", DUMMY_REPLACEMENT) .replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\", \"\") .replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) .replace(ENGLAND, DUMMY_REPLACEMENT) .replace(SCOTLAND, DUMMY_REPLACEMENT) .replace(WALES, DUMMY_REPLACEMENT) .replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT).codePointCount(0, \\old(str).replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") .replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE + \"])\", DUMMY_REPLACEMENT) .replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\", \"\") .replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) .replace(ENGLAND, DUMMY_REPLACEMENT) .replace(SCOTLAND, DUMMY_REPLACEMENT) .replace(WALES, DUMMY_REPLACEMENT) .replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT).length());",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage am.ik.yavi.constraint.charsequence;\n\nimport am.ik.yavi.constraint.charsequence.variant.StandardizedVariationSequence;\nimport am.ik.yavi.jsr305.Nullable;\n\npublic class Emoji {\n\n\tprivate static final String COMBINING_ENCLOSING_KEYCAP = new String(new int[] { 0x20E3 }, 0, 1);\n\n\tprivate static final String DUMMY_REPLACEMENT = \"X\";\n\n\tprivate static final String ELF = new String(new int[] { 0x1F9DD }, 0, 1);\n\n\tprivate static final String E140_SKIN_RANGE = new String(new int[] { 0x1FAF0 }, 0, 1) + \"-\"\n\t\t\t+ new String(new int[] { 0x1FAF6 }, 0, 1) + new String(new int[] { 0x1FAC3 }, 0, 1) + \"-\"\n\t\t\t+ new String(new int[] { 0x1FAC5 }, 0, 1);\n\n\tprivate static final String ENGLAND = new String(\n\t\t\tnew int[] { 0x1F3F4, 0xE0067, 0xE0062, 0xE0065, 0xE006E, 0xE0067, 0xE007F }, 0, 7);\n\n\tprivate static final String PERSON = new String(new int[] { 0x1F9D1 }, 0, 1);\n\n\tprivate static final String REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE = new String(new int[] { 0x1F1E6 }, 0, 1) + \"-\"\n\t\t\t+ new String(new int[] { 0x1F1FF }, 0, 1);\n\n\tprivate static final String SCOTLAND = new String(\n\t\t\tnew int[] { 0x1F3F4, 0xE0067, 0xE0062, 0xE0073, 0xE0063, 0xE0074, 0xE007F }, 0, 7);\n\n\tprivate static final String SKIN_TONE_SELECTOR_RANGE = new String(new int[] { 0x1F3FB }, 0, 1) + \"-\"\n\t\t\t+ new String(new int[] { 0x1F3FF }, 0, 1);\n\n\tprivate static final String SKUL_AND_CROSSBONES = new String(new int[] { 0x2620 }, 0, 1);\n\n\tprivate static final String WALES = new String(\n\t\t\tnew int[] { 0x1F3F4, 0xE0067, 0xE0062, 0xE0077, 0xE006C, 0xE0073, 0xE007F }, 0, 7);\n\n\tprivate static final String WHITE_UP_POINTING_INDEX = new String(new int[] { 0x261D }, 0, 1);\n\n\tprivate static final String ADHESIVE_BANDAGE = new String(new int[] { 0x1FA79 }, 0, 1);\n\n\tprivate static final String ZERO_WIDTH_JOINER = \"\\u200D\";\n\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") \n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") \n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) \n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) \n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) \n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) \n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}\n\n}\n\n```\n## Target Method\n```\n\tpublic static int bestEffortCount(@Nullable String str) {\n\t\tif (str == null || str.isEmpty()) {\n\t\t\treturn 0;\n\t\t}\n\t\tString s = str.replaceAll(\"[\" + StandardizedVariationSequence.RANGE + COMBINING_ENCLOSING_KEYCAP + \"]\", \"\") \n\t\t\t.replaceAll(\"([\" + WHITE_UP_POINTING_INDEX + \"-\" + ELF + E140_SKIN_RANGE + \"][\" + SKIN_TONE_SELECTOR_RANGE\n\t\t\t\t\t+ \"])\", DUMMY_REPLACEMENT)\n\t\t\t.replaceAll(\"([\" + ZERO_WIDTH_JOINER + \"][\" + SKUL_AND_CROSSBONES + \"-\" + PERSON + ADHESIVE_BANDAGE + \"])\",\n\t\t\t\t\t\"\") \n\t\t\t.replaceAll(\"([\" + REGIONAL_INDICATOR_SYMBOL_LETTER_RANGE + \"]{2})\", DUMMY_REPLACEMENT) \n\t\t\t.replace(ENGLAND, DUMMY_REPLACEMENT) \n\t\t\t.replace(SCOTLAND, DUMMY_REPLACEMENT) \n\t\t\t.replace(WALES, DUMMY_REPLACEMENT) \n\t\t\t.replaceAll(\"(\" + DUMMY_REPLACEMENT + ZERO_WIDTH_JOINER + DUMMY_REPLACEMENT + \")\", DUMMY_REPLACEMENT);\n\t\treturn s.codePointCount(0, s.length());\n\t}\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `bestEffortCount`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "//@ ensures (str == null || str.isEmpty()) ==> \\result == 0;\n//@ ensures \\result >= 0;\n//@ ensures str != null && !str.isEmpty() ==> \\result <= str.codePointCount(0, str.length());\n//@ ensures str != null ==> \\result == 0 <==> str.isEmpty();",
+    "//@ ensures (str == null || str.isEmpty()) ==> \\result == 0;\n//@ ensures \\result >= 0;\n//@ ensures str != null && !str.isEmpty() ==> \\result <= str.codePointCount(0, str.length());\n//@ ensures str != null && !str.isEmpty() ==> \\result > 0 || str.codePointCount(0, str.length()) > 0;",
+    "//@ ensures (str == null || str.isEmpty()) ==> \\result == 0;\n//@ ensures \\result >= 0;\n//@ ensures str != null && !str.isEmpty() ==> \\result > 0 || str.codePointCount(0, str.length()) > 0;\n//@ ensures str != null ==> \\result <= str.codePointCount(0, str.length());",
+    "//@ ensures (str == null || str.isEmpty()) ==> \\result == 0;\n//@ ensures \\result >= 0;\n//@ ensures str != null && !str.isEmpty() ==> \\result <= str.codePointCount(0, str.length());",
+    "//@ ensures (str == null || str.isEmpty()) ==> \\result == 0;\n//@ ensures \\result >= 0;\n//@ ensures str != null && !str.isEmpty() ==> \\result > 0 || \\result == 0;\n//@ ensures str != null ==> \\result <= str.codePointCount(0, str.length());"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 233
+}

@@ -1,0 +1,198 @@
+{
+  "rlid": "greater_than",
+  "github_url": "https://github.com/tuneflow/tuneflow-py/blob/b5736cba31843590cdfefd6dd9c748110d347f69/./src/tuneflow_py/utils.py#L63-L79",
+  "name": "greater_than",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 12,
+  "cc": 6,
+  "content": "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+  "header": "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''",
+  "file": "./src/tuneflow_py/utils.py",
+  "start_line": 63,
+  "end_line": 79,
+  "body_start_line": 67,
+  "comment": "'''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''",
+  "test_time": 0.606086015701294,
+  "cover_tests": [
+    "test/test_automation.py::AutomationValueTestCase::test_moves_multiple_points_to_left_overwrite",
+    "test/test_midi_clip.py::TestBasicOperations::test_get_notes_within_clip_range",
+    "test/test_midi_clip.py::TestMoveClips::test_move_clips_overlaps_in_the_middle",
+    "test/test_note.py::TestBasicOperations::test_get_data",
+    "test/test_note.py::TestDeleteFromParent::test_delete_note",
+    "test/test_note.py::TestMoveNote::test_delete_note_if_moved_to_the_left_of_0",
+    "test/test_note.py::TestMoveNote::test_do_not_delete_note_if_moved_to_the_left_of_the_clip",
+    "test/test_note.py::TestMoveNote::test_do_not_delete_note_if_moved_to_the_right_of_the_clip",
+    "test/test_note.py::TestMoveNote::test_move_not_and_change_the_order_of_notes",
+    "test/test_note.py::TestMoveNote::test_set_note_start_to_0_if_moved_cross_0",
+    "test/test_track.py::TestMIDITracks::test_get_visible_notes",
+    "test/test_utils.py::TestBinarySearch::test_greater_than"
+  ],
+  "repo": {
+    "github_path": "tuneflow/tuneflow-py",
+    "commit": "b5736cba31843590cdfefd6dd9c748110d347f69",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"tuneflow-py\"\nversion = \"0.8.4\"\ndescription = \"Implement your music models and algorithms directly in TuneFlow - The next-gen DAW for the AI era\"\nreadme = \"README.md\"\nrequires-python = \">=3.10,<4.0\"\nkeywords = [ \"AI\", \"music\", \"DAW\", \"TuneFlow\", \"composition\", \"songwriting\", \"music production\", \"music generation\", \"music transcription\", \"mixing\", \"music theory\", \"music information retrieval\", \"MIR\", \"music analysis\", \"song analysis\",]\nclassifiers = [ \"Programming Language :: Python :: 3\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\",]\ndependencies = [ \"protobuf <= 3.19.4\", \"nanoid >= 2.0.0\", \"numpy (>=1.23,<2.0)\", \"miditoolkit-light >= 0.1.19\", \"typing_extensions >= 4.5.0\",]\n[[project.authors]]\nname = \"TuneFlow\"\nemail = \"contact@info.tuneflow.com\"\n\n[project.urls]\nHomepage = \"https://github.com/tuneflow/tuneflow-py\"\n\"Bug Tracker\" = \"https://github.com/tuneflow/tuneflow-py/issues\"\n\n[tool.pyright]\ninclude = [ \"src\",]\nexclude = [ \"**/__pycache__\", \"src/experimental\", \"src/typestubs\",]\nreportTypedDictNotRequiredAccess = \"warning\"\nreportGeneralTypeIssues = \"warning\"\n\n[tool.autopep8]\nmax_line_length = 120\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [],
+    "test_time": 14.671276569366455
+  },
+  "mutants": [
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 1\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else -1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else 0\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 2\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) // 2\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = None\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 2\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high - 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low < high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low < high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low >= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) + key(val)) if key is not None else (x + val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) + key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) + key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (val - x)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x * val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x + val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x + val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p < 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p <= 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p == 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 1:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 1:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p >= 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p >= 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = None\n            high = m - 1\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 2\n        else:\n            low = m + 1\n    return i\n",
+    "def greater_than(sorted_list: list, val, key: Callable | None = None, low: int | None = None, high: int | None = None):\n    '''\n    Returns the index of the first item in the array > val. This is the same as a successor query.\n    '''\n    low = low if low is not None else 0\n    high = high if high is not None else len(sorted_list) - 1\n    i = high + 1\n    while low <= high:\n        m = (low + high) >> 1\n        x = sorted_list[m]\n        p = (key(x) - key(val)) if key is not None else (x - val)\n        if p > 0:\n            i = m\n            high = m - 1\n        else:\n            low = m + 2\n    return i\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda sorted_list, val, key=None, low=None, high=None: list(sorted_list), name=\"sorted\")\n@icontract.snapshot(lambda sorted_list, val, key=None, low=None, high=None: (low if low is not None else 0), name=\"LOW\")\n@icontract.snapshot(lambda sorted_list, val, key=None, low=None, high=None: (high if high is not None else len(sorted_list) - 1), name=\"HIGH\")\n@icontract.ensure(lambda OLD, result: isinstance(result, int) and OLD.LOW <= result <= OLD.HIGH + 1)\n@icontract.ensure(lambda OLD, result, val, key: result == (next((i for i in range(OLD.LOW, OLD.HIGH + 1) if (((key(OLD.sorted[i]) - key(val)) if key is not None else (OLD.sorted[i] - val)) > 0)), OLD.HIGH + 1)))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": null,
+  "port": null,
+  "generate_num": null,
+  "w_code": null,
+  "prompt": null,
+  "prompting": null,
+  "postconds": null,
+  "responses": null,
+  "postcond_corr": null,
+  "mutant_kill": null,
+  "traversal_rank": 32
+}

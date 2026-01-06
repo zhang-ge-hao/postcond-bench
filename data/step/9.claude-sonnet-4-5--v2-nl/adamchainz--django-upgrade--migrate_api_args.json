@@ -1,0 +1,284 @@
+{
+  "rlid": "migrate_api_args",
+  "github_url": "https://github.com/adamchainz/django-upgrade/blob/05589e6da630cc5b9b589e183fa7c81f0b1fbed7/./src/django_upgrade/fixers/mail_api_kwargs.py#L149-L174",
+  "name": "migrate_api_args",
+  "line_cov": 1.0,
+  "lines": 26,
+  "stats": 9,
+  "cc": 3,
+  "content": "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+  "header": "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"",
+  "file": "./src/django_upgrade/fixers/mail_api_kwargs.py",
+  "start_line": 149,
+  "end_line": 174,
+  "body_start_line": 161,
+  "comment": "\"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"",
+  "test_time": 0.28959059715270996,
+  "cover_tests": [
+    "tests/fixers/test_mail_api_kwargs.py::test_get_connection",
+    "tests/fixers/test_mail_api_kwargs.py::test_get_connection_indented",
+    "tests/fixers/test_mail_api_kwargs.py::test_get_connection_indented_sameline",
+    "tests/fixers/test_mail_api_kwargs.py::test_get_connection_indented_weird",
+    "tests/fixers/test_mail_api_kwargs.py::test_get_connection_extra_kwargs",
+    "tests/fixers/test_mail_api_kwargs.py::test_get_connection_module_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_mail_admins_1",
+    "tests/fixers/test_mail_api_kwargs.py::test_mail_admins_2",
+    "tests/fixers/test_mail_api_kwargs.py::test_mail_admins_3",
+    "tests/fixers/test_mail_api_kwargs.py::test_mail_admins_module_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_mail_managers_1",
+    "tests/fixers/test_mail_api_kwargs.py::test_mail_managers_2",
+    "tests/fixers/test_mail_api_kwargs.py::test_mail_managers_3",
+    "tests/fixers/test_mail_api_kwargs.py::test_mail_managers_module_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mail_1",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mail_2",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mail_3",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mail_4",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mail_5",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mail_module_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mass_mail_1",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mass_mail_2",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mass_mail_3",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mass_mail_4",
+    "tests/fixers/test_mail_api_kwargs.py::test_send_mass_mail_module_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_1",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_2",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_3",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_4",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_5",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_6",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_module_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_message_module_from_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_message_message_module_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_1",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_2",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_3",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_4",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_5",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_6",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_7",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_module_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_message_module_from_import",
+    "tests/fixers/test_mail_api_kwargs.py::test_email_multi_alternatives_message_module_import"
+  ],
+  "repo": {
+    "github_path": "adamchainz/django-upgrade",
+    "commit": "05589e6da630cc5b9b589e183fa7c81f0b1fbed7",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"setuptools.build_meta\"\nrequires = [ \"setuptools>=77\",]\n\n[project]\nname = \"django-upgrade\"\nversion = \"1.29.1\"\ndescription = \"Automatically upgrade your Django project code.\"\nreadme = \"README.rst\"\nkeywords = [ \"Django\",]\nlicense = \"MIT\"\nlicense-files = [ \"LICENSE\",]\nrequires-python = \">=3.9\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Framework :: Django :: 2.2\", \"Framework :: Django :: 3.0\", \"Framework :: Django :: 3.1\", \"Framework :: Django :: 3.2\", \"Framework :: Django :: 4.0\", \"Framework :: Django :: 4.1\", \"Framework :: Django :: 4.2\", \"Framework :: Django :: 5.0\", \"Framework :: Django :: 5.1\", \"Framework :: Django :: 5.2\", \"Intended Audience :: Developers\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: 3.14\", \"Typing :: Typed\",]\ndependencies = [ \"tokenize-rt>=4.1\",]\n[[project.authors]]\nname = \"Adam Johnson\"\nemail = \"me@adamj.eu\"\n\n[dependency-groups]\ntest = [ \"coverage[toml]\", \"pytest\", \"pytest-randomly\", \"tokenize-rt\",]\ndocs = [ \"furo>=2024.8.6\", \"sphinx>=7.4.7\", \"sphinx-build-compatibility\", \"sphinx-copybutton>=0.5.2\",]\n\n[project.urls]\nChangelog = \"https://django-upgrade.readthedocs.io/en/latest/changelog.html\"\nDocumentation = \"https://django-upgrade.readthedocs.io/\"\nFunding = \"https://adamj.eu/books/\"\nRepository = \"https://github.com/adamchainz/django-upgrade\"\n\n[project.scripts]\ndjango-upgrade = \"django_upgrade.main:main\"\n\n[tool.pyproject-fmt]\nmax_supported_python = \"3.14\"\n\n[tool.mypy]\nenable_error_code = [ \"ignore-without-code\", \"redundant-expr\", \"truthy-bool\",]\nmypy_path = \"src/\"\nnamespace_packages = false\nstrict = true\nwarn_unreachable = true\n[[tool.mypy.overrides]]\nmodule = \"tests.*\"\nallow_untyped_defs = true\n\n[tool.rstcheck]\nreport_level = \"ERROR\"\n\n[tool.ruff.lint]\nselect = [ \"B\", \"C4\", \"E\", \"F\", \"I\", \"SIM\", \"TID\", \"UP\", \"W\",]\nignore = [ \"B9\", \"E501\", \"SIM105\", \"SIM108\",]\nextend-safe-fixes = [ \"UP006\",]\n\n[tool.pytest.ini_options]\naddopts = \"--strict-config\\n    --strict-markers\\n    \"\nxfail_strict = true\n\n[tool.coverage.run]\nbranch = true\nparallel = true\nsource = [ \"django_upgrade\", \"tests\",]\n\n[tool.coverage.paths]\nsource = [ \"src\", \".tox/**/site-packages\",]\n\n[tool.coverage.report]\nshow_missing = true\nexclude_also = [ \"if TYPE_CHECKING:\",]\n\n[tool.ruff.lint.isort]\nrequired-imports = [ \"from __future__ import annotations\",]\n\n[tool.uv.sources.sphinx-build-compatibility]\ngit = \"https://github.com/readthedocs/sphinx-build-compatibility\"\nrev = \"4f304bd4562cdc96316f4fec82b264ca379d23e0\"\n\n[tool.poetry.group.test.dependencies]\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [],
+    "test_time": 8.641982555389404
+  },
+  "mutants": [
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, -1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs + convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs + 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs + 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, ):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, +1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -2):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 2, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 2, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - convertible_posargs - 1, num_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = None\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs - 1]  # Incorrectly decrements the index\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name not in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name not in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end or tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"COMMENT\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"DEDENT\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"INDENT\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"NEWLINE\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"SPACE\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"XXUNIMPORTANT_WSXX\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"unimportant_ws\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"XXNLXX\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"nl\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 2\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start -= 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}=\"))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, None)\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=None))\n",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg} = None\"))  # Incorrectly adds a default value",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg} =\"))  # Extra space before '='",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}\"))  # Missing '='",
+    "def migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n    open_idx = find(tokens, i, name=OP, src=\"(\")\n    func_args, _close_idx = parse_call_args(tokens, open_idx)\n\n    for argindex in range(num_posargs - 1, num_posargs - convertible_posargs - 1, -1):\n        kwarg = api_config.new_kwargs[argindex - api_config.new_posargs]\n        arg_start, arg_end = func_args[argindex]\n\n        actual_arg_start = arg_start\n        while actual_arg_start < arg_end and tokens[actual_arg_start].name in (\n            \"UNIMPORTANT_WS\",\n            \"NL\",\n        ):\n            actual_arg_start += 1\n        tokens.insert(actual_arg_start, Token(name=CODE, src=f\"{kwarg}:\"))  # Incorrect syntax for keyword argument"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda tokens: tokens[:], name=\"old_tokens\")\n@icontract.snapshot(\n    lambda tokens, i: parse_call_args(\n        tokens, find(tokens, i, name=OP, src=\"(\")\n    )[0],\n    name=\"old_func_args\",\n)\n@icontract.snapshot(lambda api_config: api_config.new_kwargs[:], name=\"new_kwargs\")\n@icontract.snapshot(lambda num_posargs: num_posargs, name=\"num_posargs\")\n@icontract.snapshot(\n    lambda convertible_posargs: convertible_posargs,\n    name=\"convertible_posargs\",\n)\n@icontract.snapshot(lambda tokens: len(tokens), name=\"old_len\")\n@icontract.ensure(\n    lambda OLD, tokens, api_config, num_posargs, convertible_posargs:\n        len(tokens) == OLD.old_len + OLD.convertible_posargs\n        and\n        all(\n            any(getattr(t, \"src\", None) == f\"{k}=\" for t in tokens)\n            for k in OLD.new_kwargs[\n                OLD.num_posargs - OLD.convertible_posargs - api_config.new_posargs : OLD.num_posargs - api_config.new_posargs\n            ]\n        )\n        and\n        all(\n            not any(getattr(t, \"src\", None) == f\"{k}=\" for t in tokens)\n            for k in (\n                OLD.new_kwargs[: OLD.num_posargs - OLD.convertible_posargs - api_config.new_posargs]\n                + OLD.new_kwargs[OLD.num_posargs - api_config.new_posargs :]\n            )\n        )\n        and\n        (\n        all(\n            sum(\n                1\n                for t in tokens\n                if getattr(t, \"src\", None)\n                == f\"{OLD.new_kwargs[argindex - api_config.new_posargs]}=\"\n            )\n            == 1\n            for argindex in range(\n                OLD.num_posargs - OLD.convertible_posargs,\n                OLD.num_posargs,\n            )\n        )\n        and\n        all(\n            not any(\n                getattr(t, \"src\", None) == f\"{kw}=\"\n                for t in tokens\n            )\n            for kw in (\n                set(OLD.new_kwargs)\n                - {\n                    OLD.new_kwargs[argindex - api_config.new_posargs]\n                    for argindex in range(\n                        OLD.num_posargs - OLD.convertible_posargs,\n                        OLD.num_posargs,\n                    )\n                }\n            )\n        )\n    )\n    and\n    all(\n        (\n            (\n                lambda kw_name: (\n                    (lambda kw_pos: (\n                        (lambda start, end: (\n                            (lambda arg_slice: (\n                                (lambda first_sig: (\n                                    (lambda leading_ws: (\n                                        kw_pos\n                                        <= tokens.index(first_sig)\n                                        and\n                                        all(tokens.index(ws_tok) < kw_pos for ws_tok in leading_ws)\n                                    ))(\n                                        [\n                                            tok\n                                            for offset, tok in enumerate(arg_slice)\n                                            if tok.name in (\"UNIMPORTANT_WS\", \"NL\")\n                                            and all(\n                                                prev_tok.name in (\"UNIMPORTANT_WS\", \"NL\")\n                                                for prev_tok in arg_slice[:offset]\n                                            )\n                                        ]\n                                    )\n                                ))(\n                                    [\n                                        tok\n                                        for tok in arg_slice\n                                        if tok.name not in (\"UNIMPORTANT_WS\", \"NL\")\n                                    ][0]\n                                )\n                            ))(\n                                OLD.old_tokens[start:end]\n                            )\n                        ))(*OLD.old_func_args[argindex])\n                    ))(\n                        [\n                            idx\n                            for idx, t in enumerate(tokens)\n                            if getattr(t, \"src\", None) == f\"{kw_name}=\"\n                        ][0]\n                    )\n                )\n            )(\n                OLD.new_kwargs[argindex - api_config.new_posargs]\n            )\n        )\n        for argindex in range(\n            OLD.num_posargs - OLD.convertible_posargs,\n            OLD.num_posargs,\n        )\n    )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nConvert positional arguments to keyword arguments for Django email APIs:\nhttps://docs.djangoproject.com/en/6.0/releases/6.0/#positional-arguments-in-django-core-mail-apis\n\"\"\"\n\nfrom __future__ import annotations\n\nimport ast\nfrom collections.abc import Iterable\nfrom functools import partial\n\nfrom tokenize_rt import Offset, Token\n\nfrom django_upgrade.ast import ast_start_offset\nfrom django_upgrade.data import Fixer, State, TokenFunc\nfrom django_upgrade.tokens import CODE, OP, find, parse_call_args\n\nfixer = Fixer(\n    __name__,\n    min_version=(6, 0),\n)\n\n\nclass APIConfig:\n    __slots__ = (\"new_posargs\", \"new_kwargs\", \"extra_kwargs\")\n\n    def __init__(\n        self, new_posargs: int, new_kwargs: list[str], extra_kwargs: bool\n    ) -> None:\n...\nAPI_CONFIGS = {\n    \"get_connection\": APIConfig(1, [\"fail_silently\"], True),\n    \"mail_admins\": APIConfig(2, [\"fail_silently\", \"connection\", \"html_message\"], False),\n    \"mail_managers\": APIConfig(\n        2, [\"fail_silently\", \"connection\", \"html_message\"], False\n    ),\n    \"send_mail\": APIConfig(\n        4,\n        [\n            \"fail_silently\",\n            \"auth_user\",\n            \"auth_password\",\n            \"connection\",\n            \"html_message\",\n        ],\n        False,\n    ),\n    \"send_mass_mail\": APIConfig(\n        1, [\"fail_silently\", \"auth_user\", \"auth_password\", \"connection\"], False\n    ),\n    \"EmailMessage\": APIConfig(\n        4,\n        [\n            \"bcc\",\n            \"connection\",\n            \"attachments\",\n            \"headers\",\n            \"cc\",\n            \"reply_to\",\n        ],\n        False,\n    ),\n    \"EmailMultiAlternatives\": APIConfig(\n        4,\n        [\n            \"bcc\",\n            \"connection\",\n            \"attachments\",\n            \"headers\",\n            \"alternatives\",\n            \"cc\",\n            \"reply_to\",\n        ],\n        False,\n    ),\n}\n\nMESSAGE_MODULE_NAMES = {\"EmailMessage\", \"EmailMultiAlternatives\"}\n\n\n@fixer.register(ast.Call)\ndef visit_Call(\n    state: State,\n    node: ast.Call,\n    parents: tuple[ast.AST, ...],\n) -> Iterable[tuple[Offset, TokenFunc]]:\n    # Check for direct import or module import and get function config\n...\ndef migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n...\n```\n## Target Method\n```\ndef migrate_api_args(\n    tokens: list[Token],\n    i: int,\n    *,\n    api_config: APIConfig,\n    num_posargs: int,\n    convertible_posargs: int,\n) -> None:\n    \"\"\"\n    Convert excess positional arguments to keyword arguments for email functions.\n    Only converts arguments beyond the allowed positional count.\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `migrate_api_args`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(lambda tokens: len(tokens), name=\"old_len\")\n@icontract.snapshot(lambda tokens: id(tokens), name=\"old_id\")\n@icontract.ensure(lambda tokens, old_id: id(tokens) == old_id, \"tokens list object identity preserved\")\n@icontract.ensure(lambda tokens, old_len: len(tokens) >= old_len, \"tokens list can only grow or stay same size\")\n@icontract.ensure(lambda tokens: isinstance(tokens, list), \"tokens remains a list\")\n@icontract.ensure(lambda tokens: all(isinstance(t, Token) for t in tokens), \"all elements remain Token objects\")",
+    "@icontract.snapshot(lambda tokens: len(tokens), name=\"original_length\")\n@icontract.snapshot(lambda tokens: tokens[:], name=\"original_tokens\")\n@icontract.ensure(lambda tokens: tokens is not None)\n@icontract.ensure(lambda tokens, original_length: len(tokens) >= original_length)\n@icontract.ensure(lambda tokens, original_tokens: all(isinstance(t, type(original_tokens[0])) for t in tokens if tokens))",
+    "@icontract.snapshot(lambda tokens: len(tokens), name=\"old_len\")\n@icontract.snapshot(lambda tokens: list(tokens), name=\"old_tokens\")\n@icontract.ensure(lambda result: result is None)\n@icontract.ensure(lambda tokens, old_len, convertible_posargs, api_config, num_posargs: \n    (convertible_posargs == 0 or num_posargs <= api_config.new_posargs) or len(tokens) >= old_len,\n    \"Tokens list should grow or stay same when converting positional to keyword arguments\")\n@icontract.ensure(lambda tokens, i, old_tokens: i < len(old_tokens) or len(tokens) == len(old_tokens),\n    \"If index i is valid in original tokens, modifications should occur\")",
+    "@icontract.snapshot(lambda tokens: len(tokens), name=\"old_len\")\n@icontract.snapshot(lambda tokens: tokens[:], name=\"old_tokens\")\n@icontract.ensure(lambda tokens, old_len: len(tokens) >= old_len - convertible_posargs)\n@icontract.ensure(lambda i, tokens: 0 <= i < len(tokens))",
+    "@icontract.snapshot(lambda tokens: tokens[:], name=\"old_tokens\")\n@icontract.snapshot(lambda tokens: len(tokens), name=\"old_len\")\n@icontract.ensure(lambda tokens: isinstance(tokens, list))\n@icontract.ensure(lambda tokens, old_len: len(tokens) >= old_len, \"Tokens may be added during conversion\")\n@icontract.ensure(lambda convertible_posargs, old_tokens, tokens: convertible_posargs == 0 or old_tokens != tokens, \"Tokens should be modified if there are convertible posargs\")"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 225
+}

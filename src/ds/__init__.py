@@ -56,12 +56,16 @@ class Method:
     mutants: List[str] = None
     mutant_tags: List[List[str]] = None
 
+    ref_source: str = None
     ref_postcond: str = None
     ref_mutant_kill: List[str] = None
 
     model_name: str = None
     port: str = None
     generate_num: int = None
+
+    task_version: int = None
+
     w_code: bool = None
 
     prompt: str = None
