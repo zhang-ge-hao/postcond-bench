@@ -48,7 +48,7 @@ def read_benchmark_with_exclude(p, save_mem=False) -> List[Method]:
             exluded_methods.append(m)
     ex_methods_python = [m for m in exluded_methods if m.repo.language == "python"]
     ex_methods_java = [m for m in exluded_methods if m.repo.language == "java"]
-    print(len(ex_methods_python), len(ex_methods_java))
+    # print(len(ex_methods_python), len(ex_methods_java))
     ex_methods_python.sort(key=lambda m: m.traversal_rank)
     ex_methods_java.sort(key=lambda m: m.traversal_rank)
     min_len = min(len(ex_methods_python), len(ex_methods_java))
