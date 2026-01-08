@@ -249,8 +249,8 @@ if __name__ == "__main__":
     # write_final_benchmark()
     # exit()
 
-    method_fn = "cojen--Maker--get"
-    mut_idxs = None
+    method_fn = "keon--algorithms--k_closest"
+    mut_idxs = [10]
     ban_mut_idxs = None
     early_stop = True
     method_fn, results = eval(

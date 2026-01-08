@@ -1,4 +1,4 @@
-IMAGE=~/image/apptainer/sbpy.sif
+IMAGE="${1:-$HOME/image/apptainer/sbpy.sif}"
 
 export PATH_STR=/root/.cargo/bin
 export PATH_STR=$PATH_STR:/opt/maven/bin

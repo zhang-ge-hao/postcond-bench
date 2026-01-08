@@ -16,6 +16,7 @@ import re
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 from matplotlib import colors as mcolors   # 新增
+from collections import defaultdict
 
 import colorsys
 
@@ -58,7 +59,7 @@ def read_benchmark_with_exclude(p, save_mem=False) -> List[Method]:
 KFS = ["jml_fail", "icontract_fail"]
 KS = [1, 3, 5]
 LANGUAGES = ["python", "java"]
-PROMPTINGS = ["v2-all", "v2-code", "v2-nl"]
+PROMPTINGS = ["v2-code", "v2-nl", "v2-all"]
 
 with open("data/step/0.append/dep_anno_python.txt") as file:
     dep_anno_python: Dict[str, str] = {l.split("\t")[0]: l.strip().split("\t")[1] for l in file}
@@ -84,9 +85,14 @@ MODEL_NAME_MAP = {
 }
 
 PROMPTING_MAP = {
-    "v2-all": "Ori", 
-    "v2-code": "Code", 
-    "v2-nl": "NL"
+    "v2-code": "C2P (Code-only)", 
+    "v2-nl": "N2P (NL-only)",
+    "v2-all": "F2P (NL + Code)", 
+}
+PROMPTING_MAP_SHORT = {
+    "v2-code": "C2P", 
+    "v2-nl": "N2P",
+    "v2-all": "F2P", 
 }
 
 @dataclass
@@ -107,6 +113,19 @@ class ExpRes:
     comp_5: float
 
     c2c: float
+    
+    gap_sub_1: float
+    gap_sub_3: float
+    gap_sub_5: float
+
+    gap_rate_1: float
+    gap_rate_3: float
+    gap_rate_5: float
+
+    gap_count_dist: List[int]
+    gap_count_dist_2: List[int]
+
+    method_level_dist: List[float]
 
     rule_precision: float
     llm_precision: float
@@ -132,7 +151,12 @@ def new_exp_res(
         method_count=None, postcond_count=None,
         corr_1=None, corr_3=None, corr_5=None,
         comp_1=None, comp_3=None, comp_5=None,
-        c2c=None,
+        c2c=None, 
+        gap_sub_1=None, gap_sub_3=None, gap_sub_5=None, 
+        gap_rate_1=None, gap_rate_3=None, gap_rate_5=None, 
+        gap_count_dist=None,
+        gap_count_dist_2=None,
+        method_level_dist=None,
         rule_precision=None, llm_precision=None)
 
 def calculate_pass_k(n, c, k) -> float:
@@ -145,10 +169,15 @@ def calculate_pass_k(n, c, k) -> float:
 def set_metrics(res: ExpRes, 
                 corr_and_comps: List[float],
                 c2c: float,
+                gaps: List[float],
+                gap_count_dist: List[float],
+                gap_count_dist_2: List[float],
+                method_level_dist: List[float],
                 rule_precision,
                 llm_precision):
     assert isinstance(corr_and_comps, list)
     assert len(corr_and_comps) == 6
+    assert len(gaps) == 6
     res.corr_1 = corr_and_comps[0]
     res.corr_3 = corr_and_comps[1]
     res.corr_5 = corr_and_comps[2]
@@ -156,11 +185,20 @@ def set_metrics(res: ExpRes,
     res.comp_3 = corr_and_comps[4]
     res.comp_5 = corr_and_comps[5]
     res.c2c = c2c
+    res.gap_sub_1 = gaps[0]
+    res.gap_sub_3 = gaps[1]
+    res.gap_sub_5 = gaps[2]
+    res.gap_rate_1 = gaps[3]
+    res.gap_rate_3 = gaps[4]
+    res.gap_rate_5 = gaps[5]
+    assert len(gap_count_dist) == 6
+    res.gap_count_dist = gap_count_dist
+    res.gap_count_dist_2 = gap_count_dist_2
+
+    res.method_level_dist = method_level_dist
+
     res.rule_precision = rule_precision
     res.llm_precision = llm_precision
-
-def set_metrics_none(res: ExpRes):
-    set_metrics(res, [None, None, None, None, None, None], None, None, None)
 
 def dump_exp_results(results: List[ExpRes], jsonl_path: str, csv_path: str) -> None:
     dict_rows = [asdict(r) for r in results]
@@ -247,9 +285,7 @@ def cal_metrics(methods: List[Method], res: ExpRes) -> ExpRes:
         assert method.generate_num == len(method.postcond_corr)
         assert len(method.postcond_corr) == len(method.mutant_kill)
 
-    if len(methods) == 0:
-        set_metrics_none(res)
-        return res
+    assert len(methods) > 0
 
     assert len(set([m.generate_num for m in methods])) == 1
     generate_num = methods[0].generate_num
@@ -261,6 +297,12 @@ def cal_metrics(methods: List[Method], res: ExpRes) -> ExpRes:
     pass_k = {n: {i: [] for i in KS} for n in ["corr", "comp"]}
     tot_corr_count = 0
     tot_comp_count = 0
+
+    gap_count_dist = [0] * 6
+    gap_count_dist_2 = [0] * 6
+
+    method_level_dist = [0] * 3
+
     for method in methods:
         corr_count, comp_count = 0, 0
         for corr_res, comp_res in zip(method.postcond_corr, method.mutant_kill):
@@ -278,18 +320,34 @@ def cal_metrics(methods: List[Method], res: ExpRes) -> ExpRes:
         tot_corr_count += corr_count
         tot_comp_count += comp_count
 
-    corr_and_comps = [np.mean(pass_k["corr"][k]).item() for k in KS]
-    corr_and_comps.extend(np.mean(pass_k["comp"][k]).item() for k in KS)
+        method_level_dist[0] += len(method.postcond_corr) - corr_count # incorrect
+        method_level_dist[1] += corr_count - comp_count # correct but incomplete
+        method_level_dist[2] += comp_count # correct but complete
+        
+        gap_count_dist[corr_count - comp_count] += 1
+        if corr_count > 0:
+            gap_count_dist_2[corr_count - comp_count] += 1
+
+    corrs = [np.mean(pass_k["corr"][k]).item() for k in KS]
+    comps = [np.mean(pass_k["comp"][k]).item() for k in KS]
+    corr_and_comps = corrs + comps
+
+    method_level_dist = [v / len(methods) for v in method_level_dist]
 
     c2c = None
     if tot_corr_count > 0:
         c2c = tot_comp_count / tot_corr_count
+    
+    gaps = [corr - comp for corr, comp in zip(corrs, comps)]
+    gaps.extend([(1 - comp / corr) if corr > 0 else None for corr, comp in zip(corrs, comps)])
 
     mutator_precision, _ = get_mutator_precision(methods)
     p_rule = mutator_precision["rule"]
     p_llm = mutator_precision["llm"]
 
-    set_metrics(res, corr_and_comps, c2c, p_rule, p_llm)
+    set_metrics(res, corr_and_comps, c2c, gaps, 
+                gap_count_dist, gap_count_dist_2, 
+                method_level_dist, p_rule, p_llm)
 
     return res
 
@@ -436,18 +494,54 @@ def main_res():
 
     # =====
 
-    prompting_metrics = {prompting: [] for prompting in PROMPTINGS}
-    for _n in numbers:
-        if _n.metric != "c2c":
-            prompting_metrics[_n.prompting].append(_n.number)
-    avgs = []
-    for prompting, ns in prompting_metrics.items():
-        avg = sum(ns) / len(ns)
-        avgs.append((avg, prompting, len(ns)))
-    avgs.sort()
-    for avg, prompting, length in avgs:
-        print(f"{avg:.3f} {prompting} {length}")
+    # prompting_metrics = {prompting: [] for prompting in PROMPTINGS}
+    # for _n in numbers:
+    #     if _n.metric != "c2c":
+    #         prompting_metrics[_n.prompting].append(_n.number)
+    # avgs = []
+    # for prompting, ns in prompting_metrics.items():
+    #     avg = sum(ns) / len(ns)
+    #     avgs.append((avg, prompting, len(ns)))
+    # avgs.sort()
+    # for avg, prompting, length in avgs:
+    #     print(f"{avg:.3f} {prompting} {length}")
     
+    # =====
+
+    # __results = {model: [] for model in model_names}
+    # for _n in numbers:
+    #     if "comp" in _n.metric:
+    #         __results[_n.model_name].append(_n.number)
+    # avgs = []
+    # for key, ns in __results.items():
+    #     avg = sum(ns) / len(ns)
+    #     avgs.append((avg, key, len(ns)))
+    # avgs.sort()
+    # for avg, key, length in avgs:
+    #     print(f"{avg:.3f} {key} {length}")
+    
+    # =====
+
+    # __results = {(lang, prompting, f"{metric}_{k}"): [0, 0]
+    #              for k in [1, 5] for metric in ["corr", "comp"] 
+    #              for lang in LANGUAGES 
+    #              for prompting in PROMPTINGS}
+    # tot_count = 0
+    # os_count = 0
+    # for _n in numbers:
+    #     if _n.metric != "c2c":
+    #         _tuple = __results[(_n.language, _n.prompting, _n.metric)]
+    #         _tuple[0] = max(_tuple[0], _n.number)
+    #         tot_count += 1
+    #         if "gpt" not in _n.model_name.lower() and "claude" not in _n.model_name.lower():
+    #             _tuple[1] = max(_tuple[1], _n.number)
+    #             os_count += 1
+    # results = list(__results.items())
+    # results.sort()
+    # print(tot_count, os_count)
+    # for (lang, prompting, metric), (max_1, max_2) in results:
+    #     print(f"{lang}, {prompting}, {metric}, {max_1:.3f}, {max_2:.3f}, {max_1 / max_2:.3f}")
+
     # =====
 
     width = 10
@@ -614,6 +708,147 @@ def analyze_dep():
     print(" & ".join(avg_str_list) + "\\\\")
 
 
+def code_line_line_chart_main():
+    plt.rcParams['font.family'] = 'DejaVu Serif'   # 直接用这句就够了
+
+    ranges = [
+        "line__00_20", 
+        "line__20_40", 
+        "line__40_inf",
+    ]
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [r for r in exp_res_list if r.method_range in ranges]
+
+    model_names = list(set([r.model_name for r in exp_res_list]))
+    model_names = [m for m in ORDERED_MODELS if m in model_names]
+
+    metrics = ["corr_1", "comp_1"]
+
+    data = {metric: {p: {m: {_range: [] for _range in ranges} 
+                     for m in model_names} for p in PROMPTINGS} for metric in metrics}
+
+    for r in exp_res_list:
+        for metric in metrics:
+            n = getattr(r, metric)
+            data[metric][r.prompting][r.model_name][r.method_range].append(n)
+    for metric in metrics:
+        for p in PROMPTINGS:
+            for m in model_names:
+                for _range in ranges:
+                    ns = data[metric][p][m][_range]
+                    assert len(ns) == 2
+                    data[metric][p][m][_range] = np.mean(ns)
+
+    print(json.dumps(data, indent=2))
+
+    x_pos = [1, 3, 5]
+    x_labels = ["[0,20)", "[20,40)", r"[40,$\infty$)"]
+
+    promptings = ["v2-code", "v2-nl", "v2-all"]
+
+    # ----- model list: take from corr_1 / first prompting -----
+    model_names = list(data["corr_1"][promptings[0]].keys())
+
+    # ----- color logic (same spirit as your original) -----
+    color_cycle = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+
+    def ensure_not_too_light(color, max_l=0.80):
+        r, g, b = mcolors.to_rgb(color)
+        h, l, s = colorsys.rgb_to_hls(r, g, b)
+        if l > max_l:
+            l = max_l
+            r, g, b = colorsys.hls_to_rgb(h, l, s)
+        return (r, g, b)
+
+    def make_variant_colors(models, cycle):
+        out = {}
+        for i, m in enumerate(models):
+            base = cycle[i % len(cycle)]
+            out[m] = ensure_not_too_light(base, max_l=0.5)
+        return out
+
+    model_to_color = make_variant_colors(model_names, color_cycle)
+
+    # ----- figure: 2 rows (corr/comp) x 3 cols (promptings) -----
+    fig, axes = plt.subplots(
+        2, 3, figsize=(10, 6),
+        sharex=True,
+        sharey="row",
+        constrained_layout=False
+    )
+
+    subplot_specs = [
+        ("corr_1", p) for p in promptings
+    ] + [
+        ("comp_1", p) for p in promptings
+    ]
+
+    # axes is 2x3 ndarray already
+    for idx, (metric, prompting) in enumerate(subplot_specs):
+        r = 0 if metric == "corr_1" else 1
+        c = promptings.index(prompting)
+        ax = axes[r, c]
+
+        for model in model_names:
+            y = []
+            has_any = False
+            for rr in ranges:
+                v = data.get(metric, {}).get(prompting, {}).get(model, {}).get(rr, None)
+                if v is None:
+                    y.append(float("nan"))
+                else:
+                    y.append(v)
+                    has_any = True
+            if not has_any:
+                continue
+
+            ax.plot(
+                x_pos, y,
+                linestyle="-",
+                marker="o",
+                color=model_to_color[model],
+                alpha=0.7,
+                markersize=7,
+            )
+
+        # titles: only top row
+        if r == 0:
+            ax.set_title(PROMPTING_MAP_SHORT.get(prompting, prompting), fontsize=22)
+
+        # x formatting: only bottom row
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(x_labels)
+        ax.tick_params(axis="both", labelsize=15)
+        if r == 1:
+            ax.set_xlabel("#LoC", fontsize=22)
+
+        # y labels: leftmost col only
+        if c == 0:
+            ax.set_ylabel("Corr@1" if r == 0 else "Comp@1", fontsize=22)
+
+    # ----- legend (top center) -----
+    # If you have MODEL_NAME_MAP, replace label=m with MODEL_NAME_MAP[m]
+    handles = [Patch(facecolor=model_to_color[m], label=MODEL_NAME_MAP[m], alpha=0.7) for m in model_names]
+    leg = fig.legend(
+        handles=handles,
+        labels=[h.get_label() for h in handles],
+        loc="upper center",
+        bbox_to_anchor=(0.5, 1.15),
+        ncol=3,
+        frameon=True,
+        fontsize=18,
+    )
+    frame = leg.get_frame()
+    frame.set_edgecolor("black")
+    frame.set_linewidth(0.8)
+
+    fig.tight_layout(pad=1.6)
+    plt.savefig("data/lines--main.pdf", bbox_inches="tight")
+
+
 
 def code_line_line_chart():
     plt.rcParams['font.family'] = 'DejaVu Serif'   # 直接用这句就够了
@@ -762,7 +997,7 @@ def code_line_line_chart():
             linestyle = "-"
             color = model_to_color[model_name]
 
-            task_name = PROMPTING_MAP[prompting]
+            task_name = PROMPTING_MAP_SHORT[prompting]
 
             ax.plot(
                 [1, 3, 5],
@@ -934,6 +1169,1084 @@ def mutation_FDR():
         print(" & ".join(number_str_list) + f" \\\\")
 
 
+def _xspan_at_y_from_body(body, y0: float):
+    """Return (xmin, xmax) where the violin body intersects the horizontal line y=y0."""
+    path = body.get_paths()[0]
+    verts = path.vertices
+    xs = verts[:, 0]
+    ys = verts[:, 1]
+
+    hits = []
+    for i in range(len(verts) - 1):
+        x1, y1 = xs[i], ys[i]
+        x2, y2 = xs[i + 1], ys[i + 1]
+
+        # segment crosses y0 (or touches it)
+        if (y1 - y0) == 0:
+            hits.append(x1)
+        if (y1 - y0) * (y2 - y0) < 0:  # strictly crosses
+            t = (y0 - y1) / (y2 - y1)
+            hits.append(x1 + t * (x2 - x1))
+        elif (y2 - y0) == 0:
+            hits.append(x2)
+
+    if not hits:
+        return None
+
+    # 轮廓可能产生多个交点（重复/数值原因），取最左最右即可
+    return (float(np.min(hits)), float(np.max(hits)))
+
+
+def add_violin_quantile_bars(ax, parts, data, positions, qs=(0.25, 0.5, 0.75),
+                             color="orange", lw=1.2, zorder=5):
+    for body, arr, x0 in zip(parts["bodies"], data, positions):
+        arr = np.asarray(arr)
+        if arr.size == 0:
+            continue
+
+        for q in qs:
+            y0 = float(np.quantile(arr, q))
+            span = _xspan_at_y_from_body(body, y0)
+            if span is None:
+                continue
+            xmin, xmax = span
+            ax.plot([xmin, xmax], [y0, y0],
+                    color=color, linewidth=lw, zorder=zorder, solid_capstyle="round")
+
+
+def violin_main_unfilter(style="violin"):
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [r for r in exp_res_list if r.method_range is None]
+
+    data = defaultdict(list)
+    for r in exp_res_list:
+        prompting = r.prompting
+        gap_count_dist = r.gap_count_dist
+        for v, d in enumerate(gap_count_dist):
+            data[prompting].extend([v / 5] * d)
+
+    data = [data[prompting] for prompting in PROMPTINGS]
+
+    fig, ax = plt.subplots(figsize=(1.5 * len(PROMPTINGS), 4))
+    positions = list(range(1, len(PROMPTINGS) + 1))
+
+    # 配色
+    light_blue = "#9ecae1"  # 浅蓝（填充）
+    dark_blue = "#08519c"   # 深蓝（线条/均值点）
+    grey = "grey"
+
+    if style == "box":
+        bp = ax.boxplot(
+            data,
+            positions=positions,
+            widths=0.40,
+            capwidths=0.15,
+            showfliers=False,
+            patch_artist=True,
+            boxprops=dict(facecolor=light_blue, alpha=0.35, edgecolor="none", linewidth=0),
+            whiskerprops=dict(color=dark_blue, linewidth=1.4),
+            capprops=dict(color=dark_blue, linewidth=1.4),
+            medianprops=dict(color=dark_blue, linewidth=1.6),
+        )
+
+        # 如果某些 matplotlib 版本仍然给 boxes 留了边框，强行关掉
+        for box in bp["boxes"]:
+            box.set_edgecolor("none")
+            box.set_linewidth(0)
+
+        means = [float(np.mean(arr)) if len(arr) > 0 else np.nan for arr in data]
+        ax.scatter(
+            positions,
+            means,
+            marker="o",
+            s=32,
+            color=dark_blue,
+            zorder=3,
+            label="_nolegend_",
+        )
+
+        ax.set_xticks(positions)
+        
+    elif style == "violin":
+        violin_box_color = "#08529cd4"
+
+        parts = ax.violinplot(
+            data,
+            positions=positions,
+            showmeans=False,
+            showextrema=False,
+            # quantiles=[[0.25, 0.5, 0.75] for _ in data],
+            bw_method=0.4
+        )
+
+        # 去掉 violin 外轮廓线
+        for b in parts["bodies"]:
+            b.set_edgecolor("none")
+            b.set_linewidth(0)
+
+        # quantiles 线保留为橙色
+        # parts["cquantiles"].set_color("orange")
+        # parts["cquantiles"].set_linewidth(1.2)
+
+        add_violin_quantile_bars(
+            ax, parts, data, positions,
+            qs=(0.25, 0.5, 0.75),
+            color=violin_box_color,
+            lw=1.2
+        )
+
+        # 叠加：更细线条的空心 box
+        # bp = ax.boxplot(
+        #     data,
+        #     positions=positions,
+        #     widths=0.30,
+        #     capwidths=0.15,
+        #     showfliers=False,
+        #     patch_artist=True,
+        #     zorder=4,
+        #     boxprops=dict(facecolor="none", edgecolor=violin_box_color, linewidth=1.0),
+        #     whiskerprops=dict(color=violin_box_color, linewidth=0.9),
+        #     capprops=dict(color=violin_box_color, linewidth=0.9),
+        #     medianprops=dict(color=violin_box_color, linewidth=1.0),
+        # )
+        # for w in bp["whiskers"]:
+        #     w.set_visible(False)
+        # for c in bp["caps"]:
+        #     c.set_visible(False)
+
+
+        # 均值蓝色圆点（盖在最上层）
+        means = [float(np.mean(arr)) if len(arr) > 0 else np.nan for arr in data]
+        ax.scatter(
+            positions,
+            means,
+            marker="o",
+            s=12,
+            color=violin_box_color,
+            zorder=5,
+            label="_nolegend_",
+        )
+
+        ax.set_xticks(positions)
+
+    ax.set_xticklabels([PROMPTING_MAP[p] for p in PROMPTINGS], ha="center")
+    ax.set_xlabel("Input Setting", fontsize=12)
+    ax.set_ylabel("Gap (Corr_rate − Comp_rate)", fontsize=12)
+    ax.set_title("Method-level correctness–completeness gap", fontsize=12)
+
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    plt.tight_layout()
+    plt.savefig(f"data/{style}--main--unfilter.pdf", bbox_inches="tight")
+
+
+
+def violin_main(style="violin"):
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [r for r in exp_res_list if r.method_range is None]
+
+    data = defaultdict(list)
+    for r in exp_res_list:
+        prompting = r.prompting
+        gap_count_dist = r.gap_count_dist_2
+        for v, d in enumerate(gap_count_dist):
+            data[prompting].extend([v / 5] * d)
+
+    data = [data[prompting] for prompting in PROMPTINGS]
+
+    fig, ax = plt.subplots(figsize=(1.5 * len(PROMPTINGS), 4))
+    positions = list(range(1, len(PROMPTINGS) + 1))
+
+    # 配色
+    light_blue = "#9ecae1"  # 浅蓝（填充）
+    dark_blue = "#08519c"   # 深蓝（线条/均值点）
+    grey = "grey"
+
+    if style == "box":
+        bp = ax.boxplot(
+            data,
+            positions=positions,
+            widths=0.40,
+            capwidths=0.15,
+            showfliers=False,
+            patch_artist=True,
+            boxprops=dict(facecolor=light_blue, alpha=0.35, edgecolor="none", linewidth=0),
+            whiskerprops=dict(color=dark_blue, linewidth=1.4),
+            capprops=dict(color=dark_blue, linewidth=1.4),
+            medianprops=dict(color=dark_blue, linewidth=1.6),
+        )
+
+        # 如果某些 matplotlib 版本仍然给 boxes 留了边框，强行关掉
+        for box in bp["boxes"]:
+            box.set_edgecolor("none")
+            box.set_linewidth(0)
+
+        means = [float(np.mean(arr)) if len(arr) > 0 else np.nan for arr in data]
+        ax.scatter(
+            positions,
+            means,
+            marker="o",
+            s=32,
+            color=dark_blue,
+            zorder=3,
+            label="_nolegend_",
+        )
+
+        ax.set_xticks(positions)
+        
+    elif style == "violin":
+        violin_box_color = "#08529cd4"
+
+        parts = ax.violinplot(
+            data,
+            positions=positions,
+            showmeans=False,
+            showextrema=False,
+            # quantiles=[[0.25, 0.5, 0.75] for _ in data],
+            bw_method=0.4
+        )
+
+        # 去掉 violin 外轮廓线
+        for b in parts["bodies"]:
+            b.set_edgecolor("none")
+            b.set_linewidth(0)
+
+        # quantiles 线保留为橙色
+        # parts["cquantiles"].set_color("orange")
+        # parts["cquantiles"].set_linewidth(1.2)
+
+        add_violin_quantile_bars(
+            ax, parts, data, positions,
+            qs=(0.25, 0.5, 0.75),
+            color=violin_box_color,
+            lw=1.2
+        )
+
+        # 叠加：更细线条的空心 box
+        # bp = ax.boxplot(
+        #     data,
+        #     positions=positions,
+        #     widths=0.30,
+        #     capwidths=0.15,
+        #     showfliers=False,
+        #     patch_artist=True,
+        #     zorder=4,
+        #     boxprops=dict(facecolor="none", edgecolor=violin_box_color, linewidth=1.0),
+        #     whiskerprops=dict(color=violin_box_color, linewidth=0.9),
+        #     capprops=dict(color=violin_box_color, linewidth=0.9),
+        #     medianprops=dict(color=violin_box_color, linewidth=1.0),
+        # )
+        # for w in bp["whiskers"]:
+        #     w.set_visible(False)
+        # for c in bp["caps"]:
+        #     c.set_visible(False)
+
+
+        # 均值蓝色圆点（盖在最上层）
+        means = [float(np.mean(arr)) if len(arr) > 0 else np.nan for arr in data]
+        ax.scatter(
+            positions,
+            means,
+            marker="o",
+            s=12,
+            color=violin_box_color,
+            zorder=5,
+            label="_nolegend_",
+        )
+
+        ax.set_xticks(positions)
+
+    ax.set_xticklabels([PROMPTING_MAP[p] for p in PROMPTINGS], ha="center")
+    ax.set_xlabel("Input Setting", fontsize=12)
+    ax.set_ylabel("Gap (Corr_rate − Comp_rate)", fontsize=12)
+    ax.set_title("Method-level correctness–completeness gap", fontsize=12)
+
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    plt.tight_layout()
+    plt.savefig(f"data/{style}--main.pdf", bbox_inches="tight")
+
+
+def violin_app_1(style="violin"):
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [r for r in exp_res_list 
+                    if r.method_range is None and r.prompting == "v2-all"]
+
+    data = defaultdict(list)
+    for r in exp_res_list:
+        model_name = r.model_name
+        gap_count_dist = r.gap_count_dist_2
+        for v, d in enumerate(gap_count_dist):
+            data[model_name].extend([v / 5] * d)
+
+    data = [data[model_name] for model_name in ORDERED_MODELS]
+
+    fig, ax = plt.subplots(figsize=(1.5 * len(data), 4))
+    positions = list(range(1, len(data) + 1))
+
+    # 配色
+    light_blue = "#9ecae1"  # 浅蓝（填充）
+    dark_blue = "#08519c"   # 深蓝（线条/均值点）
+    grey = "grey"
+
+    if style == "box":
+        bp = ax.boxplot(
+            data,
+            positions=positions,
+            widths=0.40,
+            capwidths=0.15,
+            showfliers=False,
+            patch_artist=True,
+            boxprops=dict(facecolor=light_blue, alpha=0.35, edgecolor="none", linewidth=0),
+            whiskerprops=dict(color=dark_blue, linewidth=1.4),
+            capprops=dict(color=dark_blue, linewidth=1.4),
+            medianprops=dict(color=dark_blue, linewidth=1.6),
+        )
+
+        # 如果某些 matplotlib 版本仍然给 boxes 留了边框，强行关掉
+        for box in bp["boxes"]:
+            box.set_edgecolor("none")
+            box.set_linewidth(0)
+
+        means = [float(np.mean(arr)) if len(arr) > 0 else np.nan for arr in data]
+        ax.scatter(
+            positions,
+            means,
+            marker="o",
+            s=32,
+            color=dark_blue,
+            zorder=3,
+            label="_nolegend_",
+        )
+
+        ax.set_xticks(positions)
+        
+    elif style == "violin":
+        violin_box_color = "#08529cd4"
+
+        parts = ax.violinplot(
+            data,
+            positions=positions,
+            showmeans=False,
+            showextrema=False,
+            # quantiles=[[0.25, 0.5, 0.75] for _ in data],
+            bw_method=0.4
+        )
+
+        # 去掉 violin 外轮廓线
+        for b in parts["bodies"]:
+            b.set_edgecolor("none")
+            b.set_linewidth(0)
+
+        # quantiles 线保留为橙色
+        # parts["cquantiles"].set_color("orange")
+        # parts["cquantiles"].set_linewidth(1.2)
+
+        add_violin_quantile_bars(
+            ax, parts, data, positions,
+            qs=(0.25, 0.5, 0.75),
+            color=violin_box_color,
+            lw=1.2
+        )
+
+        # 叠加：更细线条的空心 box
+        # bp = ax.boxplot(
+        #     data,
+        #     positions=positions,
+        #     widths=0.30,
+        #     capwidths=0.15,
+        #     showfliers=False,
+        #     patch_artist=True,
+        #     zorder=4,
+        #     boxprops=dict(facecolor="none", edgecolor=violin_box_color, linewidth=1.0),
+        #     whiskerprops=dict(color=violin_box_color, linewidth=0.9),
+        #     capprops=dict(color=violin_box_color, linewidth=0.9),
+        #     medianprops=dict(color=violin_box_color, linewidth=1.0),
+        # )
+        # for w in bp["whiskers"]:
+        #     w.set_visible(False)
+        # for c in bp["caps"]:
+        #     c.set_visible(False)
+
+
+        # 均值蓝色圆点（盖在最上层）
+        means = [float(np.mean(arr)) if len(arr) > 0 else np.nan for arr in data]
+        ax.scatter(
+            positions,
+            means,
+            marker="o",
+            s=12,
+            color=violin_box_color,
+            zorder=5,
+            label="_nolegend_",
+        )
+
+        ax.set_xticks(positions)
+
+    ax.set_xticklabels(ORDERED_MODELS, ha="center")
+    ax.set_xlabel("Model", fontsize=12)
+    ax.set_ylabel("Gap (Corr_rate − Comp_rate)", fontsize=12)
+    ax.set_title("F2P Method-level correctness–completeness gap", fontsize=12)
+
+    ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    plt.tight_layout()
+    plt.savefig(f"data/{style}--app_1.pdf", bbox_inches="tight")
+
+
+def violin_app_2(style="violin"):
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    fig, axes = plt.subplots(1, 2, figsize=(8, 4))
+
+    # 配色
+    light_blue = "#9ecae1"  # 浅蓝（填充）
+    dark_blue = "#08519c"   # 深蓝（线条/均值点）
+    grey = "grey"
+
+    for lang_idx, lang in enumerate(["python", "java"]):
+        ax = axes[lang_idx]
+
+        exp_res_list: List[ExpRes] = []
+        with open("data/res.jsonl") as file:
+            for line in file:
+                exp_res_list.append(ExpRes(**json.loads(line)))
+        exp_res_list = [r for r in exp_res_list 
+                        if r.method_range is None and r.language == lang]
+
+        data = defaultdict(list)
+        for r in exp_res_list:
+            prompting = r.prompting
+            gap_count_dist = r.gap_count_dist_2
+            for v, d in enumerate(gap_count_dist):
+                data[prompting].extend([v / 5] * d)
+
+        data = [data[prompting] for prompting in PROMPTINGS]
+
+        positions = list(range(1, len(data) + 1))
+
+        if style == "box":
+            bp = ax.boxplot(
+                data,
+                positions=positions,
+                widths=0.40,
+                capwidths=0.15,
+                showfliers=False,
+                patch_artist=True,
+                boxprops=dict(facecolor=light_blue, alpha=0.35, edgecolor="none", linewidth=0),
+                whiskerprops=dict(color=dark_blue, linewidth=1.4),
+                capprops=dict(color=dark_blue, linewidth=1.4),
+                medianprops=dict(color=dark_blue, linewidth=1.6),
+            )
+
+            # 如果某些 matplotlib 版本仍然给 boxes 留了边框，强行关掉
+            for box in bp["boxes"]:
+                box.set_edgecolor("none")
+                box.set_linewidth(0)
+
+            means = [float(np.mean(arr)) if len(arr) > 0 else np.nan for arr in data]
+            ax.scatter(
+                positions,
+                means,
+                marker="o",
+                s=32,
+                color=dark_blue,
+                zorder=3,
+                label="_nolegend_",
+            )
+
+            ax.set_xticks(positions)
+            
+        elif style == "violin":
+            violin_box_color = "#08529cd4"
+
+            parts = ax.violinplot(
+                data,
+                positions=positions,
+                showmeans=False,
+                showextrema=False,
+                # quantiles=[[0.25, 0.5, 0.75] for _ in data],
+                bw_method=0.4
+            )
+
+            # 去掉 violin 外轮廓线
+            for b in parts["bodies"]:
+                b.set_edgecolor("none")
+                b.set_linewidth(0)
+
+            # quantiles 线保留为橙色
+            # parts["cquantiles"].set_color("orange")
+            # parts["cquantiles"].set_linewidth(1.2)
+
+            add_violin_quantile_bars(
+                ax, parts, data, positions,
+                qs=(0.25, 0.5, 0.75),
+                color=violin_box_color,
+                lw=1.2
+            )
+
+            # 叠加：更细线条的空心 box
+            # bp = ax.boxplot(
+            #     data,
+            #     positions=positions,
+            #     widths=0.30,
+            #     capwidths=0.15,
+            #     showfliers=False,
+            #     patch_artist=True,
+            #     zorder=4,
+            #     boxprops=dict(facecolor="none", edgecolor=violin_box_color, linewidth=1.0),
+            #     whiskerprops=dict(color=violin_box_color, linewidth=0.9),
+            #     capprops=dict(color=violin_box_color, linewidth=0.9),
+            #     medianprops=dict(color=violin_box_color, linewidth=1.0),
+            # )
+            # for w in bp["whiskers"]:
+            #     w.set_visible(False)
+            # for c in bp["caps"]:
+            #     c.set_visible(False)
+
+
+            # 均值蓝色圆点（盖在最上层）
+            means = [float(np.mean(arr)) if len(arr) > 0 else np.nan for arr in data]
+            ax.scatter(
+                positions,
+                means,
+                marker="o",
+                s=12,
+                color=violin_box_color,
+                zorder=5,
+                label="_nolegend_",
+            )
+
+            ax.set_xticks(positions)
+        if lang_idx != 0:
+            ax.set_yticklabels([])
+        ax.set_xticklabels([PROMPTING_MAP[p] for p in PROMPTINGS], ha="center")
+        # ax.set_xlabel("Model", fontsize=12)
+        if lang_idx == 0:
+            ax.set_ylabel("Gap (Corr_rate − Comp_rate)", fontsize=12)
+        ax.set_title(lang.capitalize(), fontsize=12)
+
+        ax.grid(axis="y", linestyle="--", alpha=0.4)
+
+    fig.suptitle("Method-level correctness–completeness gap", fontsize=14)
+
+    plt.tight_layout()
+    plt.savefig(f"data/{style}--app_2.pdf", bbox_inches="tight")
+
+
+
+def method_level_dist_main():
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [r for r in exp_res_list if r.method_range is None]
+
+    data = {p: [[] for _ in range(3)] for p in PROMPTINGS}
+    for r in exp_res_list:
+        prompting = r.prompting
+        method_level_dist = r.method_level_dist
+        for i, v in enumerate(method_level_dist):
+            data[prompting][i].append(v)
+    for k, v in data.items():
+        for i, vs in enumerate(v):
+            v[i] = sum(vs) / len(vs)
+    print(json.dumps(data, indent=2))
+
+    keys = list(data.keys())
+    vals = np.array([data[k] for k in keys], dtype=float)      # (n_keys, 3)
+    props = vals / vals.sum(axis=1, keepdims=True)
+
+    x = np.arange(len(keys))
+    labels = ["Incorrect", "Incomplete", "Complete"]
+
+    fig, ax = plt.subplots(figsize=(4, 4))
+
+    bottom = np.zeros(len(keys))
+
+    # 你想要的样式
+    styles = [
+        dict(color="white", edgecolor="pink", hatch="///", linewidth=1.0),     # Incorrect
+        dict(color="#fdd0a2", edgecolor="black", linewidth=0.6),              # Incomplete (浅橙)
+        dict(color="#c7e9c0", edgecolor="black", linewidth=0.6),              # Complete   (浅绿)
+    ]
+
+    for j in range(3):
+        ax.bar(
+            x,
+            props[:, j],
+            bottom=bottom,
+            label=labels[j],
+            **styles[j],
+        )
+        bottom += props[:, j]
+
+    ax.set_xticks(x, [PROMPTING_MAP[k] for k in keys], rotation=0)
+    ax.set_ylim(0, 1)
+    ax.set_ylabel("Proportion")
+    ax.set_title("Correctness/completeness distribution")
+
+    # 图例：上方居中
+    ax.legend(
+        loc="lower center",
+        bbox_to_anchor=(0.5, 1.1),
+        ncol=3,
+        frameon=False,
+        borderaxespad=0.0,
+    )
+
+    # 可选：显示百分比文字
+    for i in range(len(keys)):
+        cum = 0.0
+        for j in range(3):
+            p = props[i, j]
+            if p > 0.06:
+                ax.text(i, cum + p / 2, f"{p*100:.1f}%", ha="center", va="center", fontsize=9)
+            cum += p
+
+    # 给上方 legend 留空间（比 tight_layout 更稳）
+    plt.tight_layout(rect=[0, 0, 1, 0.92])
+
+    plt.savefig("data/stack--main.pdf", bbox_inches="tight")
+
+
+def method_level_dist_app_1():
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [r for r in exp_res_list 
+                    if r.method_range is None and r.prompting == "v2-all"]
+
+    data = {mn: [[] for _ in range(3)] for mn in ORDERED_MODELS}
+    for r in exp_res_list:
+        model_name = r.model_name
+        method_level_dist = r.method_level_dist
+        for i, v in enumerate(method_level_dist):
+            data[model_name][i].append(v)
+    for k, v in data.items():
+        for i, vs in enumerate(v):
+            v[i] = sum(vs) / len(vs)
+    print(json.dumps(data, indent=2))
+
+    keys = list(data.keys())
+    vals = np.array([data[k] for k in keys], dtype=float)      # (n_keys, 3)
+    props = vals / vals.sum(axis=1, keepdims=True)
+
+    x = np.arange(len(keys))
+    labels = ["Incorrect", "Incomplete", "Complete"]
+
+    fig, ax = plt.subplots(figsize=(6, 4))
+
+    bottom = np.zeros(len(keys))
+
+    # 你想要的样式
+    styles = [
+        dict(color="white", edgecolor="pink", hatch="///", linewidth=1.0),     # Incorrect
+        dict(color="#fdd0a2", edgecolor="black", linewidth=0.6),              # Incomplete (浅橙)
+        dict(color="#c7e9c0", edgecolor="black", linewidth=0.6),              # Complete   (浅绿)
+    ]
+
+    for j in range(3):
+        ax.bar(
+            x,
+            props[:, j],
+            bottom=bottom,
+            label=labels[j],
+            **styles[j],
+        )
+        bottom += props[:, j]
+
+    ax.set_xticks(x, [MODEL_NAME_MAP[k] for k in keys], rotation=0)
+    ax.set_ylim(0, 1)
+    ax.set_ylabel("Proportion")
+    ax.set_title("Correctness/completeness distribution (F2P)")
+
+    # 图例：上方居中
+    ax.legend(
+        loc="lower center",
+        bbox_to_anchor=(0.5, 1.1),
+        ncol=3,
+        frameon=False,
+        borderaxespad=0.0,
+    )
+
+    # 可选：显示百分比文字
+    for i in range(len(keys)):
+        cum = 0.0
+        for j in range(3):
+            p = props[i, j]
+            if p > 0.06:
+                ax.text(i, cum + p / 2, f"{p*100:.1f}%", ha="center", va="center", fontsize=9)
+            cum += p
+
+    # 给上方 legend 留空间（比 tight_layout 更稳）
+    plt.tight_layout(rect=[0, 0, 1, 0.92])
+
+    plt.savefig("data/stack--app_1.pdf", bbox_inches="tight")
+
+
+def method_level_dist_app_2():
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    fig, axes = plt.subplots(1, 2, figsize=(6, 4))
+
+    for lang_idx, lang in enumerate(["python", "java"]):
+
+        ax = axes[lang_idx]
+
+        exp_res_list: List[ExpRes] = []
+        with open("data/res.jsonl") as file:
+            for line in file:
+                exp_res_list.append(ExpRes(**json.loads(line)))
+        exp_res_list = [r for r in exp_res_list 
+                        if r.method_range is None and r.language == lang]
+
+        data = {p: [[] for _ in range(3)] for p in PROMPTINGS}
+        for r in exp_res_list:
+            prompting = r.prompting
+            method_level_dist = r.method_level_dist
+            for i, v in enumerate(method_level_dist):
+                data[prompting][i].append(v)
+        for k, v in data.items():
+            for i, vs in enumerate(v):
+                v[i] = sum(vs) / len(vs)
+        print(json.dumps(data, indent=2))
+
+        keys = list(data.keys())
+        vals = np.array([data[k] for k in keys], dtype=float)      # (n_keys, 3)
+        props = vals / vals.sum(axis=1, keepdims=True)
+
+        x = np.arange(len(keys))
+        labels = ["Incorrect", "Incomplete", "Complete"]
+
+        bottom = np.zeros(len(keys))
+
+        # 你想要的样式
+        styles = [
+            dict(color="white", edgecolor="pink", hatch="///", linewidth=1.0),     # Incorrect
+            dict(color="#fdd0a2", edgecolor="black", linewidth=0.6),              # Incomplete (浅橙)
+            dict(color="#c7e9c0", edgecolor="black", linewidth=0.6),              # Complete   (浅绿)
+        ]
+
+        for j in range(3):
+            ax.bar(
+                x,
+                props[:, j],
+                bottom=bottom,
+                label=labels[j],
+                **styles[j],
+            )
+            bottom += props[:, j]
+
+        ax.set_xticks(x, [PROMPTING_MAP[k] for k in keys], rotation=0)
+        ax.set_ylim(0, 1)
+        
+        if lang_idx == 0:
+            ax.set_ylabel("Proportion")
+        else:
+            ax.set_yticks([])
+        
+        ax.set_title(lang.capitalize())
+
+        # 可选：显示百分比文字
+        for i in range(len(keys)):
+            cum = 0.0
+            for j in range(3):
+                p = props[i, j]
+                if p > 0.06:
+                    ax.text(i, cum + p / 2, f"{p*100:.1f}%", ha="center", va="center", fontsize=9)
+                cum += p
+
+    handles, labels_ = axes[0].get_legend_handles_labels()
+
+    fig.legend(
+        handles, labels_,
+        loc="lower center",
+        bbox_to_anchor=(0.5, 0.9),
+        ncol=3,
+        frameon=False,
+        borderaxespad=0.0,
+    )
+
+    # 给上方 legend 留空间（比 tight_layout 更稳）
+    plt.tight_layout(rect=[0, 0, 1, 0.92], w_pad=2.0)
+
+    plt.savefig("data/stack--app_2.pdf", bbox_inches="tight")
+
+
+def method_level_hist_main():
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [r for r in exp_res_list if r.method_range is None]
+
+    data = {p: {l: [] for l in ["Correct", "Complete"]} for p in PROMPTINGS}
+    for r in exp_res_list:
+        prompting = r.prompting
+        data[prompting]["Correct"].append(r.corr_1)
+        data[prompting]["Complete"].append(r.comp_1)
+    for p, v in data.items():
+        for l, vv in v.items():
+            v[l] = sum(vv) / len(vv)
+    print(json.dumps(data, indent=2))
+
+    style_correct = dict(color="#fdd0a2", edgecolor="black", linewidth=0.6)  # 浅橙
+    style_complete = dict(color="#c7e9c0", edgecolor="black", linewidth=0.6)  # 浅绿
+
+    # 1) 准备数据
+    groups = list(data.keys())                  # ["v2-all", "v2-code", "v2-nl"]
+    corr = [data[g]["Correct"] for g in groups]
+    comp = [data[g]["Complete"] for g in groups]
+
+    # 2) 位置与宽度
+    x = np.arange(len(groups))
+    w = 0.35  # 单个柱子的宽度
+
+    # 3) 画图
+    fig, ax = plt.subplots(figsize=(4, 4))
+
+    ax.bar(x - w/2, corr, width=w, label="Correct", **style_correct)
+    ax.bar(x + w/2, comp, width=w, label="Complete", **style_complete)
+
+    # 4) 美化
+    ax.set_xticks(x)
+    ax.set_xticklabels([PROMPTING_MAP[p] for p in groups])
+    ax.set_ylabel("Ratio")
+    ax.set_ylim(0, 0.4)  # 如果你确定值都在[0,1]，这行很方便；否则可删
+    ax.set_title("Correct/complete ratio")
+    ax.legend()
+
+    # 可选：给柱子加数值标签
+    for i, v in enumerate(corr):
+        ax.text(x[i] - w/2, v, f"{v:.3f}", ha="center", va="bottom", fontsize=9)
+    for i, v in enumerate(comp):
+        ax.text(x[i] + w/2, v, f"{v:.3f}", ha="center", va="bottom", fontsize=9)
+
+    plt.tight_layout()
+    plt.savefig("data/hist--main.pdf", bbox_inches="tight")
+
+
+def method_level_hist_app_1():
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [r for r in exp_res_list 
+                    if r.method_range is None and r.prompting == "v2-all"]
+
+    data = {mn: {l: [] for l in ["Correct", "Complete"]} for mn in ORDERED_MODELS}
+    for r in exp_res_list:
+        model_name = r.model_name
+        data[model_name]["Correct"].append(r.corr_1)
+        data[model_name]["Complete"].append(r.comp_1)
+    for p, v in data.items():
+        for l, vv in v.items():
+            v[l] = sum(vv) / len(vv)
+    print(json.dumps(data, indent=2))
+
+    style_correct = dict(color="#fdd0a2", edgecolor="black", linewidth=0.6)  # 浅橙
+    style_complete = dict(color="#c7e9c0", edgecolor="black", linewidth=0.6)  # 浅绿
+
+    # 1) 准备数据
+    groups = list(data.keys())                  # ["v2-all", "v2-code", "v2-nl"]
+    corr = [data[g]["Correct"] for g in groups]
+    comp = [data[g]["Complete"] for g in groups]
+
+    # 2) 位置与宽度
+    x = np.arange(len(groups))
+    w = 0.35  # 单个柱子的宽度
+
+    # 3) 画图
+    fig, ax = plt.subplots(figsize=(6, 4))
+
+    ax.bar(x - w/2, corr, width=w, label="Correct", **style_correct)
+    ax.bar(x + w/2, comp, width=w, label="Complete", **style_complete)
+
+    # 4) 美化
+    ax.set_xticks(x)
+    ax.set_xticklabels([MODEL_NAME_MAP[p] for p in groups])
+    ax.set_ylabel("Gap (Corr_rate − Comp_rate)")
+    # ax.set_ylim(0, 0.4)  # 如果你确定值都在[0,1]，这行很方便；否则可删
+    ax.set_title("Correct/complete ratio (F2P)")
+    ax.legend()
+
+    # 可选：给柱子加数值标签
+    for i, v in enumerate(corr):
+        ax.text(x[i] - w/2, v, f"{v:.3f}", ha="center", va="bottom", fontsize=8)
+    for i, v in enumerate(comp):
+        ax.text(x[i] + w/2, v, f"{v:.3f}", ha="center", va="bottom", fontsize=8)
+
+    plt.tight_layout()
+    plt.savefig("data/hist--app_1.pdf", bbox_inches="tight")
+
+
+
+def method_level_hist_app_2():
+    plt.rcParams['font.family'] = 'DejaVu Serif'
+
+    fig, axes = plt.subplots(1, 2, figsize=(8, 4))
+
+    for lang_idx, lang in enumerate(["python", "java"]):
+
+        ax = axes[lang_idx]
+
+        exp_res_list: List[ExpRes] = []
+        with open("data/res.jsonl") as file:
+            for line in file:
+                exp_res_list.append(ExpRes(**json.loads(line)))
+        exp_res_list = [r for r in exp_res_list 
+                        if r.method_range is None and r.language == lang]
+
+        data = {p: {l: [] for l in ["Correct", "Complete"]} for p in PROMPTINGS}
+        for r in exp_res_list:
+            prompting = r.prompting
+            data[prompting]["Correct"].append(r.corr_1)
+            data[prompting]["Complete"].append(r.comp_1)
+        for p, v in data.items():
+            for l, vv in v.items():
+                v[l] = sum(vv) / len(vv)
+        print(json.dumps(data, indent=2))
+
+        style_correct = dict(color="#fdd0a2", edgecolor="black", linewidth=0.6)  # 浅橙
+        style_complete = dict(color="#c7e9c0", edgecolor="black", linewidth=0.6)  # 浅绿
+
+        # 1) 准备数据
+        groups = list(data.keys())                  # ["v2-all", "v2-code", "v2-nl"]
+        corr = [data[g]["Correct"] for g in groups]
+        comp = [data[g]["Complete"] for g in groups]
+
+        # 2) 位置与宽度
+        x = np.arange(len(groups))
+        w = 0.35  # 单个柱子的宽度
+
+        ax.bar(x - w/2, corr, width=w, label="Correct", **style_correct)
+        ax.bar(x + w/2, comp, width=w, label="Complete", **style_complete)
+
+        # 4) 美化
+        ax.set_xticks(x)
+        ax.set_xticklabels([PROMPTING_MAP[p] for p in groups])
+        if lang_idx == 0:
+            ax.set_ylabel("Ratio")
+        else:
+            ax.set_yticklabels([])
+        ax.set_ylim(0, 0.5)  # 如果你确定值都在[0,1]，这行很方便；否则可删
+        ax.set_title(lang.capitalize())
+        if lang_idx > 0:
+            ax.legend()
+
+        # 可选：给柱子加数值标签
+        for i, v in enumerate(corr):
+            ax.text(x[i] - w/2, v, f"{v:.3f}", ha="center", va="bottom", fontsize=9)
+        for i, v in enumerate(comp):
+            ax.text(x[i] + w/2, v, f"{v:.3f}", ha="center", va="bottom", fontsize=9)
+
+    fig.align_ylabels(axes)
+
+    plt.tight_layout()
+    plt.savefig("data/hist--app_2.pdf", bbox_inches="tight")
+
+
+
+def main_res_main(k=1):
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [
+        r for r in exp_res_list if r.method_range is None]
+    model_names = list(set([r.model_name for r in exp_res_list]))
+    model_names = [m for m in ORDERED_MODELS if m in model_names]
+
+    corr_f = f"corr_{k}"
+    comp_f = f"comp_{k}"
+
+    for mn in ORDERED_MODELS:
+        fields = [corr_f, comp_f]
+        data = {f: [] for f in fields}
+        for field_name in fields:
+            for r in exp_res_list:
+                if r.model_name == mn:
+                    data[field_name].append(getattr(r, field_name))
+        print(MODEL_NAME_MAP[mn], end=" & ")
+        print(f"{np.mean(data[corr_f]):.3f}", end=" & ")
+        print(f"{np.mean(data[comp_f]):.3f}", end=" & ")
+        print(f"{np.mean(data[corr_f]) - np.mean(data[comp_f]):.3f}", end=" & ")
+        print(f"{np.mean(data[comp_f]) / np.mean(data[corr_f]):.3f}", end=" \\\\\n")
+
+
+def main_res_app_1(k=1):
+    exp_res_list: List[ExpRes] = []
+    with open("data/res.jsonl") as file:
+        for line in file:
+            exp_res_list.append(ExpRes(**json.loads(line)))
+    exp_res_list = [
+        r for r in exp_res_list if r.method_range is None]
+    model_names = list(set([r.model_name for r in exp_res_list]))
+    model_names = [m for m in ORDERED_MODELS if m in model_names]
+
+    corr_f = f"corr_{k}"
+    comp_f = f"comp_{k}"
+
+    fields = [corr_f, comp_f]
+
+    data = {mn: {p: {f: [] for f in fields} for p in PROMPTINGS} for mn in ORDERED_MODELS}
+
+    for mn in ORDERED_MODELS:
+        for p_idx, p in enumerate(PROMPTINGS):
+            for field_name in fields:
+                for r in exp_res_list:
+                    if r.model_name == mn and r.prompting == p:
+                        data[mn][p][field_name].append(getattr(r, field_name))
+                data[mn][p][field_name] = np.mean(data[mn][p][field_name])
+
+    for mn in ORDERED_MODELS:
+        for p_idx, p in enumerate(PROMPTINGS):
+            if p_idx == 0:
+                print(MODEL_NAME_MAP[mn], end=" & ")
+            corr = data[mn][p][corr_f]
+            comp = data[mn][p][comp_f]
+            corr_str = f"{corr:.3f}"
+            comp_str = f"{comp:.3f}"
+            if corr >= max([data[_mn][p][corr_f] for _mn in ORDERED_MODELS]):
+                corr_str = f"\\textbf{{{corr_str}}}"
+            if comp >= max([data[_mn][p][comp_f] for _mn in ORDERED_MODELS]):
+                comp_str = f"\\textbf{{{comp_str}}}"
+            print(corr_str, end=" & ")
+            print(comp_str, end=" & ")
+            print(f"{(corr - comp):.3f}", end=" & ")
+            if p_idx == len(PROMPTINGS) - 1:
+                end = " \\\\\n"
+            else:
+                end = " & "
+            print(f"{(comp / corr):.3f}", end=end)
+
+
+
 if __name__ == "__main__":
     # data = []
     # for file_name in os.listdir("data/batch--gpt-5--out--1st-run"):
@@ -947,9 +2260,27 @@ if __name__ == "__main__":
     # print(len(data))
     # exit()
 
-    # get_exp_res()
+    get_exp_res()
     # main_res()
     # analyze_dep()
+    # code_line_line_chart_main()
     # code_line_line_chart()
-    mutation_FDR()
+    # mutation_FDR()
+    # violin_main_unfilter(style="violin")
+    # violin_main(style="violin")
+    # # violin_main(style="box")
+    # violin_app_1(style="violin")
+    # # violin_app_1(style="box")
+    # violin_app_2(style="violin")
+    # violin_app_2(style="box")
+    # method_level_dist_main()
+    # method_level_dist_app_1()
+    # method_level_dist_app_2()
+    # method_level_hist_main()
+    # method_level_hist_app_1()
+    # method_level_hist_app_2()
+    # main_res_main(1)
+    # main_res_main(3)
+    # main_res_main(5)
+    main_res_app_1()
     print("done")

@@ -228,18 +228,16 @@ if __name__ == "__main__":
     # exit()
 
     classify_corr()
-    exit()
-
     classify_comp()
     exit()
 
-    # corr
+    # # corr
     # dir = "data/cause_analysis/corr"
-    # fn = "crawler-commons--crawler-commons--initialize--claude-sonnet-4-5--v2-nl--4"
+    # fn = "dynaconf--dynaconf--_ensure_serializable--claude-sonnet-4-5--v2-nl--0"
     # method_fn, results = eval(dir=dir, fn=fn, mut_idxs=[])
 
-    # comp
-    dir = "data/cause_analysis/comp"
-    fn = "wntrblm--nox--_find_pbs_python--claude-sonnet-4-5--v2-code--0-22"
-    mut_idx = int(fn.split("-")[-1])
-    method_fn, results = eval(dir=dir, fn=fn, mut_idxs=[mut_idx])
+    # # comp
+    # dir = "data/cause_analysis/comp"
+    # fn = "wntrblm--nox--_find_pbs_python--claude-sonnet-4-5--v2-code--0-22"
+    # mut_idx = int(fn.split("-")[-1])
+    # method_fn, results = eval(dir=dir, fn=fn, mut_idxs=[mut_idx])
