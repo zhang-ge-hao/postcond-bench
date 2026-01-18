@@ -4,7 +4,10 @@
 
 This repository includes code and a dataset proposed by the paper *POSTCONDBENCH: Benchmarking Correctness and Completeness in Formal Postcondition Inference*.
 
-> Dataset path: `data/step/8.benchmark`. (420 Python/Java methods)
+**Note:**
+- Dataset path: `data/step/8.benchmark`. (420 Python/Java methods)
+- Results path: `data/step/9.*`.
+- Since our results are included in this repo, for anyone who would like to reuse, after environment and project setup, directly running `poetry run python src/script/data_analysis_latex_v2.py` can gather the experimental results.
 
 ## :whale: Environment Setup
 
@@ -17,6 +20,11 @@ If you use [Slurm](https://slurm.schedmd.com/), you can transfer the Docker imag
 1. Run `docker save -o my-image.tar postcondbench` to save a `.tar` image file (in your docker image building environment).
 2. Transfer `.tar` image file into `.sif` file by `apptainer build my-image.sif docker-archive://my-image.tar`.
 3. To launch the environment, run `source apptainer.sh my-image.sif`.
+
+## :open_file_folder: Project Setup
+
+We use [poetry](https://python-poetry.org/) to manage the current repository. 
+Just run `poetry install` to set it up.
 
 ## :wrench: Experiment Running
 
