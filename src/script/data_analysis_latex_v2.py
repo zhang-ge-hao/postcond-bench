@@ -391,7 +391,7 @@ def get_exp_res_list(model_name: str) -> List[ExpRes]:
         if not folder_name.startswith("9."):
             continue
         if folder_name.startswith(f"9.{model_name}"):
-            all_methods.extend(read_benchmark_with_exclude(
+            all_methods.extend(read_benchmark(
                 f"{step_dir}/{folder_name}", save_mem=True))
 
     print(f"{model_name} file read finished.")
