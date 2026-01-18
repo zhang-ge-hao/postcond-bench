@@ -1,0 +1,159 @@
+{
+  "rlid": "discretize",
+  "github_url": "https://github.com/yinlou/mltk/blob/f50c42986fdd016e7da38d5e381ed24d8fe87e41/./src/main/java/mltk/core/processor/Discretizer.java#L223-L241",
+  "name": "discretize",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 8,
+  "cc": 3,
+  "content": "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+  "header": "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {",
+  "file": "./src/main/java/mltk/core/processor/Discretizer.java",
+  "start_line": 223,
+  "end_line": 241,
+  "body_start_line": 231,
+  "comment": "/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */",
+  "test_time": 4.205355644226074,
+  "cover_tests": [
+    "mltk.core.processor.DiscretizerTest#testMissingValue"
+  ],
+  "repo": {
+    "github_path": "yinlou/mltk",
+    "commit": "f50c42986fdd016e7da38d5e381ed24d8fe87e41",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.yinlou</groupId>\n  <artifactId>mltk</artifactId>\n  <version>0.1.1-SNAPSHOT</version>\n\n  <name>mltk</name>\n  <description>Machine Learning Tool Kit</description>\n  <url>https://github.com/yinlou/mltk</url>\n\n  <licenses>\n    <license>\n      <name>BSD 3-Clause</name>\n      <url>https://opensource.org/licenses/BSD-3-Clause</url>\n    </license>\n  </licenses>\n\n   <developers>\n    <developer>\n      <name>Yin Lou</name>\n      <email>machinelearningtoolkit@gmail.com</email>\n    </developer>\n  </developers>\n\n  <scm>\n    <connection>scm:git:git://github.com/yinlou/mltk.git</connection>\n    <developerConnection>scm:git:ssh://github.com:yinlou/mltk.git</developerConnection>\n    <url>https://github.com/yinlou/mltk.git</url>\n  </scm>\n\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n    <maven.compiler.source>10</maven.compiler.source>\n    <maven.compiler.target>10</maven.compiler.target>\n  </properties>\n\n  <profiles>\n    <profile>\n      <id>doclint-java8-disable</id>\n      <activation>\n        <jdk>[1.8,)</jdk>\n      </activation>\n      <properties>\n        <javadoc.opts>-Xdoclint:none</javadoc.opts>\n      </properties>\n    </profile>\n  </profiles>\n\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n  </distributionManagement>\n\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.7</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.5.1</version>\n        <configuration>\n          <showDeprecation>true</showDeprecation>\n          <source>${maven.compiler.source}</source>\n          <target>${maven.compiler.target}</target> \n        </configuration>\n      </plugin>\n      <plugin>\n      <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>2.2.1</version>\n        <executions>\n          <execution>\n           <id>attach-sources</id>\n            <goals>\n              <goal>jar-no-fork</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>2.10.3</version>\n        <configuration>\n          <source>8</source>\n          <doctitle>Machine Learning Tool Kit ${project.version} API</doctitle>\n          <windowtitle>Machine Learning Tool Kit ${project.version} API</windowtitle>\n          <additionalparam>${javadoc.opts}</additionalparam>\n        </configuration>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <phase>package</phase>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n      <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>1.5</version>\n        <executions>\n         <execution>\n            <id>sign-artifacts</id>\n            <phase>verify</phase>\n            <goals>\n             <goal>sign</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.0.0-M7</version></plugin><plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.8</version><executions><execution><id>prepare-agent</id><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>prepare-package</phase><goals><goal>report</goal></goals><configuration><formats><format>html</format><format>xml</format></formats></configuration></execution></executions></plugin></plugins>\n  </build>\n\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n    </dependency>\n  </dependencies>\n\n  <repositories>\n  </repositories>\n\n</project>",
+    "failed_tests": [],
+    "test_time": 1.3728833198547363
+  },
+  "mutants": [
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex + 1); // Accessing the next attribute instead\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\t\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().add(binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().remove(attIndex);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex + 1, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, null);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (instance.getValue(attribute.getIndex()) < 0) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (instance.getValue(attribute.getIndex()) == 0) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (instance.getValue(attribute.getIndex()) > 100) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (instance.getWeight() == 0) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), v);\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\t\n\t\t\t}\n\t\t}\n\t}",
+    "\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n\t\tAttribute attribute = instances.getAttributes().get(attIndex);\n\t\tBinnedAttribute binnedAttribute = new BinnedAttribute(attribute.getName(), bins);\n\t\tbinnedAttribute.setIndex(attribute.getIndex());\n\t\tinstances.getAttributes().set(attIndex, binnedAttribute);\n\t\tfor (Instance instance : instances) {\n\t\t\tif (!instance.isMissing(attribute.getIndex())) {\n\t\t\t\tint v = bins.getIndex(instance.getValue(attribute.getIndex()));\n\t\t\t\tinstance.setValue(attribute.getIndex(), Double.NaN); // Sets a NaN value\n\t\t\t}\n\t\t}\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures instances.getAttributes().get(attIndex) instanceof mltk.core.BinnedAttribute;\n//@ ensures ((mltk.core.BinnedAttribute)instances.getAttributes().get(attIndex)).getBins() == bins;\n//@ ensures instances.getAttributes().get(attIndex).getIndex() == attIndex;\n//@ ensures java.util.stream.IntStream.range(0, instances.size()).allMatch(i -> instances.get(i) != null);\n//@ ensures java.util.stream.IntStream.range(0, instances.size()).allMatch(i -> instances.get(i).isMissing(attIndex) || (instances.get(i).getValue(attIndex) >= 0 && instances.get(i).getValue(attIndex) < ((mltk.core.BinnedAttribute)instances.getAttributes().get(attIndex)).getBins().size() && instances.get(i).getValue(attIndex) == (int)instances.get(i).getValue(attIndex)));\n//@ ensures java.util.stream.IntStream.range(0, instances.size()).filter(i -> instances.get(i).isMissing(attIndex)).count() == \\old(java.util.stream.IntStream.range(0, instances.size()).filter(i -> instances.get(i).isMissing(attIndex)).count());\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage mltk.core.processor;\n\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.List;\n\nimport mltk.cmdline.Argument;\nimport mltk.cmdline.CmdLineParser;\nimport mltk.core.Attribute;\nimport mltk.core.BinnedAttribute;\nimport mltk.core.Bins;\nimport mltk.core.Instance;\nimport mltk.core.Instances;\nimport mltk.core.Attribute.Type;\nimport mltk.core.io.AttributesReader;\nimport mltk.core.io.InstancesReader;\nimport mltk.core.io.InstancesWriter;\nimport mltk.util.Element;\nimport mltk.util.tuple.DoublePair;\n\n/**\n * Class for discretizers.\n * \n * @author Yin Lou\n * \n */\npublic class Discretizer {\n\t\n\tstatic class Options {\n\n\t\t@Argument(name = \"-r\", description = \"attribute file path\")\n\t\tString attPath = null;\n\t\t\n\t\t@Argument(name = \"-t\", description = \"training file path\")\n\t\tString trainPath = null;\n\n\t\t@Argument(name = \"-i\", description = \"input dataset path\", required = true)\n\t\tString inputPath = null;\n\n\t\t@Argument(name = \"-d\", description = \"discretized attribute file path\")\n\t\tString disAttPath = null;\n\n\t\t@Argument(name = \"-m\", description = \"output attribute file path\")\n\t\tString outputAttPath = null;\n\n\t\t@Argument(name = \"-o\", description = \"output dataset path\", required = true)\n\t\tString outputPath = null;\n\n\t\t@Argument(name = \"-n\", description = \"maximum num of bins (default: 256)\")\n\t\tint maxNumBins = 256;\n\n\t}\n\t\n\t/**\n\t * Discretizes datasets.\n\t * \n\t * <pre>\n\t * Usage: mltk.core.processor.Discretizer\n\t * -i\tinput dataset path\n\t * -o\toutput dataset path\n\t * [-r]\tattribute file path\n\t * [-t]\ttraining file path\n\t * [-d]\tdiscretized attribute file path\n\t * [-m]\toutput attribute file path\n\t * [-n]\tmaximum num of bins (default: 256)\n\t * </pre>\n\t * \n\t * @param args the command line arguments.\n\t * @throws Exception\n\t */\n\tpublic static void main(String[] args) throws Exception {\n...\n\t/**\n\t * Compute bins for a list of values.\n\t * \n\t * @param x the vector of input data.\n\t * @param maxNumBins the number of bins.\n\t * @return bins for a list of values.\n\t */\n\tpublic static Bins computeBins(double[] x, int maxNumBins) {\n...\n\t/**\n\t * Compute bins for a specified attribute.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param maxNumBins the number of bins.\n\t * @return bins for a specified attribute.\n\t */\n\tpublic static Bins computeBins(Instances instances, int attIndex, int maxNumBins) {\n...\n\t/**\n\t * Compute bins for a list of values.\n\t * \n\t * @param list the histogram.\n\t * @param maxNumBins the number of bins.\n\t * @return bins for a list of values.\n\t */\n\tpublic static Bins computeBins(List<Element<Double>> list, int maxNumBins) {\n...\n\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n...\n\t/**\n\t * Discretized an attribute with specified number of bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param maxNumBins the number of bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, int maxNumBins) {\n...\n\tstatic double getMedian(List<DoublePair> stats, int start, double midPoint) {\n...\n\tstatic void getStats(List<Element<Double>> list, List<DoublePair> stats) {\n...\n\t/**\n\t * Constructor.\n\t */\n\tpublic Discretizer() {\n\n\t}\n\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Discretizes an attribute using bins.\n\t * \n\t * @param instances the dataset to discretize.\n\t * @param attIndex the attribute index.\n\t * @param bins the bins.\n\t */\n\tpublic static void discretize(Instances instances, int attIndex, Bins bins) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `discretize`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures instances != null;\n//@ ensures instances.numInstances() == \\old(instances.numInstances());\n//@ ensures instances.numAttributes() == \\old(instances.numAttributes());\n//@ ensures instances.getAttributes().get(attIndex) instanceof BinnedAttribute;\n//@ ensures ((BinnedAttribute)instances.getAttributes().get(attIndex)).getBins() == bins;\n//@ ensures java.util.stream.IntStream.range(0, instances.numAttributes()).filter(i -> i != attIndex).allMatch(i -> instances.getAttributes().get(i) == \\old(instances.getAttributes().get(i)));",
+    "//@ ensures instances == \\old(instances);\n//@ ensures instances != null ==> instances.size() == \\old(instances.size());\n//@ ensures (instances != null && bins != null && attIndex >= 0 && attIndex < instances.dimension()) ==> instances.attribute(attIndex) instanceof BinnedAttribute;\n//@ ensures (instances != null && bins != null && attIndex >= 0 && attIndex < instances.dimension()) ==> ((BinnedAttribute)instances.attribute(attIndex)).getBins() == bins;",
+    "//@ ensures instances != null;\n//@ ensures instances.size() == \\old(instances.size());\n//@ ensures instances.dimension() == \\old(instances.dimension());\n//@ ensures attIndex >= 0 && attIndex < instances.dimension() ==> instances.getAttributes().get(attIndex) instanceof BinnedAttribute;\n//@ ensures bins != null;",
+    "//@ ensures instances.size() == \\old(instances.size());\n//@ ensures instances.getAttributes().size() == \\old(instances.getAttributes().size());\n//@ ensures bins.equals(\\old(bins));\n//@ ensures attIndex >= 0 && attIndex < instances.dimension() ==> instances.attribute(attIndex) instanceof BinnedAttribute;",
+    "//@ ensures instances != null ==> instances.size() == \\old(instances.size());\n//@ ensures instances != null ==> instances.dimension() == \\old(instances.dimension());\n//@ ensures bins != null ==> bins.size() == \\old(bins.size());\n//@ ensures (instances != null && attIndex >= 0 && attIndex < instances.dimension()) ==> instances.getAttributes().get(attIndex) instanceof BinnedAttribute;"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "compile_failure",
+    "compile_failure",
+    "passed",
+    "compile_failure",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [],
+    [
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 100
+}

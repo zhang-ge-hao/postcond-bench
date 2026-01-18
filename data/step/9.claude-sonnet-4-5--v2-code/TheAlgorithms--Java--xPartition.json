@@ -1,0 +1,160 @@
+{
+  "rlid": "xPartition",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/divideandconquer/ClosestPair.java#L77-L102",
+  "name": "xPartition",
+  "line_cov": 1.0,
+  "lines": 26,
+  "stats": 15,
+  "cc": 3,
+  "content": "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x <= pivot.x) { // Less than or less than pivot\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+  "header": "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {",
+  "file": "./src/main/java/com/thealgorithms/divideandconquer/ClosestPair.java",
+  "start_line": 77,
+  "end_line": 102,
+  "body_start_line": 86,
+  "comment": "/**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */",
+  "test_time": 8.725049257278442,
+  "cover_tests": [
+    "com.thealgorithms.divideandconquer.ClosestPairTest#testXPartition"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j < last + 1; j++) { // Off-by-one error: includes an out-of-bounds index\n            if (a[j].x <= pivot.x) { // Less than or less than pivot\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j <= last; j++) { // Incorrect condition: includes the pivot element in the loop\n            if (a[j].x <= pivot.x) { // Less than or less than pivot\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j > last - 1; j++) {\n            if (a[j].x <= pivot.x) { // Less than or less than pivot\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j >= last; j--) { // Incorrect loop direction: results in an infinite loop\n            if (a[j].x <= pivot.x) { // Less than or less than pivot\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x < pivot.x && a[j].y < pivot.y) { // Checks both coordinates (incorrect logic)\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x == pivot.x) { // Only equal to pivot (ignores other cases)\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x > pivot.x) { // Less than or less than pivot\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x >= pivot.x) { // Greater than or equal to pivot (incorrect behavior)\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x <= pivot.x) { // Less than or less than pivot\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i--;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return i; // pivot index\n    }",
+    "    /**\n     * xPartition function: arrange x-axis.\n     *\n     * @param a (IN Parameter) array of points <br>\n     * @param first (IN Parameter) first point <br>\n     * @param last (IN Parameter) last point <br>\n     * @return pivot index\n     */\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; // pivot\n        int i = first - 1;\n        Location temp; // Temporarily store value for position transformation\n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x <= pivot.x) { // Less than or less than pivot\n                i++;\n                temp = a[i]; // array[i] <-> array[j]\n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; // array[pivot] <-> array[i]\n        a[i] = a[last];\n        a[last] = temp;\n        return 0; // pivot index\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result >= first && \\result <= last;\n//@ ensures a[\\result] == \\old(a[last]);\n//@ ensures java.util.stream.IntStream.range(first, \\result).allMatch(k -> a[k].x <= a[\\result].x);\n//@ ensures java.util.stream.IntStream.range(\\result + 1, last + 1).allMatch(k -> a[k].x > a[\\result].x);",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.divideandconquer;\n\npublic final class ClosestPair {\n\n    int numberPoints;\n    Location[] array;\n    Location point1 = null;\n    Location point2 = null;\n    private static double minNum = Double.MAX_VALUE;\n\n    public static void setMinNum(double minNum) {\n        ClosestPair.minNum = minNum;\n    }\n\n    public static void setSecondCount(int secondCount) {\n        ClosestPair.secondCount = secondCount;\n    }\n\n    private static int secondCount = 0;\n\n    ClosestPair(int points) {\n        numberPoints = points;\n        array = new Location[numberPoints];\n    }\n\n    public static class Location {\n\n        double x;\n        double y;\n\n        Location(final double xpar, final double ypar) { \n            this.x = xpar;\n            this.y = ypar;\n        }\n    }\n\n    public Location[] createLocation(int numberValues) {\n        return new Location[numberValues];\n    }\n\n    public Location buildLocation(double x, double y) {\n        return new Location(x, y);\n    }\n\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; \n        int i = first - 1;\n        Location temp; \n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x <= pivot.x) { \n                i++;\n                temp = a[i]; \n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; \n        a[i] = a[last];\n        a[last] = temp;\n        return i; \n    }\n\n    public int yPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; \n        int i = first - 1;\n        Location temp; \n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].y <= pivot.y) { \n                i++;\n                temp = a[i]; \n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; \n        a[i] = a[last];\n        a[last] = temp;\n        return i; \n    }\n\n    public void xQuickSort(final Location[] a, final int first, final int last) {\n        if (first < last) {\n            int q = xPartition(a, first, last); \n            xQuickSort(a, first, q - 1); \n            xQuickSort(a, q + 1, last); \n        }\n    }\n\n    public void yQuickSort(final Location[] a, final int first, final int last) {\n        if (first < last) {\n            int q = yPartition(a, first, last); \n            yQuickSort(a, first, q - 1); \n            yQuickSort(a, q + 1, last); \n        }\n    }\n\n    public double closestPair(final Location[] a, final int indexNum) {\n        Location[] divideArray = new Location[indexNum];\n        System.arraycopy(a, 0, divideArray, 0, indexNum); \n        int divideX = indexNum / 2; \n        Location[] leftArray = new Location[divideX]; \n        Location[] rightArray = new Location[indexNum - divideX];\n        if (indexNum <= 3) { \n            return bruteForce(divideArray);\n        }\n        System.arraycopy(divideArray, 0, leftArray, 0, divideX);\n        System.arraycopy(divideArray, divideX, rightArray, 0, indexNum - divideX);\n\n        double minLeftArea; \n        double minRightArea; \n        double minValue; \n\n        minLeftArea = closestPair(leftArray, divideX); \n        minRightArea = closestPair(rightArray, indexNum - divideX);\n        minValue = Math.min(minLeftArea, minRightArea);\n\n        for (int i = 0; i < indexNum; i++) {\n            double xGap = Math.abs(divideArray[divideX].x - divideArray[i].x);\n            if (xGap < minValue) {\n                ClosestPair.setSecondCount(secondCount + 1); \n            } else {\n                if (divideArray[i].x > divideArray[divideX].x) {\n                    break;\n                }\n            }\n        }\n        Location[] firstWindow = new Location[secondCount];\n        int k = 0;\n        for (int i = 0; i < indexNum; i++) {\n            double xGap = Math.abs(divideArray[divideX].x - divideArray[i].x);\n            if (xGap < minValue) { \n                firstWindow[k] = divideArray[i]; \n                k++;\n            } else {\n                if (divideArray[i].x > divideArray[divideX].x) {\n                    break;\n                }\n            }\n        }\n        yQuickSort(firstWindow, 0, secondCount - 1); \n        double length;\n        for (int i = 0; i < secondCount - 1; i++) {\n            for (int j = (i + 1); j < secondCount; j++) {\n                double xGap = Math.abs(firstWindow[i].x - firstWindow[j].x);\n                double yGap = Math.abs(firstWindow[i].y - firstWindow[j].y);\n                if (yGap < minValue) {\n                    length = Math.sqrt(Math.pow(xGap, 2) + Math.pow(yGap, 2));\n                    if (length < minValue) {\n                        minValue = length;\n                        if (length < minNum) {\n                            ClosestPair.setMinNum(length);\n                            point1 = firstWindow[i];\n                            point2 = firstWindow[j];\n                        }\n                    }\n                } else {\n                    break;\n                }\n            }\n        }\n        ClosestPair.setSecondCount(0);\n        return minValue;\n    }\n\n    public double bruteForce(final Location[] arrayParam) {\n        double minValue = Double.MAX_VALUE; \n        double length;\n        double xGap; \n        double yGap; \n        double result = 0;\n\n        if (arrayParam.length == 2) {\n            xGap = (arrayParam[0].x - arrayParam[1].x);\n            yGap = (arrayParam[0].y - arrayParam[1].y);\n            length = Math.sqrt(Math.pow(xGap, 2) + Math.pow(yGap, 2));\n            if (length < minNum) {\n                ClosestPair.setMinNum(length);\n            }\n            point1 = arrayParam[0];\n            point2 = arrayParam[1];\n            result = length;\n        }\n        if (arrayParam.length == 3) {\n            for (int i = 0; i < arrayParam.length - 1; i++) {\n                for (int j = (i + 1); j < arrayParam.length; j++) {\n                    xGap = (arrayParam[i].x - arrayParam[j].x);\n                    yGap = (arrayParam[i].y - arrayParam[j].y);\n                    length = Math.sqrt(Math.pow(xGap, 2) + Math.pow(yGap, 2));\n                    if (length < minValue) {\n                        minValue = length;\n                        if (length < minNum) {\n                            ClosestPair.setMinNum(length);\n                            point1 = arrayParam[i];\n                            point2 = arrayParam[j];\n                        }\n                    }\n                }\n            }\n            result = minValue;\n        }\n        return result; \n    }\n\n    public static void main(final String[] args) {\n        ClosestPair cp = new ClosestPair(12);\n        cp.array[0] = cp.buildLocation(2, 3);\n        cp.array[1] = cp.buildLocation(2, 16);\n        cp.array[2] = cp.buildLocation(3, 9);\n        cp.array[3] = cp.buildLocation(6, 3);\n        cp.array[4] = cp.buildLocation(7, 7);\n        cp.array[5] = cp.buildLocation(19, 4);\n        cp.array[6] = cp.buildLocation(10, 11);\n        cp.array[7] = cp.buildLocation(15, 2);\n        cp.array[8] = cp.buildLocation(15, 19);\n        cp.array[9] = cp.buildLocation(16, 11);\n        cp.array[10] = cp.buildLocation(17, 13);\n        cp.array[11] = cp.buildLocation(9, 12);\n\n        System.out.println(\"Input data\");\n        System.out.println(\"Number of points: \" + cp.array.length);\n        for (int i = 0; i < cp.array.length; i++) {\n            System.out.println(\"x: \" + cp.array[i].x + \", y: \" + cp.array[i].y);\n        }\n\n        cp.xQuickSort(cp.array, 0, cp.array.length - 1); \n\n        double result; \n\n        result = cp.closestPair(cp.array, cp.array.length);\n        System.out.println(\"Output Data\");\n        System.out.println(\"(\" + cp.point1.x + \", \" + cp.point1.y + \")\");\n        System.out.println(\"(\" + cp.point2.x + \", \" + cp.point2.y + \")\");\n        System.out.println(\"Minimum Distance : \" + result);\n    }\n}\n\n```\n## Target Method\n```\n    public int xPartition(final Location[] a, final int first, final int last) {\n        Location pivot = a[last]; \n        int i = first - 1;\n        Location temp; \n        for (int j = first; j <= last - 1; j++) {\n            if (a[j].x <= pivot.x) { \n                i++;\n                temp = a[i]; \n                a[i] = a[j];\n                a[j] = temp;\n            }\n        }\n        i++;\n        temp = a[i]; \n        a[i] = a[last];\n        a[last] = temp;\n        return i; \n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `xPartition`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "//@ ensures \\result >= first && \\result <= last;\n//@ ensures a[\\result] == \\old(a[last]);\n//@ ensures java.util.stream.IntStream.range(first, \\result).allMatch(idx -> a[idx].x <= a[\\result].x);\n//@ ensures java.util.stream.IntStream.range(\\result + 1, last + 1).allMatch(idx -> a[idx].x > a[\\result].x);",
+    "//@ ensures \\result >= first && \\result <= last;\n//@ ensures a[\\result] == \\old(a[last]);\n//@ ensures java.util.stream.IntStream.range(first, \\result).allMatch(idx -> a[idx].x <= a[\\result].x);\n//@ ensures java.util.stream.IntStream.range(\\result + 1, last + 1).allMatch(idx -> a[idx].x > a[\\result].x);\n//@ ensures java.util.Arrays.stream(a, first, last + 1).allMatch(loc -> java.util.stream.IntStream.range(first, last + 1).anyMatch(idx -> \\old(a[idx]) == loc));",
+    "//@ ensures \\result >= first && \\result <= last;\n//@ ensures a[\\result].x == \\old(a[last].x) && a[\\result].y == \\old(a[last].y);\n//@ ensures java.util.stream.IntStream.range(first, \\result).allMatch(idx -> a[idx].x <= a[\\result].x);\n//@ ensures java.util.stream.IntStream.range(\\result + 1, last + 1).allMatch(idx -> a[idx].x > a[\\result].x);",
+    "//@ ensures \\result >= first && \\result <= last;\n//@ ensures a[\\result] == \\old(a[last]);\n//@ ensures java.util.stream.IntStream.range(first, \\result).allMatch(k -> a[k].x <= a[\\result].x);\n//@ ensures java.util.stream.IntStream.range(\\result + 1, last + 1).allMatch(k -> a[k].x > a[\\result].x);",
+    "//@ ensures \\result >= first && \\result <= last;\n//@ ensures a[\\result] == \\old(a[last]);\n//@ ensures java.util.stream.IntStream.range(first, \\result).allMatch(k -> a[k].x <= a[\\result].x);\n//@ ensures java.util.stream.IntStream.range(\\result + 1, last + 1).allMatch(k -> a[k].x >= a[\\result].x);"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "compile_failure",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 321
+}

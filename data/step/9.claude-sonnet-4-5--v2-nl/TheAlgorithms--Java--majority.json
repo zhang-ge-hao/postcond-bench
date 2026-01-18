@@ -1,0 +1,304 @@
+{
+  "rlid": "majority",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/datastructures/hashmap/hashing/MajorityElement.java#L19-L42",
+  "name": "majority",
+  "line_cov": 1.0,
+  "lines": 24,
+  "stats": 10,
+  "cc": 6,
+  "content": "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+  "header": "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {",
+  "file": "./src/main/java/com/thealgorithms/datastructures/hashmap/hashing/MajorityElement.java",
+  "start_line": 19,
+  "end_line": 42,
+  "body_start_line": 26,
+  "comment": "/**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */",
+  "test_time": 7.719465017318726,
+  "cover_tests": [
+    "com.thealgorithms.datastructures.hashmap.hashing.MajorityElementTest#testMajorityWithAllElementsSame",
+    "com.thealgorithms.datastructures.hashmap.hashing.MajorityElementTest#testMajorityWithEmptyArray",
+    "com.thealgorithms.datastructures.hashmap.hashing.MajorityElementTest#testMajorityWithEvenCountAndOneMajorityElement",
+    "com.thealgorithms.datastructures.hashmap.hashing.MajorityElementTest#testMajorityWithLargeArray",
+    "com.thealgorithms.datastructures.hashmap.hashing.MajorityElementTest#testMajorityWithMultipleMajorityElements",
+    "com.thealgorithms.datastructures.hashmap.hashing.MajorityElementTest#testMajorityWithNoElementsEqualToHalf",
+    "com.thealgorithms.datastructures.hashmap.hashing.MajorityElementTest#testMajorityWithNoMajorityElement",
+    "com.thealgorithms.datastructures.hashmap.hashing.MajorityElementTest#testMajorityWithSingleMajorityElement"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums != null && nums.length > 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums != null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length != 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.singletonList(0); // Returns a list with a single element\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return new ArrayList<>(List.of(0));\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return null;\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : new int[0]) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) { numToCount.merge(num, 1, (a, b) -> a);\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) { numToCount.put(num, 1);\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            \n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, (oldValue, newValue) -> oldValue); // This will always keep the old value, effectively ignoring new counts.\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.put(num, 1); // This will reset the count to 1 for every occurrence, leading to incorrect majority calculations.\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.put(num, numToCount.getOrDefault(num, 0)); // This will not increment the count, leading to incorrect results.\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() < nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() <= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() == nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() > nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length * 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                \n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(0);\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey() * 2);\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey() + 1);\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getValue());\n            }\n        }\n        return majorityElements;\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return java.util.Collections.emptyList();\n    }",
+    "    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n        if (nums == null || nums.length == 0) {\n            return Collections.emptyList();\n        }\n\n        Map<Integer, Integer> numToCount = new HashMap<>();\n        for (final var num : nums) {\n            numToCount.merge(num, 1, Integer::sum);\n        }\n\n        List<Integer> majorityElements = new ArrayList<>();\n        for (final var entry : numToCount.entrySet()) {\n            if (entry.getValue() >= nums.length / 2) {\n                majorityElements.add(entry.getKey());\n            }\n        }\n        return null;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result != null;\n//@ ensures nums == null || nums.length == 0 ==> \\result.isEmpty();\n//@ ensures nums != null && nums.length > 0 ==> (\\result.containsAll(java.util.Arrays.stream(nums).boxed().collect(java.util.stream.Collectors.groupingBy(java.util.function.Function.identity(), java.util.stream.Collectors.counting())).entrySet().stream().filter(e -> e.getValue() >= (long)(nums.length / 2)).map(java.util.Map.Entry::getKey).collect(java.util.stream.Collectors.toList())) && java.util.Arrays.stream(nums).boxed().collect(java.util.stream.Collectors.groupingBy(java.util.function.Function.identity(), java.util.stream.Collectors.counting())).entrySet().stream().filter(e -> e.getValue() >= (long)(nums.length / 2)).map(java.util.Map.Entry::getKey).collect(java.util.stream.Collectors.toList()).containsAll(\\result));\n//@ ensures nums != null && nums.length > 0 ==> \\result.stream().allMatch(e -> java.util.Arrays.stream(nums).filter(x -> x == e).count() >= (long)(nums.length / 2));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.datastructures.hashmap.hashing;\n\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\n\n/**\n * This class provides a method to find the majority element(s) in an array of integers.\n * A majority element is defined as an element that appears at least \u230an/2\u230b times,\n * where n is the length of the array. If multiple elements qualify as majority elements,\n * they are all returned in a list.\n */\npublic final class MajorityElement {\n    private MajorityElement() {\n    }\n\n    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n...\n}\n\n```\n## Target Method\n```\n    /**\n     * Returns a list of majority element(s) from the given array of integers.\n     *\n     * @param nums an array of integers\n     * @return a list containing the majority element(s); returns an empty list if none exist or input is null/empty\n     */\n    public static List<Integer> majority(int[] nums) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `majority`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures \\result != null;\n//@ ensures (nums == null || nums.length == 0) ==> \\result.isEmpty();\n//@ ensures nums != null ==> \\result.stream().allMatch(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() >= nums.length / 2);\n//@ ensures nums != null ==> java.util.Arrays.stream(nums).distinct().filter(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() >= nums.length / 2).allMatch(elem -> \\result.contains(elem));\n//@ ensures nums != null ==> \\result.stream().allMatch(elem -> java.util.Arrays.stream(nums).anyMatch(x -> x == elem));\n//@ ensures \\result.stream().distinct().count() == \\result.size();",
+    "//@ ensures \\result != null;\n//@ ensures (nums == null || nums.length == 0) ==> \\result.isEmpty();\n//@ ensures nums != null ==> \\result.stream().allMatch(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() > nums.length / 2);\n//@ ensures nums != null ==> java.util.Arrays.stream(nums).boxed().distinct().filter(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() > nums.length / 2).allMatch(elem -> \\result.contains(elem));\n//@ ensures \\result.stream().distinct().count() == \\result.size();",
+    "//@ ensures \\result != null;\n//@ ensures (nums == null || nums.length == 0) ==> \\result.isEmpty();\n//@ ensures nums != null && nums.length > 0 ==> \\result.stream().allMatch(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() >= nums.length / 2);\n//@ ensures nums != null && nums.length > 0 ==> java.util.Arrays.stream(nums).distinct().filter(x -> java.util.Arrays.stream(nums).filter(y -> y == x).count() >= nums.length / 2).allMatch(x -> \\result.contains(x));\n//@ ensures \\result.size() == \\result.stream().distinct().count();",
+    "//@ ensures \\result != null;\n//@ ensures (nums == null || nums.length == 0) ==> \\result.isEmpty();\n//@ ensures (nums != null && nums.length > 0) ==> \\result.stream().allMatch(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() >= nums.length / 2);\n//@ ensures (nums != null && nums.length > 0) ==> java.util.Arrays.stream(nums).boxed().distinct().filter(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() >= nums.length / 2).allMatch(elem -> \\result.contains(elem));\n//@ ensures \\result.stream().distinct().count() == \\result.size();",
+    "//@ ensures \\result != null;\n//@ ensures nums == null || nums.length == 0 ==> \\result.isEmpty();\n//@ ensures nums != null ==> \\result.stream().allMatch(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() >= nums.length / 2);\n//@ ensures nums != null && nums.length > 0 ==> java.util.Arrays.stream(nums).boxed().distinct().filter(elem -> java.util.Arrays.stream(nums).filter(x -> x == elem).count() >= nums.length / 2).allMatch(elem -> \\result.contains(elem));\n//@ ensures \\result.size() == \\result.stream().distinct().count();"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "jml_fail",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 320
+}

@@ -1,0 +1,224 @@
+{
+  "rlid": "findMaxForm",
+  "github_url": "https://github.com/javadev/LeetCode-in-Java/blob/bd921712f2d317b9cdb0a6067edb6b6513c8d1cc/./src/main/java/g0401_0500/s0474_ones_and_zeroes/Solution.java#L7-L29",
+  "name": "findMaxForm",
+  "line_cov": 1.0,
+  "lines": 23,
+  "stats": 9,
+  "cc": 4,
+  "content": "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+  "header": "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {",
+  "file": "./src/main/java/g0401_0500/s0474_ones_and_zeroes/Solution.java",
+  "start_line": 7,
+  "end_line": 29,
+  "body_start_line": 19,
+  "comment": "/*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */",
+  "test_time": 12.920713663101196,
+  "cover_tests": [
+    "g0401_0500.s0474_ones_and_zeroes.SolutionTest#findMaxForm",
+    "g0401_0500.s0474_ones_and_zeroes.SolutionTest#findMaxForm2"
+  ],
+  "repo": {
+    "github_path": "javadev/LeetCode-in-Java",
+    "commit": "bd921712f2d317b9cdb0a6067edb6b6513c8d1cc",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n    <modelVersion>4.0.0</modelVersion>\n    <groupId>com.github.javadev</groupId>\n    <artifactId>leetcode-in-java</artifactId>\n    <packaging>jar</packaging>\n    <version>1.49-SNAPSHOT</version>\n    <name>leetcode-in-java</name>\n    <description>Java-based LeetCode algorithm problem solutions, regularly updated</description>\n    <url>https://github.com/javadev/LeetCode-in-Java</url>\n    <developers>\n        <developer>\n            <name>Valentyn Kolesnikov</name>\n        </developer>\n    </developers>\n    <licenses>\n        <license>\n            <name>The MIT License</name>\n            <url>http://opensource.org/licenses/MIT</url>\n            <distribution>repo</distribution>\n        </license>\n    </licenses>\n    <scm>\n        <connection>scm:git:git://github.com/javadev/LeetCode-in-Java.git</connection>\n        <developerConnection>scm:git:git://github.com/javadev/LeetCode-in-Java.git</developerConnection>\n        <url>https://github.com/javadev/LeetCode-in-Java</url>\n    </scm>\n    <properties>\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    </properties>\n    <ciManagement>\n        <system>GitHub Actions</system>\n        <url>https://github.com/javadev/LeetCode-in-Java/actions</url>\n    </ciManagement>\n    <issueManagement>\n        <system>GitHub Issues</system>\n        <url>https://github.com/javadev/LeetCode-in-Java/issues</url>\n    </issueManagement>\n    <build>\n        <plugins>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-compiler-plugin</artifactId>\n                <version>3.14.1</version>\n                <configuration>\n                    <source>17</source>\n                    <target>17</target>\n                    <encoding>UTF-8</encoding>\n                    <compilerArgs>\n                        <arg>-Xlint:unchecked</arg>\n                        <arg>-Xlint:deprecation</arg>\n                    </compilerArgs>\n                </configuration>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-surefire-plugin</artifactId>\n                <version>3.5.4</version>\n                <dependencies>\n                    <dependency>\n                        <groupId>org.junit.jupiter</groupId>\n                        <artifactId>junit-jupiter-engine</artifactId>\n                        <version>[5.13.3,)</version>\n                    </dependency>\n                </dependencies>\n            <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-jar-plugin</artifactId>\n                <version>3.4.2</version>\n                <configuration>\n                    <archive>\n                        <manifestEntries>\n                            <Built-By />\n                            <Created-By />\n                            <Build-Jdk />\n                        </manifestEntries>\n                    </archive>\n                </configuration>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-checkstyle-plugin</artifactId>\n                <version>2.17</version>\n                <executions>\n                    <execution>\n                        <id>checkstyle</id>\n                        <phase>validate</phase>\n                        <goals>\n                            <goal>check</goal>\n                        </goals>\n                        <configuration>\n                            <configLocation>${basedir}/checkstyle.xml</configLocation>\n                            <includeTestSourceDirectory>true</includeTestSourceDirectory>\n                            <failOnViolation>true</failOnViolation>\n                        </configuration>\n                    </execution>\n                </executions>\n            </plugin>\n            <plugin>\n                <groupId>org.jacoco</groupId>\n                <artifactId>jacoco-maven-plugin</artifactId>\n                <version>0.8.14</version>\n                <executions>\n                    <execution>\n                        <id>prepare-agent</id>\n                        <goals>\n                            <goal>prepare-agent</goal>\n                        </goals>\n                    </execution>\n                <execution><id>report</id><phase>test</phase><goals><goal>report</goal></goals></execution></executions>\n            <configuration><xml>true</xml><outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration></plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-project-info-reports-plugin</artifactId>\n                <version>3.9.0</version>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-site-plugin</artifactId>\n                <version>3.21.0</version>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-source-plugin</artifactId>\n                <version>3.3.1</version>\n                <executions>\n                    <execution>\n                        <id>attach-sources</id>\n                        <goals>\n                            <goal>jar</goal>\n                            <goal>test-jar</goal>\n                        </goals>\n                    </execution>\n                </executions>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-javadoc-plugin</artifactId>\n                <version>3.12.0</version>\n                <executions>\n                    <execution>\n                        <id>attach-sources</id>\n                        <goals>\n                            <goal>jar</goal>\n                            <goal>test-jar</goal>\n                        </goals>\n                    </execution>\n                </executions>\n                <configuration>\n                    <failOnError>false</failOnError>\n                    <detectJavaApiLink>false</detectJavaApiLink>\n                </configuration>\n            </plugin>\n            <plugin>\n                <groupId>org.apache.maven.plugins</groupId>\n                <artifactId>maven-gpg-plugin</artifactId>\n                <version>3.2.8</version>\n                <executions>\n                    <execution>\n                        <id>sign-artifacts</id>\n                        <phase>verify</phase>\n                        <goals>\n                            <goal>sign</goal>\n                        </goals>\n                    </execution>\n                </executions>\n            </plugin>\n        </plugins>\n    </build>\n    <dependencies>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter-api</artifactId>\n            <version>[5.13.3,)</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter-engine</artifactId>\n            <version>[5.13.3,)</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.junit.platform</groupId>\n            <artifactId>junit-platform-launcher</artifactId>\n            <version>[1.13.3,)</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.hamcrest</groupId>\n            <artifactId>hamcrest-core</artifactId>\n            <version>[3.0,)</version>\n            <scope>test</scope>\n        </dependency>\n        <dependency>\n            <groupId>org.zapodot</groupId>\n            <artifactId>embedded-db-junit-jupiter</artifactId>\n            <version>[2.2.3,)</version>\n            <scope>test</scope>\n        </dependency>\n    </dependencies>\n</project>",
+    "failed_tests": [],
+    "test_time": 13.60979437828064
+  },
+  "mutants": [
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str + \"00\"); // Counts the characters in str but adds extra '0's\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str.substring(1)); // Counts characters in str but skips the first character\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = new int[2]; // Initializes count but does not count the characters in str\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = new int[2]; count[0] = str.length(); // Sets count[0] to the total length of str, ignoring '0's and '1's\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i < count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i > count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0] + 1; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j > count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1] + 1; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] - 1);\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] - 1); // Incorrectly subtracts 1 instead of adding\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]]); // Missing the +1, not counting the current string\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.min(dp[i][j], dp[i - count[0]][j - count[1]] + 1); // Changed max to min\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = dp[i][j] + 1; // Incorrectly increments the value without considering previous states\n                }\n            }\n        }\n        return dp[m][n];\n    }",
+    "    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n        int[][] dp = new int[m + 1][n + 1];\n        for (String str : strs) {\n            int[] count = count(str);\n            for (int i = m; i >= count[0]; i--) {\n                for (int j = n; j >= count[1]; j--) {\n                    dp[i][j] = Math.max(dp[i][j], dp[i - count[0]][j - count[1]] + 1);\n                }\n            }\n        }\n        return 0;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result >= 0 && \\result <= strs.length;\n//@ ensures \\result == java.util.stream.IntStream.range(0, (1 << strs.length)).map(mask -> { int z = java.util.stream.IntStream.range(0, strs.length).filter(k -> ((mask >> k) & 1) == 1).map(k -> (int) strs[k].chars().filter(ch -> ch == '0').count()).sum(); int o = java.util.stream.IntStream.range(0, strs.length).filter(k -> ((mask >> k) & 1) == 1).map(k -> (int) strs[k].chars().filter(ch -> ch == '1').count()).sum(); return (z <= m && o <= n) ? Integer.bitCount(mask) : 0; }).max().getAsInt();",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage g0401_0500.s0474_ones_and_zeroes;\n\n// #Medium #Array #String #Dynamic_Programming\n// #2022_07_20_Time_41_ms_(60.42%)_Space_42.5_MB_(73.29%)\n\npublic class Solution {\n    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n...\n    private int[] count(String str) {\n...\n}\n\n```\n## Target Method\n```\n    /*\n     * The problem can be interpreted as:\n     * What's the max number of str can we pick from strs with limitation of m \"0\"s and n \"1\"s.\n     *\n     * Thus we can define dp[i][j] as it stands for max number of str can we pick from strs with limitation\n     * of i \"0\"s and j \"1\"s.\n     *\n     * For each str, assume it has a \"0\"s and b \"1\"s, we update the dp array iteratively\n     * and set dp[i][j] = Math.max(dp[i][j], dp[i - a][j - b] + 1).\n     * So at the end, dp[m][n] is the answer.\n     */\n    public int findMaxForm(String[] strs, int m, int n) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `findMaxForm`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures \\result >= 0;\n//@ ensures \\result <= strs.length;\n//@ ensures strs.length == 0 ==> \\result == 0;\n//@ ensures m == 0 && n == 0 ==> (\\result == 0 || java.util.Arrays.stream(strs).limit(\\result).allMatch(s -> s.isEmpty()));\n//@ ensures m < 0 || n < 0 ==> \\result == 0;",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result <= strs.length;\n//@ ensures strs.length == 0 ==> \\result == 0;\n//@ ensures (m < 0 || n < 0) ==> \\result == 0;\n//@ ensures m == 0 && n == 0 ==> (\\result == 0 || (strs.length > 0 && java.util.Arrays.stream(strs).anyMatch(s -> s.length() == 0)));",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result <= strs.length;\n//@ ensures strs.length == 0 ==> \\result == 0;\n//@ ensures m == 0 && n == 0 && java.util.Arrays.stream(strs).allMatch(s -> s.isEmpty()) ==> \\result == strs.length;\n//@ ensures m == 0 && n == 0 && java.util.Arrays.stream(strs).anyMatch(s -> !s.isEmpty()) ==> \\result < strs.length;\n//@ ensures java.util.Arrays.stream(strs).allMatch(s -> s.isEmpty()) ==> \\result == strs.length;",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result <= strs.length;\n//@ ensures strs.equals(\\old(strs));\n//@ ensures m == 0 && n == 0 ==> \\result == 0;\n//@ ensures strs.length == 0 ==> \\result == 0;",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result <= strs.length;\n//@ ensures strs.length == 0 ==> \\result == 0;\n//@ ensures (m == 0 && n == 0 && strs.length > 0 && !java.util.Arrays.stream(strs).anyMatch(s -> s.isEmpty())) ==> \\result == 0;"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 297
+}

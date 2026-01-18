@@ -1,0 +1,401 @@
+{
+  "rlid": "is_json",
+  "github_url": "https://github.com/marshmallow-code/webargs/blob/8838ea17702ac4a23721f8a0002ef77e87336cf0/./src/webargs/core.py#L88-L101",
+  "name": "is_json",
+  "line_cov": 1.0,
+  "lines": 14,
+  "stats": 9,
+  "cc": 5,
+  "content": "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+  "header": "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"",
+  "file": "./src/webargs/core.py",
+  "start_line": 88,
+  "end_line": 101,
+  "body_start_line": 93,
+  "comment": "\"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"",
+  "test_time": 1.9942059516906738,
+  "cover_tests": [
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_or_form",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_with_charset",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_with_vendor_media_type",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_ignore_extra_data",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_empty",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_error_unexpected_int",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_error_unexpected_list",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_many_schema_invalid_input",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_many_schema",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_many_schema_error_malformed_data",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_list",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_list_error_malformed_data",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_with_nonascii_chars",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_json_with_nonutf8_chars",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_user_validation_error_returns_422_response_by_default",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_nested_json",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_nested_many_json",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_parse_nested_many_missing",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_invalid_json",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_content_type_mismatch[/echo_json-{\"name\": \"foo\"}-application/x-www-form-urlencoded]",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_multiple_args",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_nested_many_with_data_key",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_use_args_multiple",
+    "tests/test_aiohttpparser.py::TestAIOHTTPParser::test_validation_error_returns_422_response",
+    "tests/test_bottleparser.py::TestBottleParser::test_parse_form",
+    "tests/test_bottleparser.py::TestBottleParser::test_parse_json_or_form",
+    "tests/test_bottleparser.py::TestBottleParser::test_parsing_form_default",
+    "tests/test_bottleparser.py::TestBottleParser::test_parse_form_multiple",
+    "tests/test_bottleparser.py::TestBottleParser::test_use_args_with_validation",
+    "tests/test_bottleparser.py::TestBottleParser::test_content_type_mismatch[/echo_form-payload1-application/json]",
+    "tests/test_core.py::test_is_json",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_missing",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_or_form",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_with_charset",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_with_vendor_media_type",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_ignore_extra_data",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_empty",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_error_unexpected_int",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_error_unexpected_list",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_many_schema_invalid_input",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_many_schema",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_many_schema_error_malformed_data",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_list",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_list_error_malformed_data",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_with_nonascii_chars",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_json_with_nonutf8_chars",
+    "tests/test_djangoparser.py::TestDjangoParser::test_validation_error_returns_422_response",
+    "tests/test_djangoparser.py::TestDjangoParser::test_user_validation_error_returns_422_response_by_default",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_nested_json",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_nested_many_json",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parse_nested_many_missing",
+    "tests/test_djangoparser.py::TestDjangoParser::test_empty_json",
+    "tests/test_djangoparser.py::TestDjangoParser::test_empty_json_with_headers",
+    "tests/test_djangoparser.py::TestDjangoParser::test_invalid_json",
+    "tests/test_djangoparser.py::TestDjangoParser::test_content_type_mismatch[/echo_json-{\"name\": \"foo\"}-application/x-www-form-urlencoded]",
+    "tests/test_djangoparser.py::TestDjangoParser::test_parsing_in_class_based_view",
+    "tests/test_djangoparser.py::TestDjangoParser::test_use_args_in_class_based_view",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json_or_form",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json_with_charset",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json_with_vendor_media_type",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json_empty",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json_error_unexpected_int",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json_error_unexpected_list",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json_with_nonascii_chars",
+    "tests/test_falconparser.py::TestFalconParser::test_validation_error_returns_422_response",
+    "tests/test_falconparser.py::TestFalconParser::test_empty_json_with_headers",
+    "tests/test_falconparser.py::TestFalconParser::test_content_type_mismatch[/echo_json-{\"name\": \"foo\"}-application/x-www-form-urlencoded]",
+    "tests/test_falconparser.py::TestFalconParser::test_parse_json_with_nonutf8_chars[/echo_json]",
+    "tests/test_falconparser.py::TestFalconParser::test_invalid_json[/echo_json]",
+    "tests/test_falconparser.py::TestFalconParser::test_body_parsing_works_with_simulate",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_missing",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_or_form",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_with_charset",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_with_vendor_media_type",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_ignore_extra_data",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_empty",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_error_unexpected_int",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_error_unexpected_list",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_many_schema_invalid_input",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_many_schema",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_many_schema_error_malformed_data",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_list",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_list_error_malformed_data",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_with_nonascii_chars",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_json_with_nonutf8_chars",
+    "tests/test_flaskparser.py::TestFlaskParser::test_validation_error_returns_422_response",
+    "tests/test_flaskparser.py::TestFlaskParser::test_user_validation_error_returns_422_response_by_default",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_nested_json",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_nested_many_json",
+    "tests/test_flaskparser.py::TestFlaskParser::test_parse_nested_many_missing",
+    "tests/test_flaskparser.py::TestFlaskParser::test_empty_json",
+    "tests/test_flaskparser.py::TestFlaskParser::test_empty_json_with_headers",
+    "tests/test_flaskparser.py::TestFlaskParser::test_invalid_json",
+    "tests/test_flaskparser.py::TestFlaskParser::test_content_type_mismatch[/echo_json-{\"name\": \"foo\"}-application/x-www-form-urlencoded]",
+    "tests/test_flaskparser.py::TestFlaskParser::test_use_args_on_a_method_view",
+    "tests/test_flaskparser.py::TestFlaskParser::test_use_kwargs_on_a_method_view",
+    "tests/test_flaskparser.py::TestFlaskParser::test_use_kwargs_with_missing_data",
+    "tests/test_flaskparser.py::TestFlaskParser::test_nested_many_with_data_key",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_missing",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_or_form",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_with_charset",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_with_vendor_media_type",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_ignore_extra_data",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_empty",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_error_unexpected_int",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_error_unexpected_list",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_many_schema_invalid_input",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_many_schema",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_many_schema_error_malformed_data",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_list",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_list_error_malformed_data",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_with_nonascii_chars",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_json_with_nonutf8_chars",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_validation_error_returns_422_response",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_user_validation_error_returns_422_response_by_default",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_nested_json",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_nested_many_json",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_parse_nested_many_missing",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_empty_json",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_empty_json_with_headers",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_invalid_json",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_content_type_mismatch[/echo_json-{\"name\": \"foo\"}-application/x-www-form-urlencoded]",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_use_args_on_a_method_view_async",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_use_kwargs_on_a_method_view_async",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_use_kwargs_with_missing_data_async",
+    "tests/test_flaskparser.py::TestFlaskAsyncParser::test_nested_many_with_data_key_async",
+    "tests/test_flaskparser.py::test_abort_called_on_validation_error",
+    "tests/test_flaskparser.py::test_load_json_returns_missing_if_no_data[None]",
+    "tests/test_flaskparser.py::test_load_json_returns_missing_if_no_data[application/json]",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_missing",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_or_form",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_with_charset",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_with_vendor_media_type",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_ignore_extra_data",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_empty",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_error_unexpected_int",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_error_unexpected_list",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_many_schema_invalid_input",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_many_schema",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_many_schema_error_malformed_data",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_list",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_list_error_malformed_data",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_with_nonascii_chars",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_json_with_nonutf8_chars",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_validation_error_returns_422_response",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_user_validation_error_returns_422_response_by_default",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_nested_json",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_nested_many_json",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_parse_nested_many_missing",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_empty_json",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_empty_json_with_headers",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_invalid_json",
+    "tests/test_pyramidparser.py::TestPyramidParser::test_content_type_mismatch[/echo_json-{\"name\": \"foo\"}-application/x-www-form-urlencoded]",
+    "tests/test_tornadoparser.py::TestJSONArgs::test_it_should_get_single_values",
+    "tests/test_tornadoparser.py::TestJSONArgs::test_parsing_request_with_vendor_content_type",
+    "tests/test_tornadoparser.py::TestJSONArgs::test_it_should_get_multiple_values",
+    "tests/test_tornadoparser.py::TestJSONArgs::test_it_should_get_multiple_nested_values",
+    "tests/test_tornadoparser.py::TestJSONArgs::test_it_should_not_include_fieldnames_if_not_present",
+    "tests/test_tornadoparser.py::TestJSONArgs::test_it_should_handle_type_error_on_load_json",
+    "tests/test_tornadoparser.py::TestErrorHandler::test_it_should_raise_httperror_on_failed_validation",
+    "tests/test_tornadoparser.py::TestParse::test_it_should_parse_json_arguments",
+    "tests/test_tornadoparser.py::TestParse::test_it_should_raise_when_json_is_invalid",
+    "tests/test_tornadoparser.py::TestParse::test_it_should_parse_required_arguments",
+    "tests/test_tornadoparser.py::TestParse::test_it_should_parse_multiple_arg_required",
+    "tests/test_tornadoparser.py::TestUseArgs::test_it_should_pass_parsed_as_first_argument",
+    "tests/test_tornadoparser.py::TestUseArgs::test_it_should_pass_parsed_as_kwargs_arguments",
+    "tests/test_tornadoparser.py::TestUseArgs::test_it_should_be_validate_arguments_when_validator_is_passed"
+  ],
+  "repo": {
+    "github_path": "marshmallow-code/webargs",
+    "commit": "8838ea17702ac4a23721f8a0002ef77e87336cf0",
+    "language": "python",
+    "env_config": "[project]\nname = \"webargs\"\nversion = \"8.7.1\"\ndescription = \"Declarative parsing and validation of HTTP request objects, with built-in support for popular web frameworks, including Flask, Django, Bottle, Tornado, Pyramid, Falcon, and aiohttp.\"\nreadme = \"README.rst\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Natural Language :: English\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: 3.14\", \"Topic :: Internet :: WWW/HTTP :: Dynamic Content\", \"Topic :: Internet :: WWW/HTTP :: WSGI :: Application\",]\nkeywords = [ \"webargs\", \"http\", \"flask\", \"django\", \"bottle\", \"tornado\", \"aiohttp\", \"request\", \"arguments\", \"validation\", \"parameters\", \"rest\", \"api\", \"marshmallow\",]\nrequires-python = \">=3.10\"\ndependencies = [ \"marshmallow>=3.13.0,<5.0.0\", \"packaging>=17.0\", \"typing_extensions>=4.0; python_version<\\\"3.10\\\"\",]\n[[project.authors]]\nname = \"Steven Loria\"\nemail = \"sloria1@gmail.com\"\n\n[[project.maintainers]]\nname = \"Steven Loria\"\nemail = \"sloria1@gmail.com\"\n\n[[project.maintainers]]\nname = \"J\u00e9r\u00f4me Lafr\u00e9choux\"\nemail = \"jerome@jolimont.fr\"\n\n[[project.maintainers]]\nname = \"Stephen Rosen\"\nemail = \"sirosen0@gmail.com\"\n\n[build-system]\nrequires = [ \"flit_core<4\",]\nbuild-backend = \"flit_core.buildapi\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.urls]\nChangelog = \"https://webargs.readthedocs.io/en/latest/changelog.html\"\nFunding = \"https://opencollective.com/marshmallow\"\nIssues = \"https://github.com/marshmallow-code/webargs/issues\"\nSource = \"https://github.com/marshmallow-code/webargs\"\nTidelift = \"https://tidelift.com/subscription/pkg/pypi-webargs?utm_source=pypi-webargs&utm_medium=pypi\"\n\n[project.optional-dependencies]\nframeworks = [ \"Flask>=0.12.5\", \"Django>=2.2.0\", \"bottle>=0.12.13\", \"tornado>=4.5.2\", \"pyramid>=1.9.1\", \"falcon>=2.0.0\", \"aiohttp>=3.0.8\",]\n\n[tool.ruff]\nsrc = [ \"src\",]\nfix = true\nshow-fixes = true\noutput-format = \"full\"\n\n[tool.mypy]\nignore_missing_imports = true\nwarn_unreachable = true\nwarn_unused_ignores = true\nwarn_redundant_casts = true\nwarn_no_return = true\nno_implicit_optional = true\ndisallow_untyped_defs = true\n[[tool.mypy.overrides]]\ndisallow_untyped_defs = false\nmodule = [ \"webargs.fields\", \"webargs.testing\", \"webargs.aiohttpparser\", \"webargs.bottleparser\", \"webargs.djangoparser\", \"webargs.falconparser\", \"tests.*\",]\n\n[tool.ruff.format]\ndocstring-code-format = true\n\n[tool.ruff.lint]\nignore = [ \"E203\", \"E266\", \"E501\", \"E731\",]\nselect = [ \"B\", \"E\", \"F\", \"I\", \"UP\", \"W\",]\n\n[tool.flit.sdist]\ninclude = [ \"docs/\", \"tests/\", \"CHANGELOG.rst\", \"CONTRIBUTING.rst\", \"SECURITY.md\", \"NOTICE\", \"tox.ini\",]\nexclude = [ \"docs/_build/\",]\n\n[tool.pytest.ini_options]\nfilterwarnings = [ \"ignore:.*pkg_resources.*:DeprecationWarning\", \"ignore:.*'cgi' is deprecated.*:DeprecationWarning\", \"ignore:.*The object should be created within an async function.*:DeprecationWarning\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-asyncio = \"^1.2.0\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\nicontract = \"^2.7.1\"\nwebtest = \"3.0.7\"\nwebtest-aiohttp = \"2.0.0\"\npytest-aiohttp = \"^1.1.0\"\nflask = \"^3.1.2\"\ndjango = \"^5.2.7\"\nbottle = \"^0.13.4\"\ntornado = \"^6.5.2\"\npyramid = \"^2.0.2\"\nfalcon = \"^4.1.0\"\naiohttp = \"^3.13.2\"\n",
+    "failed_tests": [
+      "tests/test_aiohttpparser.py::test_aiohttpparser_synchronous_error_handler",
+      "tests/test_aiohttpparser.py::test_aiohttpparser_asynchronous_error_handler",
+      "tests/test_core.py::test_parse[parse]",
+      "tests/test_core.py::test_parse[async_parse]",
+      "tests/test_core.py::test_parse_required_arg_raises_validation_error[parse]",
+      "tests/test_core.py::test_parse_required_arg_raises_validation_error[async_parse]",
+      "tests/test_core.py::test_handle_error_called_when_async_parsing_raises_error",
+      "tests/test_core.py::test_custom_error_handler_decorator_in_async_parse[True]",
+      "tests/test_core.py::test_custom_error_handler_decorator_in_async_parse[False]",
+      "tests/test_core.py::test_use_args_on_async",
+      "tests/test_flaskparser.py::test_abort_called_on_validation_error_async"
+    ],
+    "test_time": 8.122182607650757
+  },
+  "mutants": [
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return True\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" not in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \"XX;XX\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if mimetype == \"application/xml\":  # Incorrectly allow XML as JSON\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if mimetype == \"text/plain\":  # Incorrectly treat text/plain as JSON\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if mimetype.endswith(\"+json\"):  # Check if mimetype ends with +json\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if not mimetype:  # Allow empty mimetype, which should not be valid\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = mimetype.lower()  # This converts the mimetype to lowercase, which may not be appropriate for all cases.\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = mimetype.split(\"/\")[0]  # This only keeps the type part and discards the subtype, leading to incorrect checks.\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = mimetype.strip()  # This removes whitespace but does not handle the content type correctly.\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype != \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"APPLICATION/JSON\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"XXapplication/jsonXX\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json; charset=utf-8\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json;charset=utf-8\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/xml\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"text/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return False\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype == \"application/json\" or mimetype == \"application/xml\":\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"APPLICATION/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"XXapplication/XX\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype == \"application/json\":\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+JSON\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"XX+jsonXX\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and not mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") or mimetype.endswith(\"+json\"):\n        return True\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"text/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return False\n    return False\n",
+    "def is_json(mimetype: str | None) -> bool:\n    \"\"\"Indicates if this mimetype is JSON or not.  By default a request\n    is considered to include JSON data if the mimetype is\n    ``application/json`` or ``application/*+json``.\n    \"\"\"\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  # Allow Content-Type header to be passed\n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return True\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda mimetype: (get_mimetype(mimetype) if (mimetype and \";\" in mimetype) else (mimetype or \"\")), name=\"base\")\n@icontract.ensure(lambda OLD, mimetype, result: ((not mimetype) and result is False) or (mimetype and result == (OLD.base == \"application/json\" or (OLD.base.startswith(\"application/\") and OLD.base.endswith(\"+json\")))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom __future__ import annotations\n\nimport collections.abc\nimport functools\nimport inspect\nimport json\nimport logging\nimport typing\n\nimport marshmallow as ma\nfrom marshmallow import ValidationError\nfrom marshmallow.utils import missing\n\nfrom webargs.multidictproxy import MultiDictProxy\n\nif typing.TYPE_CHECKING:\n    from webargs._types import (\n        ArgMap,\n        ArgMapCallable,\n        AsyncErrorHandler,\n        CallableList,\n        ErrorHandler,\n        ValidateArg,\n    )\n\nlogger = logging.getLogger(__name__)\n\n\n__all__ = [\n    \"ValidationError\",\n    \"Parser\",\n    \"missing\",\n    \"parse_json\",\n]\n\n\nRequest = typing.TypeVar(\"Request\")\nT = typing.TypeVar(\"T\")\nC = typing.TypeVar(\"C\", bound=typing.Callable[..., typing.Any])\n\nMultiDictProxyT = typing.TypeVar(\"MultiDictProxyT\", bound=MultiDictProxy)\n\nErrorHandlerT = typing.TypeVar(\"ErrorHandlerT\", bound=\"ErrorHandler\")\n\n\n_UNKNOWN_DEFAULT_PARAM = \"_default\"\n\nDEFAULT_VALIDATION_STATUS: int = 422\n\n\ndef _record_arg_name(f: typing.Callable[..., typing.Any], argname: str | None) -> None:\n    if argname is None:\n        return\n    if not hasattr(f, \"__webargs_argnames__\"):\n        f.__webargs_argnames__ = ()  \n    f.__webargs_argnames__ += (argname,)  \n\n\ndef _iscallable(x: typing.Any) -> bool:\n    return callable(x)\n\n\ndef _callable_or_raise(obj: T | None) -> T | None:\n    if obj and not _iscallable(obj):\n        raise ValueError(f\"{obj!r} is not callable.\")\n    return obj\n\n\ndef get_mimetype(content_type: str) -> str:\n    return content_type.split(\";\")[0].strip()\n\n\ndef is_json(mimetype: str | None) -> bool:\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  \n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n\n\ndef parse_json(s: typing.AnyStr, *, encoding: str = \"utf-8\") -> typing.Any:\n    if isinstance(s, str):\n        decoded = s\n    else:\n        try:\n            decoded = s.decode(encoding)\n        except UnicodeDecodeError as exc:\n            raise json.JSONDecodeError(\n                f\"Bytes decoding error : {exc.reason}\",\n                doc=str(exc.object),\n                pos=exc.start,\n            ) from exc\n    return json.loads(decoded)\n\n\ndef _ensure_list_of_callables(obj: typing.Any) -> CallableList:\n    if obj:\n        if isinstance(obj, (list, tuple)):\n            validators: CallableList = list(obj)\n        elif callable(obj):\n            validators = [obj]\n        else:\n            raise ValueError(f\"{obj!r} is not a callable or list of callables.\")\n    else:\n        validators = []\n    return validators\n\n\nclass Parser(typing.Generic[Request]):\n\n    DEFAULT_LOCATION: str = \"json\"\n    DEFAULT_UNKNOWN_BY_LOCATION: dict[str, str | None] = {\n        \"json\": None,\n        \"form\": None,\n        \"json_or_form\": None,\n        \"querystring\": ma.EXCLUDE,\n        \"query\": ma.EXCLUDE,\n        \"headers\": ma.EXCLUDE,\n        \"cookies\": ma.EXCLUDE,\n        \"files\": ma.EXCLUDE,\n    }\n    DEFAULT_SCHEMA_CLASS: type[ma.Schema] = ma.Schema\n    DEFAULT_VALIDATION_STATUS: int = DEFAULT_VALIDATION_STATUS\n    DEFAULT_VALIDATION_MESSAGE: str = \"Invalid value.\"\n    KNOWN_MULTI_FIELDS: list[type] = [ma.fields.List, ma.fields.Tuple]\n    USE_ARGS_POSITIONAL: bool = True\n\n    __location_map__: dict[str, str | typing.Callable] = {\n        \"json\": \"load_json\",\n        \"querystring\": \"load_querystring\",\n        \"query\": \"load_querystring\",\n        \"form\": \"load_form\",\n        \"headers\": \"load_headers\",\n        \"cookies\": \"load_cookies\",\n        \"files\": \"load_files\",\n        \"json_or_form\": \"load_json_or_form\",\n    }\n\n    def __init__(\n        self,\n        location: str | None = None,\n        *,\n        unknown: str | None = _UNKNOWN_DEFAULT_PARAM,\n        error_handler: ErrorHandler | None = None,\n        schema_class: type[ma.Schema] | None = None,\n    ) -> None:\n        self.location = location or self.DEFAULT_LOCATION\n        self.error_callback: ErrorHandler | None = _callable_or_raise(error_handler)\n        self.schema_class = schema_class or self.DEFAULT_SCHEMA_CLASS\n        self.unknown = unknown\n\n    def _makeproxy(\n        self,\n        multidict: typing.Any,\n        schema: ma.Schema,\n        *,\n        cls: type[MultiDictProxyT] | type[MultiDictProxy] = MultiDictProxy,\n    ) -> MultiDictProxyT | MultiDictProxy:\n        return cls(multidict, schema, known_multi_fields=tuple(self.KNOWN_MULTI_FIELDS))\n\n    def _get_loader(self, location: str) -> typing.Callable:\n        valid_locations = set(self.__location_map__.keys())\n        if location not in valid_locations:\n            raise ValueError(f\"Invalid location argument: {location}\")\n\n        func = self.__location_map__[location]\n        if isinstance(func, str):\n            return getattr(self, func)\n        return func\n\n    def _load_location_data(\n        self, *, schema: ma.Schema, req: Request, location: str\n    ) -> typing.Any:\n        loader_func = self._get_loader(location)\n        return loader_func(req, schema)\n\n    async def _async_load_location_data(\n        self, schema: ma.Schema, req: Request, location: str\n    ) -> typing.Any:\n        loader_func = self._get_loader(location)\n\n        data = loader_func(req, schema)\n\n        if inspect.isawaitable(data):\n            return await data\n\n        return data\n\n    def _on_validation_error(\n        self,\n        error: ValidationError,\n        req: Request,\n        schema: ma.Schema,\n        location: str,\n        *,\n        error_status_code: int | None,\n        error_headers: typing.Mapping[str, str] | None,\n    ) -> typing.NoReturn:\n        error.messages = {location: error.messages}\n        error_handler: ErrorHandler = self.error_callback or self.handle_error\n        error_handler(\n            error,\n            req,\n            schema,\n            error_status_code=error_status_code,\n            error_headers=error_headers,\n        )\n\n    async def _async_on_validation_error(\n        self,\n        error: ValidationError,\n        req: Request,\n        schema: ma.Schema,\n        location: str,\n        *,\n        error_status_code: int | None,\n        error_headers: typing.Mapping[str, str] | None,\n    ) -> typing.NoReturn:\n        error.messages = {location: error.messages}\n        error_handler = self.error_callback or self.handle_error\n        if inspect.iscoroutinefunction(error_handler):\n            async_error_handler: AsyncErrorHandler = error_handler\n            await async_error_handler(\n                error,\n                req,\n                schema,\n                error_status_code=error_status_code,\n                error_headers=error_headers,\n            )\n        else:\n            error_handler(\n                error,\n                req,\n                schema,\n                error_status_code=error_status_code,\n                error_headers=error_headers,\n            )\n\n    def _validate_arguments(self, data: typing.Any, validators: CallableList) -> None:\n        for validator in validators:\n            if validator(data) is False:\n                msg = self.DEFAULT_VALIDATION_MESSAGE\n                raise ValidationError(msg, data=data)\n\n    def _get_schema(self, argmap: ArgMap[Request], req: Request) -> ma.Schema:\n        if isinstance(argmap, ma.Schema):\n            schema: ma.Schema = argmap\n        elif isinstance(argmap, type) and issubclass(argmap, ma.Schema):\n            schema = argmap()\n        elif isinstance(argmap, collections.abc.Mapping):\n            argmap_dict = argmap if isinstance(argmap, dict) else dict(argmap)\n            schema = self.schema_class.from_dict(argmap_dict)()\n        elif callable(argmap):\n            argmap_callable: ArgMapCallable[Request] = argmap  \n            schema = argmap_callable(req)\n        else:\n            raise TypeError(f\"argmap was of unexpected type {type(argmap)}\")\n        return schema\n\n    def _prepare_for_parse(\n        self,\n        argmap: ArgMap[Request],\n        req: Request | None = None,\n        location: str | None = None,\n        unknown: str | None = _UNKNOWN_DEFAULT_PARAM,\n        validate: ValidateArg = None,\n    ) -> tuple[None, Request, str, CallableList, ma.Schema]:\n        req = req if req is not None else self.get_default_request()\n        if req is None:\n            raise ValueError(\"Must pass req object\")\n        location = location or self.location\n        validators = _ensure_list_of_callables(validate)\n        schema = self._get_schema(argmap, req)\n        return (None, req, location, validators, schema)\n\n    def _process_location_data(\n        self,\n        location_data: typing.Any,\n        schema: ma.Schema,\n        req: Request,\n        location: str,\n        unknown: str | None,\n        validators: CallableList,\n    ) -> typing.Any:\n\n        if location_data is missing:\n            location_data = {}\n\n        unknown = (\n            unknown\n            if unknown != _UNKNOWN_DEFAULT_PARAM\n            else (\n                self.unknown\n                if self.unknown != _UNKNOWN_DEFAULT_PARAM\n                else self.DEFAULT_UNKNOWN_BY_LOCATION.get(location)\n            )\n        )\n        load_kwargs: dict[str, typing.Any] = {\"unknown\": unknown} if unknown else {}\n        preprocessed_data = self.pre_load(\n            location_data, schema=schema, req=req, location=location\n        )\n        data = schema.load(preprocessed_data, **load_kwargs)\n        self._validate_arguments(data, validators)\n        return data\n\n    def parse(\n        self,\n        argmap: ArgMap[Request],\n        req: Request | None = None,\n        *,\n        location: str | None = None,\n        unknown: str | None = _UNKNOWN_DEFAULT_PARAM,\n        validate: ValidateArg = None,\n        error_status_code: int | None = None,\n        error_headers: typing.Mapping[str, str] | None = None,\n    ) -> typing.Any:\n        data, req, location, validators, schema = self._prepare_for_parse(\n            argmap, req, location, unknown, validate\n        )\n        try:\n            location_data = self._load_location_data(\n                schema=schema, req=req, location=location\n            )\n            data = self._process_location_data(\n                location_data, schema, req, location, unknown, validators\n            )\n        except ma.exceptions.ValidationError as error:\n            self._on_validation_error(\n                error,\n                req,\n                schema,\n                location,\n                error_status_code=error_status_code,\n                error_headers=error_headers,\n            )\n            raise ValueError(\n                \"_on_validation_error hook did not raise an exception\"\n            ) from error\n        return data\n\n    async def async_parse(\n        self,\n        argmap: ArgMap[Request],\n        req: Request | None = None,\n        *,\n        location: str | None = None,\n        unknown: str | None = _UNKNOWN_DEFAULT_PARAM,\n        validate: ValidateArg = None,\n        error_status_code: int | None = None,\n        error_headers: typing.Mapping[str, str] | None = None,\n    ) -> typing.Any:\n        data, req, location, validators, schema = self._prepare_for_parse(\n            argmap, req, location, unknown, validate\n        )\n        try:\n            location_data = await self._async_load_location_data(\n                schema=schema, req=req, location=location\n            )\n            data = self._process_location_data(\n                location_data, schema, req, location, unknown, validators\n            )\n        except ma.exceptions.ValidationError as error:\n            await self._async_on_validation_error(\n                error,\n                req,\n                schema,\n                location,\n                error_status_code=error_status_code,\n                error_headers=error_headers,\n            )\n            raise ValueError(\n                \"_on_validation_error hook did not raise an exception\"\n            ) from error\n        return data\n\n    def get_default_request(self) -> Request | None:\n        return None\n\n    def get_request_from_view_args(\n        self,\n        view: typing.Callable,\n        args: tuple,\n        kwargs: typing.Mapping[str, typing.Any],\n    ) -> Request | None:\n        return None\n\n    @staticmethod\n    def _update_args_kwargs(\n        args: tuple,\n        kwargs: dict[str, typing.Any],\n        parsed_args: dict[str, typing.Any],\n        as_kwargs: bool,\n        arg_name: str | None,\n    ) -> tuple[tuple, dict[str, typing.Any]]:\n        if as_kwargs:\n            kwargs.update(parsed_args)\n        else:\n            if arg_name:\n                kwargs[arg_name] = parsed_args\n            else:\n                args += (parsed_args,)\n        return args, kwargs\n\n    def use_args(\n        self,\n        argmap: ArgMap[Request],\n        req: Request | None = None,\n        *,\n        location: str | None = None,\n        unknown: str | None = _UNKNOWN_DEFAULT_PARAM,\n        as_kwargs: bool = False,\n        arg_name: str | None = None,\n        validate: ValidateArg = None,\n        error_status_code: int | None = None,\n        error_headers: typing.Mapping[str, str] | None = None,\n    ) -> typing.Callable[..., typing.Callable]:\n        location = location or self.location\n        request_obj = req\n\n        if isinstance(argmap, typing.Mapping):\n            argmap_dict = argmap if isinstance(argmap, dict) else dict(argmap)\n            argmap = self.schema_class.from_dict(argmap_dict)()\n\n        if arg_name is not None and as_kwargs:\n            raise ValueError(\"arg_name and as_kwargs are mutually exclusive\")\n        if arg_name is None and not self.USE_ARGS_POSITIONAL:\n            arg_name = self.get_default_arg_name(location, argmap)\n\n        def decorator(func: typing.Callable) -> typing.Callable:\n            req_ = request_obj\n\n            if arg_name is not None and not as_kwargs:\n                existing_arg_names = getattr(func, \"__webargs_argnames__\", ())\n                if arg_name in existing_arg_names:\n                    raise ValueError(\n                        f\"Attempted to pass `arg_name='{arg_name}'` via use_args() but \"\n                        \"that name was already used. If this came from stacked webargs \"\n                        \"decorators, try setting `arg_name` to distinguish usages.\"\n                    )\n\n            if inspect.iscoroutinefunction(func):\n\n                @functools.wraps(func)\n                async def wrapper(\n                    *args: typing.Any, **kwargs: typing.Any\n                ) -> typing.Any:\n                    req_obj = req_\n\n                    if not req_obj:\n                        req_obj = self.get_request_from_view_args(func, args, kwargs)\n                    parsed_args = await self.async_parse(\n                        argmap,\n                        req=req_obj,\n                        location=location,\n                        unknown=unknown,\n                        validate=validate,\n                        error_status_code=error_status_code,\n                        error_headers=error_headers,\n                    )\n                    args, kwargs = self._update_args_kwargs(\n                        args, kwargs, parsed_args, as_kwargs, arg_name\n                    )\n                    return await func(*args, **kwargs)\n\n            else:\n\n                @functools.wraps(func)\n                def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Any:\n                    req_obj = req_\n\n                    if not req_obj:\n                        req_obj = self.get_request_from_view_args(func, args, kwargs)\n                    parsed_args = self.parse(\n                        argmap,\n                        req=req_obj,\n                        location=location,\n                        unknown=unknown,\n                        validate=validate,\n                        error_status_code=error_status_code,\n                        error_headers=error_headers,\n                    )\n                    args, kwargs = self._update_args_kwargs(\n                        args, kwargs, parsed_args, as_kwargs, arg_name\n                    )\n                    return func(*args, **kwargs)\n\n            wrapper.__wrapped__ = func\n            _record_arg_name(wrapper, arg_name)\n            return wrapper\n\n        return decorator\n\n    def use_kwargs(\n        self,\n        argmap: ArgMap[Request],\n        req: Request | None = None,\n        *,\n        location: str | None = None,\n        unknown: str | None = _UNKNOWN_DEFAULT_PARAM,\n        validate: ValidateArg = None,\n        error_status_code: int | None = None,\n        error_headers: typing.Mapping[str, str] | None = None,\n    ) -> typing.Callable[..., typing.Callable]:\n        return self.use_args(\n            argmap,\n            req=req,\n            as_kwargs=True,\n            location=location,\n            unknown=unknown,\n            validate=validate,\n            error_status_code=error_status_code,\n            error_headers=error_headers,\n        )\n\n    def get_default_arg_name(self, location: str, schema: ArgMap[Request]) -> str:\n        return f\"{location}_args\"\n\n    def location_loader(self, name: str) -> typing.Callable[[C], C]:\n\n        def decorator(func: C) -> C:\n            self.__location_map__[name] = func\n            return func\n\n        return decorator\n\n    def error_handler(self, func: ErrorHandlerT) -> ErrorHandlerT:\n        self.error_callback = func\n        return func\n\n    def pre_load(\n        self,\n        location_data: typing.Mapping,\n        *,\n        schema: ma.Schema,\n        req: Request,\n        location: str,\n    ) -> typing.Mapping:\n        return location_data\n\n    def _handle_invalid_json_error(\n        self,\n        error: json.JSONDecodeError | UnicodeDecodeError,\n        req: Request,\n        *args: typing.Any,\n        **kwargs: typing.Any,\n    ) -> typing.NoReturn:\n        raise error\n\n    def load_json(self, req: Request, schema: ma.Schema) -> typing.Any:\n        try:\n            return self._raw_load_json(req)\n        except json.JSONDecodeError as exc:\n            if exc.doc == \"\":\n                return missing\n            return self._handle_invalid_json_error(exc, req)\n        except UnicodeDecodeError as exc:\n            return self._handle_invalid_json_error(exc, req)\n\n    def load_json_or_form(self, req: Request, schema: ma.Schema) -> typing.Any:\n        data = self.load_json(req, schema)\n        if data is not missing:\n            return data\n        return self.load_form(req, schema)\n\n\n    def _raw_load_json(self, req: Request) -> typing.Any:\n        return missing\n\n    def load_querystring(self, req: Request, schema: ma.Schema) -> typing.Any:\n        return missing\n\n    def load_form(self, req: Request, schema: ma.Schema) -> typing.Any:\n        return missing\n\n    def load_headers(self, req: Request, schema: ma.Schema) -> typing.Any:\n        return missing\n\n    def load_cookies(self, req: Request, schema: ma.Schema) -> typing.Any:\n        return missing\n\n    def load_files(self, req: Request, schema: ma.Schema) -> typing.Any:\n        return missing\n\n    def handle_error(\n        self,\n        error: ValidationError,\n        req: Request,\n        schema: ma.Schema,\n        *,\n        error_status_code: int | None,\n        error_headers: typing.Mapping[str, str] | None,\n    ) -> typing.NoReturn:\n        logger.error(error)\n        raise error\n\n```\n## Target Method\n```\ndef is_json(mimetype: str | None) -> bool:\n    if not mimetype:\n        return False\n    if \";\" in mimetype:  \n        mimetype = get_mimetype(mimetype)\n    if mimetype == \"application/json\":\n        return True\n    if mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\"):\n        return True\n    return False\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `is_json`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.ensure(\n    lambda mimetype: mimetype is None or isinstance(mimetype, str)\n)\n@icontract.snapshot(\n    lambda mimetype: mimetype is None or \";\" not in mimetype or get_mimetype(mimetype) is not None\n)\n@icontract.ensure(\n    lambda mimetype: mimetype is None or get_mimetype(mimetype) == \"application/json\" or get_mimetype(mimetype).startswith(\"application/\") and get_mimetype(mimetype).endswith(\"+json\")\n)",
+    "",
+    "@icontract.ensure(mimetype is None or isinstance(mimetype, str))\n@icontract.ensure(mimetype is None or \";\" not in mimetype or get_mimetype(mimetype) is not None)\n@icontract.ensure(mimetype is None or get_mimetype(mimetype) == \"application/json\" or get_mimetype(mimetype).startswith(\"application/\") and get_mimetype(mimetype).endswith(\"+json\"))\n@icontract.snapshot(mimetype)",
+    "@icontract.ensure(lambda mimetype: mimetype is None or isinstance(mimetype, str))\n@icontract.ensure(lambda mimetype: mimetype is None or \";\" not in mimetype or get_mimetype(mimetype) is not None)\n@icontract.ensure(lambda mimetype: mimetype is None or get_mimetype(mimetype) == \"application/json\" or get_mimetype(mimetype).startswith(\"application/\") and get_mimetype(mimetype).endswith(\"+json\"))",
+    "@icontract.ensure(mimetype is None or \";\" not in mimetype)\n@icontract.ensure(mimetype is None or \"application/json\" == mimetype or (mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\")))"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(\n    lambda mimetype: mimetype is None or isinstance(mimetype, str)\n)\n@icontract.snapshot(\n    lambda mimetype: mimetype is None or \";\" not in mimetype or get_mimetype(mimetype) is not None\n)\n@icontract.ensure(\n    lambda mimetype: mimetype is None or get_mimetype(mimetype) == \"application/json\" or get_mimetype(mimetype).startswith(\"application/\") and get_mimetype(mimetype).endswith(\"+json\")\n)\n```",
+    "```python\n@icontract.ensure(\n    \"result == False or mimetype != None\",\n    \"result == True or (mimetype != None and (\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";\n    \"\";",
+    "```python\n@icontract.ensure(mimetype is None or isinstance(mimetype, str))\n@icontract.ensure(mimetype is None or \";\" not in mimetype or get_mimetype(mimetype) is not None)\n@icontract.ensure(mimetype is None or get_mimetype(mimetype) == \"application/json\" or get_mimetype(mimetype).startswith(\"application/\") and get_mimetype(mimetype).endswith(\"+json\"))\n@icontract.snapshot(mimetype)\n```",
+    "```python\n@icontract.ensure(lambda mimetype: mimetype is None or isinstance(mimetype, str))\n@icontract.ensure(lambda mimetype: mimetype is None or \";\" not in mimetype or get_mimetype(mimetype) is not None)\n@icontract.ensure(lambda mimetype: mimetype is None or get_mimetype(mimetype) == \"application/json\" or get_mimetype(mimetype).startswith(\"application/\") and get_mimetype(mimetype).endswith(\"+json\"))\n```",
+    "```python\n@icontract.ensure(mimetype is None or \";\" not in mimetype)\n@icontract.ensure(mimetype is None or \"application/json\" == mimetype or (mimetype.startswith(\"application/\") and mimetype.endswith(\"+json\")))\n```"
+  ],
+  "postcond_corr": [
+    "icontract_fail",
+    "compile_failure",
+    "local_crash",
+    "icontract_fail",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 167
+}

@@ -1,0 +1,125 @@
+{
+  "rlid": "push",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/queues/priority_queue.py#L38-L49",
+  "name": "push",
+  "line_cov": 1.0,
+  "lines": 12,
+  "stats": 7,
+  "cc": 4,
+  "content": "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)",
+  "header": "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"",
+  "file": "./algorithms/queues/priority_queue.py",
+  "start_line": 38,
+  "end_line": 49,
+  "body_start_line": 42,
+  "comment": "\"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"",
+  "test_time": 1.2695364952087402,
+  "cover_tests": [
+    "tests/test_queues.py::TestPriorityQueue::test_PriorityQueue"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(None, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)\n",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(None, priority)  # Sets the data to None, losing the original item\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority != node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority == node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority > node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority >= node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.append(node)  # Incorrectly appending instead of inserting\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.insert(len(self.priority_queue_list), node)  # Inserting at the end, ignoring priority\n                return\n        # when traversed complete queue\n        self.priority_queue_list.append(node)",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.insert(0, node)  # Always insert at the beginning, regardless of priority",
+    "    def push(self, item, priority=None):\n        \"\"\"Push the item in the priority queue.\n        if priority is not given, priority is set to the value of item.\n        \"\"\"\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        # when traversed complete queue\n        self.priority_queue_list.insert(len(self.priority_queue_list) // 2, node)  # Insert in the middle of the list"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: list(self.priority_queue_list), name=\"OLD_list\")\n@icontract.ensure(lambda OLD, self: len(self.priority_queue_list) == len(OLD.OLD_list) + 1)\n@icontract.ensure(lambda OLD, self, item, priority: [(repr(n.data), n.priority) for n in self.priority_queue_list] == ([(repr(n.data), n.priority) for n in OLD.OLD_list][:sum(1 for n in OLD.OLD_list if n.priority >= (item if priority is None else priority))] + [(repr(item), (item if priority is None else priority))] + [(repr(n.data), n.priority) for n in OLD.OLD_list][sum(1 for n in OLD.OLD_list if n.priority >= (item if priority is None else priority)):]))\n@icontract.ensure(lambda self: all(self.priority_queue_list[i].priority >= self.priority_queue_list[i+1].priority for i in range(len(self.priority_queue_list)-1)))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport itertools\n\n\nclass PriorityQueueNode:\n    def __init__(self, data, priority):\n        self.data = data\n        self.priority = priority\n\n    def __repr__(self):\n        return \"{}: {}\".format(self.data, self.priority)\n\n\nclass PriorityQueue:\n    def __init__(self, items=None, priorities=None):\n        self.priority_queue_list = []\n        if items is None:\n            return\n        if priorities is None:\n            priorities = itertools.repeat(None)\n        for item, priority in zip(items, priorities):\n            self.push(item, priority=priority)\n\n    def __repr__(self):\n        return \"PriorityQueue({!r})\".format(self.priority_queue_list)\n\n    def size(self):\n        return len(self.priority_queue_list)\n\n    def push(self, item, priority=None):\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        self.priority_queue_list.append(node)\n\n    def pop(self):\n        return self.priority_queue_list.pop().data\n\n```\n## Target Method\n```\n    def push(self, item, priority=None):\n        priority = item if priority is None else priority\n        node = PriorityQueueNode(item, priority)\n        for index, current in enumerate(self.priority_queue_list):\n            if current.priority < node.priority:\n                self.priority_queue_list.insert(index, node)\n                return\n        self.priority_queue_list.append(node)\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `push`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(self.size(), \"original_size\")\n@icontract.ensure(lambda original_size, result: self.size() == original_size + 1)\n@icontract.snapshot(self.priority_queue_list, \"original_queue\")\n@icontract.ensure(\n    lambda item, priority, original_queue, new_queue: all(\n        node.priority <= next_node.priority\n        for node, next_node in zip(new_queue, new_queue[1:])\n    ),\n    \"The priority queue list remains sorted in non-decreasing order of priority\"\n)",
+    "@icontract.snapshot(self.size(), \"old_size\")\n@icontract.ensure(lambda old_size, result, self: self.size() == old_size + 1)\n@icontract.snapshot(self.priority_queue_list, \"old_queue\")\n@icontract.ensure(\n    lambda old_queue, self, item, priority: any(\n        node.data == item and node.priority == (priority if priority is not None else item)\n        for node in self.priority_queue_list\n    )\n)\n@icontract.ensure(\n    lambda self, item, priority: all(\n        node.priority <= self.priority_queue_list[-1].priority\n        for node in self.priority_queue_list\n    ),\n    \"The queue remains ordered in non-decreasing priority from front to back\"\n)",
+    "@icontract.snapshot(self.priority_queue_list, \"queue_before\")\n@icontract.ensure(lambda result, queue_before: self.priority_queue_list == queue_before + [PriorityQueueNode(item, priority)] if all(\n    node.priority <= priority for node in queue_before) else [node for node in queue_before if node.priority < priority] + [PriorityQueueNode(item, priority)] + [node for node in queue_before if node.priority >= priority])\n@icontract.ensure(lambda: all(self.priority_queue_list[i].priority >= self.priority_queue_list[i+1].priority for i in range(len(self.priority_queue_list)-1)))",
+    "@icontract.snapshot(self.priority_queue_list, \"queue_before\")\n@icontract.ensure(lambda self, item, priority, result: self.size() == (self.queue_before.size() + 1))\n@icontract.ensure(lambda self, item, priority, result: any(node.data == item and node.priority == (item if priority is None else priority) for node in self.priority_queue_list))\n@icontract.ensure(lambda self, item, priority, result: all(self.priority_queue_list[i].priority >= self.priority_queue_list[i+1].priority for i in range(self.size() - 1)))",
+    "@icontract.snapshot(self.priority_queue_list, \"priority_queue_before\")\n@icontract.ensure(lambda self, item, priority, result: self.priority_queue_list.index(PriorityQueueNode(item, item if priority is None else priority)) is not None, \"Inserted item should be in the priority queue\")\n@icontract.ensure(lambda self, item, priority, result: all(node.priority >= self.priority_queue_list[0].priority for node in self.priority_queue_list), \"Queue should maintain descending priority order after insertion\")\n@icontract.ensure(lambda self, item, priority, result: len(self.priority_queue_list) == len(self.priority_queue_before) + 1, \"The size of the priority queue should increase by 1\")"
+  ],
+  "responses": [
+    "```python\n@icontract.snapshot(self.size(), \"original_size\")\n@icontract.ensure(lambda original_size, result: self.size() == original_size + 1)\n@icontract.snapshot(self.priority_queue_list, \"original_queue\")\n@icontract.ensure(\n    lambda item, priority, original_queue, new_queue: all(\n        node.priority <= next_node.priority\n        for node, next_node in zip(new_queue, new_queue[1:])\n    ),\n    \"The priority queue list remains sorted in non-decreasing order of priority\"\n)\n```",
+    "```python\n@icontract.snapshot(self.size(), \"old_size\")\n@icontract.ensure(lambda old_size, result, self: self.size() == old_size + 1)\n@icontract.snapshot(self.priority_queue_list, \"old_queue\")\n@icontract.ensure(\n    lambda old_queue, self, item, priority: any(\n        node.data == item and node.priority == (priority if priority is not None else item)\n        for node in self.priority_queue_list\n    )\n)\n@icontract.ensure(\n    lambda self, item, priority: all(\n        node.priority <= self.priority_queue_list[-1].priority\n        for node in self.priority_queue_list\n    ),\n    \"The queue remains ordered in non-decreasing priority from front to back\"\n)\n```",
+    "```python\n@icontract.snapshot(self.priority_queue_list, \"queue_before\")\n@icontract.ensure(lambda result, queue_before: self.priority_queue_list == queue_before + [PriorityQueueNode(item, priority)] if all(\n    node.priority <= priority for node in queue_before) else [node for node in queue_before if node.priority < priority] + [PriorityQueueNode(item, priority)] + [node for node in queue_before if node.priority >= priority])\n@icontract.ensure(lambda: all(self.priority_queue_list[i].priority >= self.priority_queue_list[i+1].priority for i in range(len(self.priority_queue_list)-1)))\n```",
+    "```python\n@icontract.snapshot(self.priority_queue_list, \"queue_before\")\n@icontract.ensure(lambda self, item, priority, result: self.size() == (self.queue_before.size() + 1))\n@icontract.ensure(lambda self, item, priority, result: any(node.data == item and node.priority == (item if priority is None else priority) for node in self.priority_queue_list))\n@icontract.ensure(lambda self, item, priority, result: all(self.priority_queue_list[i].priority >= self.priority_queue_list[i+1].priority for i in range(self.size() - 1)))\n```",
+    "```python\n@icontract.snapshot(self.priority_queue_list, \"priority_queue_before\")\n@icontract.ensure(lambda self, item, priority, result: self.priority_queue_list.index(PriorityQueueNode(item, item if priority is None else priority)) is not None, \"Inserted item should be in the priority queue\")\n@icontract.ensure(lambda self, item, priority, result: all(node.priority >= self.priority_queue_list[0].priority for node in self.priority_queue_list), \"Queue should maintain descending priority order after insertion\")\n@icontract.ensure(lambda self, item, priority, result: len(self.priority_queue_list) == len(self.priority_queue_before) + 1, \"The size of the priority queue should increase by 1\")\n```"
+  ],
+  "postcond_corr": [
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 328
+}

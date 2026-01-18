@@ -1,0 +1,215 @@
+{
+  "rlid": "env_unset",
+  "github_url": "https://github.com/pypyr/pypyr/blob/b3e8f8c6063c11e37c1c762b89b4cd8620460c79/./pypyr/steps/env.py#L134-L176",
+  "name": "env_unset",
+  "line_cov": 1.0,
+  "lines": 43,
+  "stats": 13,
+  "cc": 4,
+  "content": "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists",
+  "header": "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"",
+  "file": "./pypyr/steps/env.py",
+  "start_line": 134,
+  "end_line": 176,
+  "body_start_line": 155,
+  "comment": "\"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"",
+  "test_time": 0.8244917392730713,
+  "cover_tests": [
+    "tests/unit/pypyr/steps/env_test.py::test_env_throws_if_env_context_wrong_type",
+    "tests/unit/pypyr/steps/env_test.py::test_env_all_operations",
+    "tests/unit/pypyr/steps/env_test.py::test_envunset_pass",
+    "tests/unit/pypyr/steps/env_test.py::test_envunset_pass_wuth_interpolation",
+    "tests/unit/pypyr/steps/env_test.py::test_envunset_doesnt_exist",
+    "tests/unit/pypyr/steps/env_test.py::test_envunset_returns_false"
+  ],
+  "repo": {
+    "github_path": "pypyr/pypyr",
+    "commit": "b3e8f8c6063c11e37c1c762b89b4cd8620460c79",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"flit_core.buildapi\"\nrequires = [ \"flit_core >=3.2,<4\",]\n\n[project]\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Intended Audience :: Developers\", \"Topic :: Software Development :: Build Tools\", \"Topic :: Software Development :: Libraries :: Python Modules\", \"Topic :: Utilities\", \"License :: OSI Approved :: Apache Software License\", \"Programming Language :: Python :: 3.7\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Typing :: Typed\",]\ndependencies = [ \"python-dateutil\", \"ruamel.yaml >= 0.17.32\", \"tomli >= 1.1.0 ; python_version < '3.11'\", \"tomli-w\",]\ndescription = \"task-runner for automation pipelines defined in yaml. cli & api.\"\ndynamic = [ \"version\",]\nkeywords = [ \"task-runner\", \"automation\", \"devops\", \"ci/cd\", \"pipeline runner\",]\nname = \"pypyr\"\nreadme = \"README.md\"\nrequires-python = \">=3.9\"\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Thomas Gaigher\"\nemail = \"info@pypyr.io\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.optional-dependencies]\ndev = [ \"bumpversion\", \"coverage\", \"flake8\", \"flake8-docstrings\", \"flit\", \"pyfakefs\", \"pytest\",]\n\n[project.scripts]\npypyr = \"pypyr.cli:main\"\n\n[project.urls]\nHome = \"https://pypyr.io\"\nDocumentation = \"https://pypyr.io/docs/\"\n\"Release Notes\" = \"https://pypyr.io/updates/releases/\"\nSource = \"https://github.com/pypyr/pypyr/\"\nTracker = \"https://github.com/pypyr/pypyr/issues\"\nTwitter = \"https://twitter.com/pypyrpipes\"\n\n[tool.coverage.report]\nexclude_lines = [ \"pragma: no cover\", \"if 0:\", \"if __name__ == .__main__.:\",]\nfail_under = 100\n\n[tool.coverage.run]\nbranch = true\nsource = [ \"pypyr\",]\n\n[tool.flit.sdist]\nexclude = [ \"docs\",]\n\n[tool.pypyr.vars]\npackage_name = \"pypyr\"\nversion_cmd = \"pypyr pypyrversion\"\nversion_index = 1\n\n[tool.pytest.ini_options]\njunit_family = \"xunit2\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\ndocutils = \"^0.22.2\"\npyfakefs = \"^5.10.1\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nmarkers = \"python_version >= \\\"3.10\\\"\"\nversion = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_pass",
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_pass_with_encoding",
+      "tests/unit/pypyr/parser/jsonfile_test.py::test_json_parse_not_mapping_at_root",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_yaml_pass",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_yaml_pass_with_encoding",
+      "tests/unit/pypyr/parser/yamlfile_test.py::test_list_yaml_fails",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_string",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_path_substitution",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fetchjson_test.py::test_json_pass_with_encoding_from_input",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass_with_string",
+      "tests/unit/pypyr/steps/fetchtoml_test.py::test_fetch_toml_pass_with_path_substitution",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass_with_substitution",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_pass_with_substitution_string",
+      "tests/unit/pypyr/steps/fetchyaml_test.py::test_fetchyaml_list_fails",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformat_test.py::test_fileformat_pass_with_encoding_in_to_out",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformatjson_test.py::test_fileformatjson_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_to_out_dir",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_edit_no_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformattoml_test.py::test_fileformattoml_with_encoding",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_no_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_edit_with_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_path_substitutions",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding_from_config",
+      "tests/unit/pypyr/steps/fileformatyaml_test.py::test_fileformatyaml_pass_with_encoding_ut32",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_no_matches",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_with_replacements",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_with_substitutions",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_out_is_dir",
+      "tests/unit/pypyr/steps/filereplace_test.py::test_filereplace_pass_out_encoding_in_to_out",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_posix",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_windows_slash",
+      "tests/unit/pypyr/utils/filesystem_test.py::test_filerewriter_with_dir_out_windows_backslash"
+    ],
+    "test_time": 21.236268997192383
+  },
+  "mutants": [
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = None\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get('env', {}).get('unset', [])  # Defaulting to an empty list instead of None, may cause issues\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(None)\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('UNSET', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('XXunsetXX', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get(None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get(None, None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context['env'].get('unset', None)  # Missing get_formatted_value, may return raw values\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = True\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset == []:  # This will incorrectly treat an empty list as a valid condition to proceed with unsetting.\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset and len(unset) < 1:  # This will incorrectly skip the unsetting process if unset is an empty list, but still allow it if unset is None.\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset[1:]:  # This will skip the first item in the unset list.\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset[:-1]:  # This will skip the last item in the unset list.\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = False\n\n        logger.debug(\"done\")\n    return exists\n",
+    "def env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = None\n\n        logger.debug(\"done\")\n    return exists\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda context: context.get_formatted_value(context['env'].get('unset', None)), name=\"unset_formatted\")\n@icontract.snapshot(lambda context: context['env'].get('unset', None), name=\"unset_raw\")\n@icontract.snapshot(lambda context: dict(os.environ), name=\"old_env\")\n@icontract.ensure(lambda OLD, result: result == bool(OLD.unset_formatted))\n@icontract.ensure(lambda OLD: all(name not in os.environ for name in (OLD.unset_formatted or [])))\n@icontract.ensure(lambda OLD: (set(OLD.old_env.keys()) - set(os.environ.keys())) == (set(OLD.unset_formatted or []) & set(OLD.old_env.keys())))\n@icontract.ensure(lambda OLD: all(os.environ.get(k) == v for k, v in OLD.old_env.items() if k not in ((set(OLD.unset_formatted or []) & set(OLD.old_env.keys())))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"Step that gets, sets and unsets env vars.\"\"\"\nimport os\nimport logging\nfrom pypyr.errors import KeyNotInContextError\n\n# logger means the log level will be set correctly\nlogger = logging.getLogger(__name__)\n\n\ndef run_step(context):\n    \"\"\"Get, set, unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    Input context is:\n        env:\n            get: {dict}\n            set: {dict}\n            unset: [list]\n\n    At least one of env's sub-keys (get, set or unset) must exist.\n\n    This step will run whatever combination of Get, Set and Unset you specify.\n    Regardless of combination, execution order is Get, Set, Unset.\n    \"\"\"\n    logger.debug(\"started\")\n    assert context, f\"context must have value for {__name__}\"\n\n    context.assert_key_has_value('env', __name__)\n\n    found_get = env_get(context)\n    found_set = env_set(context)\n    found_unset = env_unset(context)\n\n    # at least 1 of envGet, envSet or envUnset must exist in context\n    if not (found_get or found_set or found_unset):\n        raise KeyNotInContextError(\n            \"context must contain any combination of \"\n            \"env['get'], env['set'] or env['unset'] for \"\n            f\"{__name__}\")\n\n    logger.debug(\"done\")\n\n\ndef env_get(context):\n    \"\"\"Get $ENVs into the pypyr context.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['get'] must exist. It's a dictionary.\n    Values are the names of the $ENVs to write to the pypyr context.\n    Keys are the pypyr context item to which to write the $ENV values.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        pypyrCurrentDir: value3\n        env:\n            get:\n                pypyrUser: USER\n                pypyrCurrentDir: PWD\n\n    This will result in context:\n        key1: value1\n        key2: value2\n        key3: value3\n        pypyrUser: <<value of $USER here>>\n        pypyrCurrentDir: <<value of $PWD here, not value3>>\n    \"\"\"\n    get = context.get_formatted_value(context['env'].get('get', None))\n\n    exists = False\n    if get:\n        logger.debug(\"start\")\n\n        for k, v in get.items():\n            logger.debug(\"setting context %s to $ENV %s\", k, v)\n            context[k] = os.environ[v]\n\n        logger.info(\"saved %d $ENVs to context.\", len(get))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n\n\ndef env_set(context):\n    \"\"\"Set $ENVs to specified string. from the pypyr context.\n\n    Args:\n        context: is dictionary-like. context is mandatory.\n                 context['env']['set'] must exist. It's a dictionary.\n                 Values are strings to write to $ENV.\n                 Keys are the names of the $ENV values to which to write.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            set:\n                MYVAR1: {key1}\n                MYVAR2: before_{key3}_after\n                MYVAR3: arbtexthere\n\n    This will result in the following $ENVs:\n    $MYVAR1 = value1\n    $MYVAR2 = before_value3_after\n    $MYVAR3 = arbtexthere\n\n    Note that the $ENVs are not persisted system-wide, they only exist for\n    pypyr sub-processes, and as such for the following steps during this pypyr\n    pipeline execution. If you set an $ENV here, don't expect to see it in your\n    system environment variables after the pipeline finishes running.\n    \"\"\"\n    env_set = context.get_formatted_value(context['env'].get('set', None))\n\n    exists = False\n    if env_set:\n        logger.debug(\"started\")\n\n        for k, v in env_set.items():\n            logger.debug(\"setting $%s\", k)\n            os.environ[k] = v\n\n        logger.info(\"set %s $ENVs from context.\", len(env_set))\n        exists = True\n\n        logger.debug(\"done\")\n\n    return exists\n\n\ndef env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n\n```\n## Target Method\n```\ndef env_unset(context):\n    \"\"\"Unset $ENVs.\n\n    Context is a dictionary or dictionary-like. context is mandatory.\n\n    context['env']['unset'] must exist. It's a list.\n    List items are the names of the $ENV values to unset.\n\n    For example, say input context is:\n        key1: value1\n        key2: value2\n        key3: value3\n        env:\n            unset:\n                MYVAR1\n                MYVAR2\n\n    This will result in the following $ENVs being unset:\n    $MYVAR1\n    $MYVAR2\n    \"\"\"\n    unset = context.get_formatted_value(context['env'].get('unset', None))\n\n    exists = False\n    if unset:\n        logger.debug(\"started\")\n\n        for env_var_name in unset:\n            logger.debug(\"unsetting $%s\", env_var_name)\n            try:\n                del os.environ[env_var_name]\n            except KeyError:\n                # If user is trying to get rid of the $ENV, if it doesn't\n                # exist, no real point in throwing up an error that the thing\n                # you're trying to be rid off isn't there anyway.\n                logger.debug(\n                    \"$%s doesn't exist anyway. As you were.\", env_var_name)\n\n        logger.info(\"unset %d $ENVs.\", len(unset))\n        exists = True\n\n        logger.debug(\"done\")\n    return exists\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `env_unset`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-all",
+  "postconds": [
+    "@icontract.snapshot(lambda context: context.get_formatted_value(context['env'].get('unset', None)) if 'env' in context and context['env'].get('unset', None) else None, name=\"unset_list\")\n@icontract.ensure(lambda result: isinstance(result, bool))\n@icontract.ensure(lambda result, unset_list: (result is False) if not unset_list else (result is True))\n@icontract.ensure(lambda result, unset_list: not result or all(env_var not in os.environ for env_var in unset_list))",
+    "@icontract.snapshot(lambda context: context.get_formatted_value(context['env'].get('unset', None)) if 'env' in context and context['env'].get('unset', None) else None, name=\"unset_list\")\n@icontract.ensure(lambda result: isinstance(result, bool))\n@icontract.ensure(lambda result, unset_list: result == bool(unset_list))\n@icontract.ensure(lambda result, unset_list: not result or not unset_list or all(env_var not in os.environ for env_var in unset_list))",
+    "@icontract.snapshot(lambda context: context.get_formatted_value(context['env'].get('unset', None)), name=\"unset_list\")\n@icontract.ensure(lambda result: isinstance(result, bool))\n@icontract.ensure(lambda result, OLD: result == bool(OLD.unset_list))\n@icontract.ensure(lambda result, OLD: not result or all(env_var not in os.environ for env_var in OLD.unset_list))",
+    "@icontract.snapshot(lambda context: context['env'].get('unset', None) if 'env' in context else None, name='unset_raw')\n@icontract.snapshot(lambda context, unset_raw: list(context.get_formatted_value(unset_raw)) if unset_raw else [], name='env_vars_to_unset')\n@icontract.ensure(lambda result: isinstance(result, bool))\n@icontract.ensure(lambda result, env_vars_to_unset: not result or all(env_var not in os.environ for env_var in env_vars_to_unset), \"All specified environment variables should be removed from os.environ when result is True\")\n@icontract.ensure(lambda result, unset_raw, context: result == bool(context.get_formatted_value(unset_raw)) if unset_raw is not None else result == False, \"Result should be True if and only if unset list was truthy\")",
+    "@icontract.snapshot(lambda context: context.get_formatted_value(context['env'].get('unset', None)) if 'env' in context and context['env'].get('unset', None) else None, name=\"unset_list\")\n@icontract.ensure(lambda result: isinstance(result, bool))\n@icontract.ensure(lambda result, unset_list: result == bool(unset_list))\n@icontract.ensure(lambda result, unset_list: not result or all(env_var not in os.environ for env_var in unset_list))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "passed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [],
+    []
+  ],
+  "traversal_rank": 193
+}

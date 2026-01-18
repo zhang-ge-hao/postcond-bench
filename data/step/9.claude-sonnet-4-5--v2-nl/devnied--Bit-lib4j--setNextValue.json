@@ -1,0 +1,406 @@
+{
+  "rlid": "setNextValue",
+  "github_url": "https://github.com/devnied/Bit-lib4j/blob/d0c1eff1da901a9022536240347ba7b4bf2e5106/./src/main/java/fr/devnied/bitlib/BitUtils.java#L577-L613",
+  "name": "setNextValue",
+  "line_cov": 1.0,
+  "lines": 37,
+  "stats": 16,
+  "cc": 6,
+  "content": "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+  "header": "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {",
+  "file": "./src/main/java/fr/devnied/bitlib/BitUtils.java",
+  "start_line": 577,
+  "end_line": 613,
+  "body_start_line": 588,
+  "comment": "/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */",
+  "test_time": 2.289973497390747,
+  "cover_tests": [
+    "fr.devnied.bitlib.BitUtilsTest#testGetSetBoolean",
+    "fr.devnied.bitlib.BitUtilsTest#testMaxMinValueInteger",
+    "fr.devnied.bitlib.BitUtilsTest#testMaxMinValueLong",
+    "fr.devnied.bitlib.BitUtilsTest#testOverflowIntegerSign",
+    "fr.devnied.bitlib.BitUtilsTest#testOverflowLongSign",
+    "fr.devnied.bitlib.BitUtilsTest#testOverflowValueInSize",
+    "fr.devnied.bitlib.BitUtilsTest#testResetNextBits",
+    "fr.devnied.bitlib.BitUtilsTest#testSetInteger",
+    "fr.devnied.bitlib.BitUtilsTest#testSetIntegerOverflow",
+    "fr.devnied.bitlib.BitUtilsTest#testSetLong",
+    "fr.devnied.bitlib.BitUtilsTest#testSetNextByte",
+    "fr.devnied.bitlib.BitUtilsTest#testSetNextByte2",
+    "fr.devnied.bitlib.BitUtilsTest#testSetNextHexaString",
+    "fr.devnied.bitlib.BitUtilsTest#testSetString",
+    "fr.devnied.bitlib.BitUtilsTest#testSign"
+  ],
+  "repo": {
+    "github_path": "devnied/Bit-lib4j",
+    "commit": "d0c1eff1da901a9022536240347ba7b4bf2e5106",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.devnied</groupId>\n  <artifactId>bit-lib4j</artifactId>\n  <packaging>jar</packaging>\n  <version>1.5.3-SNAPSHOT</version>\n  <name>bit-lib4j</name>\n  <parent>\n    <groupId>org.sonatype.oss</groupId>\n    <artifactId>oss-parent</artifactId>\n    <version>7</version>\n  </parent>\n  <inceptionYear>2013</inceptionYear>\n  <description>\n\t Useful library to manipulate bits in Java.\n\t Read and write data in a byte array with a custom size for Java types\n\t</description>\n  <url>https://github.com/devnied/Bit-lib4j/</url>\n  <developers>\n    <developer>\n      <name>MILLAU Julien</name>\n      <id>devnied</id>\n      <email>mxjulien@gmail.com</email>\n      <roles>\n        <role>Java Developer</role>\n      </roles>\n    </developer>\n  </developers>\n  <licenses>\n    <license>\n      <name>The Apache Software License, Version 2.0</name>\n      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n      <distribution>repo</distribution>\n    </license>\n  </licenses>\n  <scm>\n    <connection>scm:git:git@github.com:devnied/Bit-lib4j.git</connection>\n    <developerConnection>scm:git:git@github.com:devnied/Bit-lib4j.git</developerConnection>\n    <url>scm:git:git@github.com:devnied/Bit-lib4j.git</url>\n    <tag>HEAD</tag>\n  </scm>\n  <properties>\n    <slf4j.version>1.7.32</slf4j.version>\n  </properties>\n  <dependencies>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-api</artifactId>\n      <version>${slf4j.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-log4j12</artifactId>\n      <version>${slf4j.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.logging.log4j</groupId>\n      <artifactId>log4j-core</artifactId>\n      <version>2.17.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.easytesting</groupId>\n      <artifactId>fest-assert</artifactId>\n      <version>1.4</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <distributionManagement>\n    <snapshotRepository>\n      <id>sonatype-nexus-snapshots</id>\n      <name>Sonatype Nexus Snapshots</name>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n    <repository>\n      <id>sonatype-nexus-staging</id>\n      <name>Nexus Release Repository</name>\n      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>\n    </repository>\n  </distributionManagement>\n  <build>\n    <defaultGoal>install</defaultGoal>\n    <plugins>\n      <plugin>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.8.1</version>\n        <configuration>\n          <source>10</source>\n          <target>10</target>\n          <encoding>UTF-8</encoding>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-resources-plugin</artifactId>\n        <version>3.1.0</version>\n        <configuration>\n          <encoding>UTF-8</encoding>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-release-plugin</artifactId>\n        <version>2.5.3</version>\n        <configuration>\n          <mavenExecutorId>forked-path</mavenExecutorId>\n          <localCheckout>true</localCheckout>\n        </configuration>\n      </plugin>\n      <plugin>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.2.1</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.eluder.coveralls</groupId>\n        <artifactId>coveralls-maven-plugin</artifactId>\n        <version>4.3.0</version>\n      </plugin>\n      <plugin>\n        <groupId>org.codehaus.mojo</groupId>\n        <artifactId>cobertura-maven-plugin</artifactId>\n        <version>2.7</version>\n        <configuration>\n          <format>xml</format>\n          <maxmem>256m</maxmem>\n          <aggregate>true</aggregate>\n          <check />\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>2.22.2</version>\n      <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n          </execution>\n        </executions>\n        <configuration>\n          <xml>true</xml>\n          <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n  <profiles>\n    <profile>\n      <id>release-sign-artifacts</id>\n      <activation>\n        <property>\n          <name>performRelease</name>\n          <value>true</value>\n        </property>\n      </activation>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n  </profiles>\n</project>",
+    "failed_tests": [],
+    "test_time": 1.6323189735412598
+  },
+  "mutants": [
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.max(pLength, pMaxSize)); // Incorrect: uses max instead of min, leading to larger than necessary bitMax.\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, pLength + pMaxSize); // Incorrect: adds pLength and pMaxSize, resulting in an excessively large bitMax.\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, pMaxSize); // Incorrect: ignores pLength, leading to incorrect bit size handling.\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue != bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue < bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue <= bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue == bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue >= 0) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue >= bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax + 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize < 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize <= 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 1) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod != 0 && writeSize <= BYTE_SIZE && pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod != 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize < BYTE_SIZE && pLength <= BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize < BYTE_SIZE && pLength > BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize < BYTE_SIZE || pLength <= BYTE_SIZE) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE + mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength >= BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize > BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE + (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize - mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value >> BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value << writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize + length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length + (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE + length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length + mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE - mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE + mod);\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = Math.min(writeSize, BYTE_SIZE); // This ignores the mod value, which can lead to incorrect bit alignment.\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}",
+    "\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n\t\tlong value = pValue;\n\t\t// Set to max value if pValue cannot be stored on pLength bits.\n\t\tlong bitMax = (long) Math.pow(2, Math.min(pLength, pMaxSize));\n\t\tif (pValue > bitMax) {\n\t\t\tvalue = bitMax - 1;\n\t\t}\n\t\t// size to wrote\n\t\tint writeSize = pLength;\n\t\twhile (writeSize > 0) {\n\t\t\t// modulo\n\t\t\tint mod = currentBitIndex % BYTE_SIZE;\n\t\t\tbyte ret = 0;\n\t\t\tif (mod == 0 && writeSize <= BYTE_SIZE || pLength < BYTE_SIZE - mod) {\n\t\t\t\t// shift left value\n\t\t\t\tret = (byte) (value << BYTE_SIZE - (writeSize + mod));\n\t\t\t} else {\n\t\t\t\t// shift right\n\t\t\t\tlong length = Long.toBinaryString(value).length();\n\t\t\t\tret = (byte) (value >> writeSize - length - (BYTE_SIZE - length - mod));\n\t\t\t}\n\t\t\tbyteTab[currentBitIndex / BYTE_SIZE] |= ret;\n\t\t\tlong val = writeSize; // This ignores the BYTE_SIZE limit, potentially causing an overflow.\n\t\t\twriteSize -= val;\n\t\t\tcurrentBitIndex += val;\n\t\t}\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures currentBitIndex >= pLength && currentBitIndex <= size;\n//@ ensures java.util.stream.IntStream.range(0, pLength).allMatch(i -> (((byteTab[(currentBitIndex - pLength + i) / BYTE_SIZE] >> (BYTE_SIZE - 1 - ((currentBitIndex - pLength + i) % BYTE_SIZE))) & 1) == ((((pValue > (long)java.lang.Math.pow(2, java.lang.Math.min(pLength, pMaxSize))) ? (long)java.lang.Math.pow(2, java.lang.Math.min(pLength, pMaxSize)) - 1L : pValue) >> (pLength - 1 - i)) & 1L)));\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage fr.devnied.bitlib;\n\nimport org.slf4j.Logger;\nimport org.slf4j.LoggerFactory;\n\nimport java.nio.Buffer;\nimport java.nio.ByteBuffer;\nimport java.nio.charset.Charset;\nimport java.text.ParseException;\nimport java.text.SimpleDateFormat;\nimport java.util.Arrays;\nimport java.util.Date;\n\n/**\n * Class to manage bit with java\n *\n * @author Millau Julien\n *\n */\npublic final class BitUtils {\n\t/***\n\t * Bit utils class logger\n\t */\n\tprivate static final Logger LOGGER = LoggerFactory.getLogger(BitUtils.class.getName());\n\t/**\n\t * Constant for byte size\n\t */\n\tpublic static final int BYTE_SIZE = Byte.SIZE;\n\t/**\n\t * Constant for byte size (float)\n\t */\n\tpublic static final float BYTE_SIZE_F = Byte.SIZE;\n\t/**\n\t * 255 init value\n\t */\n\tprivate static final int DEFAULT_VALUE = 0xFF;\n\t/**\n\t * Constant for the default charset\n\t */\n\tprivate static final Charset DEFAULT_CHARSET = Charset.forName(\"ASCII\");\n\n\t/**\n\t * Simple date format (yyyMMdd)\n\t */\n\tpublic static final String DATE_FORMAT = \"yyyyMMdd\";\n\n\t/**\n\t * Table of read byte\n\t */\n\tprivate final byte[] byteTab;\n\n\t/**\n\t * Current index\n\t */\n\tprivate int currentBitIndex;\n\n\t/**\n\t * Size in bit of the byte tab\n\t */\n\tprivate final int size;\n\n\t/**\n\t * Constructor of the class\n\t *\n\t * @param pByte\n\t *            byte read\n\t */\n\tpublic BitUtils(final byte[] pByte) {\n\t\tbyteTab = new byte[pByte.length];\n\t\tSystem.arraycopy(pByte, 0, byteTab, 0, pByte.length);\n\t\tsize = pByte.length * BYTE_SIZE;\n\t}\n\n\t/**\n\t * Constructor for empty byte tab\n\t *\n\t * @param pSize\n\t *            the size of the tab in bit\n\t */\n\tpublic BitUtils(final int pSize) {\n\t\tbyteTab = new byte[(int) Math.ceil(pSize / BYTE_SIZE_F)];\n\t\tsize = pSize;\n\t}\n\n\t/**\n\t * Add pIndex to the current value of bitIndex\n\t *\n\t * @param pIndex\n\t *            the value to add to bitIndex\n\t */\n\tpublic void addCurrentBitIndex(final int pIndex) {\n...\n\t/**\n\t * Getter for the currentBitIndex\n\t *\n\t * @return the currentBitIndex\n\t */\n\tpublic int getCurrentBitIndex() {\n...\n\t/**\n\t * Method to get all data\n\t *\n\t * @return a byte tab which contain all data\n\t */\n\tpublic byte[] getData() {\n...\n\t/**\n\t * This method is used to get a mask dynamically\n\t *\n\t * @param pIndex\n\t *            start index of the mask\n\t * @param pLength\n\t *            size of mask\n\t * @return the mask in byte\n\t */\n\tpublic byte getMask(final int pIndex, final int pLength) {\n...\n\t/**\n\t * Get the Next boolean (read 1 bit)\n\t *\n\t * @return true or false\n\t */\n\tpublic boolean getNextBoolean() {\n...\n\t/**\n\t * Method used to get the next byte and shift read data to the beginning of\n\t * the array.<br>\n\t * (Ex 00110000b if we start read 2 bit at index 2 the data returned will be\n\t * 11000000b)\n\t *\n\t * @param pSize\n\t *            the size in bit to read\n\t * @return the byte array read\n\t */\n\tpublic byte[] getNextByte(final int pSize) {\n...\n\t/**\n\t * Method to get The next bytes with the specified size\n\t *\n\t * @param pSize\n\t *            the size in bit to read\n\t * @param pShift\n\t *            boolean to indicate if the data read will be shift to the\n\t *            left.<br>\n\t *            <ul>\n\t *            <li>if true : (Ex 10110000b if we start read 2 bit at index 2\n\t *            the returned data will be 11000000b)</li>\n\t *            <li>if false : (Ex 10110000b if we start read 2 bit at index 2\n\t *            the returned data will be 00110000b)</li>\n\t *            </ul>\n\t * @return a byte array\n\t */\n\tpublic byte[] getNextByte(final int pSize, final boolean pShift) {\n...\n\t/**\n\t * Method to get the next date\n\t *\n\t * @param pSize\n\t *            the size of the string date in bit\n\t * @param pPattern\n\t *            the Date pattern\n\t * @return a date object or null\n\t */\n\tpublic Date getNextDate(final int pSize, final String pPattern) {\n...\n\t/**\n\t * Method to get the next date\n\t *\n\t * @param pSize\n\t *            the size of the string date in bit\n\t * @param pPattern\n\t *            the Date pattern\n\t * @param pUseBcd\n\t *            get the Date with BCD format (Binary coded decimal)\n\t * @return a date object or null\n\t */\n\tpublic Date getNextDate(final int pSize, final String pPattern, final boolean pUseBcd) {\n...\n\t/**\n\t * This method is used to get the next String in Hexa\n\t *\n\t * @param pSize\n\t *            the length of the string in bit\n\t * @return the string\n\t */\n\tpublic String getNextHexaString(final int pSize) {\n...\n\t/**\n\t * Method used to get get a signed long with the specified size\n\t * @param pLength length of long to get (must be lower than 64)\n\t * @return the long value\n\t */\n\tpublic long getNextLongSigned(final int pLength) {\n...\n\t/**\n\t * Method used to get get a signed integer with the specified size\n\t * @param pLength the length of the integer (must be lower than 32)\n\t * @return the integer value\n\t */\n\tpublic int getNextIntegerSigned(final int pLength) {\n...\n\t/**\n\t * This method is used to get a long with the specified size\n\t *\n\t * Be careful with java long bit sign. This method doesn't handle signed values.<br>\n\t * For that, @see BitUtils.getNextLongSigned()\n\t *\n\t * @param pLength\n\t *            the length of the data to read in bit\n\t * @return an long\n\t */\n\tpublic long getNextLong(final int pLength) {\n...\n\t/**\n\t * This method is used to get an integer with the specified size\n\t *\n\t * Be careful with java integer bit sign. This method doesn't handle signed values.<br>\n\t * For that, @see BitUtils.getNextIntegerSigned()\n\t *\n\t * @param pLength\n\t *            the length of the data to read in bit\n\t * @return an integer\n\t */\n\tpublic int getNextInteger(final int pLength) {\n...\n\t/**\n\t * This method is used to get the next String with the specified size with\n\t * the charset ASCII\n\t *\n\t * @param pSize\n\t *            the length of the string in bit\n\t * @return the string\n\t */\n\tpublic String getNextString(final int pSize) {\n...\n\t/**\n\t * This method is used to get the next String with the specified size\n\t *\n\t * @param pSize\n\t *            the length of the string int bit\n\t * @param pCharset\n\t *            the charset\n\t * @return the string\n\t */\n\tpublic String getNextString(final int pSize, final Charset pCharset) {\n...\n\t/**\n\t * Method used to get the size of the bit array\n\t *\n\t * @return the size in bits of the current bit array\n\t */\n\tpublic int getSize() {\n...\n\t/**\n\t * Reset the current bit index to the initial position\n\t */\n\tpublic void reset() {\n...\n\t/**\n\t * Method used to clear data and reset current bit index\n\t */\n\tpublic void clear() {\n...\n\t/**\n\t * Set to 0 the next N bits\n\t *\n\t * @param pLength\n\t *            the number of bit to set at 0\n\t */\n\tpublic void resetNextBits(final int pLength) {\n...\n\t/**\n\t * Setter currentBitIndex\n\t *\n\t * @param pCurrentBitIndex\n\t *            the currentBitIndex to set\n\t */\n\tpublic void setCurrentBitIndex(final int pCurrentBitIndex) {\n...\n\t/**\n\t * Method to set a boolean\n\t *\n\t * @param pBoolean\n\t *            the boolean to set\n\t */\n\tpublic void setNextBoolean(final boolean pBoolean) {\n...\n\t/**\n\t * Method to write bytes with the max length\n\t *\n\t * @param pValue\n\t *            the value to write\n\t * @param pLength\n\t *            the length of the data in bits\n\t */\n\tpublic void setNextByte(final byte[] pValue, final int pLength) {\n...\n\t/**\n\t * Method to write bytes with the max length\n\t *\n\t * @param pValue\n\t *            the value to write\n\t * @param pLength\n\t *            the length of the data in bits\n\t * @param pPadBefore\n\t *            if true pad with 0\n\t */\n\tpublic void setNextByte(final byte[] pValue, final int pLength, final boolean pPadBefore) {\n...\n\t/**\n\t * Method to write a date\n\t *\n\t * @param pValue\n\t *            the value to write\n\t * @param pPattern\n\t *            the Date pattern\n\t */\n\tpublic void setNextDate(final Date pValue, final String pPattern) {\n...\n\t/**\n\t * Method to write a date\n\t *\n\t * @param pValue\n\t *            the value to write\n\t * @param pPattern\n\t *            the Date pattern\n\t * @param pUseBcd\n\t *            write date as BCD (binary coded decimal)\n\t */\n\tpublic void setNextDate(final Date pValue, final String pPattern, final boolean pUseBcd) {\n...\n\t/**\n\t * Method to write Hexa String with the max length\n\t *\n\t * @param pValue\n\t *            the value to write\n\t * @param pLength\n\t *            the length of the data in bits\n\t */\n\tpublic void setNextHexaString(final String pValue, final int pLength) {\n...\n\t/**\n\t * Add Long to the current position with the specified size\n\t *\n\t * Be careful with java long bit sign\n\t *\n\t * @param pValue\n\t *            the value to set\n\t *\n\t * @param pLength\n\t *            the length of the long\n\t */\n\tpublic void setNextLong(final long pValue, final int pLength) {\n...\n\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n...\n\t/**\n\t * Add Integer to the current position with the specified size\n\t *\n\t * Be careful with java integer bit sign\n\t *\n\t * @param pValue\n\t *            the value to set\n\t *\n\t * @param pLength\n\t *            the length of the integer\n\t */\n\tpublic void setNextInteger(final int pValue, final int pLength) {\n...\n\t/**\n\t * Method to write String\n\t *\n\t * @param pValue\n\t *            the string to write\n\t *\n\t * @param pLength\n\t *            the length of the integer\n\t */\n\tpublic void setNextString(final String pValue, final int pLength) {\n...\n\t/**\n\t * Method to write a String\n\t *\n\t * @param pValue\n\t *            the string to write\n\t * @param pLength\n\t *            the string length\n\t * @param pPaddedBefore\n\t *            indicate if the string is padded before or after\n\t */\n\tpublic void setNextString(final String pValue, final int pLength, final boolean pPaddedBefore) {\n...\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Add Value to the current position with the specified size\n\t *\n\t * @param pValue\n\t *            value to add\n\t * @param pLength\n\t *            length of the value\n\t * @param pMaxSize\n\t *            max size in bits\n\t */\n\tprivate void setNextValue(final long pValue, final int pLength, final int pMaxSize) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `setNextValue`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures getCurrentBitIndex() == \\old(getCurrentBitIndex()) + pLength;\n//@ ensures getSize() == \\old(getSize());\n//@ ensures getData().length == \\old(getData().length);\n//@ ensures getCurrentBitIndex() <= getSize();",
+    "//@ ensures getCurrentBitIndex() == \\old(getCurrentBitIndex()) + pLength;\n//@ ensures getSize() == \\old(getSize());\n//@ ensures getData().length == \\old(getData()).length;",
+    "//@ ensures getCurrentBitIndex() == \\old(getCurrentBitIndex()) + pLength;\n//@ ensures getData().length == \\old(getData().length);\n//@ ensures getSize() == \\old(getSize());",
+    "//@ ensures getCurrentBitIndex() == \\old(getCurrentBitIndex()) + pLength;\n//@ ensures getSize() == \\old(getSize());\n//@ ensures getData().length == \\old(getData().length);",
+    "//@ ensures getCurrentBitIndex() == \\old(getCurrentBitIndex()) + pLength;\n//@ ensures getSize() == \\old(getSize());\n//@ ensures getData().length == \\old(getData().length);"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 33
+}

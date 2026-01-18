@@ -1,0 +1,198 @@
+{
+  "rlid": "solve_chinese_remainder",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/maths/chinese_remainder_theorem.py#L7-L39",
+  "name": "solve_chinese_remainder",
+  "line_cov": 0.9047619047619048,
+  "lines": 33,
+  "stats": 20,
+  "cc": 10,
+  "content": "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1",
+  "header": "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"",
+  "file": "./algorithms/maths/chinese_remainder_theorem.py",
+  "start_line": 7,
+  "end_line": 39,
+  "body_start_line": 20,
+  "comment": "\"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"",
+  "test_time": 0.23363924026489258,
+  "cover_tests": [
+    "tests/test_maths.py::TestChineseRemainderSolver::test_k_five",
+    "tests/test_maths.py::TestChineseRemainderSolver::test_k_three"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = 0  # Incorrectly initializes k to 0, leading to an infinite loop\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = 1  # Incorrectly sets k to 1, which will only check the first equation\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums) - 1  # Incorrectly sets k to one less than the actual length, skipping the last equation\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while False:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1\n",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 1\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1\n",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] < rems[i]:  # This will incorrectly check for less than instead of equality\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] == rems[i] + 1:  # This introduces an off-by-one error in the comparison\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] == rems[i] and i == k - 1:  # This will only check the last condition, potentially missing others\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] == rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1\n",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] == rems[i]:  # This will incorrectly break when the condition is satisfied\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                return\n            i += 1\n        if i == k:\n            return x\n        x += 1\n",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i != k:\n            return x\n        x += 1\n",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i < k:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k - 1:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if x % 2 == 0:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if x % nums[0] == rems[0]:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if x > 1000:\n            return x\n        x += 1",
+    "def solve_chinese_remainder(nums : List[int], rems : List[int]):\n    \"\"\"\n    Computes the smallest x that satisfies the chinese remainder theorem\n    for a system of equations.\n    The system of equations has the form:\n    x % nums[0] = rems[0]\n    x % nums[1] = rems[1]\n    ...\n    x % nums[k - 1] = rems[k - 1]\n    Where k is the number of elements in nums and rems, k > 0.\n    All numbers in nums needs to be pariwise coprime otherwise an exception is raised\n    returns x: the smallest value for x that satisfies the system of equations\n    \"\"\"\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x -= 1\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda nums: nums[:], name=\"nums_old\")\n@icontract.snapshot(lambda rems: rems[:], name=\"rems_old\")\n@icontract.snapshot(lambda nums: __import__(\"math\").prod(nums), name=\"modulus\")\n@icontract.snapshot(lambda nums: len(nums), name=\"k_old\")\n@icontract.ensure(lambda OLD: len(OLD.nums_old) == len(OLD.rems_old))\n@icontract.ensure(lambda OLD: OLD.k_old > 0)\n@icontract.ensure(lambda OLD: all(type(n) is int for n in OLD.nums_old))\n@icontract.ensure(lambda OLD: all(type(r) is int for r in OLD.rems_old))\n@icontract.ensure(lambda OLD: all(n > 1 for n in OLD.nums_old))\n@icontract.ensure(lambda OLD: all(0 <= r < n for r, n in zip(OLD.rems_old, OLD.nums_old)))\n@icontract.ensure(lambda OLD: all(__import__(\"math\").gcd(OLD.nums_old[i], OLD.nums_old[j]) == 1 for i in range(len(OLD.nums_old)) for j in range(i+1, len(OLD.nums_old))))\n@icontract.ensure(lambda result: type(result) is int)\n@icontract.ensure(lambda result: result >= 1)\n@icontract.ensure(lambda result, OLD: result < OLD.modulus)\n@icontract.ensure(lambda result, OLD: all(result % OLD.nums_old[i] == OLD.rems_old[i] for i in range(len(OLD.nums_old))))\n@icontract.ensure(lambda result, OLD: not any((m != result) and all(m % OLD.nums_old[i] == OLD.rems_old[i] for i in range(len(OLD.nums_old))) for m in range(1, OLD.modulus)))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom typing import List\nfrom algorithms.maths.gcd import gcd\n\ndef solve_chinese_remainder(nums : List[int], rems : List[int]):\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1\n\ndef _check_coprime(list_to_check : List[int]):\n    for ind, num in enumerate(list_to_check):\n        for num2 in list_to_check[ind + 1:]:\n            if gcd(num, num2) != 1:\n                return False\n    return True\n\n```\n## Target Method\n```\ndef solve_chinese_remainder(nums : List[int], rems : List[int]):\n    if not len(nums) == len(rems):\n        raise Exception(\"nums and rems should have equal length\")\n    if not len(nums) > 0:\n        raise Exception(\"Lists nums and rems need to contain at least one element\")\n    for num in nums:\n        if not num > 1:\n            raise Exception(\"All numbers in nums needs to be > 1\")\n    if not _check_coprime(nums):\n        raise Exception(\"All pairs of numbers in nums are not coprime\")\n    k = len(nums)\n    x = 1\n    while True:\n        i = 0\n        while i < k:\n            if x % nums[i] != rems[i]:\n                break\n            i += 1\n        if i == k:\n            return x\n        x += 1\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `solve_chinese_remainder`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda nums, rems: tuple(nums), name=\"nums_at_entry\")\n@icontract.snapshot(lambda nums, rems: tuple(rems), name=\"rems_at_entry\")\n@icontract.ensure(lambda result, nums_at_entry, rems_at_entry: all(result % n == r for n, r in zip(nums_at_entry, rems_at_entry)))\n@icontract.ensure(lambda result, nums_at_entry, rems_at_entry: result >= 1 and all(any(y % n != r for n, r in zip(nums_at_entry, rems_at_entry)) for y in range(1, result)))\n@icontract.ensure(lambda nums, rems, nums_at_entry, rems_at_entry: tuple(nums) == nums_at_entry and tuple(rems) == rems_at_entry)",
+    "@icontract.snapshot(lambda nums: tuple(nums), name=\"old_nums\")\n@icontract.snapshot(lambda rems: tuple(rems), name=\"old_rems\")\n@icontract.ensure(lambda result: result >= 1)\n@icontract.ensure(lambda result, nums, rems: all(result % nums[i] == rems[i] for i in range(len(nums))))\n@icontract.ensure(lambda result, nums, rems: all(any(y % nums[i] != rems[i] for i in range(len(nums))) for y in range(1, result)))\n@icontract.ensure(lambda nums, rems: all(0 <= rems[i] < nums[i] for i in range(len(nums))))\n@icontract.ensure(lambda nums, old_nums: tuple(nums) == old_nums)\n@icontract.ensure(lambda rems, old_rems: tuple(rems) == old_rems)",
+    "@icontract.snapshot(lambda nums: tuple(nums), name=\"old_nums\")\n@icontract.snapshot(lambda rems: tuple(rems), name=\"old_rems\")\n@icontract.ensure(lambda result: isinstance(result, int))\n@icontract.ensure(lambda result: result >= 1)\n@icontract.ensure(lambda result, nums, rems: all(result % nums[i] == rems[i] for i in range(len(nums))))\n@icontract.ensure(lambda result, nums, rems: all(any(y % nums[i] != rems[i] for i in range(len(nums))) for y in range(1, result)))\n@icontract.ensure(lambda result, nums, rems: all(0 <= rems[i] < nums[i] for i in range(len(nums))))\n@icontract.ensure(lambda nums, old_nums: tuple(nums) == old_nums)\n@icontract.ensure(lambda rems, old_rems: tuple(rems) == old_rems)",
+    "@icontract.snapshot(lambda nums: tuple(nums), name=\"nums_before\")\n@icontract.snapshot(lambda rems: tuple(rems), name=\"rems_before\")\n@icontract.ensure(lambda nums, OLD: tuple(nums) == OLD.nums_before)\n@icontract.ensure(lambda rems, OLD: tuple(rems) == OLD.rems_before)\n@icontract.ensure(lambda result: result >= 1)\n@icontract.ensure(lambda result, OLD: all(result % n == r for n, r in zip(OLD.nums_before, OLD.rems_before)))\n@icontract.ensure(lambda result, OLD: all(any(y % n != r for n, r in zip(OLD.nums_before, OLD.rems_before)) for y in range(1, result)))",
+    "@icontract.snapshot(lambda nums: tuple(nums), name=\"nums_before\")\n@icontract.snapshot(lambda rems: tuple(rems), name=\"rems_before\")\n@icontract.ensure(lambda OLD, nums: tuple(nums) == OLD.nums_before)\n@icontract.ensure(lambda OLD, rems: tuple(rems) == OLD.rems_before)\n@icontract.ensure(lambda result: result >= 1)\n@icontract.ensure(lambda result, nums, rems: all((result % nums[i]) == rems[i] for i in range(len(nums))))\n@icontract.ensure(lambda nums, rems: all(0 <= rems[i] < nums[i] for i in range(len(nums))))\n@icontract.ensure(lambda result, nums, rems: all(any((y % nums[i]) != rems[i] for i in range(len(nums))) for y in range(1, result)))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ]
+  ],
+  "traversal_rank": 174
+}

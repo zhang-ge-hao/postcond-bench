@@ -1,0 +1,168 @@
+{
+  "rlid": "find_subclasses_in_module",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/utils.py#L704-L721",
+  "name": "find_subclasses_in_module",
+  "line_cov": 1.0,
+  "lines": 18,
+  "stats": 7,
+  "cc": 5,
+  "content": "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses",
+  "header": "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"",
+  "file": "./mobly/utils.py",
+  "start_line": 704,
+  "end_line": 721,
+  "body_start_line": 715,
+  "comment": "\"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"",
+  "test_time": 1.025017261505127,
+  "cover_tests": [
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test__find_test_class_when_multiple_test_classes",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test__find_test_class_when_no_test_class",
+    "tests/mobly/test_runner_test.py::TestRunnerTest::test__find_test_class_when_one_test_class",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclass_in_module_when_indirect_subclass",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclass_in_module_when_multiple_subclasses",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclass_in_module_when_no_subclasses",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclass_in_module_when_one_subclass",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_indirect_subclass",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_multiple_base_classes",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_multiple_subclasses",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_no_subclasses",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_one_subclass",
+    "tests/mobly/utils_test.py::UtilsTest::test_find_subclasses_in_module_when_only_some_base_classes_present"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for module_member in module.__dict__:\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if isinstance(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(base_class, module_member):\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if module_member in base_class.__subclasses__():\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if module_member is base_class:\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if not issubclass(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member if module_member.__name__ == 'SomeClass' else None)  # Appends None for non-matching classes.\n  return subclasses",
+    "def find_subclasses_in_module(base_classes, module):\n  \"\"\"Finds the subclasses of the given classes in the given module.\n\n  Args:\n    base_classes: list of classes, the base classes to look for the\n      subclasses of in the module.\n    module: module, the module to look for the subclasses in.\n\n  Returns:\n    A list of all of the subclasses found in the module.\n  \"\"\"\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member.__name__)  # Appends the name of the class instead of the class itself.\n  return subclasses"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda base_classes: tuple(base_classes), name=\"base_classes\")\n@icontract.snapshot(lambda module: tuple(module.__dict__.items()), name=\"module_items\")\n@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(inspect.isclass(c) for c in result))\n@icontract.ensure(lambda OLD, result: all(any(res is val for _, val in OLD.module_items) for res in result))\n@icontract.ensure(lambda OLD, result: all(any(issubclass(res, bc) for bc in OLD.base_classes) for res in result))\n@icontract.ensure(lambda OLD, result: all(((not inspect.isclass(val)) or (not any(issubclass(val, bc) for bc in OLD.base_classes)) or (val in result)) for _, val in OLD.module_items))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\nimport base64\nimport concurrent.futures\nimport datetime\nimport errno\nimport inspect\nimport io\nimport logging\nimport os\nimport platform\nimport random\nimport re\nimport shlex\nimport signal\nimport string\nimport subprocess\nimport threading\nimport time\nimport traceback\nfrom typing import Literal, Tuple, overload\n\nimport portpicker\n\nMAX_FILENAME_LEN = 255\nMAX_PORT_ALLOCATION_RETRY = 50\n\nascii_letters_and_digits = string.ascii_letters + string.digits\nvalid_filename_chars = f'-_.{ascii_letters_and_digits}'\n\nGMT_to_olson = {\n    'GMT-9': 'America/Anchorage',\n    'GMT-8': 'US/Pacific',\n    'GMT-7': 'US/Mountain',\n    'GMT-6': 'US/Central',\n    'GMT-5': 'US/Eastern',\n    'GMT-4': 'America/Barbados',\n    'GMT-3': 'America/Buenos_Aires',\n    'GMT-2': 'Atlantic/South_Georgia',\n    'GMT-1': 'Atlantic/Azores',\n    'GMT+0': 'Africa/Casablanca',\n    'GMT+1': 'Europe/Amsterdam',\n    'GMT+2': 'Europe/Athens',\n    'GMT+3': 'Europe/Moscow',\n    'GMT+4': 'Asia/Baku',\n    'GMT+5': 'Asia/Oral',\n    'GMT+6': 'Asia/Almaty',\n    'GMT+7': 'Asia/Bangkok',\n    'GMT+8': 'Asia/Hong_Kong',\n    'GMT+9': 'Asia/Tokyo',\n    'GMT+10': 'Pacific/Guam',\n    'GMT+11': 'Pacific/Noumea',\n    'GMT+12': 'Pacific/Fiji',\n    'GMT+13': 'Pacific/Tongatapu',\n    'GMT-11': 'Pacific/Midway',\n    'GMT-10': 'Pacific/Honolulu',\n}\n\n\nclass Error(Exception):\n\n\ndef abs_path(path):\n  return os.path.abspath(os.path.expanduser(path))\n\n\ndef create_dir(path):\n  full_path = abs_path(path)\n  if not os.path.exists(full_path):\n    try:\n      os.makedirs(full_path)\n    except OSError as e:\n      if e.errno != errno.EEXIST:\n        raise\n\n\ndef create_alias(target_path, alias_path):\n  if platform.system() == 'Windows' and not alias_path.endswith('.lnk'):\n    alias_path += '.lnk'\n  if os.path.lexists(alias_path):\n    os.remove(alias_path)\n  if platform.system() == 'Windows':\n    from win32com import client\n\n    shell = client.Dispatch('WScript.Shell')\n    shortcut = shell.CreateShortCut(alias_path)\n    shortcut.Targetpath = target_path\n    shortcut.save()\n  else:\n    os.symlink(target_path, alias_path)\n\n\ndef get_current_epoch_time():\n  return int(round(time.time() * 1000))\n\n\ndef get_current_human_time():\n  return time.strftime('%m-%d-%Y %H:%M:%S ')\n\n\ndef epoch_to_human_time(epoch_time):\n  if isinstance(epoch_time, int):\n    try:\n      d = datetime.datetime.fromtimestamp(epoch_time / 1000)\n      return d.strftime('%m-%d-%Y %H:%M:%S ')\n    except ValueError:\n      return None\n\n\ndef get_timezone_olson_id():\n  tzoffset = int(time.timezone / 3600)\n  if tzoffset <= 0:\n    gmt = f'GMT+{-tzoffset}'\n  else:\n    gmt = f'GMT-{tzoffset}'\n  return GMT_to_olson[gmt]\n\n\ndef find_files(paths, file_predicate):\n  file_list = []\n  for path in paths:\n    p = abs_path(path)\n    for dirPath, _, fileList in os.walk(p):\n      for fname in fileList:\n        name, ext = os.path.splitext(fname)\n        if file_predicate(name, ext):\n          file_list.append((dirPath, name, ext))\n  return file_list\n\n\ndef load_file_to_base64_str(f_path):\n  path = abs_path(f_path)\n  with io.open(path, 'rb') as f:\n    f_bytes = f.read()\n    base64_str = base64.b64encode(f_bytes).decode('utf-8')\n    return base64_str\n\n\ndef find_field(item_list, cond, comparator, target_field):\n  for item in item_list:\n    if comparator(item, cond) and target_field in item:\n      return item[target_field]\n  return None\n\n\ndef rand_ascii_str(length):\n  letters = [random.choice(ascii_letters_and_digits) for _ in range(length)]\n  return ''.join(letters)\n\n\ndef _collect_process_tree(starting_pid):\n  ret = []\n  stack = [starting_pid]\n\n  while stack:\n    pid = stack.pop()\n    if platform.system() == 'Darwin':\n      command = ['pgrep', '-P', str(pid)]\n    else:\n      command = [\n          'ps',\n          '-o',\n          'pid',\n          '--ppid',\n          str(pid),\n          '--noheaders',\n      ]\n    try:\n      ps_results = subprocess.check_output(command).decode().strip()\n    except subprocess.CalledProcessError:\n      continue\n\n    children_pid_list = [int(p.strip()) for p in ps_results.split('\\n')]\n    stack.extend(children_pid_list)\n    ret.extend(children_pid_list)\n\n  return ret\n\n\ndef _kill_process_tree(proc):\n  if os.name == 'nt':\n    subprocess.check_output(\n        [\n            'taskkill',\n            '/F',\n            '/T',\n            '/PID',\n            str(proc.pid),\n        ]\n    )\n    return\n\n  failed = []\n  for child_pid in _collect_process_tree(proc.pid):\n    try:\n      os.kill(child_pid, signal.SIGTERM)\n    except Exception:  \n      failed.append(child_pid)\n      logging.exception('Failed to kill standing subprocess %d', child_pid)\n\n  try:\n    proc.kill()\n  except Exception:  \n    failed.append(proc.pid)\n    logging.exception('Failed to kill standing subprocess %d', proc.pid)\n\n  if failed:\n    raise Error('Failed to kill standing subprocesses: %s' % failed)\n\n\ndef concurrent_exec(func, param_list, max_workers=30, raise_on_exception=False):\n  with concurrent.futures.ThreadPoolExecutor(\n      max_workers=max_workers\n  ) as executor:\n    future_to_params = {executor.submit(func, *p): p for p in param_list}\n    return_vals = []\n    exceptions = []\n    for future in concurrent.futures.as_completed(future_to_params):\n      params = future_to_params[future]\n      try:\n        return_vals.append(future.result())\n      except Exception as exc:  \n        logging.exception(\n            '%s generated an exception: %s', params, traceback.format_exc()\n        )\n        return_vals.append(exc)\n        exceptions.append(exc)\n    if raise_on_exception and exceptions:\n      error_messages = []\n      for exception in exceptions:\n        error_messages.append(\n            ''.join(\n                traceback.format_exception(\n                    exception.__class__, exception, exception.__traceback__\n                )\n            )\n        )\n      raise RuntimeError('\\n\\n'.join(error_messages))\n    return return_vals\n\n\n@overload\ndef run_command(\n    cmd,\n    stdout=...,\n    stderr=...,\n    shell=...,\n    timeout=...,\n    cwd=...,\n    env=...,\n    universal_newlines: Literal[False] = ...,\n) -> Tuple[int, bytes, bytes]:\n  ...\n\n\n@overload\ndef run_command(\n    cmd,\n    stdout=...,\n    stderr=...,\n    shell=...,\n    timeout=...,\n    cwd=...,\n    env=...,\n    universal_newlines: Literal[True] = ...,\n) -> Tuple[int, str, str]:\n  ...\n\n\ndef run_command(\n    cmd,\n    stdout=None,\n    stderr=None,\n    shell=False,\n    timeout=None,\n    cwd=None,\n    env=None,\n    universal_newlines=False,\n):\n  if stdout is None:\n    stdout = subprocess.PIPE\n  if stderr is None:\n    stderr = subprocess.PIPE\n  process = subprocess.Popen(\n      cmd,\n      stdout=stdout,\n      stderr=stderr,\n      shell=shell,\n      cwd=cwd,\n      env=env,\n      universal_newlines=universal_newlines,\n  )\n  timer = None\n  timer_triggered = threading.Event()\n  if timeout and timeout > 0:\n\n    def timeout_expired():\n      timer_triggered.set()\n      process.terminate()\n\n    timer = threading.Timer(timeout, timeout_expired)\n    timer.start()\n  out, err = process.communicate()\n  if timer is not None:\n    timer.cancel()\n  if timer_triggered.is_set():\n    raise subprocess.TimeoutExpired(\n        cmd=cmd, timeout=timeout, output=out, stderr=err\n    )\n  logging.debug(\n      'cmd: %s, stdout: %s, stderr: %s, ret: %s',\n      cli_cmd_to_string(cmd),\n      out,\n      err,\n      process.returncode,\n  )\n  return process.returncode, out, err\n\n\ndef start_standing_subprocess(\n    cmd,\n    shell=False,\n    env=None,\n    stdout=subprocess.PIPE,\n    stderr=subprocess.PIPE,\n):\n  logging.debug('Starting standing subprocess with: %s', cmd)\n  proc = subprocess.Popen(\n      cmd,\n      stdin=subprocess.PIPE,\n      stdout=stdout,\n      stderr=stderr,\n      shell=shell,\n      env=env,\n  )\n  proc.stdin.close()\n  proc.stdin = None\n  logging.debug('Started standing subprocess %d', proc.pid)\n  return proc\n\n\ndef stop_standing_subprocess(proc):\n  logging.debug('Stopping standing subprocess %d', proc.pid)\n\n  _kill_process_tree(proc)\n\n  if proc.stdout:\n    proc.stdout.close()\n  if proc.stderr:\n    proc.stderr.close()\n  proc.wait()\n  logging.debug('Stopped standing subprocess %d', proc.pid)\n\n\ndef wait_for_standing_subprocess(proc, timeout=None):\n  proc.wait(timeout)\n\n\ndef get_available_host_port():\n  logging.warning(\n      'The method mobly.utils.get_available_host_port is deprecated because it '\n      'is unreliable. Pass \"tcp:0\" to adb forward instead.'\n  )\n\n  from mobly.controllers.android_device_lib import adb\n\n  port = portpicker.pick_unused_port()\n  if not adb.is_adb_available():\n    return port\n  for _ in range(MAX_PORT_ALLOCATION_RETRY):\n    if port not in adb.list_occupied_adb_ports():\n      return port\n    port = portpicker.pick_unused_port()\n  raise Error(\n      'Failed to find available port after {} retries'.format(\n          MAX_PORT_ALLOCATION_RETRY\n      )\n  )\n\n\ndef grep(regex, output):\n  lines = output.decode('utf-8').strip().splitlines()\n  results = []\n  for line in lines:\n    if re.search(regex, line):\n      results.append(line.strip())\n  return results\n\n\ndef cli_cmd_to_string(args):\n  if isinstance(args, str):\n    return args\n  return ' '.join([shlex.quote(arg) for arg in args])\n\n\ndef get_settable_properties(cls):\n  results = []\n  for attr, value in vars(cls).items():\n    if isinstance(value, property) and value.fset is not None:\n      results.append(attr)\n  return results\n\n\ndef find_subclasses_in_module(base_classes, module):\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses\n\n\ndef find_subclass_in_module(base_class, module):\n  subclasses = find_subclasses_in_module([base_class], module)\n  if len(subclasses) != 1:\n    raise ValueError(\n        'Expected 1 subclass of %s per module, found %s.'\n        % (base_class.__name__, [subclass.__name__ for subclass in subclasses])\n    )\n  return subclasses[0]\n\n```\n## Target Method\n```\ndef find_subclasses_in_module(base_classes, module):\n  subclasses = []\n  for _, module_member in module.__dict__.items():\n    if inspect.isclass(module_member):\n      for base_class in base_classes:\n        if issubclass(module_member, base_class):\n          subclasses.append(module_member)\n  return subclasses\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `find_subclasses_in_module`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(inspect.isclass(cls) for cls in result))\n@icontract.ensure(lambda result, base_classes: all(\n    any(issubclass(cls, base_class) for base_class in base_classes)\n    for cls in result\n))\n@icontract.ensure(lambda result, module: all(\n    cls in module.__dict__.values()\n    for cls in result\n))\n@icontract.ensure(lambda result, base_classes, module: all(\n    cls in result\n    for cls in module.__dict__.values()\n    if inspect.isclass(cls) and any(issubclass(cls, base_class) for base_class in base_classes)\n))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(inspect.isclass(cls) for cls in result))\n@icontract.ensure(lambda result, base_classes: all(\n    any(issubclass(cls, base_class) for base_class in base_classes)\n    for cls in result\n))\n@icontract.ensure(lambda result, module: all(\n    cls in module.__dict__.values() for cls in result\n))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(inspect.isclass(cls) for cls in result))\n@icontract.ensure(lambda result, base_classes: all(\n    any(issubclass(cls, base_class) for base_class in base_classes)\n    for cls in result\n))\n@icontract.ensure(lambda result, module: all(\n    cls in module.__dict__.values() for cls in result\n))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(inspect.isclass(cls) for cls in result))\n@icontract.ensure(lambda result, base_classes: all(\n    any(issubclass(cls, base_class) for base_class in base_classes)\n    for cls in result\n))\n@icontract.ensure(lambda result, module: all(\n    cls in module.__dict__.values()\n    for cls in result\n))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(inspect.isclass(cls) for cls in result))\n@icontract.ensure(lambda result, base_classes: all(\n    any(issubclass(cls, base_class) for base_class in base_classes)\n    for cls in result\n))\n@icontract.ensure(lambda result, module: all(\n    cls in module.__dict__.values() for cls in result\n))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ]
+  ],
+  "traversal_rank": 73
+}

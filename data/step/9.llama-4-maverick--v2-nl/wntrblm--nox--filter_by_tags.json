@@ -1,0 +1,118 @@
+{
+  "rlid": "filter_by_tags",
+  "github_url": "https://github.com/wntrblm/nox/blob/38dea062a14355469fa44170ec64694b2c2d5e7f/./nox/manifest.py#L223-L230",
+  "name": "filter_by_tags",
+  "line_cov": 1.0,
+  "lines": 8,
+  "stats": 1,
+  "cc": 3,
+  "content": "    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n        self._queue = [x for x in self._queue if set(x.tags).intersection(tags)]",
+  "header": "    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"",
+  "file": "./nox/manifest.py",
+  "start_line": 223,
+  "end_line": 230,
+  "body_start_line": 230,
+  "comment": "\"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"",
+  "test_time": 0.6610267162322998,
+  "cover_tests": [
+    "tests/test_manifest.py::test_filter_by_tags[tags0-2]",
+    "tests/test_manifest.py::test_filter_by_tags[tags1-2]",
+    "tests/test_manifest.py::test_filter_by_tags[tags2-1]",
+    "tests/test_manifest.py::test_filter_by_tags[tags3-0]",
+    "tests/test_manifest.py::test_filter_by_tags[tags4-2]",
+    "tests/test_tasks.py::test_filter_manifest_tags[tags1-7]",
+    "tests/test_tasks.py::test_filter_manifest_tags[tags2-5]",
+    "tests/test_tasks.py::test_filter_manifest_tags[tags3-3]",
+    "tests/test_tasks.py::test_filter_manifest_tags[tags4-8]",
+    "tests/test_tasks.py::test_filter_manifest_tags[tags5-7]",
+    "tests/test_tasks.py::test_filter_manifest_tags[tags6-6]",
+    "tests/test_tasks.py::test_filter_manifest_tags[tags7-8]",
+    "tests/test_tasks.py::test_filter_manifest_tags_not_found[tags-are-case-insensitive]",
+    "tests/test_tasks.py::test_filter_manifest_tags_not_found[tag-does-not-exist]",
+    "tests/test_tasks.py::test_merge_tags"
+  ],
+  "repo": {
+    "github_path": "wntrblm/nox",
+    "commit": "38dea062a14355469fa44170ec64694b2c2d5e7f",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"hatchling.build\"\nrequires = [ \"hatchling\",]\n\n[project]\nname = \"nox\"\nversion = \"2025.10.16\"\ndescription = \"Flexible test automation.\"\nreadme = \"README.md\"\nkeywords = [ \"automation\", \"testing\", \"tox\",]\nlicense = \"Apache-2.0\"\nrequires-python = \">=3.8\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Environment :: Console\", \"Intended Audience :: Developers\", \"Operating System :: MacOS\", \"Operating System :: Microsoft :: Windows\", \"Operating System :: POSIX\", \"Operating System :: Unix\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.8\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: 3.14\", \"Topic :: Software Development :: Testing\",]\ndependencies = [ \"argcomplete>=1.9.4,<4\", \"attrs>=24.1\", \"colorlog>=2.6.1,<7\", \"dependency-groups>=1.1\", \"humanize>=4\", \"packaging>=20.9; python_version<'3.10'\", \"packaging>=21; python_version>='3.10'\", \"tomli>=1.1; python_version<'3.11'\", \"virtualenv>=20.14.1; python_version<'3.10'\", \"virtualenv>=20.15; python_version>='3.10'\",]\n[[project.authors]]\nname = \"Alethea Katherine Flowers\"\nemail = \"me@thea.codes\"\n\n[dependency-groups]\ntest = [ \"coverage[toml]>=7.2\", \"pytest>=7.4; python_version>='3.12'\", \"pytest>=7; python_version<'3.12'\", \"pytest-cov>=3\",]\ndocs = [ \"myst-parser\", \"sphinx>=3\", \"sphinx-autobuild\", \"sphinx-tabs\", \"witchhazel\",]\n[[dependency-groups.dev]]\ninclude-group = \"test\"\n\n[project.optional-dependencies]\npbs = [ \"pbs-installer[all]>=2025.1.6\",]\ntox_to_nox = [ \"importlib-resources; python_version<'3.9'\", \"jinja2\", \"tox>=4\",]\nuv = [ \"uv>=0.1.6\",]\n\n[project.urls]\nbug-tracker = \"https://github.com/wntrblm/nox/issues\"\ndocumentation = \"https://nox.thea.codes\"\nhomepage = \"https://github.com/wntrblm/nox\"\nrepository = \"https://github.com/wntrblm/nox\"\n\n[project.scripts]\nnox = \"nox.__main__:main\"\ntox-to-nox = \"nox.tox_to_nox:main\"\n\n[tool.pyproject-fmt]\nmax_supported_python = \"3.14\"\n\n[tool.mypy]\npython_version = \"3.9\"\nstrict = true\nwarn_unreachable = true\nenable_error_code = [ \"ignore-without-code\", \"redundant-expr\", \"truthy-bool\",]\nmypy_path = [ \".github\",]\n[[tool.mypy.overrides]]\nmodule = [ \"tox.*\",]\nignore_missing_imports = true\n\n[tool.hatch.metadata]\nallow-ambiguous-features = true\n\n[tool.ruff.lint]\nextend-select = [ \"ARG\", \"B\", \"C4\", \"EM\", \"EXE\", \"FBT\", \"FLY\", \"FURB\", \"I\", \"ICN\", \"ISC\", \"N\", \"PERF\", \"PGH\", \"PIE\", \"PL\", \"PT\", \"PYI\", \"RET\", \"RUF\", \"S\", \"SIM\", \"TC\", \"TRY\", \"UP\", \"YTT\",]\nignore = [ \"N802\", \"N818\", \"PLR09\", \"PLR2004\", \"S101\", \"S603\",]\ntyping-modules = [ \"nox._typing\",]\n\n[tool.pytest.ini_options]\nminversion = \"7.0\"\naddopts = [ \"-ra\", \"--strict-markers\", \"--strict-config\",]\nxfail_strict = true\nfilterwarnings = [ \"error\",]\nlog_cli_level = \"INFO\"\ntestpaths = [ \"tests\",]\npythonpath = [ \".github/\",]\nmarkers = [ \"conda: test requires conda\",]\n\n[tool.coverage.run]\nbranch = true\nrelative_files = true\nsource_pkgs = [ \"nox\",]\ndisable_warnings = [ \"no-ctracer\",]\n\n[tool.coverage.report]\nexclude_also = [ \"@overload\", \"def __dir__()\", \"def __repr__\", \"if TYPE_CHECKING:\",]\nomit = [ \"nox/_typing.py\",]\n\n[tool.ruff.lint.per-file-ignores]\n\"tests/*.py\" = [ \"FBT001\",]\n\"tests/resources/**.py\" = [ \"ARG001\", \"TRY002\",]\n\n[tool.ruff.lint.flake8-unused-arguments]\nignore-variadic-names = true\n\n[tool.poetry.group.dev.dependencies]\npytest = \">=7\"\npytest-cov = \">=3\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies.coverage]\nversion = \">=7.2\"\nextras = [ \"toml\",]\n",
+    "failed_tests": [
+      "tests/test_main.py::test_main_requires[sessions1-expected_order1]",
+      "tests/test_main.py::test_main_requires[sessions2-expected_order2]",
+      "tests/test_main.py::test_noxfile_script_mode_url_req",
+      "tests/test_virtualenv.py::test_download_python_auto_missing_interpreter[uv]",
+      "tests/test_virtualenv.py::test_download_python_always_preexisting_interpreter[uv]",
+      "tests/test_virtualenv.py::test_download_python_failed_install[always-uv]",
+      "tests/test_virtualenv.py::test_download_python_failed_install[auto-uv]"
+    ],
+    "test_time": 160.74314188957214
+  },
+  "mutants": [
+    "    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n        self._queue = None\n",
+    "    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n        self._queue = [x for x in self._queue if len(set(x.tags).intersection(tags)) > 1]",
+    "    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n        self._queue = [x for x in self._queue if not set(x.tags).intersection(tags)]",
+    "    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n        self._queue = [x for x in self._queue if x.name in tags]",
+    "    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n        self._queue = [x for x in self._queue if x.tags == tags]",
+    "    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n        self._queue = [x for x in self._queue if x.tags is None]"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: list(self._queue), name=\"OLD_queue\")\n@icontract.ensure(lambda OLD, self, tags: isinstance(self._queue, list))\n@icontract.ensure(lambda OLD, self, tags: self._queue == [x for x in OLD.OLD_queue if set(x.tags).intersection(tags)])",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n# Copyright 2017 Alethea Katherine Flowers\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#    http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\nfrom __future__ import annotations\n\nimport ast\nimport itertools\nimport operator\nfrom typing import TYPE_CHECKING, Any, Mapping, cast\n\nfrom nox._decorators import Call, Func\nfrom nox._resolver import CycleError, lazy_stable_topo_sort\nfrom nox.sessions import Session, SessionRunner\n\nif TYPE_CHECKING:\n    import argparse\n    from collections.abc import Iterable, Iterator, Sequence\n\n__all__ = [\"WARN_PYTHONS_IGNORED\", \"Manifest\", \"keyword_match\"]\n\n\ndef __dir__() -> list[str]:\n...\nWARN_PYTHONS_IGNORED = \"python_ignored\"\n\n\ndef _unique_list(*args: str) -> list[str]:\n    \"\"\"Return a list without duplicates, while preserving order.\"\"\"\n...\nclass Manifest:\n    \"\"\"Session manifest.\n\n    The session manifest provides the source of truth for the sequence of\n    sessions that should be run by Nox.\n\n    It is possible for this to be mutated during execution. This allows for\n    useful use cases, such as for one session to \"notify\" another or\n    \"chain\" to another.\n\n    Args:\n        session_functions (Mapping[str, function]): The registry of discovered\n            session functions.\n        global_config (.nox.main.GlobalConfig): The global configuration.\n        module_docstring (Optional[str]): The user noxfile.py docstring.\n            Defaults to `None`.\n    \"\"\"\n\n    def __init__(\n        self,\n        session_functions: Mapping[str, Func],\n        global_config: argparse.Namespace,\n        module_docstring: str | None = None,\n    ) -> None:\n...\n    def __contains__(self, needle: str | SessionRunner) -> bool:\n...\n    def __iter__(self) -> Manifest:\n...\n    def __getitem__(self, key: str) -> SessionRunner:\n...\n    def __next__(self) -> SessionRunner:\n        \"\"\"Return the next item in the queue.\n\n        Raises:\n            StopIteration: If the queue has been entirely consumed.\n        \"\"\"\n...\n    def __len__(self) -> int:\n...\n    def list_all_sessions(self) -> Iterator[tuple[SessionRunner, bool]]:\n        \"\"\"Yields all sessions and whether or not they're selected.\"\"\"\n...\n    @property\n    def all_sessions_by_signature(self) -> dict[str, SessionRunner]:\n...\n    @property\n    def parametrized_sessions_by_name(self) -> dict[str, list[SessionRunner]]:\n        \"\"\"Returns a mapping from names to all sessions that are parameterizations of\n        the ``@session`` with each name.\n\n        The sessions in each returned list will occur in the same order as they occur in\n        ``self._all_sessions``.\n        \"\"\"\n...\n    def add_session(self, session: SessionRunner) -> None:\n        \"\"\"Add the given session to the manifest.\n\n        Args:\n            session (~nox.sessions.Session): A session object, such as\n                one returned from ``make_session``.\n        \"\"\"\n...\n    def filter_by_name(self, specified_sessions: Iterable[str]) -> None:\n        \"\"\"Filter sessions in the queue based on the user-specified names.\n\n        Args:\n            specified_sessions (Sequence[str]): A list of specified\n                session names.\n\n        Raises:\n            KeyError: If any explicitly listed sessions are not found.\n        \"\"\"\n...\n    def filter_by_default(self) -> None:\n        \"\"\"Filter sessions in the queue based on the default flag.\"\"\"\n...\n    def filter_by_python_interpreter(self, specified_pythons: Sequence[str]) -> None:\n        \"\"\"Filter sessions in the queue based on the user-specified\n        python interpreter versions.\n\n        Args:\n            specified_pythons (Sequence[str]): A list of specified\n                python interpreter versions.\n        \"\"\"\n...\n    def filter_by_keywords(self, keywords: str) -> None:\n        \"\"\"Filter sessions using pytest-like keyword expressions.\n\n        Args:\n            keywords (str): A Python expression of keywords which\n                session names are checked against.\n        \"\"\"\n...\n    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n...\n    def add_dependencies(self) -> None:\n        \"\"\"Add direct and recursive dependencies to the queue.\n\n        Raises:\n            KeyError: If any depended-on sessions are not found.\n            ~nox._resolver.CycleError: If a dependency cycle is encountered.\n        \"\"\"\n...\n    def make_session(\n        self, name: str, func: Func, *, multi: bool = False\n    ) -> list[SessionRunner]:\n        \"\"\"Create a session object from the session function.\n\n        Args:\n            name (str): The name of the session.\n            func (function): The session function.\n            multi (bool): Whether the function is a member of a set of sessions\n                with different interpreters.\n\n        Returns:\n            Sequence[~nox.session.Session]: A sequence of Session objects\n                bound to this manifest and configuration.\n        \"\"\"\n...\n    def next(self) -> SessionRunner:\n...\n    def notify(\n        self, session: str | SessionRunner, posargs: Iterable[str] | None = None\n    ) -> bool:\n        \"\"\"Enqueue the specified session in the queue.\n\n        If the session is already in the queue, or has been run already,\n        then this is a no-op.\n\n        Args:\n            session (Union[str, ~nox.session.Session]): The session to be\n                enqueued.\n            posargs (Optional[List[str]]): If given, sets the positional\n                arguments *only* for the queued session. Otherwise, the\n                standard globally available positional arguments will be\n                used instead.\n\n        Returns:\n            bool: Whether the session was added to the queue.\n\n        Raises:\n            ValueError: If the session was not found.\n        \"\"\"\n...\nclass KeywordLocals(Mapping[str, bool]):\n    \"\"\"Eval locals using keywords.\n\n    When looking up a local variable the variable name is compared against\n    the set of keywords. If the local variable name matches any *substring* of\n    any keyword, then the name lookup returns True. Otherwise, the name lookup\n    returns False.\n    \"\"\"\n\n    def __init__(self, keywords: Iterable[str]) -> None:\n...\n    def __getitem__(self, variable_name: str) -> bool:\n...\n    def __iter__(self) -> Iterator[str]:\n...\n    def __len__(self) -> int:\n...\ndef keyword_match(expression: str, keywords: Iterable[str]) -> Any:\n    \"\"\"See if an expression matches the given set of keywords.\"\"\"\n...\ndef _null_session_func_(session: Session) -> None:\n    \"\"\"A no-op session for parametrized sessions with no available params.\"\"\"\n...\ndef _normalized_session_match(session_name: str, session: SessionRunner) -> bool:\n    \"\"\"Checks if session_name matches session.\"\"\"\n...\ndef _normalize_arg(arg: str) -> str:\n    \"\"\"Normalize arg for comparison.\"\"\"\n...\n_null_session_func = Func(_null_session_func_, python=False)\n\n```\n## Target Method\n```\n    def filter_by_tags(self, tags: Iterable[str]) -> None:\n        \"\"\"Filter sessions by their tags.\n\n        Args:\n            tags (list[str]): A list of tags which session names\n                are checked against.\n        \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `filter_by_tags`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(lambda self: list(self.list_all_sessions()))\n@icontract.ensure(\n    lambda self, OLD: all(\n        session.selected == (any(_normalize_arg(tag) in _normalize_arg(session.name) for tag in tags) or session.selected)\n        for session, _ in OLD\n    ),\n    \"Sessions are filtered by tags\"\n)",
+    "@icontract.snapshot(lambda self: list(self.list_all_sessions()))\n@icontract.ensure(\n    lambda self, OLD: all(\n        not selected or any(tag in session.tags for tag in tags)\n        for session, selected in OLD(self.list_all_sessions())\n    ),\n    \"All remaining sessions match at least one of the given tags.\"\n)\n@icontract.ensure(\n    lambda OLD: len(list(self.list_all_sessions())) <= len(list(OLD(self.list_all_sessions()))),\n    \"The number of sessions is reduced or remains the same.\"\n)",
+    "@icontract.snapshot(lambda self: list(self.list_all_sessions()))\n@icontract.ensure(\n    lambda self, OLD: all(\n        session.selected == (any(_normalized_session_match(tag, session) for tag in tags) or session.selected)\n        for session, _ in OLD\n    ),\n    description=\"Sessions are filtered based on the given tags.\",\n)",
+    "@icontract.snapshot(lambda self: list(self.list_all_sessions()))\n@icontract.ensure(\n    lambda self, OLD: all(\n        not selected or any(tag in session.tags for tag in tags)\n        for session, selected in OLD(self)\n    )\n)",
+    "@icontract.snapshot(lambda self: list(self.list_all_sessions()))\n@icontract.ensure(\n    lambda self, OLD: all(\n        not selected or any(tag in session.tags for tag in tags)\n        for session, selected in OLD(self)\n    ),\n    \"All selected sessions match at least one tag\",\n)\n@icontract.ensure(\n    lambda self, OLD, tags: all(\n        any(tag in session.tags for tag in tags) == selected\n        for session, selected in self.list_all_sessions()\n    )\n    if tags\n    else list(self.list_all_sessions()) == list(OLD(self)),\n    \"Sessions are filtered by tags if tags are provided\",\n)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 103
+}

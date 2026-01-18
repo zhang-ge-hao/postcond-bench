@@ -1,0 +1,432 @@
+{
+  "rlid": "parse_roboflow_identifier",
+  "github_url": "https://github.com/roboflow/maestro/blob/f394fce0b2c2fe98b3f457ad5abb61a9c7e88c7b/./maestro/trainer/common/datasets/roboflow.py#L10-L41",
+  "name": "parse_roboflow_identifier",
+  "line_cov": 1.0,
+  "lines": 32,
+  "stats": 15,
+  "cc": 7,
+  "content": "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+  "header": "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"",
+  "file": "./maestro/trainer/common/datasets/roboflow.py",
+  "start_line": 10,
+  "end_line": 41,
+  "body_start_line": 21,
+  "comment": "\"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"",
+  "test_time": 7.3097052574157715,
+  "cover_tests": [
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[https://universe.roboflow.com/maestro/dataset/1-expected_result0-context_manager0]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[https://app.roboflow.com/maestro/dataset/1-expected_result1-context_manager1]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[roboflow.com/maestro/dataset/1-expected_result2-context_manager2]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[maestro/dataset/1-expected_result3-context_manager3]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[maestro/dataset-expected_result4-context_manager4]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[https://universe.roboflow.com/maestro/dataset-expected_result5-context_manager5]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[https://app.roboflow.com/maestro/dataset-expected_result6-context_manager6]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[universe.roboflow.com/maestro/dataset-expected_result7-context_manager7]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[app.roboflow.com/maestro/dataset-expected_result8-context_manager8]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[maestro-None-context_manager9]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[app.roboflow.com/maestro/dataset/version-None-context_manager10]",
+    "test/meastro/trainer/common/datasets/test_roboflow.py::test_parse_roboflow_identifier[app.roboflow.com/maestro/dataset/version/more-None-context_manager11]"
+  ],
+  "repo": {
+    "github_path": "roboflow/maestro",
+    "commit": "f394fce0b2c2fe98b3f457ad5abb61a9c7e88c7b",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"maestro\"\nversion = \"1.1.0rc3\"\ndescription = \"Streamline the fine-tuning process for vision-language models like PaliGemma 2, Florence-2, and Qwen2.5-VL.\"\nreadme = \"README.md\"\nkeywords = [ \"roboflow\", \"maestro\", \"transformers\", \"torch\", \"accelerate\", \"multimodal\", \"lmm\", \"vision\", \"nlp\", \"prompting\", \"vlm\",]\nrequires-python = \">=3.10,<3.13\"\nclassifiers = [ \"Development Status :: 3 - Alpha\", \"Intended Audience :: Developers\", \"Intended Audience :: Education\", \"Intended Audience :: Science/Research\", \"License :: OSI Approved :: Apache Software License\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Topic :: Software Development\", \"Topic :: Scientific/Engineering\", \"Topic :: Scientific/Engineering :: Artificial Intelligence\", \"Typing :: Typed\", \"Operating System :: Microsoft :: Windows\", \"Operating System :: POSIX :: Linux\", \"Operating System :: MacOS\",]\ndependencies = [ \"roboflow>=1.1.0\", \"dacite>=1.9.1\", \"lightning>=2.4.0\", \"supervision>=0.26.0rc4\", \"requests>=2.31.0,<=2.32.3\", \"typer>=0.12.5\", \"evaluate>=0.4.3\", \"nltk>=3.9.0\", \"sacrebleu>=2.3.0\", \"pillow>=9.4\", \"icontract (>=2.7.1,<3.0.0)\", \"transformers (>=4.57.1,<5.0.0)\",]\n[[project.authors]]\nname = \"Piotr Skalski\"\nemail = \"piotr.skalski92@gmail.com\"\n\n[[project.maintainers]]\nname = \"Piotr Skalski\"\nemail = \"piotr.skalski92@gmail.com\"\n\n[project.license]\nfile = \"LICENSE\"\n\n[project.urls]\nHomepage = \"https://roboflow.github.io/multimodal-maestro/\"\nDocumentation = \"https://roboflow.github.io/multimodal-maestro/\"\nRepository = \"https://github.com/roboflow/multimodal-maestro\"\nIssues = \"https://github.com/roboflow/multimodal-maestro/issues\"\nChangelog = \"https://github.com/roboflow/multimodal-maestro/blob/main/CHANGELOG.md\"\n\n[project.optional-dependencies]\ndocs = [ \"mkdocs-material[imaging]>=9.5.35,<9.7.0\", \"mkdocstrings[python]>=0.20.0,<0.29.2\", \"mike~=2.1.3\",]\ndev = [ \"pytest>=8.3.2,<8.5.0\", \"pre-commit>=3.8,<4.3\", \"mypy>=1.11.2,<1.17.0\", \"ruff>=0.6.5,<0.12.0\", \"tox>=4.18.1,<4.27.0\",]\nflorence_2 = [ \"peft>=0.12\", \"transformers>=4.43.0\", \"torch>=2.4.0\", \"flash-attn>=2.7.0.post2; sys_platform != 'darwin'\",]\npaligemma_2 = [ \"peft>=0.12\", \"torch>=2.4.0\", \"transformers>=4.48.3\", \"bitsandbytes>=0.45.0\",]\nqwen_2_5_vl = [ \"accelerate>=1.2.1\", \"peft>=0.12\", \"torch>=2.4.0\", \"torchvision>=0.20.0\", \"transformers>=4.49.0\", \"bitsandbytes>=0.45.0\", \"qwen-vl-utils>=0.0.8\",]\n\n[project.scripts]\nmaestro = \"maestro.cli.main:app\"\n\n[tool.setuptools]\ninclude-package-data = true\n\n[tool.bandit]\ntarget = [ \"test\", \"maestro\",]\ntests = [ \"B201\", \"B301\", \"B318\", \"B314\", \"B303\", \"B413\", \"B412\",]\n\n[tool.autoflake]\ncheck = true\nimports = [ \"cv2\", \"maestro\",]\n\n[tool.ruff]\ntarget-version = \"py39\"\nexclude = [ \".bzr\", \".direnv\", \".eggs\", \".git\", \".git-rewrite\", \".hg\", \".mypy_cache\", \".nox\", \".pants.d\", \".pytype\", \".ruff_cache\", \".svn\", \".tox\", \".venv\", \"__pypackages__\", \"_build\", \"buck-out\", \"build\", \"dist\", \"node_modules\", \"venv\", \"yarn-error.log\", \"yarn.lock\", \"docs\",]\nline-length = 120\nindent-width = 4\n\n[tool.ruff.lint]\nselect = [ \"E\", \"F\", \"I\", \"A\", \"Q\", \"W\", \"N\", \"T\", \"Q\", \"TRY\", \"UP\", \"C90\", \"RUF\", \"NPY\",]\nignore = [ \"T201\", \"TRY003\", \"NPY201\",]\nfixable = [ \"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"I\", \"N\", \"Q\", \"S\", \"T\", \"W\", \"ANN\", \"ARG\", \"BLE\", \"COM\", \"DJ\", \"DTZ\", \"EM\", \"ERA\", \"EXE\", \"FBT\", \"ICN\", \"INP\", \"ISC\", \"NPY\", \"PD\", \"PGH\", \"PIE\", \"PL\", \"PT\", \"PTH\", \"PYI\", \"RET\", \"RSE\", \"RUF\", \"SIM\", \"SLF\", \"TCH\", \"TID\", \"TRY\", \"UP\", \"YTT\",]\nunfixable = []\ndummy-variable-rgx = \"^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$\"\n\n[tool.ruff.format]\nquote-style = \"double\"\nindent-style = \"space\"\nskip-magic-trailing-comma = false\nline-ending = \"auto\"\n\n[tool.setuptools.packages.find]\nwhere = [ \".\",]\nexclude = [ \"cookbooks\", \"docs\", \"docs.*\", \"test\", \"test.*\", \"mkdocs\", \"mkdocs.*\",]\n\n[tool.ruff.lint.pylint]\nmax-args = 20\n\n[tool.ruff.lint.flake8-quotes]\ninline-quotes = \"double\"\nmultiline-quotes = \"double\"\ndocstring-quotes = \"double\"\n\n[tool.ruff.lint.pydocstyle]\nconvention = \"google\"\n\n[tool.ruff.lint.per-file-ignores]\n\"__init__.py\" = [ \"E402\", \"F401\",]\n\"*.ipynb\" = [ \"E501\",]\n\n[tool.ruff.lint.pyupgrade]\nkeep-runtime-typing = true\n\n[tool.ruff.lint.mccabe]\nmax-complexity = 15\n\n[tool.ruff.lint.isort]\norder-by-type = true\nno-sections = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [],
+    "test_time": 27.41280245780945
+  },
+  "mutants": [
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = identifier.strip()  # Does not remove protocol\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"XX^https?://XX\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^HTTPS?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^http://\", \"\", identifier.strip())  # Only removes http, not https\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"http://\", identifier.strip())  # Replaces protocol with http\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"XX^(?:[^/]*roboflow\\.com)/?XX\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*ROBOFLOW\\.COM)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"XXXX\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"roboflow.com/\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"XX/XX\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(None) if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = identifier_no_domain.split(\"/\") + [\"\"]  # This will add an empty string to the end of tokens\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = identifier_no_domain.split(\"/\")[:2]  # This will limit tokens to only the first two segments\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 3:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 3:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) <= 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = None\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[1]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = None\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = \"\"\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) < 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) == 2:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) == 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 2:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 4:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) >= 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) >= 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 4:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 4:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    if len(tokens) == 1:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = None\n        except ValueError:\n            return None\n\n    return workspace, project, version\n",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = None  # Incorrectly sets version to None, ignoring the parsed value\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[1])  # Incorrectly assigns the project token instead of the version\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2]) + 1  # Incorrectly modifies the version by adding 1\n        except ValueError:\n            return None\n\n    return workspace, project, version",
+    "def parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = tokens[2]  # Incorrectly assigns a string instead of an integer\n        except ValueError:\n            return None\n\n    return workspace, project, version"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda identifier: [segment for segment in re.sub(r\"^(?:[^/]*roboflow\\.com)/?\", \"\", re.sub(r\"^https?://\", \"\", identifier.strip())).split(\"/\") if segment], name=\"tokens\")\n@icontract.ensure(lambda result, OLD: (result is None) == (len(OLD.tokens) < 2 or len(OLD.tokens) > 3 or (len(OLD.tokens) == 3 and re.fullmatch(r\"[+-]?\\d+\", OLD.tokens[2]) is None)))\n@icontract.ensure(lambda result: result is None or (isinstance(result, tuple) and len(result) == 3 and isinstance(result[0], str) and isinstance(result[1], str) and (result[2] is None or isinstance(result[2], int))))\n@icontract.ensure(lambda result, OLD: result is None or (result[0] == OLD.tokens[0] and result[1] == OLD.tokens[1]))\n@icontract.ensure(lambda result, OLD: result is None or ((len(OLD.tokens) == 2 and result[2] is None) or (len(OLD.tokens) == 3 and result[2] == int(OLD.tokens[2]))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport re\nfrom typing import Optional\n\nROBOFLOW_PROJECT_TYPE_TO_DATASET_FORMAT = {\n    \"object-detection\": \"coco\",\n    \"text-image-pairs\": \"jsonl\",\n}\n\n\ndef parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n\n```\n## Target Method\n```\ndef parse_roboflow_identifier(identifier: str) -> Optional[tuple[str, str, Optional[int]]]:\n    \"\"\"\n    Parses a Roboflow identifier and extracts the workspace, project, and optional dataset version.\n\n    Args:\n        identifier (str): The Roboflow identifier, which can be a full URL or a partial identifier string.\n\n    Returns:\n        Optional[tuple[str, str, Optional[int]]]: A tuple in the form of (workspace_id, project_id, dataset_version)\n            if the identifier is valid; otherwise, None.\n    \"\"\"\n    identifier_no_protocol = re.sub(r\"^https?://\", \"\", identifier.strip())\n    domain_pattern = r\"^(?:[^/]*roboflow\\.com)/?\"\n    identifier_no_domain = re.sub(domain_pattern, \"\", identifier_no_protocol)\n    tokens = [segment for segment in identifier_no_domain.split(\"/\") if segment]\n\n    if len(tokens) < 2:\n        return None\n\n    workspace = tokens[0]\n    project = tokens[1]\n    version = None\n\n    if len(tokens) > 3:\n        return None\n    elif len(tokens) == 3:\n        try:\n            version = int(tokens[2])\n        except ValueError:\n            return None\n\n    return workspace, project, version\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `parse_roboflow_identifier`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-all",
+  "postconds": [
+    "@icontract.ensure(lambda result: result is None or (isinstance(result, tuple) and len(result) == 3))\n@icontract.ensure(lambda result: result is None or (isinstance(result[0], str) and len(result[0]) > 0))\n@icontract.ensure(lambda result: result is None or (isinstance(result[1], str) and len(result[1]) > 0))\n@icontract.ensure(lambda result: result is None or (result[2] is None or isinstance(result[2], int)))",
+    "@icontract.ensure(lambda result: result is None or (isinstance(result, tuple) and len(result) == 3))\n@icontract.ensure(lambda result: result is None or (isinstance(result[0], str) and isinstance(result[1], str)))\n@icontract.ensure(lambda result: result is None or (result[2] is None or isinstance(result[2], int)))\n@icontract.ensure(lambda result: result is None or (len(result[0]) > 0 and len(result[1]) > 0))\n@icontract.ensure(lambda result: result is None or result[2] is None or result[2] >= 0, \"Version must be non-negative if present\")",
+    "@icontract.ensure(lambda result: result is None or (isinstance(result, tuple) and len(result) == 3))\n@icontract.ensure(lambda result: result is None or isinstance(result[0], str))\n@icontract.ensure(lambda result: result is None or isinstance(result[1], str))\n@icontract.ensure(lambda result: result is None or (result[2] is None or isinstance(result[2], int)))\n@icontract.ensure(lambda result: result is None or (len(result[0]) > 0 and len(result[1]) > 0))\n@icontract.ensure(lambda result: result is None or result[2] is None or result[2] >= 0)",
+    "@icontract.ensure(lambda result: result is None or (isinstance(result, tuple) and len(result) == 3))\n@icontract.ensure(lambda result: result is None or isinstance(result[0], str))\n@icontract.ensure(lambda result: result is None or isinstance(result[1], str))\n@icontract.ensure(lambda result: result is None or (result[2] is None or isinstance(result[2], int)))\n@icontract.ensure(lambda result: result is None or (len(result[0]) > 0 and len(result[1]) > 0))",
+    "@icontract.ensure(lambda result: result is None or (isinstance(result, tuple) and len(result) == 3))\n@icontract.ensure(lambda result: result is None or isinstance(result[0], str))\n@icontract.ensure(lambda result: result is None or isinstance(result[1], str))\n@icontract.ensure(lambda result: result is None or (result[2] is None or isinstance(result[2], int)))\n@icontract.ensure(lambda result: result is None or (len(result[0]) > 0 and len(result[1]) > 0))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "failed",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "failed",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail"
+    ]
+  ],
+  "traversal_rank": 325
+}

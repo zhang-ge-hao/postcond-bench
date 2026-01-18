@@ -1,0 +1,190 @@
+{
+  "rlid": "isWhitespace",
+  "github_url": "https://github.com/crawler-commons/crawler-commons/blob/d185a090bc29d1eea697cf6ed565dc92258be2a3/./src/main/java/crawlercommons/sitemaps/sax/DelegatorHandler.java#L259-L265",
+  "name": "isWhitespace",
+  "line_cov": 1.0,
+  "lines": 7,
+  "stats": 1,
+  "cc": 4,
+  "content": "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n    }",
+  "header": "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {",
+  "file": "./src/main/java/crawlercommons/sitemaps/sax/DelegatorHandler.java",
+  "start_line": 259,
+  "end_line": 265,
+  "body_start_line": 264,
+  "comment": "/**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */",
+  "test_time": 5.024707794189453,
+  "cover_tests": [
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testHebdenbridgetimesArticlesSitemap",
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testImageSitemap",
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testMobileSitemap",
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testNewsSitemap",
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testPageMapSitemap",
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testShinpaideshuNewsSitemap",
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testVideosSitemap",
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testVideosSitemapTVShow",
+    "crawlercommons.sitemaps.SiteMapParserExtensionTest#testXHTMLLinksSitemap",
+    "crawlercommons.sitemaps.SiteMapParserTest#testLenientParser",
+    "crawlercommons.sitemaps.SiteMapParserTest#testMissingLocSitemapIndexFile",
+    "crawlercommons.sitemaps.SiteMapParserTest#testPartialSitemapIndicesAllowed",
+    "crawlercommons.sitemaps.SiteMapParserTest#testPartialSitemapsAllowed",
+    "crawlercommons.sitemaps.SiteMapParserTest#testRSS10SyndicationFormat",
+    "crawlercommons.sitemaps.SiteMapParserTest#testRSSFormat",
+    "crawlercommons.sitemaps.SiteMapParserTest#testRSSPubDate",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapGZ",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapGZMediaTypes",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapIndex",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapParserBrokenXml",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapWithNamespace",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapWithWrongNamespace",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapXIncludeDisabled",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapXML",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapXMLMediaTypes",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapXMLfilterUrls",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapXMLleadingWhiteSpace",
+    "crawlercommons.sitemaps.SiteMapParserTest#testSitemapXXEWithDocTypeAllowed",
+    "crawlercommons.sitemaps.SiteMapParserTest#testStripUnicodeWhiteSpace",
+    "crawlercommons.sitemaps.SiteMapParserTest#testUnclosedSitemapIndexFile",
+    "crawlercommons.sitemaps.SiteMapParserTest#testUrlLocUrl",
+    "crawlercommons.sitemaps.SiteMapParserTest#testWalkSiteMap"
+  ],
+  "repo": {
+    "github_path": "crawler-commons/crawler-commons",
+    "commit": "d185a090bc29d1eea697cf6ed565dc92258be2a3",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.crawler-commons</groupId>\n  <artifactId>crawler-commons</artifactId>\n  <name>Crawler-commons</name>\n  <packaging>jar</packaging>\n  <version>1.6-SNAPSHOT</version>\n  <licenses>\n    <license>\n      <name>Apache License, Version 2.0</name>\n      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>\n      </license>\n    </licenses>\n  <url>https://github.com/crawler-commons/crawler-commons</url>\n  <description>crawler-commons is a set of reusable Java components that implement \n\tfunctionality common to any web crawler.\n\t</description>\n  <inceptionYear>2009</inceptionYear>\n  <scm>\n    <url>https://github.com/crawler-commons/crawler-commons</url>\n    <connection>scm:git:git://github.com/crawler-commons/crawler-commons.git</connection>\n    <developerConnection>scm:git:git@github.com:crawler-commons/crawler-commons.git</developerConnection>\n    <tag>crawler-commons-1.5</tag>\n    </scm>\n  <distributionManagement>\n    <repository>\n      <id>sonatype-nexus-staging</id>\n      <name>Nexus Staging Repository</name>\n      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n      </repository>\n    </distributionManagement>\n  <issueManagement>\n    <system>GitHub Issues</system>\n    <url>https://github.com/crawler-commons/crawler-commons/issues</url>\n    </issueManagement>\n  <mailingLists>\n    <mailingList>\n      <name>Project Mailing List</name>\n      <post>crawler-commons [at] googlegroups [dot] com</post>\n      </mailingList>\n    </mailingLists>\n  <organization>\n    <name>Crawler-Commons</name>\n    <url>https://github.com/crawler-commons</url>\n    </organization>\n  <developers>\n    <developer>\n      <id>KKrugler</id>\n      <name>Ken Krugler</name>\n      <email>kkrugler_lists@transpac.com</email>\n      <organization>Scale Unlimited</organization>\n      <organizationUrl>https://www.scaleunlimited.com</organizationUrl>\n      </developer>\n    <developer>\n      <id>ab</id>\n      <name>Andrzej Bialecki</name>\n      <email>ab@apache.org</email>\n      </developer>\n    <developer>\n      <id>jnioche</id>\n      <name>Julien Nioche</name>\n      <email>julien@digitalpebble.com</email>\n      <organization>DigitalPebble Ltd</organization>\n      <organizationUrl>https://www.digitalpebble.com</organizationUrl>\n      </developer>\n    <developer>\n      <id>lewismc</id>\n      <name>Lewis John McGibbney</name>\n      <email>lewismc [at] apache [dot] org</email>\n      </developer>\n    <developer>\n      <id>avi_hayun</id>\n      <name>Avi Hayun</name>\n      <email>avraham2@gmail.com</email>\n      </developer>\n    <developer>\n      <id>snagel</id>\n      <name>Sebastian Nagel</name>\n      <email>snagel@apache.org</email>\n      </developer>\n    <developer>\n      <id>rzo1</id>\n      <name>Richard Zowalla</name>\n      <email>rzo1@apache.org</email>\n      </developer>\n    </developers>\n  <build>\n    <defaultGoal>install</defaultGoal>\n    <directory>target</directory>\n    <outputDirectory>${basedir}/target/classes</outputDirectory>\n    <finalName>${project.artifactId}-${project.version}</finalName>\n    <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>\n    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>\n    <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>\n    <testResources>\n      <testResource>\n        <directory>src/test/resources/</directory>\n        <includes>\n          <include>**</include>\n          </includes>\n        </testResource>\n      </testResources>\n    <resources>\n      <resource>\n        <directory>src/main/resources</directory>\n        <filtering>true</filtering>\n        <includes>\n          <include>**/version.prop</include>\n          </includes>\n        </resource>\n      <resource>\n        <directory>src/main/resources</directory>\n        <filtering>false</filtering>\n        <excludes>\n          <exclude>**/version.prop</exclude>\n          </excludes>\n        </resource>\n      </resources>\n    <pluginManagement>\n      <plugins>\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-deploy-plugin</artifactId>\n          <version>${maven-deploy-plugin.version}</version>\n          </plugin>\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-release-plugin</artifactId>\n          <version>${maven-release-plugin.version}</version>\n          <configuration>\n            <mavenExecutorId>forked-path</mavenExecutorId>\n            <useReleaseProfile>false</useReleaseProfile>\n            <arguments>-Prelease</arguments>\n            </configuration>\n          </plugin>\n        </plugins>\n      </pluginManagement>\n    <plugins>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.13</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>post-unit-test</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            </execution>\n          </executions>\n        <configuration>\n          <reports>\n            <xml>true</xml>\n            </reports>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-jar-plugin</artifactId>\n        <version>${maven-jar-plugin.version}</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>test-jar</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>${maven-compiler-plugin.version}</version>\n        <inherited>true</inherited>\n        <configuration>\n          <source>${javac.src.version}</source>\n          <target>${javac.target.version}</target>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>${maven-surfire-plugin.version}</version>\n        <inherited>true</inherited>\n        <configuration>\n          <systemPropertyVariables>\n            <test.build.data>${project.basedir}/target/test-data/</test.build.data>\n            </systemPropertyVariables>\n          <argLine>@{argLine} -Xmx512m</argLine>\n          <forkCount>2</forkCount>\n          <testFailureIgnore>false</testFailureIgnore>\n          <reportsDirectory>target/surefire-reports</reportsDirectory>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>com.googlecode.maven-java-formatter-plugin</groupId>\n        <artifactId>maven-java-formatter-plugin</artifactId>\n        <version>0.4</version>\n        <configuration>\n          <configFile>${project.basedir}/doc/eclipse-formatter.xml</configFile>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>de.thetaphi</groupId>\n        <artifactId>forbiddenapis</artifactId>\n        <version>3.9</version>\n        <configuration>\n          <failOnUnsupportedJava>false</failOnUnsupportedJava>\n          <bundledSignatures>\n            <bundledSignature>jdk-unsafe</bundledSignature>\n            <bundledSignature>jdk-deprecated</bundledSignature>\n            <bundledSignature>jdk-non-portable</bundledSignature>\n            </bundledSignatures>\n          <signaturesFiles>\n            <signaturesFile>src/test/resources/forbidden-apis-signatures.txt</signaturesFile>\n            </signaturesFiles>\n          </configuration>\n        <executions>\n          <execution>\n            <goals>\n              <goal>check</goal>\n              <goal>testCheck</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>com.googlecode.maven-download-plugin</groupId>\n        <artifactId>download-maven-plugin</artifactId>\n        <version>${maven.download.plugin.version}</version>\n        <executions>\n          <execution>\n            <id>download-public-suffix-list.dat</id>\n            <phase>generate-resources</phase>\n            <goals>\n              <goal>wget</goal>\n              </goals>\n            <configuration>\n              <url>https://publicsuffix.org/list/effective_tld_names.dat</url>\n              <outputDirectory>${project.build.outputDirectory}</outputDirectory>\n              <failOnError>true</failOnError>\n              <overwrite>false</overwrite>\n              <skipCache>${skip.download.cache}</skipCache>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>${maven-javadoc-plugin.version}</version>\n        <configuration>\n          <source>${javac.src.version}</source>\n          </configuration>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <goals>\n              <goal>jar</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      </plugins>\n    </build>\n  <profiles>\n    <profile>\n      <id>release</id>\n      <properties>\n        <skip.download.cache>true</skip.download.cache>\n        </properties>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-source-plugin</artifactId>\n            <version>${maven-source-plugin.version}</version>\n            <executions>\n              <execution>\n                <id>attach-sources</id>\n                <goals>\n                  <goal>jar-no-fork</goal>\n                  </goals>\n                <configuration>\n                  <archive>\n                    <manifest>\n                      <addDefaultImplementationEntries>true</addDefaultImplementationEntries>\n                      <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>\n                      </manifest>\n                    <manifestEntries>\n                      <Implementation-Build>${implementation.build}</Implementation-Build>\n                      <Implementation-Build-Date>${maven.build.timestamp}</Implementation-Build-Date>\n                      <X-Compile-Source-JDK>${javac.src.version}</X-Compile-Source-JDK>\n                      <X-Compile-Target-JDK>${javac.target.version}</X-Compile-Target-JDK>\n                      </manifestEntries>\n                    </archive>\n                  </configuration>\n                </execution>\n              </executions>\n            </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-javadoc-plugin</artifactId>\n            <version>${maven-javadoc-plugin.version}</version>\n            <executions>\n              <execution>\n                <id>attach-javadocs</id>\n                <goals>\n                  <goal>jar</goal>\n                  </goals>\n                <configuration>\n                  <quiet>true</quiet>\n                  <archive>\n                    <manifest>\n                      <addDefaultImplementationEntries>true</addDefaultImplementationEntries>\n                      <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>\n                      </manifest>\n                    <manifestEntries>\n                      <Implementation-Build>${implementation.build}</Implementation-Build>\n                      <Implementation-Build-Date>${maven.build.timestamp}</Implementation-Build-Date>\n                      <X-Compile-Source-JDK>${javac.src.version}</X-Compile-Source-JDK>\n                      <X-Compile-Target-JDK>${javac.target.version}</X-Compile-Target-JDK>\n                      </manifestEntries>\n                    </archive>\n                  </configuration>\n                </execution>\n              </executions>\n            </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>${maven-gpg-plugin.version}</version>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                  </goals>\n                </execution>\n              </executions>\n            </plugin>\n          <plugin>\n            <groupId>net.ju-n.maven.plugins</groupId>\n            <artifactId>checksum-maven-plugin</artifactId>\n            <version>${checksum-maven-plugin.version}</version>\n            </plugin>\n          <plugin>\n            <groupId>org.sonatype.central</groupId>\n            <artifactId>central-publishing-maven-plugin</artifactId>\n            <version>${central-publishing-plugin.version}</version>\n            <extensions>true</extensions>\n            <configuration>\n              <publishingServerId>central</publishingServerId>\n              </configuration>\n            </plugin>\n          </plugins>\n        </build>\n      </profile>\n    </profiles>\n  <properties>\n    <commons-io.version>2.19.0</commons-io.version>\n    <slf4j-api.version>2.0.17</slf4j-api.version>\n    <junit.version>5.13.3</junit.version>\n    <slf4j-log4j12.version>1.7.33</slf4j-log4j12.version>\n    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>\n    <maven-resources-plugin.version>2.5</maven-resources-plugin.version>\n    <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>\n    <maven-surfire-plugin.version>3.5.3</maven-surfire-plugin.version>\n    <maven-release-plugin.version>3.1.1</maven-release-plugin.version>\n    <maven-source-plugin.version>3.3.1</maven-source-plugin.version>\n    <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>\n    <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>\n    <apache-rat-plugin.version>0.8</apache-rat-plugin.version>\n    <maven-assembly-plugin.version>2.2.2</maven-assembly-plugin.version>\n    <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>\n    <checksum-maven-plugin.version>1.4</checksum-maven-plugin.version>\n    <maven.download.plugin.version>1.13.0</maven.download.plugin.version>\n    <central-publishing-plugin.version>0.8.0</central-publishing-plugin.version>\n    <implementation.build>${scmBranch}@r${buildNumber}</implementation.build>\n    <javac.src.version>11</javac.src.version>\n    <javac.target.version>11</javac.target.version>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.release>11</maven.compiler.release>\n    <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ssZ</maven.build.timestamp.format>\n    <skipTests>false</skipTests>\n    <skip.download.cache>false</skip.download.cache>\n    <assembly.finalName>${project.build.finalName}</assembly.finalName>\n    </properties>\n  <dependencies>\n    <dependency>\n      <groupId>commons-io</groupId>\n      <artifactId>commons-io</artifactId>\n      <version>${commons-io.version}</version>\n      </dependency>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-api</artifactId>\n      <version>${slf4j-api.version}</version>\n      </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-engine</artifactId>\n      <version>${junit.version}</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-params</artifactId>\n      <version>${junit.version}</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-log4j12</artifactId>\n      <version>${slf4j-log4j12.version}</version>\n      <scope>test</scope>\n      </dependency>\n    </dependencies>\n  </project>",
+    "failed_tests": [
+      "crawlercommons.domains.EffectiveTldFinderTest#testWildcardEtld"
+    ],
+    "test_time": 1.940392255783081
+  },
+  "mutants": [
+    "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return Character.isWhitespace(c) && c != '\\u00a0'; // Incorrect logic, excludes '\\u00a0'\n    }",
+    "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return Character.isWhitespace(c) || c != '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n    }",
+    "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return Character.isWhitespace(c) || c == '\\u00a0' || c != '\\u2007' || c == '\\u202f';\n    }",
+    "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c != '\\u202f';\n    }",
+    "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return Character.isWhitespace(c) || c == '\\u202f'; // Missing '\\u00a0' and '\\u2007'\n    }",
+    "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return false;\n    }",
+    "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return false; // Always returns false, incorrectly identifies all characters as non-whitespace\n    }",
+    "    /**\n     * Check whether character is any Unicode whitespace, including the space\n     * characters not covered by {@link Character#isWhitespace(char)}\n     */\n    public static boolean isWhitespace(char c) {\n        return true;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result == (Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f');",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\npackage crawlercommons.sitemaps.sax;\n\nimport static crawlercommons.sitemaps.SiteMapParser.LOG;\n\nimport java.net.MalformedURLException;\nimport java.net.URI;\nimport java.net.URISyntaxException;\nimport java.net.URL;\nimport java.util.LinkedList;\nimport java.util.Map;\nimport java.util.Set;\nimport java.util.function.Function;\n\nimport org.xml.sax.Attributes;\nimport org.xml.sax.SAXException;\nimport org.xml.sax.SAXParseException;\nimport org.xml.sax.helpers.DefaultHandler;\n\nimport crawlercommons.sitemaps.AbstractSiteMap;\nimport crawlercommons.sitemaps.Namespace;\nimport crawlercommons.sitemaps.UnknownFormatException;\nimport crawlercommons.sitemaps.extension.Extension;\n\npublic class DelegatorHandler extends DefaultHandler {\n\n    private LinkedList<String> elementStack;\n    private DelegatorHandler delegate;\n    private URL url;\n    private boolean strict;\n    private boolean strictNamespace;\n    private UnknownFormatException exception;\n    private Set<String> acceptedNamespaces;\n    protected Map<String, Extension> extensionNamespaces;\n    private StringBuilder characterBuffer = new StringBuilder();\n    protected Function<String, String> urlFilter = (String url) -> url;\n\n    protected DelegatorHandler(LinkedList<String> elementStack, boolean strict) {\n        this.elementStack = elementStack;\n        this.strict = strict;\n    }\n\n    public DelegatorHandler(URL url, boolean strict) {\n        this.elementStack = new LinkedList<String>();\n        this.url = url;\n        this.strict = strict;\n    }\n\n    protected URL getUrl() {\n        return url;\n    }\n\n    protected boolean isStrict() {\n        return strict;\n    }\n\n    protected boolean isStrictNamespace() {\n        return strictNamespace;\n    }\n\n    public void setStrictNamespace(boolean s) {\n        strictNamespace = s;\n    }\n\n    public void setAcceptedNamespaces(Set<String> acceptedSet) {\n        acceptedNamespaces = acceptedSet;\n    }\n\n    protected boolean isAcceptedNamespace(String uri) {\n        return acceptedNamespaces.contains(uri);\n    }\n\n    public void setExtensionNamespaces(Map<String, Extension> extensionMap) {\n        extensionNamespaces = extensionMap;\n    }\n\n    protected boolean isExtensionNamespace(String uri) {\n        if (extensionNamespaces == null) {\n            return false;\n        }\n        return extensionNamespaces.containsKey(uri);\n    }\n\n    public void setURLFilter(Function<String, String> urlFilter) {\n        this.urlFilter = urlFilter;\n    }\n\n    protected void setException(UnknownFormatException exception) {\n        this.exception = exception;\n    }\n\n    public UnknownFormatException getException() {\n        return exception;\n    }\n\n    @Override\n    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {\n        if (elementStack.isEmpty() || delegate == null) {\n            startRootElement(uri, localName, qName, attributes);\n        } else {\n            elementStack.push(localName);\n        }\n        if (delegate != null) {\n            delegate.startElement(uri, localName, qName, attributes);\n        }\n    }\n\n    private void startRootElement(String uri, String localName, String qName, Attributes attributes) {\n        elementStack.push(localName);\n\n        if (\"feed\".equals(localName)) {\n            delegate = new AtomHandler(url, elementStack, strict);\n        }\n        else if (\"channel\".equals(localName)) {\n            delegate = new RSSHandler(url, elementStack, strict);\n        } else if (\"sitemapindex\".equals(localName)) {\n            delegate = new XMLIndexHandler(url, elementStack, strict);\n        } else if (\"urlset\".equals(localName)) {\n            delegate = new XMLHandler(url, elementStack, strict);\n        } else {\n            LOG.debug(\"Skipped unknown root element <{}> in {}\", localName, url);\n            return;\n        }\n        delegate.setStrictNamespace(isStrictNamespace());\n        delegate.setAcceptedNamespaces(acceptedNamespaces);\n        if (isStrictNamespace()) {\n            if (delegate instanceof AtomHandler || delegate instanceof RSSHandler) {\n                return;\n            }\n            if (!isAcceptedNamespace(uri) && uri.startsWith(\"/\")) {\n                try {\n                    uri = url.toURI().resolve(uri).toString();\n                } catch (IllegalArgumentException | URISyntaxException e) {\n                    LOG.warn(\"Failed to resolve relative namespace URI {} in sitemap {}\", uri, url);\n                }\n            }\n            if (!isAcceptedNamespace(uri)) {\n                String msg;\n                if (!Namespace.isSupported(uri)) {\n                    msg = \"Unsupported namespace <\" + uri + \">\";\n                } else {\n                    msg = \"Namespace <\" + uri + \"> not accepted\";\n                }\n                setException(new UnknownFormatException(msg));\n                delegate = null;\n                return;\n            }\n        }\n        delegate.setExtensionNamespaces(extensionNamespaces);\n        delegate.setURLFilter(urlFilter);\n    }\n\n    @Override\n    public void endElement(String uri, String localName, String qName) throws SAXException {\n        if (delegate != null) {\n            delegate.endElement(uri, localName, qName);\n        }\n        elementStack.pop();\n    }\n\n    @Override\n    public void characters(char ch[], int start, int length) throws SAXException {\n        if (delegate != null) {\n            delegate.characters(ch, start, length);\n        }\n    }\n\n    protected void appendCharacterBuffer(char ch[], int start, int length) {\n        for (int i = start; i < start + length; i++) {\n            characterBuffer.append(ch[i]);\n        }\n    }\n\n    protected void appendCharacterBuffer(String str) {\n        characterBuffer.append(str);\n    }\n\n    protected String getAndResetCharacterBuffer() {\n        String value = characterBuffer.toString();\n        resetCharacterBuffer();\n        return value;\n    }\n\n    protected void resetCharacterBuffer() {\n        characterBuffer = new StringBuilder();\n    }\n\n    protected String currentElement() {\n        return elementStack.peek();\n    }\n\n    protected String currentElementParent() {\n        return (elementStack.size() < 2) ? null : elementStack.get(1);\n    }\n\n    public AbstractSiteMap getSiteMap() {\n        if (delegate == null)\n            return null;\n        return delegate.getSiteMap();\n    }\n\n    @Override\n    public void error(SAXParseException e) throws SAXException {\n        if (delegate != null) {\n            delegate.error(e);\n        }\n    }\n\n    @Override\n    public void fatalError(SAXParseException e) throws SAXException {\n        if (delegate != null) {\n            delegate.fatalError(e);\n        }\n    }\n\n    public static boolean isAllBlank(CharSequence charSeq) {\n        for (int i = 0; i < charSeq.length(); i++) {\n            if (!isWhitespace(charSeq.charAt(i))) {\n                return false;\n            }\n        }\n        return true;\n    }\n\n    public static boolean isWhitespace(char c) {\n        return Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n    }\n\n    public static String stripAllBlank(CharSequence charSeq) {\n        if (charSeq.length() == 0) {\n            return charSeq.toString();\n        }\n        int start = 0;\n        int end = charSeq.length() - 1;\n        while (isWhitespace(charSeq.charAt(start)) && start < end) {\n            start++;\n        }\n        if (start < end) {\n            while (isWhitespace(charSeq.charAt(end))) {\n                end--;\n            }\n        }\n        return charSeq.subSequence(start, end + 1).toString();\n    }\n\n}\n\n```\n## Target Method\n```\n    public static boolean isWhitespace(char c) {\n        return Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `isWhitespace`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';",
+    "//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';",
+    "//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';",
+    "//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';",
+    "//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';"
+  ],
+  "responses": [
+    "```jml\n//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n```",
+    "```jml\n//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n```",
+    "```jml\n//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n```",
+    "```jml\n//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n```",
+    "```jml\n//@ ensures \\result == Character.isWhitespace(c) || c == '\\u00a0' || c == '\\u2007' || c == '\\u202f';\n```"
+  ],
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 94
+}

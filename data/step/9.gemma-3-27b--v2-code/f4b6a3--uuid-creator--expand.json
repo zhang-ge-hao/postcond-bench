@@ -1,0 +1,374 @@
+{
+  "rlid": "expand",
+  "github_url": "https://github.com/f4b6a3/uuid-creator/blob/3f41c3e6ed9fa3c229303672960570281f35a125/./src/main/java/com/github/f4b6a3/uuid/codec/base/BaseN.java#L284-L313",
+  "name": "expand",
+  "line_cov": 1.0,
+  "lines": 30,
+  "stats": 14,
+  "cc": 5,
+  "content": "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+  "header": "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {",
+  "file": "./src/main/java/com/github/f4b6a3/uuid/codec/base/BaseN.java",
+  "start_line": 284,
+  "end_line": 313,
+  "body_start_line": 291,
+  "comment": "/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */",
+  "test_time": 2.001066207885742,
+  "cover_tests": [
+    "com.github.f4b6a3.uuid.alt.GUIDTest#testV6",
+    "com.github.f4b6a3.uuid.codec.BinaryCodecTest#testDecode",
+    "com.github.f4b6a3.uuid.codec.BinaryCodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.BinaryCodecTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.BinaryCodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.BinaryCodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.StringCodecTest#testDecode",
+    "com.github.f4b6a3.uuid.codec.StringCodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.StringCodecTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.StringCodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.StringCodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.StringCodecTest#testModifyString",
+    "com.github.f4b6a3.uuid.codec.UriCodecTest#testDecode",
+    "com.github.f4b6a3.uuid.codec.UriCodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.UriCodecTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.UriCodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.UriCodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.UriCodecTest#testIsUuidUri",
+    "com.github.f4b6a3.uuid.codec.UrnCodecTest#testDecode",
+    "com.github.f4b6a3.uuid.codec.UrnCodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.UrnCodecTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.UrnCodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.UrnCodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.UrnCodecTest#testIsUuidUrn",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testDecodeBase16",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testDecodeBase32",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testDecodeBase64",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testDecodeBase64Url",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testEncodeBase16",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testEncodeBase32",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testEncodeBase64",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testEncodeBase64Url",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec1Test#testInvalidUuidExceptionException",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec2SamplesTest#testDecodeBase16",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec2SamplesTest#testDecodeBase32",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec2SamplesTest#testDecodeBase64",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec2SamplesTest#testEncodeBase16",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec2SamplesTest#testEncodeBase32",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec2SamplesTest#testEncodeBase64",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec3SamplesTest#testDecodeBase36",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec3SamplesTest#testDecodeBase58",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec3SamplesTest#testDecodeBase62",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec3SamplesTest#testEncodeBase36",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec3SamplesTest#testEncodeBase58",
+    "com.github.f4b6a3.uuid.codec.base.BaseNCodec3SamplesTest#testEncodeBase62",
+    "com.github.f4b6a3.uuid.codec.base.BaseNTest#testConstructorBaseNCodec",
+    "com.github.f4b6a3.uuid.codec.base.BaseNTest#testConstructorCompare",
+    "com.github.f4b6a3.uuid.codec.base.BaseNTest#testConstructorRadix",
+    "com.github.f4b6a3.uuid.codec.base.BaseNTest#testExpand",
+    "com.github.f4b6a3.uuid.codec.base.BaseNTest#testExpandBase",
+    "com.github.f4b6a3.uuid.codec.base.function.BaseNRemainderDecoderTest#testDecode",
+    "com.github.f4b6a3.uuid.codec.base.function.BaseNRemainderDecoderTest#testMultiply",
+    "com.github.f4b6a3.uuid.codec.base.function.BaseNRemainderEncoderTest#testDivide",
+    "com.github.f4b6a3.uuid.codec.base.function.BaseNRemainderEncoderTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.other.DotNetGuid1CodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.DotNetGuid1CodecTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.other.DotNetGuid1CodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.other.DotNetGuid1CodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.DotNetGuid4CodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.DotNetGuid4CodecTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.other.DotNetGuid4CodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.other.DotNetGuid4CodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.NcnameCodecTest#testDecode32",
+    "com.github.f4b6a3.uuid.codec.other.NcnameCodecTest#testDecode64",
+    "com.github.f4b6a3.uuid.codec.other.NcnameCodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.NcnameCodecTest#testEncode32",
+    "com.github.f4b6a3.uuid.codec.other.NcnameCodecTest#testEncode64",
+    "com.github.f4b6a3.uuid.codec.other.NcnameCodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.other.NcnameCodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.SlugCodecTest#testDecode",
+    "com.github.f4b6a3.uuid.codec.other.SlugCodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.SlugCodecTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.other.SlugCodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.other.SlugCodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.TimeOrderedCodecTest#testDecodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.codec.other.TimeOrderedCodecTest#testEncode",
+    "com.github.f4b6a3.uuid.codec.other.TimeOrderedCodecTest#testEncodeAndDecode",
+    "com.github.f4b6a3.uuid.codec.other.TimeOrderedCodecTest#testEncodeInvalidUuidException",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedMd5FactoryTest#testGetNameBasedMd5InParallel1",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedMd5FactoryTest#testGetNameBasedMd5InParallel2",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedMd5FactoryTest#testNameBasedMd5NamespaceDns",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedMd5FactoryTest#testNameBasedMd5NamespaceMovies",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedMd5FactoryTest#testNameBasedMd5NamespaceUrl",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedSha1FactoryTest#testGetNameBasedSha1InParallel1",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedSha1FactoryTest#testGetNameBasedSha1InParallel2",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedSha1FactoryTest#testNameBasedSha1WithNamespaceDns",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedSha1FactoryTest#testNameBasedSha1WithNamespaceMovies",
+    "com.github.f4b6a3.uuid.factory.standard.NameBasedSha1FactoryTest#testNameBasedSha1WithNamespaceUrl",
+    "com.github.f4b6a3.uuid.util.UuidComparatorTest#testCompareDefault",
+    "com.github.f4b6a3.uuid.util.UuidComparatorTest#testCompareOpaque",
+    "com.github.f4b6a3.uuid.util.UuidValidatorTest#testIsUuidString",
+    "com.github.f4b6a3.uuid.util.UuidValidatorTest#testIsValidBytes",
+    "com.github.f4b6a3.uuid.util.UuidValidatorTest#testIsValidString",
+    "com.github.f4b6a3.uuid.util.UuidValidatorTest#testIsValidStringWithVersion"
+  ],
+  "repo": {
+    "github_path": "f4b6a3/uuid-creator",
+    "commit": "3f41c3e6ed9fa3c229303672960570281f35a125",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.f4b6a3</groupId>\n  <artifactId>uuid-creator</artifactId>\n  <version>6.1.2-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <name>uuid-creator</name>\n  <url>https://github.com/f4b6a3/uuid-creator</url>\n  <description>A Java library to generate RFC-4122 Universally Unique Identifiers (UUID).</description>\n  <licenses>\n    <license>\n      <name>MIT License</name>\n      <url>https://opensource.org/licenses/MIT</url>\n      </license>\n    </licenses>\n  <developers>\n    <developer>\n      <name>Fabio Lima</name>\n      </developer>\n    </developers>\n  <properties>\n    <jdk.version>11</jdk.version>\n    <package.name>com.github.f4b6a3.uuid</package.name>\n    <maven.compiler.source>${jdk.version}</maven.compiler.source>\n    <maven.compiler.target>${jdk.version}</maven.compiler.target>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    </properties>\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n      <scope>test</scope>\n      </dependency>\n    </dependencies>\n  <scm>\n    <url>https://github.com/f4b6a3/uuid-creator</url>\n    <connection>scm:git:ssh://git@github.com/f4b6a3/uuid-creator.git</connection>\n    <developerConnection>scm:git:ssh://git@github.com/f4b6a3/uuid-creator.git</developerConnection>\n    <tag>HEAD</tag>\n    </scm>\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n      </snapshotRepository>\n    <repository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n      </repository>\n    </distributionManagement>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.8.1</version>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-jar-plugin</artifactId>\n        <version>3.2.0</version>\n        <configuration>\n          <archive>\n            <manifestEntries>\n              <Automatic-Module-Name>${package.name}</Automatic-Module-Name>\n              <Bundle-ManifestVersion>2</Bundle-ManifestVersion>\n              <Bundle-Name>${project.artifactId}</Bundle-Name>\n              <Bundle-SymbolicName>${package.name}</Bundle-SymbolicName>\n              <Bundle-Version>${project.version}</Bundle-Version>\n              <Export-Package>\n\t\t\t\t\t\t\t\tcom.github.f4b6a3.uuid;uses:=\"com.github.f4b6a3.uuid.enums\",com.github.f4b6a3.uuid.codec,com.github.f4b6a3.uuid.codec.base;uses:=\"com.github.f4b6a3.uuid.codec,com.github.f4b6a3.uuid.codec.base.function,com.github.f4b6a3.uuid.util.immutable\",com.github.f4b6a3.uuid.codec.base.function;uses:=\"com.github.f4b6a3.uuid.codec.base,com.github.f4b6a3.uuid.util.immutable\",com.github.f4b6a3.uuid.codec.other;uses:=\"com.github.f4b6a3.uuid.codec,com.github.f4b6a3.uuid.codec.base\",com.github.f4b6a3.uuid.enums,com.github.f4b6a3.uuid.exception,com.github.f4b6a3.uuid.factory;uses:=\"com.github.f4b6a3.uuid.enums,com.github.f4b6a3.uuid.factory.function\",com.github.f4b6a3.uuid.factory.function,com.github.f4b6a3.uuid.factory.function.impl;uses:=\"com.github.f4b6a3.uuid.factory.function\",com.github.f4b6a3.uuid.factory.nonstandard;uses:=\"com.github.f4b6a3.uuid.factory,com.github.f4b6a3.uuid.factory.function\",com.github.f4b6a3.uuid.factory.rfc4122;uses:=\"com.github.f4b6a3.uuid.enums,com.github.f4b6a3.uuid.factory,com.github.f4b6a3.uuid.factory.function\",com.github.f4b6a3.uuid.util;uses:=\"com.github.f4b6a3.uuid.enums\",com.github.f4b6a3.uuid.util.immutable,com.github.f4b6a3.uuid.alt\n\t\t\t\t\t\t\t</Export-Package>\n              <Require-Capability>osgi.ee;filter:=\"(&amp;(osgi.ee=JavaSE)(version=1.8))\"</Require-Capability>\n              </manifestEntries>\n            </archive>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>3.2.0</version>\n        <configuration>\n\t\t\t\t</configuration>\n        </plugin>\n      <plugin>\n        <artifactId>maven-deploy-plugin</artifactId>\n        <version>2.8.2</version>\n        <executions>\n          <execution>\n            <id>default-deploy</id>\n            <phase>deploy</phase>\n            <goals>\n              <goal>deploy</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-release-plugin</artifactId>\n        <version>2.5.3</version>\n        <configuration>\n          <localCheckout>true</localCheckout>\n          <pushChanges>false</pushChanges>\n          <mavenExecutorId>forked-path</mavenExecutorId>\n          <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>\n          </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>org.apache.maven.scm</groupId>\n            <artifactId>maven-scm-provider-gitexe</artifactId>\n            <version>1.9.5</version>\n            </dependency>\n          </dependencies>\n        </plugin>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.13</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.0.1</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.7.3.6</version>\n        <configuration>\n          <sarifOutput>true</sarifOutput>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <configuration>\n          <format>net.sourceforge.pmd.renderers.SarifRenderer</format>\n          <linkXRef>false</linkXRef>\n          </configuration>\n        <version>3.21.0</version>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <configuration>\n          <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n          <reports>\n            <xml enabled=\"true\">\n              <enabled>true</enabled>\n              </xml>\n            </reports>\n          </configuration>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            </execution>\n          </executions>\n        </plugin>\n      </plugins>\n    </build>\n  <profiles>\n    <profile>\n      <id>release-sign-artifacts</id>\n      <activation>\n        <property>\n          <name>performRelease</name>\n          <value>true</value>\n          </property>\n        </activation>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>1.6</version>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                  </goals>\n                </execution>\n              </executions>\n            </plugin>\n          </plugins>\n        </build>\n      </profile>\n    </profiles>\n  </project>\n",
+    "failed_tests": [],
+    "test_time": 8.608755350112915
+  },
+  "mutants": [
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i < string.length() && i >= 0) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i < string.length() - 1) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i < string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i >= 0 && i < string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(0); // first char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(string.length() - 1); // last char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) != '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 2) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i - 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i - 1); // previous char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i); // same character\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b, '0', '9'); // Incorrectly restricts expansion to digits only\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b, '0', 'Z'); // Incorrectly expands the range beyond valid characters\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b, 'A', 'Z'); // Incorrectly restricts expansion to uppercase letters only\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b, 'a', 'Z'); // Incorrectly expands the range to include both cases, leading to duplicates\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b, 'a', 'z'); // Incorrectly restricts expansion to lowercase letters only\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length < 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length == 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length == 1) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length >= 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\t\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(\"\"); // appends an empty string, effectively ignoring the expanded characters\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(a); // appends the original character instead of the expanded sequence\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded.length > 0 ? expanded[0] : ' '); // appends only the first character of the expanded array or a space if empty\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded[0]); // appends only the first character of the expanded array, losing the rest\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\t\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(Character.toUpperCase(a));\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a).append(' ');\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a).append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(b);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\t\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(\"\"); // Appends an empty string, effectively doing nothing\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(' '); // Appends a space instead of the character\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(Character.toUpperCase(a)); // Appends the uppercase version of the character, ignoring the original case\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a + 1); // Appends the next character in the Unicode sequence\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a).append(a); // Appends the character twice, altering the expected output length\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString() + \"extra\"; // Appends \"extra\" to the result, altering the expected output length.\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString().replace(\"a\", \"b\"); // Replaces all occurrences of 'a' with 'b', changing the output.\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString().toUpperCase(); // Converts the result to uppercase, altering the expected output.\n\t}",
+    "\t/**\n\t * Expands character sequences similar to 0-9, a-z and A-Z.\n\t * \n\t * @param string a string to be expanded\n\t * @return a string\n\t */\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); // previous char\n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); // next char\n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; // skip\n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn null;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures \\result != null;\n//@ ensures string.length() == 0 ==> \\result.length() == 0;\n//@ ensures string.length() == 1 ==> \\result.length() == 1;\n//@ ensures string.length() > 0 ==> \\result.length() > 0;\n//@ ensures string.length() > 0 ==> \\result.charAt(0) == string.charAt(0);\n//@ ensures string.length() > 0 ==> \\result.charAt(\\result.length() - 1) == string.charAt(string.length() - 1);\n//@ ensures !string.contains(\" \") ==> !\\result.contains(\" \");\n//@ ensures (string.indexOf('-') >= 1 && string.indexOf('-') <= string.length() - 2 && com.github.f4b6a3.uuid.codec.base.BaseN.expand(string.charAt(string.indexOf('-') - 1), string.charAt(string.indexOf('-') + 1)).length != 0) ==> \\result.contains(new String(com.github.f4b6a3.uuid.codec.base.BaseN.expand(string.charAt(string.indexOf('-') - 1), string.charAt(string.indexOf('-') + 1))));\n//@ ensures java.util.stream.IntStream.range(1, string.length() - 1).filter(i -> string.charAt(i) == '-' && com.github.f4b6a3.uuid.codec.base.BaseN.expand(string.charAt(i - 1), string.charAt(i + 1)).length == 0 && string.indexOf(string.charAt(i - 1)) == string.lastIndexOf(string.charAt(i - 1))).allMatch(i -> \\result.indexOf(string.charAt(i - 1)) != -1);\n//@ ensures java.util.stream.IntStream.range(1, string.length() - 1).filter(i -> string.charAt(i) == '-' && com.github.f4b6a3.uuid.codec.base.BaseN.expand(string.charAt(i - 1), string.charAt(i + 1)).length == 0 && string.indexOf(string.charAt(i - 1)) == string.lastIndexOf(string.charAt(i - 1))).allMatch(i -> !\\result.contains(\"\" + string.charAt(i - 1) + string.charAt(i - 1)));\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\npackage com.github.f4b6a3.uuid.codec.base;\n\nimport java.util.Arrays;\n\nimport com.github.f4b6a3.uuid.exception.InvalidUuidException;\nimport com.github.f4b6a3.uuid.util.immutable.ByteArray;\nimport com.github.f4b6a3.uuid.util.immutable.CharArray;\n\npublic final class BaseN {\n\n\tprivate final int radix;\n\tprivate final int length;\n\tprivate final char padding;\n\tprivate final boolean sensitive;\n\n\tprivate final CharArray alphabet;\n\tprivate final ByteArray map;\n\n\tprotected static final int RADIX_MIN = 2;\n\tprotected static final int RADIX_MAX = 64;\n\n\tprotected static final String ALPHABET_36 = \"0123456789abcdefghijklmnopqrstuvwxyz\";\n\tprotected static final String ALPHABET_64 = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_\";\n\n\tprivate static final int UUID_BITS = 128;\n\n\tpublic BaseN(int radix) {\n\t\tthis(expand(radix));\n\t}\n\n\tpublic BaseN(String alphabet) {\n\n\t\tString charset = alphabet.indexOf('-') >= 0 ? expand(alphabet) : alphabet;\n\n\t\tif (charset.length() < RADIX_MIN || charset.length() > RADIX_MAX) {\n\t\t\tthrow new IllegalArgumentException(\"Unsupported length: \" + charset.length());\n\t\t}\n\n\t\tthis.radix = charset.length();\n\n\t\tthis.length = (int) Math.ceil(UUID_BITS / (Math.log(this.radix) / Math.log(2)));\n\n\t\tthis.padding = charset.charAt(0);\n\n\t\tthis.sensitive = sensitive(charset);\n\n\t\tthis.alphabet = CharArray.from(charset.toCharArray());\n\n\t\tthis.map = map(charset, sensitive);\n\t}\n\n\tpublic int getRadix() {\n\t\treturn radix;\n\t}\n\n\tpublic int getLength() {\n\t\treturn length;\n\t}\n\n\tpublic char getPadding() {\n\t\treturn padding;\n\t}\n\n\tpublic boolean isSensitive() {\n\t\treturn sensitive;\n\t}\n\n\tpublic CharArray getAlphabet() {\n\t\treturn this.alphabet;\n\t}\n\n\tpublic ByteArray getMap() {\n\t\treturn this.map;\n\t}\n\n\tpublic boolean isValid(String uuid) {\n\t\tif (uuid == null || uuid.length() != this.length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < this.length; i++) {\n\t\t\tif (this.map.get(uuid.charAt(i)) == -1) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\tpublic void validate(String uuid) {\n\t\tif (!isValid(uuid)) {\n\t\t\tthrow InvalidUuidException.newInstance(uuid);\n\t\t}\n\t}\n\n\tprivate static boolean sensitive(String charset) {\n\t\tString lowercase = charset.toLowerCase();\n\t\tString uppercase = charset.toUpperCase();\n\t\treturn !(charset.equals(lowercase) || charset.equals(uppercase));\n\t}\n\n\tprivate static ByteArray map(String alphabet, boolean sensitive) {\n\t\t\n\t\tbyte[] mapping = new byte[256];\n\t\tArrays.fill(mapping, (byte) -1);\n\t\t\n\t\tfor (int i = 0; i < alphabet.length(); i++) {\n\t\t\tif (sensitive) {\n\t\t\t\tmapping[alphabet.charAt(i)] = (byte) i;\n\t\t\t} else {\n\t\t\t\tmapping[alphabet.toLowerCase().charAt(i)] = (byte) i;\n\t\t\t\tmapping[alphabet.toUpperCase().charAt(i)] = (byte) i;\n\t\t\t}\n\t\t}\n\t\t\n\t\treturn ByteArray.from(mapping);\n\t}\n\n\tprivate static String expand(int radix) {\n\t\tif (radix < RADIX_MIN || radix > RADIX_MAX) {\n\t\t\tthrow new IllegalArgumentException(\"Unsupported radix: \" + radix);\n\t\t}\n\t\tif (radix > 36) {\n\t\t\treturn ALPHABET_64.substring(0, radix); \n\t\t}\n\t\treturn ALPHABET_36.substring(0, radix); \n\t}\n\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); \n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); \n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; \n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}\n\n\tprotected static char[] expand(char a, char b) {\n\t\tchar[] expanded = expand(a, b, '0', '9'); \n\t\tif (expanded.length == 0) {\n\t\t\texpanded = expand(a, b, 'a', 'z'); \n\t\t}\n\t\tif (expanded.length == 0) {\n\t\t\texpanded = expand(a, b, 'A', 'Z'); \n\t\t}\n\t\treturn expanded;\n\t}\n\n\tprivate static char[] expand(char a, char b, char min, char max) {\n\t\tif (!isValidRange(a, b, min, max)) {\n\t\t\treturn new char[0];\n\t\t}\n\n\t\treturn fillRange(a, b);\n\t}\n\n\tprivate static boolean isValidRange(char start, char end, char min, char max) {\n\t\treturn start <= end && start >= min && end <= max;\n\t}\n\n\tprivate static char[] fillRange(char start, char end) {\n\t\tchar[] buffer = new char[(end - start) + 1];\n\t\tfor (int i = 0; i < buffer.length; i++) {\n\t\t\tbuffer[i] = (char) (start + i);\n\t\t}\n\t\treturn buffer;\n\t}\n}\n```\n## Target Method\n```\n\tprotected static String expand(String string) {\n\n\t\tStringBuilder buffer = new StringBuilder();\n\n\t\tint i = 1;\n\t\twhile (i <= string.length()) {\n\t\t\tfinal char a = string.charAt(i - 1); \n\t\t\tif ((i < string.length() - 1) && (string.charAt(i) == '-')) {\n\t\t\t\tfinal char b = string.charAt(i + 1); \n\t\t\t\tchar[] expanded = expand(a, b);\n\t\t\t\tif (expanded.length != 0) {\n\t\t\t\t\ti += 2; \n\t\t\t\t\tbuffer.append(expanded);\n\t\t\t\t} else {\n\t\t\t\t\tbuffer.append(a);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tbuffer.append(a);\n\t\t\t}\n\t\t\ti++;\n\t\t}\n\n\t\treturn buffer.toString();\n\t}\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `expand`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "//@ ensures \\result != null;\n//@ ensures \\result.length() >= 0;\n//@ ensures \\result.length() <= \\old(string).length();\n//@ ensures \\result.chars().allMatch(c -> (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));\n//@ ensures \\old(string).length() == 0 ==> \\result.length() == 0;\n//@ ensures \\old(string).length() == 1 ==> \\result.length() == 1;\n//@ ensures \\old(string).length() == 2 && \\old(string).charAt(1) != '-' ==> \\result == \\old(string);\n//@ ensures \\old(string).length() == 3 && \\old(string).charAt(1) == '-' ==> (\\result == \\old(string).substring(0,1) + \\old(string).substring(2,3));",
+    "//@ ensures \\result != null;\n//@ ensures \\result.length() <= string.length();\n//@ ensures (\\forall int i; 0 <= i && i < \\result.length(); \\result.charAt(i) == string.charAt(i) || (i > 0 && string.charAt(i-1) == '-' && string.charAt(i) == '-' && \\result.charAt(i) == string.charAt(i+1)));\n//@ ensures (\\forall int i; 0 <= i && i < string.length(); (\\exists int j; 0 <= j && j < \\result.length(); \\result.charAt(j) == string.charAt(i)));",
+    "//@ ensures \\result != null;\n//@ ensures \\result.length() >= 0;\n//@ ensures \\result.length() <= \\old(string).length();\n//@ ensures (\\forall int i; 0 <= i && i < \\result.length(); \\result.charAt(i) == \\old(string).charAt(i) || (\\exists int j; 0 <= j && j < \\old(string).length(); \\result.charAt(i) == \\old(string).charAt(j)));",
+    "//@ ensures \\result != null;\n//@ ensures \\result.length() == \\old(string).length() - (\\old(string).count(\"=\") + \\old(string).count(\"-\"));\n//@ ensures \\result.length() >= \\old(string).length();\n//@ ensures (\\forall int i; 0 <= i && i < \\result.length(); \\result.charAt(i) != '-');",
+    "//@ ensures \\result != null;\n//@ ensures \\result.length() <= string.length();\n//@ ensures string.length() == 1 ==> \\result == string;\n//@ ensures string.length() == 2 ==> \\result == string;\n//@ ensures string.length() == 3 && string.charAt(1) == '-' ==> \\result == string.substring(0,1) + expand(string.charAt(0), string.charAt(2));\n//@ ensures string.length() > 3 && string.charAt(1) == '-' ==> \\result == string.substring(0,1) + expand(string.charAt(0), string.charAt(2)) + expand(string.substring(3));\n//@ ensures string.length() > 3 && string.charAt(1) != '-' ==> \\result == string;"
+  ],
+  "responses": [
+    "```jml\n//@ ensures \\result != null;\n//@ ensures \\result.length() >= 0;\n//@ ensures \\result.length() <= \\old(string).length();\n//@ ensures \\result.chars().allMatch(c -> (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));\n//@ ensures \\old(string).length() == 0 ==> \\result.length() == 0;\n//@ ensures \\old(string).length() == 1 ==> \\result.length() == 1;\n//@ ensures \\old(string).length() == 2 && \\old(string).charAt(1) != '-' ==> \\result == \\old(string);\n//@ ensures \\old(string).length() == 3 && \\old(string).charAt(1) == '-' ==> (\\result == \\old(string).substring(0,1) + \\old(string).substring(2,3));\n```",
+    "```jml\n//@ ensures \\result != null;\n//@ ensures \\result.length() <= string.length();\n//@ ensures (\\forall int i; 0 <= i && i < \\result.length(); \\result.charAt(i) == string.charAt(i) || (i > 0 && string.charAt(i-1) == '-' && string.charAt(i) == '-' && \\result.charAt(i) == string.charAt(i+1)));\n//@ ensures (\\forall int i; 0 <= i && i < string.length(); (\\exists int j; 0 <= j && j < \\result.length(); \\result.charAt(j) == string.charAt(i)));\n```",
+    "```jml\n//@ ensures \\result != null;\n//@ ensures \\result.length() >= 0;\n//@ ensures \\result.length() <= \\old(string).length();\n//@ ensures (\\forall int i; 0 <= i && i < \\result.length(); \\result.charAt(i) == \\old(string).charAt(i) || (\\exists int j; 0 <= j && j < \\old(string).length(); \\result.charAt(i) == \\old(string).charAt(j)));\n```",
+    "```jml\n//@ ensures \\result != null;\n//@ ensures \\result.length() == \\old(string).length() - (\\old(string).count(\"=\") + \\old(string).count(\"-\"));\n//@ ensures \\result.length() >= \\old(string).length();\n//@ ensures (\\forall int i; 0 <= i && i < \\result.length(); \\result.charAt(i) != '-');\n```",
+    "```jml\n//@ ensures \\result != null;\n//@ ensures \\result.length() <= string.length();\n//@ ensures string.length() == 1 ==> \\result == string;\n//@ ensures string.length() == 2 ==> \\result == string;\n//@ ensures string.length() == 3 && string.charAt(1) == '-' ==> \\result == string.substring(0,1) + expand(string.charAt(0), string.charAt(2));\n//@ ensures string.length() > 3 && string.charAt(1) == '-' ==> \\result == string.substring(0,1) + expand(string.charAt(0), string.charAt(2)) + expand(string.substring(3));\n//@ ensures string.length() > 3 && string.charAt(1) != '-' ==> \\result == string;\n```"
+  ],
+  "postcond_corr": [
+    "jml_fail",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "jml_fail"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 160
+}

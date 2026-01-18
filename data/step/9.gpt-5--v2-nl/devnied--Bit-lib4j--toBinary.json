@@ -1,0 +1,362 @@
+{
+  "rlid": "toBinary",
+  "github_url": "https://github.com/devnied/Bit-lib4j/blob/d0c1eff1da901a9022536240347ba7b4bf2e5106/./src/main/java/fr/devnied/bitlib/BytesUtils.java#L278-L297",
+  "name": "toBinary",
+  "line_cov": 1.0,
+  "lines": 20,
+  "stats": 9,
+  "cc": 4,
+  "content": "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+  "header": "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {",
+  "file": "./src/main/java/fr/devnied/bitlib/BytesUtils.java",
+  "start_line": 278,
+  "end_line": 297,
+  "body_start_line": 286,
+  "comment": "/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */",
+  "test_time": 4.047503232955933,
+  "cover_tests": [
+    "fr.devnied.bitlib.BytesUtilsTest#testToBinary"
+  ],
+  "repo": {
+    "github_path": "devnied/Bit-lib4j",
+    "commit": "d0c1eff1da901a9022536240347ba7b4bf2e5106",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.devnied</groupId>\n  <artifactId>bit-lib4j</artifactId>\n  <packaging>jar</packaging>\n  <version>1.5.3-SNAPSHOT</version>\n  <name>bit-lib4j</name>\n  <parent>\n    <groupId>org.sonatype.oss</groupId>\n    <artifactId>oss-parent</artifactId>\n    <version>7</version>\n  </parent>\n  <inceptionYear>2013</inceptionYear>\n  <description>\n\t Useful library to manipulate bits in Java.\n\t Read and write data in a byte array with a custom size for Java types\n\t</description>\n  <url>https://github.com/devnied/Bit-lib4j/</url>\n  <developers>\n    <developer>\n      <name>MILLAU Julien</name>\n      <id>devnied</id>\n      <email>mxjulien@gmail.com</email>\n      <roles>\n        <role>Java Developer</role>\n      </roles>\n    </developer>\n  </developers>\n  <licenses>\n    <license>\n      <name>The Apache Software License, Version 2.0</name>\n      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n      <distribution>repo</distribution>\n    </license>\n  </licenses>\n  <scm>\n    <connection>scm:git:git@github.com:devnied/Bit-lib4j.git</connection>\n    <developerConnection>scm:git:git@github.com:devnied/Bit-lib4j.git</developerConnection>\n    <url>scm:git:git@github.com:devnied/Bit-lib4j.git</url>\n    <tag>HEAD</tag>\n  </scm>\n  <properties>\n    <slf4j.version>1.7.32</slf4j.version>\n  </properties>\n  <dependencies>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-api</artifactId>\n      <version>${slf4j.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-log4j12</artifactId>\n      <version>${slf4j.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.logging.log4j</groupId>\n      <artifactId>log4j-core</artifactId>\n      <version>2.17.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.easytesting</groupId>\n      <artifactId>fest-assert</artifactId>\n      <version>1.4</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <distributionManagement>\n    <snapshotRepository>\n      <id>sonatype-nexus-snapshots</id>\n      <name>Sonatype Nexus Snapshots</name>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n    <repository>\n      <id>sonatype-nexus-staging</id>\n      <name>Nexus Release Repository</name>\n      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>\n    </repository>\n  </distributionManagement>\n  <build>\n    <defaultGoal>install</defaultGoal>\n    <plugins>\n      <plugin>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.8.1</version>\n        <configuration>\n          <source>10</source>\n          <target>10</target>\n          <encoding>UTF-8</encoding>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-resources-plugin</artifactId>\n        <version>3.1.0</version>\n        <configuration>\n          <encoding>UTF-8</encoding>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-release-plugin</artifactId>\n        <version>2.5.3</version>\n        <configuration>\n          <mavenExecutorId>forked-path</mavenExecutorId>\n          <localCheckout>true</localCheckout>\n        </configuration>\n      </plugin>\n      <plugin>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.2.1</version>\n        <executions>\n          <execution>\n            <id>attach-sources</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.eluder.coveralls</groupId>\n        <artifactId>coveralls-maven-plugin</artifactId>\n        <version>4.3.0</version>\n      </plugin>\n      <plugin>\n        <groupId>org.codehaus.mojo</groupId>\n        <artifactId>cobertura-maven-plugin</artifactId>\n        <version>2.7</version>\n        <configuration>\n          <format>xml</format>\n          <maxmem>256m</maxmem>\n          <aggregate>true</aggregate>\n          <check />\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>2.22.2</version>\n      <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n          </execution>\n        </executions>\n        <configuration>\n          <xml>true</xml>\n          <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n  <profiles>\n    <profile>\n      <id>release-sign-artifacts</id>\n      <activation>\n        <property>\n          <name>performRelease</name>\n          <value>true</value>\n        </property>\n      </activation>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n  </profiles>\n</project>",
+    "failed_tests": [],
+    "test_time": 1.6323189735412598
+  },
+  "mutants": [
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length < 1) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length <= 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length == 1) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes) + \"0\", HEXA); // Appends an extra '0', leading to an incorrect value\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), 10); // Incorrect base for conversion\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes).replace(\"0\", \"1\"), HEXA); // Replaces all '0's with '1's, altering the value\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes).substring(1), HEXA); // Skips the first character, leading to incorrect value\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(10)); // Incorrect base for binary representation\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(16)); // Incorrect base for binary representation\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2)).append(\"0\"); // Appends an extra '0', altering the binary representation\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2)).deleteCharAt(0); // Removes the first character, leading to incorrect output\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2)).reverse(); // Reverses the binary string, leading to incorrect output\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = 0; i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE + 1; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length / BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i <= pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i >= pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\t\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.append('0');\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.append(0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(build.length(), 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(i, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.reverse().toString(); // Reverses the binary string, leading to an incorrect binary representation.\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString() + \"0\"; // Appends an extra '0' to the binary string, resulting in an incorrect length.\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString().replace('0', '1'); // Replaces all '0's with '1's, resulting in an incorrect binary representation.\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString().substring(1); // Removes the first character of the binary string, which alters the value.\n\t\t}\n\t\treturn ret;\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n\t\tString ret = null;\n\t\tif (pBytes != null && pBytes.length > 0) {\n\t\t\tBigInteger val = new BigInteger(bytesToStringNoSpace(pBytes), HEXA);\n\t\t\tStringBuilder build = new StringBuilder(val.toString(2));\n\t\t\t// left pad with 0 to fit byte size\n\t\t\tfor (int i = build.length(); i < pBytes.length * BitUtils.BYTE_SIZE; i++) {\n\t\t\t\tbuild.insert(0, 0);\n\t\t\t}\n\t\t\tret = build.toString();\n\t\t}\n\t\treturn null;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures pBytes == null || pBytes.length == 0 ==> \\result == null;\n//@ ensures pBytes != null && pBytes.length > 0 ==> \\result != null;\n//@ ensures pBytes != null && pBytes.length > 0 ==> \\result.length() == pBytes.length * BitUtils.BYTE_SIZE;\n//@ ensures pBytes != null && pBytes.length > 0 ==> \\result.matches(\"[01]+\");\n//@ ensures pBytes != null && pBytes.length > 0 ==> new java.math.BigInteger(\\result, 2).equals(new java.math.BigInteger(bytesToStringNoSpace(pBytes), HEXA));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage fr.devnied.bitlib;\n\nimport java.math.BigInteger;\n\n/**\n * Class used to manage String/byte/int converter\n *\n * @author Millau Julien\n *\n */\npublic final class BytesUtils {\n\n\t/**\n\t * Integer bit size\n\t */\n\tprivate static final int MAX_BIT_INTEGER = 31;\n\n\t/**\n\t * Constant for Hexa\n\t */\n\tprivate static final int HEXA = 16;\n\n\t/**\n\t * Byte left mask\n\t */\n\tprivate static final int LEFT_MASK = 0xF0;\n\n\t/**\n\t * Byte right mask\n\t */\n\tprivate static final int RIGHT_MASK = 0xF;\n\n\t/**\n\t * Char digit 0 (0x30) :<br>\n\t * <ul>\n\t * <li>char 0 = 0x30 + 0x0\n\t * <li>char 1 = 0x30 + 0x1\n\t * <li>...\n\t * <li>char 9 = 0x30 + 0x9\n\t * </ul>\n\t */\n\tprivate static final int CHAR_DIGIT_ZERO = 0x30;\n\n\t/**\n\t * Char digit 7 (0x37) :<br>\n\t * <ul>\n\t * <li>char A = 0x37 + 0xA\n\t * <li>char B = 0x37 + 0xB\n\t * <li>...\n\t * <li>char F = 0x37 + 0xF\n\t * </ul>\n\t */\n\tprivate static final int CHAR_DIGIT_SEVEN = 0x37;\n\n\t/**\n\t * Char space\n\t */\n\tprivate static final char CHAR_SPACE = (char) 0x20;\n\n\t/**\n\t * Method used to convert byte array to int\n\t *\n\t * @param byteArray\n\t *            byte array to convert\n\t * @return int value\n\t */\n\tpublic static int byteArrayToInt(final byte[] byteArray) {\n...\n\t/**\n\t * Method used to convert byte array to int\n\t *\n\t * @param byteArray\n\t *            byte array to convert\n\t * @param startPos\n\t *            start position in array in the\n\t * @param length\n\t *            length of data\n\t * @return int value of byte array\n\t */\n\tpublic static int byteArrayToInt(final byte[] byteArray, final int startPos, final int length) {\n...\n\t/**\n\t * Method to convert bytes to string with space between bytes\n\t *\n\t * @param pBytes\n\t *            Bytes to convert\n\t *\n\t * @return a string\n\t */\n\tpublic static String bytesToString(final byte[] pBytes) {\n...\n\t/**\n\t * Method to convert bytes to string with space between bytes\n\t *\n\t * bytes to convert\n\t *\n\t * @param pBytes\n\t *            Bytes to convert\n\t * @param pTruncate\n\t *            true to remove 0 left byte value\n\t * @return a string\n\t */\n\tpublic static String bytesToString(final byte[] pBytes, final boolean pTruncate) {\n...\n\t/**\n\t * Method to convert byte to string without space between byte\n\t *\n\t * @param pByte\n\t *            byte to convert\n\t * @return a string\n\t */\n\tpublic static String bytesToStringNoSpace(final byte pByte) {\n...\n\t/**\n\t * Method to convert bytes to string without space between bytes\n\t *\n\t * @param pBytes\n\t *            bytes to convert\n\t * @return a string\n\t */\n\tpublic static String bytesToStringNoSpace(final byte[] pBytes) {\n...\n\t/**\n\t * Method to convert bytes to string without space between bytes\n\t *\n\t * @param pBytes\n\t *            bytes to convert\n\t * @param pTruncate\n\t *            true to remove 0 left byte value\n\t * @return a string\n\t */\n\tpublic static String bytesToStringNoSpace(final byte[] pBytes, final boolean pTruncate) {\n...\n\t/**\n\t * Private method to format bytes to hexa string\n\t *\n\t * @param pByte\n\t *            the bytes to format\n\t * @param pSpace\n\t *            true if add spaces between bytes\n\t * @param pTruncate\n\t *            true to remove 0 left bytes value\n\t * @return a string containing the requested string\n\t */\n\tprivate static String formatByte(final byte[] pByte, final boolean pSpace, final boolean pTruncate) {\n...\n\t/**\n\t * Method to get bytes form string\n\t *\n\t * @param pData\n\t *            String to parse\n\t * @return a table of string\n\t */\n\tpublic static byte[] fromString(final String pData) {\n...\n\t/**\n\t * Test if bit at given index of given value is = 1.\n\t *\n\t * @param pVal\n\t *            value to test\n\t * @param pBitIndex\n\t *            bit index between 0 and 31\n\t * @return true bit at given index of give value is = 1\n\t */\n\tpublic static boolean matchBitByBitIndex(final int pVal, final int pBitIndex) {\n...\n\t/**\n\t * Method used to set a bit index to 1 or 0.\n\t *\n\t * @param pData\n\t *            data to modify\n\t * @param pBitIndex\n\t *            index to set\n\t * @param pOn\n\t *            set bit at specified index to 1 or 0\n\t * @return the modified byte\n\t */\n\tpublic static byte setBit(final byte pData, final int pBitIndex, final boolean pOn) {\n...\n\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n...\n\t/**\n\t * Method used to convert integer to byet array\n\t *\n\t * @param value\n\t *            the value to convert\n\t * @return a byte array\n\t */\n\tpublic static byte[] toByteArray(final int value) {\n...\n\t/**\n\t * private constructor\n\t */\n\tprivate BytesUtils() {\n\t}\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Convert byte array to binary String\n\t *\n\t * @param pBytes\n\t *            byte array to convert\n\t * @return a binary representation of the byte array\n\t */\n\tpublic static String toBinary(final byte[] pBytes) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `toBinary`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "// @ ensures pBytes != null ==> \\result != null;\n// @ ensures pBytes != null ==> \\result.length() == 8 * pBytes.length;\n// @ ensures pBytes != null ==> \\result.chars().allMatch(c -> c == '0' || c == '1');\n// @ ensures pBytes != null && pBytes.length == 0 ==> \\result.equals(\"\");\n// @ ensures pBytes != null && java.util.stream.IntStream.range(0, pBytes.length).allMatch(i -> pBytes[i] == 0) ==> \\result.chars().allMatch(c -> c == '0');\n// @ ensures pBytes != null && java.util.stream.IntStream.range(0, pBytes.length).allMatch(i -> pBytes[i] == (byte)0xFF) ==> \\result.chars().allMatch(c -> c == '1');\n// @ ensures pBytes != null ==> java.util.Arrays.equals(pBytes, \\old(pBytes));",
+    "// @ ensures pBytes != null ==> \\result != null;\n// @ ensures pBytes != null ==> \\result.length() == 8 * pBytes.length;\n// @ ensures pBytes != null ==> \\result.chars().allMatch(c -> c == '0' || c == '1');\n// @ ensures pBytes != null ==> java.util.Arrays.hashCode(pBytes) == \\old(java.util.Arrays.hashCode(pBytes));\n// @ ensures pBytes != null && pBytes.length == 0 ==> \\result.isEmpty();\n// @ ensures pBytes != null && pBytes.length > 0 ==> new java.math.BigInteger(\\result, 2).equals(new java.math.BigInteger(1, pBytes));",
+    "// @ ensures pBytes != null ==> \\result != null;\n// @ ensures pBytes == null ==> (\\result == null || \\result.length() == 0);\n// @ ensures pBytes != null ==> \\result.replace(\" \", \"\").length() == 8 * pBytes.length;\n// @ ensures \\result != null ==> \\result.chars().allMatch(c -> c == '0' || c == '1' || c == ' ');\n// @ ensures pBytes == \\old(pBytes);",
+    "// @ ensures pBytes != null ==> \\result != null;\n// @ ensures pBytes != null ==> (\\result.length() == 8 * pBytes.length || \\result.length() == 9 * pBytes.length - 1);\n// @ ensures pBytes != null ==> \\result.replace(\" \", \"\").length() == 8 * pBytes.length;\n// @ ensures pBytes != null && pBytes.length == 0 ==> \\result.equals(\"\");\n// @ ensures pBytes != null && \\result.length() == 8 * pBytes.length ==> \\result.chars().allMatch(c -> c == '0' || c == '1');\n// @ ensures pBytes != null && \\result.length() == 9 * pBytes.length - 1 ==> \\result.replace(\" \", \"\").chars().allMatch(c -> c == '0' || c == '1');\n// @ ensures pBytes != null && \\result.length() == 9 * pBytes.length - 1 ==> \\result.chars().filter(c -> c == ' ').count() == pBytes.length - 1;\n// @ ensures pBytes != null ==> (java.util.stream.IntStream.range(0, pBytes.length).allMatch(i -> pBytes[i] == 0) <==> \\result.replace(\" \", \"\").indexOf(\"1\") == -1);",
+    "// @ ensures pBytes == null ==> \\result == null || \\result.length() == 0;\n// @ ensures pBytes != null ==> \\result != null;\n// @ ensures pBytes != null ==> \\result.replace(\"0\",\"\").replace(\"1\",\"\").replace(\" \",\"\").length() == 0;\n// @ ensures pBytes != null ==> ((long)\\result.chars().filter(c -> c == '0' || c == '1').count()) == (long)pBytes.length * 8;\n// @ ensures pBytes != null ==> \\result.length() >= pBytes.length * 8;\n// @ ensures pBytes != null ==> \\result.length() <= (pBytes.length == 0 ? 0 : (pBytes.length * 9 - 1));\n// @ ensures pBytes == null || java.util.Arrays.equals(pBytes, \\old(pBytes));"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "failed",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "failed",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "failed",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "failed",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 317
+}

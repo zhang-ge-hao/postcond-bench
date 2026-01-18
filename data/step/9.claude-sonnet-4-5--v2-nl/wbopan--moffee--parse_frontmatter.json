@@ -1,0 +1,381 @@
+{
+  "rlid": "parse_frontmatter",
+  "github_url": "https://github.com/wbopan/moffee/blob/0dbc4e691e9dc455262fdab00a5563b890b7046f/./moffee/compositor.py#L166-L198",
+  "name": "parse_frontmatter",
+  "line_cov": 0.9,
+  "lines": 33,
+  "stats": 18,
+  "cc": 7,
+  "content": "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+  "header": "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"",
+  "file": "./moffee/compositor.py",
+  "start_line": 166,
+  "end_line": 198,
+  "body_start_line": 173,
+  "comment": "\"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"",
+  "test_time": 0.5822181701660156,
+  "cover_tests": [
+    "tests/test_builder.py::test_rendering",
+    "tests/test_builder.py::test_read_options",
+    "tests/test_builder.py::test_build",
+    "tests/test_builder.py::test_retrieve_structure",
+    "tests/test_paginate.py::test_paginate_creates_correct_number_of_pages",
+    "tests/test_paginate.py::test_frontmatter_parsing",
+    "tests/test_paginate.py::test_style_overwrite",
+    "tests/test_paginate.py::test_header_inheritance",
+    "tests/test_paginate.py::test_page_splitting_on_headers",
+    "tests/test_paginate.py::test_page_splitting_on_dividers",
+    "tests/test_paginate.py::test_escaped_area_paging",
+    "tests/test_paginate.py::test_escaped_area_chunking",
+    "tests/test_paginate.py::test_title_and_subtitle",
+    "tests/test_paginate.py::test_adjacent_headings_same_level",
+    "tests/test_paginate.py::test_chunking_trivial",
+    "tests/test_paginate.py::test_chunking_vertical",
+    "tests/test_paginate.py::test_chunking_horizontal",
+    "tests/test_paginate.py::test_chunking_hybrid",
+    "tests/test_paginate.py::test_empty_lines_handling",
+    "tests/test_paginate.py::test_deco_handling",
+    "tests/test_paginate.py::test_multiple_deco"
+  ],
+  "repo": {
+    "github_path": "wbopan/moffee",
+    "commit": "0dbc4e691e9dc455262fdab00a5563b890b7046f",
+    "language": "python",
+    "env_config": "[project]\nname = \"moffee\"\nversion = \"0.2.7\"\ndescription = \"A slide maker that transform markdown into slides.\"\nreadme = \"README.md\"\nhomepage = \"https://github.com/bmpixel/moffee\"\nrepository = \"https://github.com/bmpixel/moffee\"\nkeywords = [ \"markdown\", \"slides\", \"presentation\", \"CLI\",]\nrequires-python = \">=3.10\"\ndependencies = [ \"jinja2>=3.1.4\", \"markdown>=3.6\", \"pyyaml>=6.0.1\", \"pymdown-extensions>=10.8.1\", \"livereload>=2.7.0\", \"click>=8.1.7\", \"beautifulsoup4>=4.12.3\", \"myst-parser>=4.0.0\",]\n[[project.authors]]\nname = \"Wenbo Pan\"\nemail = \"pixelwenbo@gmail.com\"\n\n[build-system]\nrequires = [ \"hatchling\",]\nbuild-backend = \"hatchling.build\"\n\n[project.license]\ntext = \"MIT\"\n\n[project.optional-dependencies]\ndev = [ \"pytest>=8.2.2\", \"wat-inspector>=0.3.3\", \"pygments>=2.18.0\", \"ipdb>=0.13.13\", \"flake8>=7.1.1\", \"black>=24.8.0\", \"pre-commit>=3.8.0\", \"mkdocs>=1.6.0\", \"mkdocs-callouts>=1.14.0\",]\n\n[project.scripts]\nmoffee = \"moffee.cli:cli\"\n\n[tool.ipdb]\ncontext = 15\n\n[tool.flake8]\nexclude = [ \".venv\", \"venv\", \"env\", \"*/migrations/*\",]\nmax-complexity = 10\nignore = [ \"E9\", \"F63\", \"F7\", \"F82\",]\nper-file-ignores = [ \"__init__.py:F401\",]\n\n[tool.flake8.import-order]\napplication-import-names = [ \"your_project_name\",]\nimport-order-style = \"google\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [],
+    "test_time": 1.1435136795043945
+  },
+  "mutants": [
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document + \"\\n\"\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.lower()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.replace(\"\\n\", \" \")\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.splitlines()[0]\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"XXXX\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = None\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\") and document.count(\"---\") < 2:  # Checks for fewer than 2 occurrences of '---', which is incorrect\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"...\"):  # Incorrectly checks for an ellipsis instead of '---'\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"XX---XX\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if not document.startswith(\"---\"):  # Negates the condition, leading to incorrect behavior\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.rsplit(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\")  # This will split on all occurrences, not limiting to 2\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", )\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 0)  # This will not split at all, resulting in a single part\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 1)  # This will only split once, potentially missing the content\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 3)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 3)  # This will split more than necessary, leading to unexpected results\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"----\", 2)  # Incorrect delimiter, will not find the front matter\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"XX---XX\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(None, 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) < 3:  # This will always fail for valid documents with front matter\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) == 2:  # This will incorrectly assume there are not enough parts\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) > 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) > 3:  # This will incorrectly process documents with more than 3 parts\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 4:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = \"\"  # Assigns an empty string, effectively discarding the front matter\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = None\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[0].strip()  # Incorrectly assigns the first part instead of the second\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip().upper()  # Converts the front matter to uppercase, altering its intended format\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[2].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[2].strip()  # Incorrectly assigns the third part, which may not exist\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = None\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = front_matter  # Assigns the front matter directly, losing the rest of the document\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[0].strip()  # Incorrectly assigns the first part of the split to content\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[1].strip()  # Incorrectly assigns the front matter to content\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption(default_h1=True)  # Incorrectly sets default_h1 to True\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = \"default_value\"\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = None\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.default\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.default_factory\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.metadata.get('name', None)\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.type\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data and isinstance(yaml_data[name], dict):  # This will only set options if the value is a dictionary\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data and isinstance(yaml_data[name], str):  # This will only set options if the value is a string\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, None)\n    option.styles = yaml_data\n\n    return content, option\n",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.get(name, \"\"))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.get(name, None))\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data[name] if name in yaml_data else \"default\")\n    option.styles = yaml_data\n\n    return content, option",
+    "def parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n    document = document.strip()\n    front_matter = \"\"\n    content = document\n\n    # Check if the document starts with '---'\n    if document.startswith(\"---\"):\n        parts = document.split(\"---\", 2)\n        if len(parts) >= 3:\n            front_matter = parts[1].strip()\n            content = parts[2].strip()\n\n    # Parse YAML front matter\n    try:\n        yaml_data = yaml.safe_load(front_matter) if front_matter else {}\n    except yaml.YAMLError:\n        yaml_data = {}\n\n    # Create PageOption from YAML data\n    option = PageOption()\n    for field in fields(option):\n        name = field.name\n        if name in yaml_data:\n            setattr(option, name, yaml_data.pop(name))\n    option.styles = None\n\n    return content, option\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda document: document, name=\"orig_doc\")\n@icontract.ensure(lambda OLD, document, result: isinstance(result[0], str) and isinstance(result[1], PageOption) and ((OLD.orig_doc.strip().startswith('---') and len(OLD.orig_doc.strip().split('---', 2)) >= 3 and result[0] == OLD.orig_doc.strip().split('---', 2)[2].strip()) or (not OLD.orig_doc.strip().startswith('---') and result[0] == OLD.orig_doc.strip())))\n@icontract.ensure(lambda OLD, document, result: (lambda parsed: all(getattr(result[1], f.name) == (parsed[f.name] if f.name in parsed else getattr(PageOption(), f.name)) for f in fields(PageOption()) if f.name != 'styles') and isinstance(result[1].styles, dict) and result[1].styles == {k: v for k, v in parsed.items() if k not in set(f.name for f in fields(PageOption()))})(yaml.safe_load(OLD.orig_doc.strip().split('---', 2)[1].strip()) if (OLD.orig_doc.strip().startswith('---') and len(OLD.orig_doc.strip().split('---', 2)) >= 3) else {}))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nfrom dataclasses import dataclass, field, fields\nfrom typing import List, Optional, Tuple, Dict, Any\nfrom copy import deepcopy\nimport yaml\nimport re\nfrom moffee.utils.md_helper import (\n    get_header_level,\n    is_divider,\n    is_empty,\n    rm_comments,\n    contains_deco,\n)\n\n# Pre-compiled regex patterns for better performance\nASPECT_RATIO_PATTERN = re.compile(r\"([0-9]+):([0-9]+)\")\nKEY_VALUE_PATTERN = re.compile(r'([\\w-]+)\\s*=\\s*((?:\"(?:[^\"\\\\]|\\\\.)*\"|\\'(?:[^\\'\\\\]|\\\\.)*\\'|[^,]+))')\n\nDEFAULT_ASPECT_RATIO = \"16:9\"\nDEFAULT_SLIDE_WIDTH = 720\nDEFAULT_SLIDE_HEIGHT = 405\n\n\n@dataclass\nclass PageOption:\n    default_h1: bool = False\n    default_h2: bool = True\n    default_h3: bool = True\n    theme: str = \"default\"\n    aspect_ratio: str = DEFAULT_ASPECT_RATIO\n    slide_width: int = DEFAULT_SLIDE_WIDTH\n    slide_height: int = DEFAULT_SLIDE_HEIGHT\n    layout: str = \"content\"\n    resource_dir: str = \".\"\n    styles: dict = field(default_factory=dict)\n\n    @property\n    def computed_slide_size(self) -> Tuple[int, int]:\n...\nclass Direction:\n    HORIZONTAL = \"horizontal\"\n    VERTICAL = \"vertical\"\n\n\nclass Type:\n    PARAGRAPH = \"paragraph\"\n    NODE = \"node\"\n\n\nclass Alignment:\n    LEFT = \"left\"\n    CENTER = \"center\"\n    RIGHT = \"right\"\n    JUSTIFY = \"justify\"\n\n\n@dataclass\nclass Chunk:\n    paragraph: Optional[str] = None\n    children: Optional[List[\"Chunk\"]] = field(default_factory=list)  # List of chunks\n    direction: Direction = Direction.HORIZONTAL\n    type: Type = Type.PARAGRAPH\n    alignment: Alignment = Alignment.LEFT\n\n\n@dataclass\nclass Page:\n    raw_md: str\n    option: PageOption\n    h1: Optional[str] = None\n    h2: Optional[str] = None\n    h3: Optional[str] = None\n\n    def __post_init__(self):\n...\n    @property\n    def title(self) -> Optional[str]:\n...\n    @property\n    def subtitle(self) -> Optional[str]:\n...\n    @property\n    def chunk(self) -> Chunk:\n        \"\"\"\n        Split raw_md into chunk tree\n        Chunk tree branches when in-page divider is met.\n        - adjacent \"<->\"s create chunk with horizontal direction\n        - adjacent \"===\" create chunk with vertical direction\n        \"===\" possesses higher priority than \"<->\"\n\n        :return: Root of the chunk tree\n        \"\"\"\n...\n    def _preprocess(self):\n        \"\"\"\n        Additional processing needed for the page.\n        Modifies raw_md in place.\n\n        - Removes headings 1-3\n        - Stripes\n        \"\"\"\n...\ndef parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n...\ndef parse_deco(line: str, base_option: Optional[PageOption] = None) -> PageOption:\n    \"\"\"\n    Parses a deco (custom decorator) line and returns a dictionary of key-value pairs.\n    If base_option is provided, it updates the option with matching keys from the deco. Otherwise initialize an option.\n\n    :param line: The line containing the deco\n    :param base_option: Optional PageOption to update with deco values\n    :return: An updated PageOption\n    \"\"\"\n...\ndef parse_value(value: str):\n    \"\"\"Helper function to parse string values into appropriate types\"\"\"\n...\ndef composite(document: str) -> List[Page]:\n    \"\"\"\n    Composite a markdown document into slide pages.\n\n    Splitting criteria:\n    - New h1/h2/h3 header (except when following another header)\n    - \"---\" Divider (===, <->, +++ not count)\n\n    :param document: Input markdown document as a string.\n    :param document_path: Optional string, will be used to redirect url in documents if given.\n    :return: List of Page objects representing paginated slides\n    \"\"\"\n...\n```\n## Target Method\n```\ndef parse_frontmatter(document: str) -> Tuple[str, PageOption]:\n    \"\"\"\n    Parse the YAML front matter in a given markdown document.\n\n    :param document: Input markdown document as a string.\n    :return: A tuple containing the document with front matter removed and the PageOption.\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `parse_frontmatter`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 2)\n@icontract.ensure(lambda result: isinstance(result[0], str))\n@icontract.ensure(lambda result: isinstance(result[1], PageOption))\n@icontract.ensure(lambda result, document: len(result[0]) <= len(document))\n@icontract.ensure(lambda result: result[1].theme != \"\")\n@icontract.ensure(lambda result: result[1].aspect_ratio != \"\")\n@icontract.ensure(lambda result: result[1].layout != \"\")\n@icontract.ensure(lambda result: result[1].resource_dir != \"\")\n@icontract.ensure(lambda result: result[1].slide_width > 0)\n@icontract.ensure(lambda result: result[1].slide_height > 0)\n@icontract.ensure(lambda result: isinstance(result[1].styles, dict))\n@icontract.snapshot(lambda document: document.strip().startswith('---'), name=\"has_frontmatter\")\n@icontract.ensure(lambda has_frontmatter, document, result: has_frontmatter or result[0] == document, \"If no frontmatter, document should be unchanged\")",
+    "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 2)\n@icontract.ensure(lambda result: isinstance(result[0], str))\n@icontract.ensure(lambda result: isinstance(result[1], PageOption))\n@icontract.ensure(lambda result, document: len(result[0]) <= len(document))\n@icontract.ensure(lambda result: result[1] is not None)\n@icontract.snapshot(lambda document: document, name=\"original_document\")\n@icontract.ensure(lambda original_document, result: not original_document.strip().startswith('---') or not result[0].strip().startswith('---'))",
+    "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 2, \"Result must be a tuple of length 2\")\n@icontract.ensure(lambda result: isinstance(result[0], str), \"First element must be a string (document with frontmatter removed)\")\n@icontract.ensure(lambda result: isinstance(result[1], PageOption), \"Second element must be a PageOption instance\")\n@icontract.ensure(lambda result, document: len(result[0]) <= len(document), \"Returned document length should not exceed original document length\")\n@icontract.ensure(lambda result: result[1].aspect_ratio is not None, \"PageOption aspect_ratio must not be None\")\n@icontract.ensure(lambda result: result[1].theme is not None, \"PageOption theme must not be None\")\n@icontract.ensure(lambda result: result[1].layout is not None, \"PageOption layout must not be None\")\n@icontract.ensure(lambda result: result[1].slide_width > 0, \"Slide width must be positive\")\n@icontract.ensure(lambda result: result[1].slide_height > 0, \"Slide height must be positive\")",
+    "@icontract.ensure(lambda result: isinstance(result, tuple), \"Result must be a tuple\")\n@icontract.ensure(lambda result: len(result) == 2, \"Result must contain exactly 2 elements\")\n@icontract.ensure(lambda result: isinstance(result[0], str), \"First element must be a string\")\n@icontract.ensure(lambda result: isinstance(result[1], PageOption), \"Second element must be a PageOption\")\n@icontract.snapshot(lambda document: len(document), name=\"original_length\")\n@icontract.ensure(lambda original_length, result: len(result[0]) <= original_length, \"Returned document cannot be longer than original\")\n@icontract.ensure(lambda result: result[1] is not None, \"PageOption must not be None\")\n@icontract.ensure(lambda result: result[1].aspect_ratio is not None, \"PageOption must have aspect_ratio set\")\n@icontract.ensure(lambda result: result[1].theme is not None, \"PageOption must have theme set\")\n@icontract.ensure(lambda result: result[1].layout is not None, \"PageOption must have layout set\")",
+    "@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 2)\n@icontract.ensure(lambda result: isinstance(result[0], str))\n@icontract.ensure(lambda result: isinstance(result[1], PageOption))\n@icontract.ensure(lambda result, document: len(result[0]) <= len(document))\n@icontract.snapshot(lambda document: document.strip().startswith('---'), name=\"has_frontmatter\")\n@icontract.ensure(lambda result, has_frontmatter: not has_frontmatter or len(result[0]) < len(document) or result[0] == document)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "passed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [],
+    []
+  ],
+  "traversal_rank": 224
+}

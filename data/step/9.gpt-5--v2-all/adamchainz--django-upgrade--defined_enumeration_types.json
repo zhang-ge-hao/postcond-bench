@@ -1,0 +1,452 @@
+{
+  "rlid": "defined_enumeration_types",
+  "github_url": "https://github.com/adamchainz/django-upgrade/blob/05589e6da630cc5b9b589e183fa7c81f0b1fbed7/./src/django_upgrade/fixers/model_field_choices.py#L33-L63",
+  "name": "defined_enumeration_types",
+  "line_cov": 1.0,
+  "lines": 31,
+  "stats": 12,
+  "cc": 11,
+  "content": "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+  "header": "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"",
+  "file": "./src/django_upgrade/fixers/model_field_choices.py",
+  "start_line": 33,
+  "end_line": 63,
+  "body_start_line": 37,
+  "comment": "\"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"",
+  "test_time": 0.6992671489715576,
+  "cover_tests": [
+    "tests/fixers/test_model_field_choices.py::test_untransformed_not_defined_in_same_file",
+    "tests/fixers/test_model_field_choices.py::test_untransformed_defined_after_usage",
+    "tests/fixers/test_model_field_choices.py::test_untransformed_not_choice_type",
+    "tests/fixers/test_model_field_choices.py::test_transform_defined_before_usage",
+    "tests/fixers/test_model_field_choices.py::test_transform_full_import",
+    "tests/fixers/test_model_field_choices.py::test_transform_module_import",
+    "tests/fixers/test_model_field_choices.py::test_transform_direct_import",
+    "tests/fixers/test_model_field_choices.py::test_transform_with_text_choices",
+    "tests/fixers/test_model_field_choices.py::test_transform_with_choices_base",
+    "tests/fixers/test_model_field_choices.py::test_transform_from_enums_module",
+    "tests/fixers/test_model_field_choices.py::test_transform_with_kwarg_ending_comma",
+    "tests/fixers/test_model_field_choices.py::test_transform_with_kwargs_multiline",
+    "tests/fixers/test_model_field_choices.py::test_transform_with_weird_syntax",
+    "tests/fixers/test_model_field_choices.py::test_transform_external_package"
+  ],
+  "repo": {
+    "github_path": "adamchainz/django-upgrade",
+    "commit": "05589e6da630cc5b9b589e183fa7c81f0b1fbed7",
+    "language": "python",
+    "env_config": "[build-system]\nbuild-backend = \"setuptools.build_meta\"\nrequires = [ \"setuptools>=77\",]\n\n[project]\nname = \"django-upgrade\"\nversion = \"1.29.1\"\ndescription = \"Automatically upgrade your Django project code.\"\nreadme = \"README.rst\"\nkeywords = [ \"Django\",]\nlicense = \"MIT\"\nlicense-files = [ \"LICENSE\",]\nrequires-python = \">=3.9\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Framework :: Django :: 2.2\", \"Framework :: Django :: 3.0\", \"Framework :: Django :: 3.1\", \"Framework :: Django :: 3.2\", \"Framework :: Django :: 4.0\", \"Framework :: Django :: 4.1\", \"Framework :: Django :: 4.2\", \"Framework :: Django :: 5.0\", \"Framework :: Django :: 5.1\", \"Framework :: Django :: 5.2\", \"Intended Audience :: Developers\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: Python :: 3.14\", \"Typing :: Typed\",]\ndependencies = [ \"tokenize-rt>=4.1\",]\n[[project.authors]]\nname = \"Adam Johnson\"\nemail = \"me@adamj.eu\"\n\n[dependency-groups]\ntest = [ \"coverage[toml]\", \"pytest\", \"pytest-randomly\", \"tokenize-rt\",]\ndocs = [ \"furo>=2024.8.6\", \"sphinx>=7.4.7\", \"sphinx-build-compatibility\", \"sphinx-copybutton>=0.5.2\",]\n\n[project.urls]\nChangelog = \"https://django-upgrade.readthedocs.io/en/latest/changelog.html\"\nDocumentation = \"https://django-upgrade.readthedocs.io/\"\nFunding = \"https://adamj.eu/books/\"\nRepository = \"https://github.com/adamchainz/django-upgrade\"\n\n[project.scripts]\ndjango-upgrade = \"django_upgrade.main:main\"\n\n[tool.pyproject-fmt]\nmax_supported_python = \"3.14\"\n\n[tool.mypy]\nenable_error_code = [ \"ignore-without-code\", \"redundant-expr\", \"truthy-bool\",]\nmypy_path = \"src/\"\nnamespace_packages = false\nstrict = true\nwarn_unreachable = true\n[[tool.mypy.overrides]]\nmodule = \"tests.*\"\nallow_untyped_defs = true\n\n[tool.rstcheck]\nreport_level = \"ERROR\"\n\n[tool.ruff.lint]\nselect = [ \"B\", \"C4\", \"E\", \"F\", \"I\", \"SIM\", \"TID\", \"UP\", \"W\",]\nignore = [ \"B9\", \"E501\", \"SIM105\", \"SIM108\",]\nextend-safe-fixes = [ \"UP006\",]\n\n[tool.pytest.ini_options]\naddopts = \"--strict-config\\n    --strict-markers\\n    \"\nxfail_strict = true\n\n[tool.coverage.run]\nbranch = true\nparallel = true\nsource = [ \"django_upgrade\", \"tests\",]\n\n[tool.coverage.paths]\nsource = [ \"src\", \".tox/**/site-packages\",]\n\n[tool.coverage.report]\nshow_missing = true\nexclude_also = [ \"if TYPE_CHECKING:\",]\n\n[tool.ruff.lint.isort]\nrequired-imports = [ \"from __future__ import annotations\",]\n\n[tool.uv.sources.sphinx-build-compatibility]\ngit = \"https://github.com/readthedocs/sphinx-build-compatibility\"\nrev = \"4f304bd4562cdc96316f4fec82b264ca379d23e0\"\n\n[tool.poetry.group.test.dependencies]\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\n",
+    "failed_tests": [],
+    "test_time": 8.641982555389404
+  },
+  "mutants": [
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body[1:]:  # Skipping the first node in the body\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in reversed(module.body):  # Iterating in reverse order, which may miss some definitions\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(None, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.Assign)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.FunctionDef)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.Import)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level != 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level != 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level < 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 1\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 1\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 2\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level > 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module == \"django.db.models\"\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module.lower() == \"models\"\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].add(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.asname\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name + \"Extra\"\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name.lower()\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name[0]\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name == \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name == \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name == \"specific_name\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is not None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is not None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(None, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.Assign):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.FunctionDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.If):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.Module):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.body:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.decorator_list:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.keywords:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, None):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, node):  # Uses the wrong variable 'node' instead of 'base'\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if isinstance(base, ast.Name):  # Checks if base is a Name type, but doesn't validate if it's a Django choices type\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        return\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items() if line > up_to_line\n        if line <= up_to_line\n    }",
+    "def defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items() if name.startswith(\"Invalid\")\n        if line <= up_to_line\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(\n    lambda module: (\n        lambda d=defaultdict(set): (\n            [\n                d[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n                for node in module.body\n                if isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ],\n            d,\n        )[1]\n    )(),\n    name=\"from_imports\",\n)\n@icontract.snapshot(\n    lambda module: {\n        node.name: node.lineno\n        for node in module.body\n        if isinstance(node, ast.ClassDef)\n    },\n    name=\"class_lines\",\n)\n@icontract.snapshot(\n    lambda module: {\n        node.name: node.bases\n        for node in module.body\n        if isinstance(node, ast.ClassDef)\n    },\n    name=\"class_bases\",\n)\n@icontract.ensure(\n    lambda OLD, module, up_to_line, result:\n        result is not None\n        and module in module_defined_enumeration_types\n        and isinstance(module_defined_enumeration_types[module], dict)\n        and module_defined_enumeration_types[module]\n        == {\n            name: OLD.class_lines[name]\n            for name, bases in OLD.class_bases.items()\n            if any(_is_django_choices_type(OLD.from_imports, base) for base in bases)\n        }\n        and result\n        == {\n            name\n            for name, line in module_defined_enumeration_types[module].items()\n            if line <= up_to_line\n        }\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nDrop `.choices` for model field `choices` parameters:\nhttps://docs.djangoproject.com/en/5.0/releases/5.0/#forms\n\"\"\"\n\nfrom __future__ import annotations\n\nimport ast\nfrom collections import defaultdict\nfrom collections.abc import Iterable\nfrom functools import partial\nfrom typing import cast\nfrom weakref import WeakKeyDictionary\n\nfrom tokenize_rt import Offset, Token\n\nfrom django_upgrade.ast import ast_start_offset\nfrom django_upgrade.data import Fixer, State, TokenFunc\nfrom django_upgrade.tokens import OP, find_last_token, reverse_find\n\nfixer = Fixer(\n    __name__,\n    min_version=(5, 0),\n    condition=lambda state: state.looks_like_models_file,\n)\n\n# Cache defined enumeration types by module\nmodule_defined_enumeration_types: WeakKeyDictionary[ast.Module, dict[str, int]] = (\n    WeakKeyDictionary()\n)\n\n\ndef defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n\n\nDJANGO_CHOICES_TYPES = {\n    \"TextChoices\",\n    \"IntegerChoices\",\n    \"Choices\",\n}\n\n\ndef _is_django_choices_type(\n    from_imports: defaultdict[str, set[str]], node: ast.expr\n) -> bool:\n    \"\"\"Check if an AST node refers to a Django enumeration type base class.\"\"\"\n    return (\n        isinstance(node, ast.Name)\n        and node.id in DJANGO_CHOICES_TYPES\n        and (\n            node.id in from_imports[\"django.db.models\"]\n            or node.id in from_imports[\"django.db.models.enums\"]\n        )\n    ) or (\n        isinstance(node, ast.Attribute)\n        and node.attr in DJANGO_CHOICES_TYPES\n        and isinstance(node.value, ast.Name)\n        and (\n            (node.value.id == \"models\" and node.value.id in from_imports[\"django.db\"])\n            or (\n                node.value.id == \"enums\"\n                and node.value.id in from_imports[\"django.db.models\"]\n            )\n        )\n    )\n\n\n@fixer.register(ast.Call)\ndef visit_Call(\n    state: State,\n    node: ast.Call,\n    parents: tuple[ast.AST, ...],\n) -> Iterable[tuple[Offset, TokenFunc]]:\n    if (\n        (\n            isinstance(node.func, ast.Attribute)\n            and isinstance(node.func.value, ast.Name)\n            and node.func.attr.endswith(\"Field\")\n        )\n        or (isinstance(node.func, ast.Name) and node.func.id.endswith(\"Field\"))\n    ) and any(\n        kw.arg == \"choices\"\n        and isinstance(kw.value, ast.Attribute)\n        and (target_node := kw.value).attr == \"choices\"\n        and isinstance(target_node.value, ast.Name)\n        and (\n            target_node.value.id\n            in defined_enumeration_types(\n                cast(ast.Module, parents[0]),\n                node.lineno,\n            )\n        )\n        for kw in node.keywords\n    ):\n        yield ast_start_offset(target_node), partial(remove_choices, node=target_node)\n\n\ndef remove_choices(tokens: list[Token], i: int, node: ast.Attribute) -> None:\n    j = find_last_token(tokens, i, node=node)\n    i = reverse_find(tokens, j, name=OP, src=\".\")\n    del tokens[i : j + 1]\n\n```\n## Target Method\n```\ndef defined_enumeration_types(module: ast.Module, up_to_line: int) -> set[str]:\n    \"\"\"\n    Return a set of enumeration type class names defined in the given module, up to a line number.\n    \"\"\"\n    if module not in module_defined_enumeration_types:\n        enum_dict = {}\n        from_imports: defaultdict[str, set[str]] = defaultdict(set)\n        for node in module.body:\n            if (\n                isinstance(node, ast.ImportFrom)\n                and node.level == 0\n                and node.module is not None\n            ):\n                from_imports[node.module].update(\n                    name.name\n                    for name in node.names\n                    if name.asname is None and name.name != \"*\"\n                )\n            elif isinstance(node, ast.ClassDef):\n                # Check if the class inherits from one of Django's choice types\n                for base in node.bases:\n                    if _is_django_choices_type(from_imports, base):\n                        enum_dict[node.name] = node.lineno\n                        break\n        module_defined_enumeration_types[module] = enum_dict\n\n    return {\n        name\n        for name, line in module_defined_enumeration_types[module].items()\n        if line <= up_to_line\n    }\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `defined_enumeration_types`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-all",
+  "postconds": [
+    "@icontract.snapshot(lambda module: module in module_defined_enumeration_types, name=\"old_has_module\")\n@icontract.snapshot(lambda module: dict(module_defined_enumeration_types.get(module, {})), name=\"old_module_dict\")\n@icontract.ensure(lambda module: module in module_defined_enumeration_types)\n@icontract.ensure(lambda module, up_to_line, result: result == {name for name, line in module_defined_enumeration_types[module].items() if line <= up_to_line})\n@icontract.ensure(lambda OLD, module: (not OLD.old_has_module) or (module_defined_enumeration_types[module] == OLD.old_module_dict))",
+    "@icontract.snapshot(lambda module: module_defined_enumeration_types.get(module, None), name=\"prior_cache\")\n@icontract.snapshot(lambda module: tuple(sorted(module_defined_enumeration_types.get(module, {}).items())), name=\"prior_items\")\n@icontract.ensure(lambda module: module in module_defined_enumeration_types)\n@icontract.ensure(lambda module, OLD: (OLD.prior_cache is None) or (module_defined_enumeration_types.get(module) is OLD.prior_cache))\n@icontract.ensure(lambda module, OLD: (OLD.prior_cache is None) or (tuple(sorted(module_defined_enumeration_types.get(module, {}).items())) == OLD.prior_items))\n@icontract.ensure(lambda module, up_to_line, result: result == {name for name, line in module_defined_enumeration_types.get(module, {}).items() if line <= up_to_line})",
+    "@icontract.snapshot(lambda module: module_defined_enumeration_types.get(module), name=\"prev_entry\")\n@icontract.ensure(lambda module: module in module_defined_enumeration_types)\n@icontract.ensure(lambda module, up_to_line, result: (module in module_defined_enumeration_types) and (result == {name for name, line in module_defined_enumeration_types[module].items() if line <= up_to_line}))\n@icontract.ensure(lambda result: isinstance(result, set))\n@icontract.ensure(lambda result: all(isinstance(name, str) for name in result))\n@icontract.ensure(lambda module: (module in module_defined_enumeration_types) and all(isinstance(k, str) and isinstance(v, int) for k, v in module_defined_enumeration_types[module].items()))\n@icontract.ensure(lambda prev_entry, module: (prev_entry is None) or (module_defined_enumeration_types[module] == prev_entry))",
+    "@icontract.snapshot(lambda module: {nm.name for node in module.body if isinstance(node, ast.ImportFrom) and node.level == 0 and node.module == \"django.db.models\" for nm in node.names if nm.asname is None and nm.name != \"*\"}, name=\"imports_db_models\")\n@icontract.snapshot(lambda module: {nm.name for node in module.body if isinstance(node, ast.ImportFrom) and node.level == 0 and node.module == \"django.db.models.enums\" for nm in node.names if nm.asname is None and nm.name != \"*\"}, name=\"imports_db_models_enums\")\n@icontract.snapshot(lambda module: {nm.name for node in module.body if isinstance(node, ast.ImportFrom) and node.level == 0 and node.module == \"django.db\" for nm in node.names if nm.asname is None and nm.name != \"*\"}, name=\"imports_db\")\n@icontract.ensure(lambda module, result: module in module_defined_enumeration_types)\n@icontract.ensure(lambda result: all(isinstance(x, str) for x in result))\n@icontract.ensure(lambda module, up_to_line, result, OLD: result == {cls.name for cls in module.body if isinstance(cls, ast.ClassDef) and cls.lineno <= up_to_line and any((isinstance(base, ast.Name) and base.id in DJANGO_CHOICES_TYPES and (base.id in OLD.imports_db_models or base.id in OLD.imports_db_models_enums)) or (isinstance(base, ast.Attribute) and base.attr in DJANGO_CHOICES_TYPES and isinstance(base.value, ast.Name) and ((base.value.id == \"models\" and \"models\" in OLD.imports_db) or (base.value.id == \"enums\" and \"enums\" in OLD.imports_db_models))) for base in cls.bases)})\n@icontract.ensure(lambda module, up_to_line, result: result == {name for name, line in module_defined_enumeration_types[module].items() if line <= up_to_line})",
+    "@icontract.ensure(lambda result, module, up_to_line: module in module_defined_enumeration_types)\n@icontract.ensure(lambda result, module, up_to_line: result == {name for name, line in module_defined_enumeration_types[module].items() if line <= up_to_line})"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "failed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail"
+    ]
+  ],
+  "traversal_rank": 120
+}

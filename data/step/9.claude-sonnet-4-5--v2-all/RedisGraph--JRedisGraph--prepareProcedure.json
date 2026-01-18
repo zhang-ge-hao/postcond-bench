@@ -1,0 +1,618 @@
+{
+  "rlid": "prepareProcedure",
+  "github_url": "https://github.com/RedisGraph/JRedisGraph/blob/92ce65875233bb486ded8ddf73d53dbed329ef35/./src/main/java/com/redislabs/redisgraph/impl/Utils.java#L111-L140",
+  "name": "prepareProcedure",
+  "line_cov": 1.0,
+  "lines": 30,
+  "stats": 16,
+  "cc": 5,
+  "content": "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+  "header": "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){",
+  "file": "./src/main/java/com/redislabs/redisgraph/impl/Utils.java",
+  "start_line": 111,
+  "end_line": 140,
+  "body_start_line": 119,
+  "comment": "/**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */",
+  "test_time": 2.612095355987549,
+  "cover_tests": [
+    "com.redislabs.redisgraph.impl.UtilsTest#testPrepareProcedure"
+  ],
+  "repo": {
+    "github_path": "RedisGraph/JRedisGraph",
+    "commit": "92ce65875233bb486ded8ddf73d53dbed329ef35",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.redislabs</groupId>\n  <artifactId>jredisgraph</artifactId>\n  <version>2.6.0-SNAPSHOT</version>\n  <name>JRedisGraph</name>\n  <description>Official client for Redis-Graph</description>\n  <url>https://redisgraph.io</url>\n  <organization>\n    <name>RedisLabs</name>\n    <url>www.redislabs.com</url>\n  </organization>\n\t<ciManagement>\n    <system>CircleCI</system>\n    <url>https://circleci.com/gh/RedisGraph/JRedisGraph</url>\n  </ciManagement>\n\t<issueManagement>\n    <url>https://github.com/RedisGraph/JRedisGraph/issues</url>\n    <system>Github</system>\n  </issueManagement>\n\t<scm>\n    <url>https://github.com/RedisGraph/JRedisGraph</url>\n    <connection>scm:git:git://github.com/RedisGraph/JRedisGraph.git</connection>\n    <developerConnection>scm:git:git@github.com:RedisGraph/JRedisGraph.git</developerConnection>\n  </scm>\n\t<developers>\n    <developer>\n      <name>Roi Lipman</name>\n      <organization>Redis Labs, Inc.</organization>\n    </developer>\n\t\t<developer>\n      <name>Guy Korland</name>\n      <organization>Redis Labs, Inc.</organization>\n    </developer>\n  </developers>\n\t<licenses>\n    <license>\n      <name>BSD 3 Clause</name>\n      <url>https://opensource.org/licenses/BSD-3-Clause</url>\n      <distribution>repo</distribution>\n    </license>\n  </licenses>\n\n\t<dependencies>\n    <dependency>\n      <groupId>redis.clients</groupId>\n      <artifactId>jedis</artifactId>\n      <version>3.9.0</version>\n    </dependency>\n\t\t<dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-text</artifactId>\n      <version>1.10.0</version>\n    </dependency>\n\t\t<dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.2</version>\n      <scope>test</scope>\n    </dependency>\n\t\t<dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-simple</artifactId>\n      <version>1.6.6</version>\n      <scope>test</scope>\n    </dependency>\n        <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <version>5.7.1</version>\n      <scope>test</scope>\n    </dependency>\n\t\t<dependency>\n      <groupId>nl.jqno.equalsverifier</groupId>\n      <artifactId>equalsverifier</artifactId>\n      <version>3.1.10</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.vintage</groupId>\n      <artifactId>junit-vintage-engine</artifactId>\n      <version>5.7.1</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n\t<properties>\n    <maven.compiler.source>10</maven.compiler.source>\n    <maven.compiler.target>10</maven.compiler.target>\n    <maven.test.source>10</maven.test.source>\n    <maven.test.target>10</maven.test.target>\n  </properties>\n\n\t<distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n\t\t<repository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n    </repository>\n  </distributionManagement>\n\t<build>\n    <plugins>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.5</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n\t\t\t\t\t<execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n\t\t\t\t\t<configuration>\n              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n              <xml>true</xml>\n              <formats>\n                <xml />\n                <html />\n              </formats>\n            </configuration>\n          </execution>\n        </executions>\n\t\t\t<configuration>\n          <xml>true</xml>\n          <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n        </configuration>\n      </plugin>\n\t\t\t<plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.7</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n\t\t<plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <redirectTestOutputToFile>true</redirectTestOutputToFile>\n          <useModulePath>false</useModulePath>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n\t<profiles>\n    <profile>\n      <id>release</id>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-source-plugin</artifactId>\n            <version>2.2.1</version>\n            <executions>\n              <execution>\n                <id>attach-sources</id>\n                <goals>\n                  <goal>jar-no-fork</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n\t\t\t\t\t<plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-javadoc-plugin</artifactId>\n            <version>2.9.1</version>\n            <executions>\n              <execution>\n                <id>attach-javadocs</id>\n                <goals>\n                  <goal>jar</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n\n\t\t\t\t\t\n\t\t\t\t\t<plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>3.0.1</version>\n            <configuration>\n              <gpgArguments>\n                <arg>--pinentry-mode</arg>\n                <arg>loopback</arg>\n              </gpgArguments>\n            </configuration>\n\t\t\t\t\t\t<executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n\n\t\t\t\t\t<plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-pmd-plugin</artifactId>\n            <version>3.12.0</version>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n  </profiles>\n</project>",
+    "failed_tests": [
+      "com.redislabs.redisgraph.IterableTest#testRecordsIterable",
+      "com.redislabs.redisgraph.IterableTest#testRecordsIterator",
+      "com.redislabs.redisgraph.IterableTest#testRecordsIteratorAndIterable",
+      "com.redislabs.redisgraph.PipelineTest#testReadOnlyQueries",
+      "com.redislabs.redisgraph.PipelineTest#testSync",
+      "com.redislabs.redisgraph.PipelineTest#testWaitReplicas",
+      "com.redislabs.redisgraph.RedisGraphAPITest#test64bitnumber",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testAdditionToProcedures",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testArraySupport",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testCachedExecution",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testCachedExecutionReadOnly",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testConnectNodes",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testContextedAPI",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testCreateLabeledNode",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testCreateNode",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testDeleteNodes",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testDeleteRelationship",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testEscapedQuery",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testGeoPointLatLon",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testGeoPointLonLat",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testHeader",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testIndex",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testMapDataType",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testMultiThread",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testNullGraphEntities",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testPath",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testRecord",
+      "com.redislabs.redisgraph.RedisGraphAPITest#testSimpleReadOnly",
+      "com.redislabs.redisgraph.RedisGraphAPITest#timeoutArgument",
+      "com.redislabs.redisgraph.TransactionTest#testMultiExec",
+      "com.redislabs.redisgraph.TransactionTest#testMultiExecWithReadOnlyQueries",
+      "com.redislabs.redisgraph.TransactionTest#testReadTransactionWatch",
+      "com.redislabs.redisgraph.TransactionTest#testWriteTransactionWatch",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#testContextExceptionFlow",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#testContextRuntimeErrorReporting",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#testContextSyntaxErrorReporting",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#testExceptionFlow",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#testMissingParametersSyntaxErrorReporting",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#testMissingParametersSyntaxErrorReporting2",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#testRuntimeErrorReporting",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#testSyntaxErrorReporting",
+      "com.redislabs.redisgraph.exceptions.JRedisGraphErrorTest#timeoutException"
+    ],
+    "test_time": 2.1081430912017822
+  },
+  "mutants": [
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map(String::toUpperCase).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map(Utils::quoteString).collect(Collectors.toSet()).stream().collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map(arg -> arg + \"suffix\").collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map(arg -> arg == null ? \"null\" : arg).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map(arg -> arg instanceof String ? arg : arg.toString()).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        \n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append(\" (\");\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(').append(')');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append(';');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('[');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i += 2) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 2; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size(); i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i <= args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (i = 0; i < args.size(); i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            \n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(\" and \"); // Appends \" and \" instead of a comma\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(' '); // Adds a space instead of a comma\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',').append(\"extra\"); // Adds \"extra\" after each argument\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(';');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i).toUpperCase()).append(','); // Converts the argument to uppercase\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size() - 2) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()+1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            \n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i)).append(\" AND \"); // Appends \" AND \" after the last argument, which is incorrect in this context\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i)).append(\"NULL\"); // Appends the string \"NULL\" after the last argument, which is not intended\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i)).append(' '); // Adds an extra space after the last argument\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i)).append(';'); // Appends a semicolon after the last argument, which may lead to incorrect query syntax\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i).toUpperCase()); // Converts the last argument to uppercase, altering its intended value\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        \n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append('(');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')'); queryStringBuilder.append(' '); // This adds a space after the closing parenthesis\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(','); // This introduces an extra comma before closing the parentheses\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.get(\"x\"); // This incorrectly retrieves the value for key \"x\" instead of \"y\", leading to incorrect behavior.\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null && kwargsList.size() == 0){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 2; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i >= kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                \n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(\" and \"); // Appends \" and \" instead of a comma\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(' '); // Appends a space instead of a comma\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',').append(\"extra\"); // Appends an extra string after the value\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(';');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i).toUpperCase()).append(','); // Converts the value to uppercase\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            \n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i)).append(\" \"); // Adds a space after each argument\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i)).append(\"NULL\"); // Appends the string \"NULL\" instead of the actual value\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i)).append(','); // Adds an extra comma\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i)).append(';'); // Appends a semicolon instead of a comma\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i).toUpperCase()); // Converts the value to uppercase, altering the intended output\n        }\n        return queryStringBuilder.toString();\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return \"\";\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return null;\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return null; // Returns null instead of the constructed query string\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString() + \";\"; // Appends a semicolon to the end of the query string\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString().replace(\"CALL\", \"EXECUTE\"); // Incorrectly changes the keyword from CALL to EXECUTE\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString().substring(1); // Removes the first character of the query string\n    }",
+    "    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString().toUpperCase(); // Changes the case of the query string\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result != null;\n//@ ensures (\\old(kwargs).getOrDefault(\"y\", null) == null) ==> \\result.equals(\"CALL \" + procedure + \"(\" + \\old(args).stream().map(Utils::quoteString).collect(Collectors.joining(\",\")) + \")\");\n//@ ensures (\\old(kwargs).getOrDefault(\"y\", null) != null) ==> \\result.equals(\"CALL \" + procedure + \"(\" + \\old(args).stream().map(Utils::quoteString).collect(Collectors.joining(\",\")) + \")\" + String.join(\",\", \\old(kwargs).get(\"y\")));\n//@ ensures \\result.startsWith(\"CALL \" + procedure + \"(\");\n//@ ensures \\result.indexOf(')') == (\"CALL \" + procedure + \"(\" + \\old(args).stream().map(Utils::quoteString).collect(Collectors.joining(\",\"))).length();",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.redislabs.redisgraph.impl;\n\nimport org.apache.commons.text.translate.AggregateTranslator;\nimport org.apache.commons.text.translate.CharSequenceTranslator;\nimport org.apache.commons.text.translate.LookupTranslator;\n\nimport java.util.*;\nimport java.util.stream.Collectors;\n\n/**\n * Utilities class\n */\npublic class Utils {\n    public static final List<String> DUMMY_LIST = new ArrayList<>(0);\n    public static final Map<String, List<String>> DUMMY_MAP = new HashMap<>(0);\n    public static final String COMPACT_STRING = \"--COMPACT\";\n    public static final String TIMEOUT_STRING = \"TIMEOUT\";\n\n    private static final CharSequenceTranslator ESCAPE_CHYPER;\n    static {\n        final Map<CharSequence, CharSequence> escapeJavaMap = new HashMap<>();\n        escapeJavaMap.put(\"\\'\", \"\\\\'\");\n        escapeJavaMap.put(\"\\\"\", \"\\\\\\\"\");\n        ESCAPE_CHYPER = new AggregateTranslator(new LookupTranslator(Collections.unmodifiableMap(escapeJavaMap)));\n    }\n\n    private Utils() {}\n\n    /**\n     *\n     * @param str - a string\n     * @return the input string surrounded with quotation marks, if needed\n     */\n    private static String quoteString(String str){\n        StringBuilder sb = new StringBuilder(str.length()+2);\n        sb.append('\"');\n        sb.append(str.replace(\"\\\"\",\"\\\\\\\"\"));\n        sb.append('\"');\n        return sb.toString();\n    }\n\n\n    /**\n     * Prepare and formats a query and query arguments\n     * @param query - query\n     * @param args - query arguments\n     * @return formatted query\n     * @deprecated use {@link #prepareQuery(String, Map)} instead.\n     */\n    @Deprecated\n    public static String prepareQuery(String query, Object ...args){\n        if(args.length > 0) {\n            for(int i=0; i<args.length; ++i) {\n                if(args[i] instanceof String) {\n                    args[i] = \"\\'\" + ESCAPE_CHYPER.translate((String)args[i]) + \"\\'\";\n                }\n            }\n            query = String.format(query, args);\n        }\n        return query;\n    }\n\n    /**\n     * Prepare and formats a query and query arguments\n     * @param query - query\n     * @param params - query parameters\n     * @return query with parameters header\n     */\n    public static String prepareQuery(String query, Map<String, Object> params){\n        StringBuilder sb = new StringBuilder(\"CYPHER \");\n        for(Map.Entry<String, Object> entry : params.entrySet()) {\n            String key = entry.getKey();\n            Object value = entry.getValue();\n            sb.append(key).append('=');\n            sb.append(valueToString(value));\n            sb.append(' ');\n        }\n        sb.append(query);\n        return sb.toString();\n    }\n\n    private static String arrayToString(Object[] arr) {\n        StringBuilder sb = new StringBuilder().append('[');\n        sb.append(String.join(\", \", Arrays.stream(arr).map(Utils::valueToString).collect(Collectors.toList())));\n        sb.append(']');\n        return sb.toString();\n    }\n\n    private static String valueToString(Object value) {\n        if(value == null) return \"null\";\n\n        if(value instanceof String){\n            return quoteString((String) value);\n        }\n        if(value instanceof Character){\n            return quoteString(((Character)value).toString());\n        }\n\n        if(value instanceof Object[]){\n            return arrayToString((Object[]) value);\n\n        }\n        if(value instanceof List){\n            @SuppressWarnings(\"unchecked\")\n            List<Object> list = (List<Object>) value;\n            return arrayToString(list.toArray());\n        }\n        return value.toString();\n    }\n\n    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }\n}\n\n```\n## Target Method\n```\n    /**\n     * Prepare and format a procedure call and its arguments\n     * @param procedure - procedure to invoke\n     * @param args - procedure arguments\n     * @param kwargs - procedure output arguments\n     * @return formatter procedure call\n     */\n    public static String prepareProcedure(String procedure, List<String> args  , Map<String, List<String>> kwargs){\n        args = args.stream().map( Utils::quoteString).collect(Collectors.toList());\n        StringBuilder queryStringBuilder =  new StringBuilder();\n        queryStringBuilder.append(\"CALL \").append(procedure).append('(');\n        int i = 0;\n        for (; i < args.size() - 1; i++) {\n            queryStringBuilder.append(args.get(i)).append(',');\n        }\n        if (i == args.size()-1) {\n            queryStringBuilder.append(args.get(i));\n        }\n        queryStringBuilder.append(')');\n        List<String> kwargsList = kwargs.getOrDefault(\"y\", null);\n        if(kwargsList != null){\n            i = 0;\n            for (; i < kwargsList.size() - 1; i++) {\n                queryStringBuilder.append(kwargsList.get(i)).append(',');\n\n            }\n            queryStringBuilder.append(kwargsList.get(i));\n        }\n        return queryStringBuilder.toString();\n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `prepareProcedure`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures \\result != null;\n//@ ensures \\result.startsWith(\"CALL \" + procedure + \"(\");\n//@ ensures \\result.contains(\")\");\n//@ ensures \\old(args).isEmpty() ==> \\result.substring(0, \\result.indexOf(\")\") + 1).equals(\"CALL \" + procedure + \"()\");\n//@ ensures !\\old(args).isEmpty() ==> \\old(args).stream().allMatch(arg -> \\result.contains(quoteString(arg)));\n//@ ensures \\old(kwargs).getOrDefault(\"y\", null) == null ==> \\result.endsWith(\")\");\n//@ ensures \\old(kwargs).getOrDefault(\"y\", null) != null ==> \\old(kwargs).get(\"y\").stream().allMatch(kw -> \\result.contains(kw));",
+    "//@ ensures \\result != null;\n//@ ensures \\result.startsWith(\"CALL \" + procedure + \"(\");\n//@ ensures \\result.contains(\")\");\n//@ ensures (kwargs.getOrDefault(\"y\", null) == null) ==> \\result.endsWith(\")\");\n//@ ensures (\\old(args.isEmpty())) ==> \\result.contains(\"CALL \" + procedure + \"()\");\n//@ ensures \\old(args).stream().allMatch(arg -> \\result.contains(arg.replace(\"\\\"\", \"\\\\\\\"\")));\n//@ ensures (kwargs.getOrDefault(\"y\", null) != null && !kwargs.get(\"y\").isEmpty()) ==> kwargs.get(\"y\").stream().allMatch(kwarg -> \\result.contains(kwarg));",
+    "//@ ensures \\result != null;\n//@ ensures \\result.startsWith(\"CALL \" + procedure + \"(\");\n//@ ensures \\result.contains(\")\");\n//@ ensures \\old(args).isEmpty() || \\old(args).stream().allMatch(arg -> \\result.contains(quoteString(arg)));\n//@ ensures (kwargs.getOrDefault(\"y\", null) == null) || kwargs.get(\"y\").stream().allMatch(kwarg -> \\result.contains(kwarg));\n//@ ensures \\old(args).isEmpty() ==> \\result.equals(\"CALL \" + procedure + \"()\");\n//@ ensures (\\old(args).isEmpty() && kwargs.getOrDefault(\"y\", null) == null) ==> \\result.equals(\"CALL \" + procedure + \"()\");",
+    "//@ ensures \\result != null;\n//@ ensures \\result.startsWith(\"CALL \" + procedure + \"(\");\n//@ ensures \\result.contains(\")\");\n//@ ensures (kwargs.get(\"y\") == null || kwargs.get(\"y\").isEmpty()) ==> \\result.endsWith(\")\");\n//@ ensures kwargs.get(\"y\") != null && !kwargs.get(\"y\").isEmpty() ==> !(\\result.endsWith(\")\"));\n//@ ensures \\old(args).isEmpty() ==> \\result.contains(\"()\");\n//@ ensures \\old(args).stream().allMatch(arg -> \\result.contains(quoteString(arg)));",
+    "//@ ensures \\result != null;\n//@ ensures \\result.startsWith(\"CALL \" + procedure + \"(\");\n//@ ensures \\result.contains(\")\");\n//@ ensures \\old(args).isEmpty() || \\old(args).stream().allMatch(arg -> \\result.contains(quoteString(arg)));\n//@ ensures \\old(kwargs.getOrDefault(\"y\", null)) == null || \\old(kwargs.getOrDefault(\"y\", null)).stream().allMatch(kw -> \\result.contains(kw));\n//@ ensures \\old(args).isEmpty() ==> \\result.contains(\"()\");"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "jml_fail",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [],
+    [
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 212
+}

@@ -1,0 +1,150 @@
+{
+  "rlid": "isConverged",
+  "github_url": "https://github.com/yinlou/mltk/blob/f50c42986fdd016e7da38d5e381ed24d8fe87e41/./src/main/java/mltk/predictor/evaluation/ConvergenceTester.java#L171-L179",
+  "name": "isConverged",
+  "line_cov": 1.0,
+  "lines": 9,
+  "stats": 1,
+  "cc": 4,
+  "content": "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn minNumPoints >= 0 && measureList.size() >= minNumPoints\n\t\t\t\t&& bestIdx > 0 && bestIdx + n < measureList.size() * c;\n\t}",
+  "header": "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {",
+  "file": "./src/main/java/mltk/predictor/evaluation/ConvergenceTester.java",
+  "start_line": 171,
+  "end_line": 179,
+  "body_start_line": 177,
+  "comment": "/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */",
+  "test_time": 3.95375919342041,
+  "cover_tests": [
+    "mltk.predictor.evaluation.ConvergenceTesterTest#test1",
+    "mltk.predictor.evaluation.ConvergenceTesterTest#test2",
+    "mltk.predictor.evaluation.ConvergenceTesterTest#test3",
+    "mltk.predictor.evaluation.ConvergenceTesterTest#test4"
+  ],
+  "repo": {
+    "github_path": "yinlou/mltk",
+    "commit": "f50c42986fdd016e7da38d5e381ed24d8fe87e41",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.yinlou</groupId>\n  <artifactId>mltk</artifactId>\n  <version>0.1.1-SNAPSHOT</version>\n\n  <name>mltk</name>\n  <description>Machine Learning Tool Kit</description>\n  <url>https://github.com/yinlou/mltk</url>\n\n  <licenses>\n    <license>\n      <name>BSD 3-Clause</name>\n      <url>https://opensource.org/licenses/BSD-3-Clause</url>\n    </license>\n  </licenses>\n\n   <developers>\n    <developer>\n      <name>Yin Lou</name>\n      <email>machinelearningtoolkit@gmail.com</email>\n    </developer>\n  </developers>\n\n  <scm>\n    <connection>scm:git:git://github.com/yinlou/mltk.git</connection>\n    <developerConnection>scm:git:ssh://github.com:yinlou/mltk.git</developerConnection>\n    <url>https://github.com/yinlou/mltk.git</url>\n  </scm>\n\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n    <maven.compiler.source>10</maven.compiler.source>\n    <maven.compiler.target>10</maven.compiler.target>\n  </properties>\n\n  <profiles>\n    <profile>\n      <id>doclint-java8-disable</id>\n      <activation>\n        <jdk>[1.8,)</jdk>\n      </activation>\n      <properties>\n        <javadoc.opts>-Xdoclint:none</javadoc.opts>\n      </properties>\n    </profile>\n  </profiles>\n\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n  </distributionManagement>\n\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.7</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.5.1</version>\n        <configuration>\n          <showDeprecation>true</showDeprecation>\n          <source>${maven.compiler.source}</source>\n          <target>${maven.compiler.target}</target> \n        </configuration>\n      </plugin>\n      <plugin>\n      <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>2.2.1</version>\n        <executions>\n          <execution>\n           <id>attach-sources</id>\n            <goals>\n              <goal>jar-no-fork</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>2.10.3</version>\n        <configuration>\n          <source>8</source>\n          <doctitle>Machine Learning Tool Kit ${project.version} API</doctitle>\n          <windowtitle>Machine Learning Tool Kit ${project.version} API</windowtitle>\n          <additionalparam>${javadoc.opts}</additionalparam>\n        </configuration>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <phase>package</phase>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n      <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>1.5</version>\n        <executions>\n         <execution>\n            <id>sign-artifacts</id>\n            <phase>verify</phase>\n            <goals>\n             <goal>sign</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.0.0-M7</version></plugin><plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.8</version><executions><execution><id>prepare-agent</id><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>prepare-package</phase><goals><goal>report</goal></goals><configuration><formats><format>html</format><format>xml</format></formats></configuration></execution></executions></plugin></plugins>\n  </build>\n\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n    </dependency>\n  </dependencies>\n\n  <repositories>\n  </repositories>\n\n</project>",
+    "failed_tests": [],
+    "test_time": 1.3728833198547363
+  },
+  "mutants": [
+    "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn minNumPoints < 0 && measureList.size() >= minNumPoints\n\t\t\t\t&& bestIdx > 0 && bestIdx + n < measureList.size() * c;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn minNumPoints >= 0 && measureList.size() < minNumPoints\n\t\t\t\t&& bestIdx > 0 && bestIdx + n < measureList.size() * c;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn minNumPoints >= 0 && measureList.size() > minNumPoints\n\t\t\t\t&& bestIdx > 0 && bestIdx + n < measureList.size() * c;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn true;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn minNumPoints >= 0 && measureList.size() >= minNumPoints\n\t\t\t\t&& bestIdx <= 0 && bestIdx + n < measureList.size() * c;\n\t}",
+    "\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn minNumPoints >= 0 && measureList.size() >= minNumPoints\n\t\t\t\t&& bestIdx > 0 && bestIdx + n >= measureList.size() * c;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result <==> (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage mltk.predictor.evaluation;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\n/**\n * Class for testing convergence given a list of metric values.\n * \n * @author Yin Lou\n *\n */\npublic class ConvergenceTester {\n\n\tprotected int minNumPoints;\n\tprotected int n;\n\tprotected double c;\n\tprotected double bestSoFar;\n\tprotected int bestIdx;\n\tprotected Metric metric;\n\tprotected List<Double> measureList;\n\t\n\t/**\n\t * Parses the convergence criteria string.\n\t * \n\t * @param cc the convergence criteria string.\n\t * @return a convergence tester.\n\t */\n\tpublic static ConvergenceTester parse(String cc) {\n\t\tint minNumPoints = -1;\n\t\tint n = 0;\n\t\tdouble c = 1.0;\n\t\tif (cc != null && !cc.equals(\"\")) {\n\t\t\tString[] strs = cc.split(\":\");\n\t\t\tif (strs.length > 0) {\n\t\t\t\tminNumPoints = Integer.parseInt(strs[0]);\n\t\t\t}\n\t\t\tif (strs.length > 1) {\n\t\t\t\tn = Integer.parseInt(strs[1]);\n\t\t\t}\n\t\t\tif (strs.length > 2) {\n\t\t\t\tc = Double.parseDouble(strs[2]);\n\t\t\t}\n\t\t}\n\t\treturn new ConvergenceTester(minNumPoints, n, c);\n\t}\n\t\n\t/**\n\t * Constructor.\n\t * \n\t * @param minNumPoints the minimum number of points to be considered convergence.\n\t * @param c a constant factor in [0, 1].\n\t */\n\tpublic ConvergenceTester(int minNumPoints, double c) {\n\t\tthis(minNumPoints, 0, c, 1000);\n\t}\n\t\n\t/**\n\t * Constructor.\n\t * \n\t * @param minNumPoints the minimum number of points to be considered convergence.\n\t * @param n the n.\n\t */\n\tpublic ConvergenceTester(int minNumPoints, int n) {\n\t\tthis(minNumPoints, n, 1.0, 1000);\n\t}\n\t\n\t/**\n\t * Constructor.\n\t * \n\t * @param minNumPoints the minimum number of points to be considered convergence.\n\t * @param n the n.\n\t * @param c a constant factor in [0, 1].\n\t */\n\tpublic ConvergenceTester(int minNumPoints, int n, double c) {\n\t\tthis(minNumPoints, n, c, 1000);\n\t}\n\t\n\t/**\n\t * Constructor. A list of metric values is viewed as converged if the list\n\t * has at least {@code minNumPoints} and the {@code getBestIndex() + n < size() * c}.\n\t * \n\t * @param minNumPoints the minimum number of points to be considered convergence.\n\t * @param n the n.\n\t * @param c a constant factor in [0, 1].\n\t * @param capacity the initial capacity.\n\t */\n\tpublic ConvergenceTester(int minNumPoints, int n, double c, int capacity) {\n\t\tif (n < 0) {\n\t\t\tthrow new IllegalArgumentException(\"n has to be non-negative.\");\n\t\t}\n\t\tif (!(c >= 0 && c <= 1)) {\n\t\t\tthrow new IllegalArgumentException(\"c should to be in [0, 1].\");\n\t\t}\n\t\tthis.minNumPoints = minNumPoints;\n\t\tthis.n = n;\n\t\tthis.c = c;\n\t\tmeasureList = new ArrayList<>(capacity);\n\t}\n\t\n\t/**\n\t * Returns the metric.\n\t * \n\t * @return the metric.\n\t */\n\tpublic Metric getMetric() {\n\t\treturn metric;\n\t}\n\t\n\t/**\n\t * Sets the metric. This method also resets internal status of this tester.\n\t * \n\t * @param metric the metric to set.\n\t */\n\tpublic void setMetric(Metric metric) {\n\t\tthis.metric = metric;\n\t\tmeasureList.clear();\n\t\tbestSoFar = metric.worstValue();\n\t\tbestIdx = -1;\n\t}\n\t\n\t/**\n\t * Adds a measure.\n\t * \n\t * @param measure the metric value to add.\n\t */\n\tpublic void add(double measure) {\n\t\tmeasureList.add(measure);\n\t\t\n\t\tif (metric.isFirstBetter(measure, bestSoFar)) {\n\t\t\tbestSoFar = measure;\n\t\t\tbestIdx = measureList.size() - 1;\n\t\t}\n\t}\n\t\n\t/**\n\t * Returns the index of best metric value so far.\n\t * \n\t * @return the index of best metric value so far.\n\t */\n\tpublic int getBestIndex() {\n\t\treturn bestIdx;\n\t}\n\t\n\t/**\n\t * Returns the best measure value so far.\n\t * \n\t * @return the best measure value so far.\n\t */\n\tpublic double getBestMetricValue() {\n\t\treturn bestSoFar;\n\t}\n\t\n\t/**\n\t * Returns the number of points.\n\t * \n\t * @return the number of points.\n\t */\n\tpublic int size() {\n\t\treturn measureList.size();\n\t}\n\t\n\t/**\n\t * Returns the list of metric values.\n\t * \n\t * @return the list of metric values.\n\t */\n\tpublic List<Double> getMeasureList() {\n\t\treturn measureList;\n\t}\n\t\n\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn minNumPoints >= 0 && measureList.size() >= minNumPoints\n\t\t\t\t&& bestIdx > 0 && bestIdx + n < measureList.size() * c;\n\t}\n\t\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Returns {@code true} if the series is converged.\n\t * \n\t * @return {@code true} if the series is converged.\n\t */\n\tpublic boolean isConverged() {\n\t\treturn minNumPoints >= 0 && measureList.size() >= minNumPoints\n\t\t\t\t&& bestIdx > 0 && bestIdx + n < measureList.size() * c;\n\t}\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `isConverged`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);",
+    "//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);",
+    "//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);",
+    "//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);",
+    "//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);"
+  ],
+  "responses": [
+    "```jml\n//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);\n```",
+    "```jml\n//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);\n```",
+    "```jml\n//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);\n```",
+    "```jml\n//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);\n```",
+    "```jml\n//@ ensures \\result == (minNumPoints >= 0 && measureList.size() >= minNumPoints && bestIdx > 0 && bestIdx + n < measureList.size() * c);\n```"
+  ],
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 249
+}

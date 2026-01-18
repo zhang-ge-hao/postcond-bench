@@ -1,0 +1,315 @@
+{
+  "rlid": "distance",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/ml/nearest_neighbor.py#L3-L19",
+  "name": "distance",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 8,
+  "cc": 3,
+  "content": "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+  "header": "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"",
+  "file": "./algorithms/ml/nearest_neighbor.py",
+  "start_line": 3,
+  "end_line": 19,
+  "body_start_line": 12,
+  "comment": "\"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"",
+  "test_time": 1.1868228912353516,
+  "cover_tests": [
+    "tests/test_ml.py::TestML::test_distance",
+    "tests/test_ml.py::TestML::test_nearest_neighbor"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 1\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)\n",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(1, len(x)):  # Starting from 1, skipping the first element\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x) - 1):  # Off-by-one error, missing the last element\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)//2):  # Only iterating through half of the elements\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (0,)  # Always adds zero regardless of x and y\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] * y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] + y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] + y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)\n",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] - y[i] + 1,)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] - y[i] if i % 2 == 0 else 0,)  # Only computes for even indices\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result = (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum)\n",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in range(len(result)):\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result[1:]:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result[:-1]:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in x:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in y:\n        sum += component**2\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += 1\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**0\n    return math.sqrt(sum)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum = component**2\n    return math.sqrt(sum)\n",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum + 1)",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum) * 2",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return math.sqrt(sum) + 1",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return sum",
+    "def distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n    assert len(x) == len(y), \"The vector must have same length\"\n    result = ()\n    sum = 0\n    for i in range(len(x)):\n        result += (x[i] -y[i],)\n    for component in result:\n        sum += component**2\n    return sum / len(x)"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, x, y: result >= 0)\n@icontract.ensure(lambda result, x, y: result == math.sqrt(sum((a - b) ** 2 for a, b in zip(x, y))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "llama-4-maverick",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport math\n\ndef distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n...\ndef nearest_neighbor(x, tSet):\n    \"\"\"[summary]\n    Implements the nearest neighbor algorithm\n\n    Arguments:\n        x {[tupel]} -- [vector]\n        tSet {[dict]} -- [training set]\n\n    Returns:\n        [type] -- [result of the AND-function]\n    \"\"\"\n...\n```\n## Target Method\n```\ndef distance(x,y):\n    \"\"\"[summary]\n    HELPER-FUNCTION\n    calculates the (eulidean) distance between vector x and y.\n\n    Arguments:\n        x {[tuple]} -- [vector]\n        y {[tuple]} -- [vector]\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `distance`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(lambda result: result >= 0)\n@icontract.ensure(lambda x, y, result: result == math.sqrt(sum((a - b) ** 2 for a, b in zip(x, y))))",
+    "@icontract.ensure(lambda result: result >= 0)\n@icontract.ensure(lambda x, y, result: result == math.sqrt(sum((a - b) ** 2 for a, b in zip(x, y))))",
+    "@icontract.snapshot(lambda x: list(x), name=\"x\")\n@icontract.snapshot(lambda y: list(y), name=\"y\")\n@icontract.ensure(lambda result: result >= 0, \"Distance cannot be negative\")\n@icontract.ensure(lambda x, y, result: result == math.sqrt(sum((a - b) ** 2 for a, b in zip(x, y))), \"Euclidean distance is not correctly calculated\")",
+    "@icontract.ensure(lambda result: result >= 0)\n@icontract.ensure(lambda x, y, result: result == math.sqrt(sum((a - b) ** 2 for a, b in zip(x, y))))",
+    "@icontract.ensure(lambda result: result >= 0)\n@icontract.ensure(lambda x, y, result: result == math.sqrt(sum((a - b) ** 2 for a, b in zip(x, y))))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ]
+  ],
+  "traversal_rank": 90
+}

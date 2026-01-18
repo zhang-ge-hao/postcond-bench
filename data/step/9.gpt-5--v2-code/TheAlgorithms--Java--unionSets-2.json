@@ -1,0 +1,212 @@
+{
+  "rlid": "unionSets-2",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/datastructures/disjointsetunion/DisjointSetUnionBySize.java#L57-L78",
+  "name": "unionSets",
+  "line_cov": 1.0,
+  "lines": 22,
+  "stats": 9,
+  "cc": 3,
+  "content": "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+  "header": "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {",
+  "file": "./src/main/java/com/thealgorithms/datastructures/disjointsetunion/DisjointSetUnionBySize.java",
+  "start_line": 57,
+  "end_line": 78,
+  "body_start_line": 64,
+  "comment": "/**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */",
+  "test_time": 10.081392049789429,
+  "cover_tests": [
+    "com.thealgorithms.datastructures.disjointsetunion.DisjointSetUnionBySizeTest#testEmptyValues",
+    "com.thealgorithms.datastructures.disjointsetunion.DisjointSetUnionBySizeTest#testMultipleDisjointSets",
+    "com.thealgorithms.datastructures.disjointsetunion.DisjointSetUnionBySizeTest#testPathCompression",
+    "com.thealgorithms.datastructures.disjointsetunion.DisjointSetUnionBySizeTest#testUnionAlreadyConnectedNodes",
+    "com.thealgorithms.datastructures.disjointsetunion.DisjointSetUnionBySizeTest#testUnionFindSet"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(y); // mistakenly finds the root of y instead of x\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = new Node<>(x.value); // creates a new node instead of finding the existing root\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(new Node<>(y.value)); // creates a new node and finds its root, which is always itself\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(x); // mistakenly finds the root of the same set as x\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = new Node<>(y.value); // creates a new node instead of finding the existing root\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX != rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == null || rootY == null) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX.size < rootY.size) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX.size == rootY.size) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX.size > rootY.size) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size != rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size <= rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size == rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size > rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }",
+    "    /**\n     * Merges the sets containing the two given nodes using union by size.\n     * The root of the smaller set is attached to the root of the larger set.\n     * @param x a node in the first set\n     * @param y a node in the second set\n     */\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; // They are already in the same set\n        }\n        // Union by size: attach smaller tree under the larger one\n        if (rootX.size >= rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; // update size\n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; // update size\n        }\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures findSet(x) == findSet(y);\n//@ ensures \\old(findSet(x)) == \\old(findSet(y)) ==> findSet(x).size == \\old(findSet(x).size);\n//@ ensures \\old(findSet(x)) != \\old(findSet(y)) ==> findSet(x).size == \\old(findSet(x).size + findSet(y).size);\n//@ ensures \\old(findSet(x)) != \\old(findSet(y)) ==> (\\old(findSet(x)).parent == findSet(x) || \\old(findSet(y)).parent == findSet(x));\n//@ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x).size) < \\old(findSet(y).size) ==> findSet(x) == \\old(findSet(y));\n//@ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x).size) >= \\old(findSet(y).size) ==> findSet(x) == \\old(findSet(x));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.datastructures.disjointsetunion;\n\npublic class DisjointSetUnionBySize<T> {\n    public static class Node<T> {\n        public T value;\n        public Node<T> parent;\n        public int size; \n\n        public Node(T value) {\n            this.value = value;\n            this.parent = this;\n            this.size = 1; \n        }\n    }\n\n    public Node<T> makeSet(final T value) {\n        return new Node<>(value);\n    }\n\n    public Node<T> findSet(Node<T> node) {\n        if (node != node.parent) {\n            node.parent = findSet(node.parent); \n        }\n        return node.parent;\n    }\n\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; \n        }\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; \n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; \n        }\n    }\n}\n\n```\n## Target Method\n```\n    public void unionSets(Node<T> x, Node<T> y) {\n        Node<T> rootX = findSet(x);\n        Node<T> rootY = findSet(y);\n\n        if (rootX == rootY) {\n            return; \n        }\n        if (rootX.size < rootY.size) {\n            rootX.parent = rootY;\n            rootY.size += rootX.size; \n        } else {\n            rootY.parent = rootX;\n            rootX.size += rootY.size; \n        }\n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `unionSets`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "// @ ensures (\\old(findSet(x)) != \\old(findSet(y))) ==> (findSet(x) == findSet(y))\n// @ ensures (\\old(findSet(x)) == \\old(findSet(y))) ==> (findSet(x) == \\old(findSet(x)) && findSet(y) == \\old(findSet(y)) && findSet(x).size == \\old(findSet(x).size))\n// @ ensures (\\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x).size) < \\old(findSet(y).size)) ==> (findSet(x) == \\old(findSet(y)) && findSet(y) == \\old(findSet(y)) && (\\old(findSet(x))).parent == \\old(findSet(y)) && (\\old(findSet(y))).size == (\\old(findSet(y).size) + \\old(findSet(x).size)) && (\\old(findSet(x))).size == \\old(findSet(x).size))\n// @ ensures (\\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x).size) >= \\old(findSet(y).size)) ==> (findSet(x) == \\old(findSet(x)) && findSet(y) == \\old(findSet(x)) && (\\old(findSet(y))).parent == \\old(findSet(x)) && (\\old(findSet(x))).size == (\\old(findSet(x).size) + \\old(findSet(y).size)) && (\\old(findSet(y))).size == \\old(findSet(y).size)",
+    "// @ ensures findSet(x) == findSet(y);\n// @ ensures \\old(findSet(x)) == \\old(findSet(y)) ==> (findSet(x) == \\old(findSet(x)) && findSet(y) == \\old(findSet(y)) && \\old(findSet(x)).size == \\old(findSet(x).size) && \\old(findSet(x)).parent == \\old(findSet(x)));\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x).size) < \\old(findSet(y).size) ==> (\\old(findSet(x)).parent == \\old(findSet(y)) && \\old(findSet(y)).parent == \\old(findSet(y)) && \\old(findSet(y)).size == \\old(findSet(y).size) + \\old(findSet(x).size) && \\old(findSet(x)).size == \\old(findSet(x).size) && findSet(x) == \\old(findSet(y)) && findSet(y) == \\old(findSet(y)));\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x).size) >= \\old(findSet(y).size) ==> (\\old(findSet(y)).parent == \\old(findSet(x)) && \\old(findSet(x)).parent == \\old(findSet(x)) && \\old(findSet(x)).size == \\old(findSet(x).size) + \\old(findSet(y).size) && \\old(findSet(y)).size == \\old(findSet(y).size) && findSet(x) == \\old(findSet(x)) && findSet(y) == \\old(findSet(x)));",
+    "// @ ensures findSet(x) == findSet(y);\n// @ ensures \\old(findSet(x)) == \\old(findSet(y)) ==> ( findSet(x) == \\old(findSet(x)) && findSet(y) == \\old(findSet(y)) && \\old(findSet(x)).size == \\old(findSet(x).size) && \\old(findSet(y)).size == \\old(findSet(y).size) );\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x).size) < \\old(findSet(y).size) ==> ( findSet(x) == \\old(findSet(y)) && findSet(y) == \\old(findSet(y)) && \\old(findSet(x)).parent == \\old(findSet(y)) && \\old(findSet(y)).size == \\old(findSet(x).size + findSet(y).size) && \\old(findSet(x)).size == \\old(findSet(x).size) );\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x).size) >= \\old(findSet(y).size) ==> ( findSet(x) == \\old(findSet(x)) && findSet(y) == \\old(findSet(x)) && \\old(findSet(y)).parent == \\old(findSet(x)) && \\old(findSet(x)).size == \\old(findSet(x).size + findSet(y).size) && \\old(findSet(y)).size == \\old(findSet(y).size) );",
+    "// @ ensures findSet(x) == findSet(y);\n// @ ensures \\old(findSet(x)) == \\old(findSet(y)) ==> (\\old(findSet(x))).size == \\old(findSet(x).size);\n// @ ensures \\old(findSet(x)) == \\old(findSet(y)) ==> (\\old(findSet(y))).size == \\old(findSet(y).size);\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x)).size < \\old(findSet(y)).size ==> (\\old(findSet(x))).parent == \\old(findSet(y));\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x)).size < \\old(findSet(y)).size ==> (\\old(findSet(y))).size == \\old(findSet(y).size) + \\old(findSet(x).size);\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x)).size < \\old(findSet(y)).size ==> (\\old(findSet(x))).size == \\old(findSet(x).size);\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x)).size < \\old(findSet(y)).size ==> findSet(x) == \\old(findSet(y));\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && \\old(findSet(x)).size < \\old(findSet(y)).size ==> findSet(y) == \\old(findSet(y));\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && !(\\old(findSet(x)).size < \\old(findSet(y)).size) ==> (\\old(findSet(y))).parent == \\old(findSet(x));\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && !(\\old(findSet(x)).size < \\old(findSet(y)).size) ==> (\\old(findSet(x))).size == \\old(findSet(x).size) + \\old(findSet(y).size);\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && !(\\old(findSet(x)).size < \\old(findSet(y)).size) ==> (\\old(findSet(y))).size == \\old(findSet(y).size);\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && !(\\old(findSet(x)).size < \\old(findSet(y)).size) ==> findSet(x) == \\old(findSet(x));\n// @ ensures \\old(findSet(x)) != \\old(findSet(y)) && !(\\old(findSet(x)).size < \\old(findSet(y)).size) ==> findSet(y) == \\old(findSet(x));",
+    "// @ ensures findSet(x) == findSet(y);\n// @ ensures \\old(findSet(x) == findSet(y)) ==> (findSet(x) == \\old(findSet(x)) && findSet(x).size == \\old(findSet(x).size));\n// @ ensures \\old(findSet(x) != findSet(y)) ==> (findSet(x).size == \\old(findSet(x).size + findSet(y).size));\n// @ ensures (\\old(findSet(x) != findSet(y)) && \\old(findSet(x).size < findSet(y).size)) ==> (findSet(x) == \\old(findSet(y)));\n// @ ensures (\\old(findSet(x) != findSet(y)) && \\old(findSet(x).size >= findSet(y).size)) ==> (findSet(x) == \\old(findSet(x)));\n// @ ensures (\\old(findSet(x) != findSet(y)) && \\old(findSet(x).size < findSet(y).size)) ==> ((\\old(findSet(x))).parent == findSet(x));\n// @ ensures (\\old(findSet(x) != findSet(y)) && \\old(findSet(x).size >= findSet(y).size)) ==> ((\\old(findSet(y))).parent == findSet(x));\n// @ ensures (\\old(findSet(x) != findSet(y)) && \\old(findSet(x).size < findSet(y).size)) ==> ((\\old(findSet(x))).size == \\old(findSet(x).size));\n// @ ensures (\\old(findSet(x) != findSet(y)) && \\old(findSet(x).size >= findSet(y).size)) ==> ((\\old(findSet(y))).size == \\old(findSet(y).size));"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "compile_failure",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 256
+}

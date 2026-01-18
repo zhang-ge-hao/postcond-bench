@@ -1,0 +1,180 @@
+{
+  "rlid": "first_occurrence",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/search/first_occurrence.py#L6-L23",
+  "name": "first_occurrence",
+  "line_cov": 1.0,
+  "lines": 18,
+  "stats": 10,
+  "cc": 5,
+  "content": "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+  "header": "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"",
+  "file": "./algorithms/search/first_occurrence.py",
+  "start_line": 6,
+  "end_line": 23,
+  "body_start_line": 11,
+  "comment": "\"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"",
+  "test_time": 1.0778992176055908,
+  "cover_tests": [
+    "tests/test_search.py::TestSuite::test_first_occurrence"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = -1, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) // 2\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 1, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 1, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low - (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if array[mid] == query:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low != high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low < high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if mid < high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            return\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query and low == high:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] <= query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] <= query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] == query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] > query and low != high:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] > query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 2\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] != query:\n        return low\n",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] < query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] > query:\n        return low",
+    "def first_occurrence(array, query):\n    \"\"\"\n    Returns the index of the first occurance of the given element in an array.\n    The array has to be sorted in increasing order.\n    \"\"\"\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 #Now mid will be ininteger range\n        #print(\"lo: \", lo, \" hi: \", hi, \" mid: \", mid)\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[mid] > query:\n        return low"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.ensure(lambda result, array, query: (result is None) or (isinstance(result, int) and 0 <= result < len(array)))\n@icontract.ensure(lambda result, array, query: (any(x == query for x in array) and result is not None) or (not any(x == query for x in array) and result is None))\n@icontract.ensure(lambda result, array, query: result is None or (array[result] == query and (result == 0 or array[result-1] < query)))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\ndef first_occurrence(array, query):\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 \n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n\n```\n## Target Method\n```\ndef first_occurrence(array, query):\n\n    low, high = 0, len(array) - 1\n    while low <= high:\n        mid = low + (high-low)//2 \n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `first_occurrence`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(lambda array, query: array, name=\"original_array\")",
+    "@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(lambda array, query: array, name=\"original_array\")\n@icontract.snapshot(lambda query: query, name=\"original_query\")",
+    "@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(lambda array, query: array)\n@icontract.ensure(lambda array__snap, query: first_occurrence(array__snap, query) == first_occurrence(array, query))",
+    "@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(array, \"array\")",
+    "@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(lambda array, query: array, name=\"original_array\")\n@icontract.snapshot(lambda array, query: query, name=\"original_query\")"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(lambda array, query: array, name=\"original_array\")\n```",
+    "```python\n@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(lambda array, query: array, name=\"original_array\")\n@icontract.snapshot(lambda query: query, name=\"original_query\")\n```",
+    "```python\n@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(lambda array, query: array)\n@icontract.ensure(lambda array__snap, query: first_occurrence(array__snap, query) == first_occurrence(array, query))\n```",
+    "```python\n@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(array, \"array\")\n```",
+    "```python\n@icontract.ensure(lambda result, array, query: result is None or array[result] == query)\n@icontract.ensure(lambda result, array, query: result is None or all(array[i] != query for i in range(result)))\n@icontract.snapshot(lambda array, query: array, name=\"original_array\")\n@icontract.snapshot(lambda array, query: query, name=\"original_query\")\n```"
+  ],
+  "postcond_corr": [
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 369
+}

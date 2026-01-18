@@ -1,0 +1,164 @@
+{
+  "rlid": "matrix_exponentiation",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/matrix/matrix_exponentiation.py#L30-L43",
+  "name": "matrix_exponentiation",
+  "line_cov": 1.0,
+  "lines": 14,
+  "stats": 5,
+  "cc": 3,
+  "content": "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)",
+  "header": "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"",
+  "file": "./algorithms/matrix/matrix_exponentiation.py",
+  "start_line": 30,
+  "end_line": 43,
+  "body_start_line": 37,
+  "comment": "\"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"",
+  "test_time": 0.6491217613220215,
+  "cover_tests": [
+    "tests/test_matrix.py::TestMatrixExponentiation::test_matrix_exponentiation"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return None\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return [[-1 for _ in range(len(mat))] for _ in range(len(mat))]\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return [[0 for _ in range(len(mat))] for _ in range(len(mat))]\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return multiply(mat, mat)\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 != 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)\n",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 2:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)\n",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 3 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)\n",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n / 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)\n",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(mat, mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n // 2), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n - 1)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2 - 1)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 3)\n        return multiply(tmp, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 3)\n        return multiply(tmp, tmp)\n",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(identity(len(mat)), tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(mat, tmp)",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, [[0 for _ in range(len(mat))] for _ in range(len(mat))])",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, identity(len(mat)))",
+    "def matrix_exponentiation(mat: list, n: int) -> list:\n    \"\"\"\n    Calculates mat^n by repeated squaring\n    Time Complexity: O(d^3 log(n))\n                     d: dimension of the square matrix mat\n                     n: power the matrix is raised to\n    \"\"\"\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, mat)"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda mat, n: [row[:] for row in mat], name=\"mat_copy\")\n@icontract.snapshot(lambda mat, n: __import__('functools').reduce(lambda acc, _: multiply(acc, mat), range(n), identity(len(mat))), name=\"expected\")\n@icontract.ensure(lambda OLD, result: result == OLD.expected)\n@icontract.ensure(lambda OLD, mat, n: mat == OLD.mat_copy)\n@icontract.ensure(lambda result, mat: isinstance(result, list) and len(result) == len(mat) and all(isinstance(r, list) and len(r) == len(mat) for r in result))\n@icontract.ensure(lambda result, mat: (len(mat) == 0 and result == []) or True)\n@icontract.ensure(lambda result, mat, n: (n == 0) <= (result == identity(len(mat))))\n@icontract.ensure(lambda result, mat, n: (n == 1) <= (result == mat))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\ndef multiply(matA: list, matB: list) -> list:\n    n = len(matA)\n    matC = [[0 for i in range(n)] for j in range(n)]\n\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                matC[i][j] += matA[i][k] * matB[k][j]\n\n    return matC\n\n\ndef identity(n: int) -> list:\n    I = [[0 for i in range(n)] for j in range(n)]\n\n    for i in range(n):\n        I[i][i] = 1\n\n    return I\n\n\ndef matrix_exponentiation(mat: list, n: int) -> list:\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)\n\n```\n## Target Method\n```\ndef matrix_exponentiation(mat: list, n: int) -> list:\n    if n == 0:\n        return identity(len(mat))\n    elif n % 2 == 1:\n        return multiply(matrix_exponentiation(mat, n - 1), mat)\n    else:\n        tmp = matrix_exponentiation(mat, n // 2)\n        return multiply(tmp, tmp)\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `matrix_exponentiation`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda mat: [row[:] for row in mat], name=\"mat_before\")\n@icontract.snapshot(lambda n: n, name=\"n_before\")\n@icontract.ensure(lambda mat, mat_before: mat == mat_before)\n@icontract.ensure(lambda n, n_before: n == n_before)\n@icontract.ensure(lambda result, mat_before: len(result) == len(mat_before) and all(len(row) == len(mat_before) for row in result))\n@icontract.ensure(lambda result, mat_before, n_before: (n_before != 0) or (result == identity(len(mat_before))))\n@icontract.ensure(lambda result, mat_before, n_before: (n_before != 1) or (result == mat_before))\n@icontract.ensure(lambda result, mat_before, n_before: (n_before != 2) or (not all(len(row) == len(mat_before) for row in mat_before)) or (result == multiply(mat_before, mat_before)))\n@icontract.ensure(lambda result, mat_before: (mat_before != identity(len(mat_before))) or (result == identity(len(mat_before))))\n@icontract.ensure(lambda result, mat_before, n_before: (not (n_before > 0 and all(all(x == 0 for x in row) for row in mat_before))) or all(all(x == 0 for x in row) for row in result))\n@icontract.ensure(lambda result, mat_before, n_before: (n_before == 0) or all((not all(x == 0 for x in mat_before[i])) or all(x == 0 for x in result[i]) for i in range(len(mat_before))))\n@icontract.ensure(lambda result, mat_before, n_before: (n_before == 0) or (not (all(len(row) == len(mat_before) for row in mat_before) and all(len(row) == len(mat_before) for row in result))) or all((not all(mat_before[i][j] == 0 for i in range(len(mat_before)))) or all(result[i][j] == 0 for i in range(len(mat_before))) for j in range(len(mat_before)))\n@icontract.ensure(lambda result, mat_before: (not (all(len(row) == len(mat_before) for row in mat_before) and all(len(row) == len(mat_before) for row in result))) or (not all(mat_before[i][j] == 0 for i in range(len(mat_before)) for j in range(len(mat_before)) if i != j)) or all(result[i][j] == 0 for i in range(len(mat_before)) for j in range(len(mat_before)) if i != j))\n@icontract.ensure(lambda result, mat_before: (not (all(len(row) == len(mat_before) for row in mat_before) and all(len(row) == len(mat_before) for row in result))) or (not all(mat_before[i][j] == mat_before[j][i] for i in range(len(mat_before)) for j in range(len(mat_before)))) or all(result[i][j] == result[j][i] for i in range(len(mat_before)) for j in range(len(mat_before))))",
+    "@icontract.snapshot(lambda mat, n: tuple(tuple(row) for row in mat), name=\"mat_before\")\n@icontract.ensure(lambda mat, n, result, OLD: tuple(tuple(row) for row in mat) == OLD.mat_before)\n@icontract.ensure(lambda mat, n, result: len(result) == len(mat) and all(len(row) == len(mat) for row in result))\n@icontract.ensure(lambda mat, n, result: (n != 0) or (result == identity(len(mat))))\n@icontract.ensure(lambda mat, n, result: (n != 1) or (result == mat))\n@icontract.ensure(lambda mat, n, result: (not all(len(row) == len(mat) and all((1 if i == j else 0) == cell for j, cell in enumerate(row)) for i, row in enumerate(mat))) or (result == identity(len(mat))))\n@icontract.ensure(lambda mat, n, result: (not (n > 0 and all(len(row) == len(mat) and all(cell == 0 for cell in row) for row in mat))) or all(all(cell == 0 for cell in row) for row in result))\n@icontract.ensure(lambda mat, n, result: (n % 2 != 0) or (result == multiply(matrix_exponentiation(mat, n // 2), matrix_exponentiation(mat, n // 2))))\n@icontract.ensure(lambda mat, n, result: (n % 2 != 1) or (result == multiply(matrix_exponentiation(mat, n - 1), mat)))",
+    "@icontract.snapshot(lambda mat: [row[:] for row in mat], name=\"mat_snapshot\")\n@icontract.snapshot(lambda mat: tuple(id(row) for row in mat), name=\"mat_row_ids\")\n@icontract.ensure(lambda mat, mat_snapshot: mat == mat_snapshot)\n@icontract.ensure(lambda result, mat: result is not mat)\n@icontract.ensure(lambda result, mat_row_ids: all(id(row) not in mat_row_ids for row in result))\n@icontract.ensure(lambda result, mat: len(result) == len(mat))\n@icontract.ensure(lambda result, mat: all(len(row) == len(mat) for row in result))\n@icontract.ensure(lambda result: all(len(row) == len(result) for row in result))\n@icontract.ensure(lambda result, mat, n: (n != 0) or result == identity(len(mat)))\n@icontract.ensure(lambda result, mat, n: (n != 1) or result == mat)\n@icontract.ensure(lambda result, mat, n: (n != 2) or result == multiply(mat, mat))\n@icontract.ensure(lambda result, mat, n: (mat != identity(len(mat))) or result == identity(len(mat)))\n@icontract.ensure(lambda result, mat, n: (n <= 0) or (not all(all(el == 0 for el in row) for row in mat)) or all(all(el == 0 for el in row) for row in result))\n@icontract.ensure(lambda result, mat: (not (all(len(row) == len(mat) for row in mat) and all(mat[i][j] == mat[j][i] for i in range(len(mat)) for j in range(len(mat))))) or (all(result[i][j] == result[j][i] for i in range(len(result)) for j in range(len(result)))))\n@icontract.ensure(lambda result, mat, n: (n <= 0) or not all(len(row) == len(mat) for row in mat) or all((not all(val == 0 for val in mat[i])) or all(val == 0 for val in result[i]) for i in range(len(mat))))\n@icontract.ensure(lambda result, mat, n: (n <= 0) or not all(len(row) == len(mat) for row in mat) or all((not all(mat[r][c] == 0 for r in range(len(mat)))) or all(result[r][c] == 0 for r in range(len(result))) for c in range(len(mat))))",
+    "@icontract.snapshot(lambda mat, n: [row[:] for row in mat], name=\"mat_snapshot\")\n@icontract.snapshot(lambda mat, n: len(mat), name=\"dim\")\n@icontract.snapshot(lambda mat, n: n, name=\"n_snapshot\")\n@icontract.ensure(lambda mat, n, result, mat_snapshot: mat == mat_snapshot)\n@icontract.ensure(lambda result, dim: len(result) == dim and all(len(row) == dim for row in result))\n@icontract.ensure(lambda n_snapshot, result, dim: n_snapshot != 0 or result == identity(dim))\n@icontract.ensure(lambda n_snapshot, result, mat_snapshot: n_snapshot != 1 or result == mat_snapshot)\n@icontract.ensure(lambda mat_snapshot, n_snapshot, result: (n_snapshot % 2 != 1) or result == multiply(matrix_exponentiation(mat_snapshot, n_snapshot - 1), mat_snapshot))\n@icontract.ensure(lambda mat_snapshot, n_snapshot, result: not (n_snapshot > 0 and n_snapshot % 2 == 0) or result == multiply(matrix_exponentiation(mat_snapshot, n_snapshot // 2), matrix_exponentiation(mat_snapshot, n_snapshot // 2)))\n@icontract.ensure(lambda mat_snapshot, dim, result: mat_snapshot != identity(dim) or result == identity(dim))",
+    "@icontract.snapshot(lambda mat: len(mat), name=\"size\")\n@icontract.snapshot(lambda mat: [list(row) for row in mat], name=\"mat_before\")\n@icontract.snapshot(lambda mat: [len(row) for row in mat], name=\"row_lengths_before\")\n@icontract.ensure(lambda mat, n, result, size: len(result) == size)\n@icontract.ensure(lambda result, size: all(len(row) == size for row in result))\n@icontract.ensure(lambda mat, mat_before: mat == mat_before)\n@icontract.ensure(lambda mat, row_lengths_before: [len(row) for row in mat] == row_lengths_before)\n@icontract.ensure(lambda n, result, size: n != 0 or result == identity(size))\n@icontract.ensure(lambda n, result, mat_before, size, row_lengths_before: (n != 1) or (not all(rl == size for rl in row_lengths_before)) or (result == mat_before))\n@icontract.ensure(lambda n, result, mat_before, size, row_lengths_before: (n < 0) or (not (all(rl == size for rl in row_lengths_before) and all((mat_before[i][j] == (1 if i == j else 0)) for i in range(size) for j in range(size)))) or (result == identity(size)))\n@icontract.ensure(lambda n, result, mat_before, size, row_lengths_before: (n < 1) or (not (all(rl == size for rl in row_lengths_before) and all((mat_before[i][j] == 0) for i in range(size) for j in range(size)))) or (all((result[i][j] == 0) for i in range(size) for j in range(size))))\n@icontract.ensure(lambda result, size: multiply(result, identity(size)) == result)\n@icontract.ensure(lambda result, size: multiply(identity(size), result) == result)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "syntax_error",
+    "local_crash",
+    "failed",
+    "failed",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 59
+}

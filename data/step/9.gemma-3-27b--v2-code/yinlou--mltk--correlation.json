@@ -1,0 +1,207 @@
+{
+  "rlid": "correlation",
+  "github_url": "https://github.com/yinlou/mltk/blob/f50c42986fdd016e7da38d5e381ed24d8fe87e41/./src/main/java/mltk/util/VectorUtils.java#L191-L212",
+  "name": "correlation",
+  "line_cov": 1.0,
+  "lines": 22,
+  "stats": 13,
+  "cc": 2,
+  "content": "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+  "header": "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {",
+  "file": "./src/main/java/mltk/util/VectorUtils.java",
+  "start_line": 191,
+  "end_line": 212,
+  "body_start_line": 199,
+  "comment": "/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */",
+  "test_time": 4.3486244678497314,
+  "cover_tests": [
+    "mltk.util.VectorUtilsTest#testCorrelation"
+  ],
+  "repo": {
+    "github_path": "yinlou/mltk",
+    "commit": "f50c42986fdd016e7da38d5e381ed24d8fe87e41",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.yinlou</groupId>\n  <artifactId>mltk</artifactId>\n  <version>0.1.1-SNAPSHOT</version>\n\n  <name>mltk</name>\n  <description>Machine Learning Tool Kit</description>\n  <url>https://github.com/yinlou/mltk</url>\n\n  <licenses>\n    <license>\n      <name>BSD 3-Clause</name>\n      <url>https://opensource.org/licenses/BSD-3-Clause</url>\n    </license>\n  </licenses>\n\n   <developers>\n    <developer>\n      <name>Yin Lou</name>\n      <email>machinelearningtoolkit@gmail.com</email>\n    </developer>\n  </developers>\n\n  <scm>\n    <connection>scm:git:git://github.com/yinlou/mltk.git</connection>\n    <developerConnection>scm:git:ssh://github.com:yinlou/mltk.git</developerConnection>\n    <url>https://github.com/yinlou/mltk.git</url>\n  </scm>\n\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n    <maven.compiler.source>10</maven.compiler.source>\n    <maven.compiler.target>10</maven.compiler.target>\n  </properties>\n\n  <profiles>\n    <profile>\n      <id>doclint-java8-disable</id>\n      <activation>\n        <jdk>[1.8,)</jdk>\n      </activation>\n      <properties>\n        <javadoc.opts>-Xdoclint:none</javadoc.opts>\n      </properties>\n    </profile>\n  </profiles>\n\n  <distributionManagement>\n    <snapshotRepository>\n      <id>ossrh</id>\n      <url>https://oss.sonatype.org/content/repositories/snapshots</url>\n    </snapshotRepository>\n  </distributionManagement>\n\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.sonatype.plugins</groupId>\n        <artifactId>nexus-staging-maven-plugin</artifactId>\n        <version>1.6.7</version>\n        <extensions>true</extensions>\n        <configuration>\n          <serverId>ossrh</serverId>\n          <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n          <autoReleaseAfterClose>true</autoReleaseAfterClose>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.5.1</version>\n        <configuration>\n          <showDeprecation>true</showDeprecation>\n          <source>${maven.compiler.source}</source>\n          <target>${maven.compiler.target}</target> \n        </configuration>\n      </plugin>\n      <plugin>\n      <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>2.2.1</version>\n        <executions>\n          <execution>\n           <id>attach-sources</id>\n            <goals>\n              <goal>jar-no-fork</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>2.10.3</version>\n        <configuration>\n          <source>8</source>\n          <doctitle>Machine Learning Tool Kit ${project.version} API</doctitle>\n          <windowtitle>Machine Learning Tool Kit ${project.version} API</windowtitle>\n          <additionalparam>${javadoc.opts}</additionalparam>\n        </configuration>\n        <executions>\n          <execution>\n            <id>attach-javadocs</id>\n            <phase>package</phase>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n      <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-gpg-plugin</artifactId>\n        <version>1.5</version>\n        <executions>\n         <execution>\n            <id>sign-artifacts</id>\n            <phase>verify</phase>\n            <goals>\n             <goal>sign</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n    <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-surefire-plugin</artifactId><version>3.0.0-M7</version></plugin><plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.8</version><executions><execution><id>prepare-agent</id><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>prepare-package</phase><goals><goal>report</goal></goals><configuration><formats><format>html</format><format>xml</format></formats></configuration></execution></executions></plugin></plugins>\n  </build>\n\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.1</version>\n    </dependency>\n  </dependencies>\n\n  <repositories>\n  </repositories>\n\n</project>",
+    "failed_tests": [],
+    "test_time": 1.3728833198547363
+  },
+  "mutants": [
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = 0; // Incorrectly initializes mean1 to zero\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a) * 2; // Incorrectly multiplies the mean of vector a by 2\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a) + 1; // Incorrectly adds 1 to the mean of vector a\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a) / 2; // Incorrectly divides the mean of vector a by 2\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(b); // Uses the mean of vector b instead of a\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = 0; // Setting mean2 to zero, which will affect the correlation calculation\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(a); // Using the mean of the first vector instead of the second\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b) * 2; // Doubling the mean, which will distort the correlation\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b) + 1; // Adding 1 to the mean, introducing a constant bias\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b) / 2; // Halving the mean, which will also distort the correlation\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i >= a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] + mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] + mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 / d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx -= d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 / d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 -= d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 / d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 -= d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn 0;\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x * Math.sqrt(s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / (Math.sqrt(s1) + Math.sqrt(s2));\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / (s1 * s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / (s1 + s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2 + 1);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 + s2);\n\t}",
+    "\t/**\n\t * Returns the Pearson correlation coefficient between two vectors.\n\t * \n\t * @param a the 1st vector.\n\t * @param b the 2nd vector.\n\t * @return the Pearson correlation coefficient between two vectors.\n\t */\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 / s2);\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures (StatUtils.sumSq(\\old(a)) - \\old(a.length) * StatUtils.mean(\\old(a)) * StatUtils.mean(\\old(a)) > 0 && StatUtils.sumSq(\\old(b)) - \\old(b.length) * StatUtils.mean(\\old(b)) * StatUtils.mean(\\old(b)) > 0) ==> \\result == (VectorUtils.dotProduct(\\old(a), \\old(b)) - \\old(a.length) * StatUtils.mean(\\old(a)) * StatUtils.mean(\\old(b))) / Math.sqrt((StatUtils.sumSq(\\old(a)) - \\old(a.length) * StatUtils.mean(\\old(a)) * StatUtils.mean(\\old(a))) * (StatUtils.sumSq(\\old(b)) - \\old(b.length) * StatUtils.mean(\\old(b)) * StatUtils.mean(\\old(b))));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage mltk.util;\n\nimport mltk.core.DenseVector;\nimport mltk.core.SparseVector;\nimport mltk.core.Vector;\n\npublic class VectorUtils {\n\n\tpublic static void add(double[] a, double v) {\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\ta[i] += v;\n\t\t}\n\t}\n\n\tpublic static void subtract(double[] a, double v) {\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\ta[i] -= v;\n\t\t}\n\t}\n\n\tpublic static void multiply(double[] a, double v) {\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\ta[i] *= v;\n\t\t}\n\t}\n\n\tpublic static void divide(double[] a, double v) {\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\ta[i] /= v;\n\t\t}\n\t}\n\n\tpublic static double l2norm(double[] a) {\n\t\treturn Math.sqrt(StatUtils.sumSq(a));\n\t}\n\n\tpublic static double l2norm(Vector v) {\n\t\treturn l2norm(v.getValues());\n\t}\n\n\tpublic static double l1norm(double[] a) {\n\t\tdouble norm = 0;\n\t\tfor (double v : a) {\n\t\t\tnorm += Math.abs(v);\n\t\t}\n\t\treturn norm;\n\t}\n\n\tpublic static double l1norm(Vector v) {\n\t\treturn l1norm(v.getValues());\n\t}\n\n\tpublic static double dotProduct(double[] a, double[] b) {\n\t\tdouble s = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\ts += a[i] * b[i];\n\t\t}\n\t\treturn s;\n\t}\n\n\tpublic static double dotProduct(DenseVector a, DenseVector b) {\n\t\treturn dotProduct(a.getValues(), b.getValues());\n\t}\n\n\tpublic static double dotProduct(SparseVector a, DenseVector b) {\n\t\tint[] indices1 = a.getIndices();\n\t\tdouble[] values1 = a.getValues();\n\t\tdouble[] values2 = b.getValues();\n\t\tdouble s = 0;\n\t\tfor (int i = 0; i < indices1.length; i++) {\n\t\t\ts += values1[i] * values2[indices1[i]];\n\t\t}\n\t\treturn s;\n\t}\n\n\tpublic static double dotProduct(DenseVector a, SparseVector b) {\n\t\treturn dotProduct(b, a);\n\t}\n\n\tpublic static double dotProduct(SparseVector a, SparseVector b) {\n\t\tint[] indices1 = a.getIndices();\n\t\tdouble[] values1 = a.getValues();\n\t\tint[] indices2 = b.getIndices();\n\t\tdouble[] values2 = b.getValues();\n\t\tdouble s = 0;\n\t\tint i = 0;\n\t\tint j = 0;\n\t\twhile (i < indices1.length && j < indices2.length) {\n\t\t\tif (indices1[i] < indices2[j]) {\n\t\t\t\ti++;\n\t\t\t} else if (indices1[i] > indices2[j]) {\n\t\t\t\tj++;\n\t\t\t} else {\n\t\t\t\ts += values1[i] * values2[j];\n\t\t\t\ti++;\n\t\t\t\tj++;\n\t\t\t}\n\t\t}\n\t\treturn s;\n\t}\n\t\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}\n\n}\n\n```\n## Target Method\n```\n\tpublic static double correlation(double[] a, double[] b) {\n\t\tdouble mean1 = StatUtils.mean(a);\n\t\tdouble mean2 = StatUtils.mean(b);\n\t\tdouble x = 0;\n\t\tdouble s1 = 0;\n\t\tdouble s2 = 0;\n\t\tfor (int i = 0; i < a.length; i++) {\n\t\t\tdouble d1 = (a[i] - mean1);\n\t\t\tdouble d2 = (b[i] - mean2);\n\t\t\tx += d1 * d2;\n\t\t\ts1 += d1 * d1;\n\t\t\ts2 += d2 * d2;\n\t\t}\n\t\treturn x / Math.sqrt(s1 * s2);\n\t}\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `correlation`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "//@ ensures \\result == (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : \\old(x) / Math.sqrt(\\old(s1) * \\old(s2));\n//@ ensures \\old(x) == 0.0;\n//@ ensures \\old(s1) == 0.0;\n//@ ensures \\old(s2) == 0.0;",
+    "//@ ensures \\result == (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : \\result;\n//@ ensures \\result >= -1.0 && \\result <= 1.0;",
+    "//@ ensures \\result == (\\old(StatUtils.mean(a)) == 0.0 && \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 ? 0.0 : (\\old(StatUtils.mean(b)) == 0.0 ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 1.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 2.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 3.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 4.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 5.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 6.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 7.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 8.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 9.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 10.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length > 10.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 1.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 2.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 3.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 4.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 5.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 6.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 7.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 8.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 9.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 10.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length > 10.0) ? 0.0 : 0.0))));",
+    "//@ ensures \\result == \\old(StatUtils.mean(a));\n//@ ensures \\result == \\old(StatUtils.mean(b));\n//@ ensures \\result == (x / Math.sqrt(s1 * s2));\n//@ ensures x == \\old(x);\n//@ ensures s1 == \\old(s1);\n//@ ensures s2 == \\old(s2);",
+    "//@ ensures \\result == \\old(StatUtils.mean(a));\n//@ ensures \\result == \\old(StatUtils.mean(b));\n//@ ensures \\result == (x / Math.sqrt(s1 * s2));\n//@ ensures x == \\old(x);\n//@ ensures s1 == \\old(s1);\n//@ ensures s2 == \\old(s2);"
+  ],
+  "responses": [
+    "```jml\n//@ ensures \\result == (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : \\old(x) / Math.sqrt(\\old(s1) * \\old(s2));\n//@ ensures \\old(x) == 0.0;\n//@ ensures \\old(s1) == 0.0;\n//@ ensures \\old(s2) == 0.0;\n```",
+    "```jml\n//@ ensures \\result == (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 || \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : \\result;\n//@ ensures \\result >= -1.0 && \\result <= 1.0;\n```",
+    "```jml\n//@ ensures \\result == (\\old(StatUtils.mean(a)) == 0.0 && \\old(StatUtils.mean(b)) == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == 0.0 ? 0.0 : (\\old(StatUtils.mean(b)) == 0.0 ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 1.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 2.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 3.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 4.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 5.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 6.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 7.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 8.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 9.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length == 10.0) ? 0.0 : (\\old(StatUtils.mean(a)) == \\old(StatUtils.mean(b)) && a.length > 10.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 0.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 1.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 2.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 3.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 4.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 5.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 6.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 7.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 8.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 9.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length == 10.0) ? 0.0 : (\\old(StatUtils.mean(a)) != \\old(StatUtils.mean(b)) && a.length > 10.0) ? 0.0 : 0.0))));\n```",
+    "```jml\n//@ ensures \\result == \\old(StatUtils.mean(a));\n//@ ensures \\result == \\old(StatUtils.mean(b));\n//@ ensures \\result == (x / Math.sqrt(s1 * s2));\n//@ ensures x == \\old(x);\n//@ ensures s1 == \\old(s1);\n//@ ensures s2 == \\old(s2);\n```",
+    "```jml\n//@ ensures \\result == \\old(StatUtils.mean(a));\n//@ ensures \\result == \\old(StatUtils.mean(b));\n//@ ensures \\result == (x / Math.sqrt(s1 * s2));\n//@ ensures x == \\old(x);\n//@ ensures s1 == \\old(s1);\n//@ ensures s2 == \\old(s2);\n```"
+  ],
+  "postcond_corr": [
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 205
+}

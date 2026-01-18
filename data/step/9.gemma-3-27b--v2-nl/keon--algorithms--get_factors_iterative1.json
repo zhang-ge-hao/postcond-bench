@@ -1,0 +1,145 @@
+{
+  "rlid": "get_factors_iterative1",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/dfs/all_factors.py#L63-L84",
+  "name": "get_factors_iterative1",
+  "line_cov": 1.0,
+  "lines": 22,
+  "stats": 9,
+  "cc": 4,
+  "content": "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+  "header": "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"",
+  "file": "./algorithms/dfs/all_factors.py",
+  "start_line": 63,
+  "end_line": 84,
+  "body_start_line": 75,
+  "comment": "\"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"",
+  "test_time": 1.3476247787475586,
+  "cover_tests": [
+    "tests/test_dfs.py::TestAllFactors::test_get_factors_iterative1"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i < n:  # This will miss the case where i * i equals n, potentially skipping valid factors.\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i < n // 2:  # This will limit the range of i too much, missing valid factors that are greater than n/2.\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i < n:  # This will continue checking beyond the necessary range, leading to incorrect results.\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i <= n:  # This will allow i to exceed the square root of n, leading to incorrect factor combinations.\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if i * i == n:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % (i + 1) == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i != 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 1:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n // i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi+[i])),\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i + 1, combi + [i])),  # Incrementing the divisor instead of keeping it the same\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i + 2, combi + [i])),  # Skipping the next divisor by incrementing by 2\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi + [1])),  # Adding 1 to the combination instead of the factor\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi + [n//i])),  # Adding the quotient instead of the factor\n            i += 1\n    return res",
+    "def get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n\n    todo, res = [(n, 2, [])], []\n    while todo:\n        n, i, combi = todo.pop()\n        while i * i <= n:\n            if n % i == 0:\n                res += combi + [i, n//i],\n                todo.append((n//i, i, combi)),  # Not including the current factor in the combination\n            i += 1\n    return res"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda n: get_factors(n), name=\"expected\")\n@icontract.ensure(lambda OLD, result: {tuple(x) for x in result} == {tuple(x) for x in OLD.expected})\n@icontract.ensure(lambda result: all(isinstance(combi, list) for combi in result))\n@icontract.ensure(lambda result: all(len(combi) >= 2 for combi in result))\n@icontract.ensure(lambda result: all(all(isinstance(x, int) and x >= 2 for x in combi) for combi in result))\n@icontract.ensure(lambda result, n: all(__import__('functools').reduce(lambda a, b: a * b, combi, 1) == n for combi in result))\n@icontract.ensure(lambda result: all(combi == sorted(combi) for combi in result))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nNumbers can be regarded as product of its factors. For example,\n8 = 2 x 2 x 2;\n  = 2 x 4.\n\n\nWrite a function that takes an integer n and return all possible combinations\nof its factors.Numbers can be regarded as product of its factors. For example,\n8 = 2 x 2 x 2;\n  = 2 x 4.\n\nExamples:\ninput: 1\noutput:\n[]\n\n\ninput: 37\noutput:\n[]\n\ninput: 32\noutput:\n[\n  [2, 16],\n  [2, 2, 8],\n  [2, 2, 2, 4],\n  [2, 2, 2, 2, 2],\n\"\"\"\ndef get_factors(n):\n    \"\"\"[summary]\n    \n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors of the number n]\n    \"\"\"\n...\ndef get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n...\ndef get_factors_iterative2(n):\n    \"\"\"[summary]\n    analog as above\n\n    Arguments:\n        n {[int]} -- [description]\n    \n    Returns:\n        [list of lists] -- [all factors of n]\n    \"\"\"\n...\n```\n## Target Method\n```\ndef get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `get_factors_iterative1`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(\n    lambda n: (\n        n <= 1 and len(result) == 0 or\n        n == 2 and len(result) == 0 or\n        n == 3 and len(result) == 0 or\n        n == 37 and len(result) == 0 or\n        n == 32 and result == [[2, 16], [2, 2, 8], [2, 2, 2, 4], [2, 2, 2, 2, 2]] or\n        all(\n            (\n                isinstance(factor_list, list) and\n                all(isinstance(factor, int) for factor in factor_list) and\n                reduce(lambda x, y: x * y, factor_list, 1) == n\n            )\n            for factor_list in result\n        )\n    )\n)\n@icontract.snapshot(lambda n: n)\ndef get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n    result = []\n    if n <= 1:\n        return result\n\n    def backtrack(remaining, current_list):\n        if remaining == 1:\n            if len(current_list) > 1:\n                result.append(current_list.copy())\n            return\n\n        start = 2 if len(current_list) == 0 else current_list[-1]\n        for i in range(start, int(remaining**0.5) + 1):\n            if remaining % i == 0:\n                current_list.append(i)\n                backtrack(remaining // i, current_list)\n                current_list.pop()\n\n    backtrack(n, [])\n    return result",
+    "@icontract.ensure(\n    lambda n, result: all(\n        (n % (prod(factors)) == 0) for factors in result\n    ),\n    \"All combinations must multiply to n\"\n)\n@icontract.ensure(\n    lambda n, result: all(\n        (len(factors) > 0) for factors in result\n    ) if n > 1 else (len(result) == 0),\n    \"Combinations should be non-empty if n > 1\"\n)\n@icontract.ensure(\n    lambda n, result: all(\n        (all((2 <= factor <= n) for factor in factors)) for factors in result\n    ),\n    \"All factors must be within the valid range\"\n)\n@icontract.ensure(\n    lambda n, result: (n == 1 and len(result) == 0) or (n > 1),\n    \"If n is 1 the result list should be empty\"\n)\n@icontract.ensure(\n    lambda n, result: all(\n        (isinstance(factors, list)) for factors in result\n    ),\n    \"Result must be a list of lists\"\n)\n@icontract.ensure(\n    lambda n, result: all(\n        (isinstance(factor, int)) for factors in result for factor in factors\n    ),\n    \"Factors must be integers\"\n)\n@icontract.snapshot()\ndef get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n    pass",
+    "@icontract.ensure(\n    lambda n, result: all(\n        isinstance(factors, list) and all(isinstance(x, int) for x in factors)\n        for factors in result\n    )\n)\n@icontract.ensure(\n    lambda n, result: all(\n        reduce(lambda x, y: x * y, factors) == n\n        for factors in result\n    ) if result else n == 1\n)\n@icontract.ensure(\n    lambda n, result: n < 2 or result\n)\n@icontract.ensure(\n    lambda n, result: n == 1 and result == []\n)\n@icontract.snapshot(lambda n: n)",
+    "@icontract.ensure(\n    lambda n: all(\n        isinstance(factor, int) for sublist in result for factor in sublist\n    )\n)\n@icontract.ensure(\n    lambda n: all(\n        reduce(lambda x, y: x * y, sublist) == n for sublist in result\n    ) if result else n == 1\n)\n@icontract.ensure(\n    lambda n: all(\n        len(sublist) > 1 for sublist in result\n    ) if result else n <= 1\n)\n@icontract.ensure(\n    lambda n: all(\n        sublist[0] <= sublist[-1] for sublist in result\n    )\n)\n@icontract.ensure(\n    lambda n: len(result) == 0 if n <= 1 else True\n)\n@icontract.snapshot(result)\ndef get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n    result = []\n    if n <= 1:\n        return result\n    \n    def backtrack(remaining, current_factors):\n        if remaining == 1:\n            if len(current_factors) > 1:\n                result.append(current_factors.copy())\n            return\n        \n        start = 2 if len(current_factors) == 0 else current_factors[-1]\n        for i in range(start, int(remaining**0.5) + 1):\n            if remaining % i == 0:\n                current_factors.append(i)\n                backtrack(remaining // i, current_factors)\n                current_factors.pop()\n\n    backtrack(n, [])\n    return result",
+    "@icontract.ensure(\n    lambda n: all(\n        isinstance(factor_list, list) for factor_list in get_factors_iterative1(n)\n    )\n)\n@icontract.ensure(\n    lambda n: all(\n        all(isinstance(factor, int) for factor in factor_list)\n        for factor_list in get_factors_iterative1(n)\n    )\n)\n@icontract.ensure(\n    lambda n: all(\n        math.prod(factor_list) == n for factor_list in get_factors_iterative1(n) if factor_list\n    ) if n > 1 else len(get_factors_iterative1(n)) == 0\n)\n@icontract.ensure(\n    lambda n: n == 1 and len(get_factors_iterative1(n)) == 0\n)\n@icontract.ensure(\n    lambda n: n == 37 and len(get_factors_iterative1(n)) == 0\n)\n@icontract.ensure(\n    lambda n: n == 32 and sorted(get_factors_iterative1(n)) == sorted([[2, 16], [2, 2, 8], [2, 2, 2, 4], [2, 2, 2, 2, 2]])\n)"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(\n    lambda n: (\n        n <= 1 and len(result) == 0 or\n        n == 2 and len(result) == 0 or\n        n == 3 and len(result) == 0 or\n        n == 37 and len(result) == 0 or\n        n == 32 and result == [[2, 16], [2, 2, 8], [2, 2, 2, 4], [2, 2, 2, 2, 2]] or\n        all(\n            (\n                isinstance(factor_list, list) and\n                all(isinstance(factor, int) for factor in factor_list) and\n                reduce(lambda x, y: x * y, factor_list, 1) == n\n            )\n            for factor_list in result\n        )\n    )\n)\n@icontract.snapshot(lambda n: n)\ndef get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n    result = []\n    if n <= 1:\n        return result\n\n    def backtrack(remaining, current_list):\n        if remaining == 1:\n            if len(current_list) > 1:\n                result.append(current_list.copy())\n            return\n\n        start = 2 if len(current_list) == 0 else current_list[-1]\n        for i in range(start, int(remaining**0.5) + 1):\n            if remaining % i == 0:\n                current_list.append(i)\n                backtrack(remaining // i, current_list)\n                current_list.pop()\n\n    backtrack(n, [])\n    return result\n```",
+    "```python\n@icontract.ensure(\n    lambda n, result: all(\n        (n % (prod(factors)) == 0) for factors in result\n    ),\n    \"All combinations must multiply to n\"\n)\n@icontract.ensure(\n    lambda n, result: all(\n        (len(factors) > 0) for factors in result\n    ) if n > 1 else (len(result) == 0),\n    \"Combinations should be non-empty if n > 1\"\n)\n@icontract.ensure(\n    lambda n, result: all(\n        (all((2 <= factor <= n) for factor in factors)) for factors in result\n    ),\n    \"All factors must be within the valid range\"\n)\n@icontract.ensure(\n    lambda n, result: (n == 1 and len(result) == 0) or (n > 1),\n    \"If n is 1 the result list should be empty\"\n)\n@icontract.ensure(\n    lambda n, result: all(\n        (isinstance(factors, list)) for factors in result\n    ),\n    \"Result must be a list of lists\"\n)\n@icontract.ensure(\n    lambda n, result: all(\n        (isinstance(factor, int)) for factors in result for factor in factors\n    ),\n    \"Factors must be integers\"\n)\n@icontract.snapshot()\ndef get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n    pass\n```",
+    "```python\n@icontract.ensure(\n    lambda n, result: all(\n        isinstance(factors, list) and all(isinstance(x, int) for x in factors)\n        for factors in result\n    )\n)\n@icontract.ensure(\n    lambda n, result: all(\n        reduce(lambda x, y: x * y, factors) == n\n        for factors in result\n    ) if result else n == 1\n)\n@icontract.ensure(\n    lambda n, result: n < 2 or result\n)\n@icontract.ensure(\n    lambda n, result: n == 1 and result == []\n)\n@icontract.snapshot(lambda n: n)\n```",
+    "```python\n@icontract.ensure(\n    lambda n: all(\n        isinstance(factor, int) for sublist in result for factor in sublist\n    )\n)\n@icontract.ensure(\n    lambda n: all(\n        reduce(lambda x, y: x * y, sublist) == n for sublist in result\n    ) if result else n == 1\n)\n@icontract.ensure(\n    lambda n: all(\n        len(sublist) > 1 for sublist in result\n    ) if result else n <= 1\n)\n@icontract.ensure(\n    lambda n: all(\n        sublist[0] <= sublist[-1] for sublist in result\n    )\n)\n@icontract.ensure(\n    lambda n: len(result) == 0 if n <= 1 else True\n)\n@icontract.snapshot(result)\ndef get_factors_iterative1(n):\n    \"\"\"[summary]\n    Computes all factors of n.\n    Translated the function get_factors(...) in\n    a call-stack modell.\n\n    Arguments:\n        n {[int]} -- [to analysed number]\n    \n    Returns:\n        [list of lists] -- [all factors]\n    \"\"\"\n    result = []\n    if n <= 1:\n        return result\n    \n    def backtrack(remaining, current_factors):\n        if remaining == 1:\n            if len(current_factors) > 1:\n                result.append(current_factors.copy())\n            return\n        \n        start = 2 if len(current_factors) == 0 else current_factors[-1]\n        for i in range(start, int(remaining**0.5) + 1):\n            if remaining % i == 0:\n                current_factors.append(i)\n                backtrack(remaining // i, current_factors)\n                current_factors.pop()\n\n    backtrack(n, [])\n    return result\n```",
+    "```python\n@icontract.ensure(\n    lambda n: all(\n        isinstance(factor_list, list) for factor_list in get_factors_iterative1(n)\n    )\n)\n@icontract.ensure(\n    lambda n: all(\n        all(isinstance(factor, int) for factor in factor_list)\n        for factor_list in get_factors_iterative1(n)\n    )\n)\n@icontract.ensure(\n    lambda n: all(\n        math.prod(factor_list) == n for factor_list in get_factors_iterative1(n) if factor_list\n    ) if n > 1 else len(get_factors_iterative1(n)) == 0\n)\n@icontract.ensure(\n    lambda n: n == 1 and len(get_factors_iterative1(n)) == 0\n)\n@icontract.ensure(\n    lambda n: n == 37 and len(get_factors_iterative1(n)) == 0\n)\n@icontract.ensure(\n    lambda n: n == 32 and sorted(get_factors_iterative1(n)) == sorted([[2, 16], [2, 2, 8], [2, 2, 2, 4], [2, 2, 2, 2, 2]])\n)\n```"
+  ],
+  "postcond_corr": [
+    "compile_failure",
+    "compile_failure",
+    "local_crash",
+    "compile_failure",
+    "icontract_fail"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 293
+}

@@ -1,0 +1,119 @@
+{
+  "rlid": "requires_fence_output",
+  "github_url": "https://github.com/google/langextract/blob/6e36c378994121c2b8d9a25b32cff149d9bfc61c/./langextract/core/base_model.py#L86-L102",
+  "name": "requires_fence_output",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 6,
+  "cc": 3,
+  "content": "  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n    if (\n        hasattr(self, '_fence_output_override')\n        and self._fence_output_override is not None\n    ):\n      return self._fence_output_override\n\n    schema_obj = self.schema\n    if schema_obj is None:\n      return True\n    return not schema_obj.requires_raw_output",
+  "header": "  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"",
+  "file": "./langextract/core/base_model.py",
+  "start_line": 86,
+  "end_line": 102,
+  "body_start_line": 93,
+  "comment": "\"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"",
+  "test_time": 9.477524042129517,
+  "cover_tests": [
+    "tests/extract_schema_integration_test.py::ExtractSchemaIntegrationTest::test_extract_explicit_fence_respected",
+    "tests/extract_schema_integration_test.py::ExtractSchemaIntegrationTest::test_extract_gemini_schema_deprecation_warning",
+    "tests/extract_schema_integration_test.py::ExtractSchemaIntegrationTest::test_extract_no_schema_when_disabled",
+    "tests/extract_schema_integration_test.py::ExtractSchemaIntegrationTest::test_extract_with_gemini_uses_schema",
+    "tests/extract_schema_integration_test.py::ExtractSchemaIntegrationTest::test_extract_with_ollama_uses_json_mode",
+    "tests/factory_schema_test.py::FactorySchemaIntegrationTest::test_explicit_fence_output_respected",
+    "tests/factory_schema_test.py::FactorySchemaIntegrationTest::test_gemini_with_schema_returns_false_fence",
+    "tests/factory_schema_test.py::FactorySchemaIntegrationTest::test_no_examples_no_schema",
+    "tests/factory_schema_test.py::FactorySchemaIntegrationTest::test_no_schema_defaults_to_true_fence",
+    "tests/factory_schema_test.py::FactorySchemaIntegrationTest::test_ollama_with_schema_returns_false_fence",
+    "tests/factory_schema_test.py::FactorySchemaIntegrationTest::test_schema_disabled_returns_true_fence",
+    "tests/provider_plugin_test.py::PluginSmokeTest::test_plugin_with_custom_schema",
+    "tests/provider_plugin_test.py::PluginE2ETest::test_pip_install_discovery_and_cleanup",
+    "tests/provider_plugin_test.py::PluginE2ETest::test_plugin_with_schema_e2e",
+    "tests/provider_schema_test.py::OllamaFormatParameterTest::test_extract_with_ollama_passes_json_format",
+    "tests/provider_schema_test.py::OllamaYAMLOverrideTest::test_json_format_keeps_fence_output_false",
+    "tests/provider_schema_test.py::OllamaYAMLOverrideTest::test_yaml_override_sets_fence_output_true"
+  ],
+  "repo": {
+    "github_path": "google/langextract",
+    "commit": "6e36c378994121c2b8d9a25b32cff149d9bfc61c",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=67.0.0\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"langextract\"\nversion = \"1.0.9\"\ndescription = \"LangExtract: A library for extracting structured data from language models\"\nreadme = \"README.md\"\nrequires-python = \">=3.10\"\nlicense = \"Apache-2.0\"\ndependencies = [ \"absl-py (>=1.0.0)\", \"aiohttp (>=3.8.0)\", \"async-timeout (>=4.0.0)\", \"exceptiongroup (>=1.1.0)\", \"google-genai (>=0.1.0)\", \"ml-collections (>=0.1.0)\", \"more-itertools (>=8.0.0)\", \"numpy (>=1.20.0)\", \"pandas (>=1.3.0)\", \"pydantic (>=1.8.0)\", \"python-dotenv (>=0.19.0)\", \"pyyaml (>=6.0)\", \"requests (>=2.25.0)\", \"tqdm (>=4.64.0)\", \"typing-extensions (>=4.0.0)\",]\n[[project.authors]]\nname = \"Akshay Goel\"\nemail = \"goelak@google.com\"\n\n[project.urls]\nHomepage = \"https://github.com/google/langextract\"\nRepository = \"https://github.com/google/langextract\"\nDocumentation = \"https://github.com/google/langextract/blob/main/README.md\"\n\"Bug Tracker\" = \"https://github.com/google/langextract/issues\"\nChangelog = \"https://github.com/google/langextract/releases\"\nDOI = \"https://doi.org/10.5281/zenodo.17015089\"\n\n[project.optional-dependencies]\nopenai = [ \"openai>=1.50.0\",]\nall = [ \"openai>=1.50.0\",]\ndev = [ \"pyink~=24.3.0\", \"isort>=5.13.0\", \"pylint>=3.0.0\", \"pytype>=2024.10.11\", \"tox>=4.0.0\", \"import-linter>=2.0\",]\ntest = [ \"pytest>=7.4.0\", \"tomli>=2.0.0\",]\nnotebook = [ \"ipython>=7.0.0\", \"notebook>=6.0.0\",]\n\n[tool.setuptools]\npackages = [ \"langextract\", \"langextract._compat\", \"langextract.core\", \"langextract.providers\", \"langextract.providers.schemas\",]\ninclude-package-data = true\n\n[tool.pyink]\nline-length = 80\nunstable = true\npyink-indentation = 2\npyink-use-majority-quotes = true\n\n[tool.isort]\nprofile = \"google\"\nline_length = 80\nforce_sort_within_sections = true\nsingle_line_exclusions = [ \"typing\", \"typing_extensions\", \"collections.abc\",]\n\n[tool.importlinter]\nroot_package = \"langextract\"\n[[tool.importlinter.contracts]]\nname = \"Providers must not import inference\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.providers\",]\nforbidden_modules = [ \"langextract.inference\",]\n\n[[tool.importlinter.contracts]]\nname = \"Core must not import providers\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.core\",]\nforbidden_modules = [ \"langextract.providers\",]\n\n[[tool.importlinter.contracts]]\nname = \"Core must not import high-level modules\"\ntype = \"forbidden\"\nsource_modules = [ \"langextract.core\",]\nforbidden_modules = [ \"langextract.annotation\", \"langextract.chunking\", \"langextract.prompting\", \"langextract.resolver\",]\n\n[project.entry-points.\"langextract.providers\"]\ngemini = \"langextract.providers.gemini:GeminiLanguageModel\"\nollama = \"langextract.providers.ollama:OllamaLanguageModel\"\nopenai = \"langextract.providers.openai:OpenAILanguageModel\"\n\n[tool.setuptools.package-data]\nlangextract = [ \"py.typed\",]\n\n[tool.setuptools.exclude-package-data]\n\"*\" = [ \"docs*\", \"tests*\", \"kokoro*\", \"*.gif\", \"*.svg\",]\n\n[tool.pytest.ini_options]\ntestpaths = [ \"tests\",]\npython_files = \"*_test.py\"\npython_classes = \"Test*\"\npython_functions = \"test_*\"\naddopts = \"-ra\"\nmarkers = [ \"live_api: marks tests as requiring live API access\", \"requires_pip: marks tests that perform pip install/uninstall operations\", \"integration: marks integration tests that test multiple components together\",]\n\n[tool.poetry.group.dev.dependencies]\nopenai = \">=1.50.0\"\npyink = \">=24.3.0,<24.4.0\"\nisort = \">=5.13.0\"\npylint = \">=3.0.0\"\npytype = \">=2024.10.11\"\ntox = \">=4.0.0\"\nimport-linter = \">=2.0\"\npytest = \">=7.4.0\"\ntomli = \">=2.0.0\"\nipython = \">=7.0.0\"\nnotebook = \">=6.0.0\"\nicontract = \"^2.7.1\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\n",
+    "failed_tests": [],
+    "test_time": 22.83636784553528
+  },
+  "mutants": [
+    "  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n    if (\n        not hasattr(self, '_fence_output_override')\n        and self._fence_output_override is not None\n    ):\n      return self._fence_output_override\n\n    schema_obj = self.schema\n    if schema_obj is None:\n      return True\n    return not schema_obj.requires_raw_output",
+    "  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n    if (\n        self._fence_output_override == False\n        and self._fence_output_override is not None\n    ):\n      return self._fence_output_override\n\n    schema_obj = self.schema\n    if schema_obj is None:\n      return True\n    return not schema_obj.requires_raw_output",
+    "  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n    if (\n        self._fence_output_override is None\n        and self._fence_output_override is not None\n    ):\n      return self._fence_output_override\n\n    schema_obj = self.schema\n    if schema_obj is None:\n      return True\n    return not schema_obj.requires_raw_output",
+    "  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n    if (\n        hasattr(self, '_fence_output_override')\n        and self._fence_output_override == 'auto'\n    ):\n      return self._fence_output_override\n\n    schema_obj = self.schema\n    if schema_obj is None:\n      return True\n    return not schema_obj.requires_raw_output",
+    "  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n    if (\n        hasattr(self, '_fence_output_override')\n        and self._fence_output_override == 0\n    ):\n      return self._fence_output_override\n\n    schema_obj = self.schema\n    if schema_obj is None:\n      return True\n    return not schema_obj.requires_raw_output",
+    "  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n    if (\n        hasattr(self, '_fence_output_override')\n        and self._fence_output_override is False\n    ):\n      return self._fence_output_override\n\n    schema_obj = self.schema\n    if schema_obj is None:\n      return True\n    return not schema_obj.requires_raw_output"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: hasattr(self, \"_fence_output_override\"), name=\"fence_present\")\n@icontract.snapshot(lambda self: getattr(self, \"_fence_output_override\", None), name=\"fence_val\")\n@icontract.snapshot(lambda self: self.schema, name=\"schema_obj\")\n@icontract.snapshot(lambda self: None if self.schema is None else self.schema.requires_raw_output, name=\"schema_requires_raw\")\n@icontract.ensure(lambda result, OLD: isinstance(result, bool))\n@icontract.ensure(lambda result, OLD: result == (OLD.fence_val if (OLD.fence_present and OLD.fence_val is not None) else (True if OLD.schema_obj is None else (not OLD.schema_requires_raw))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n# Copyright 2025 Google LLC.\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this file except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\n\"\"\"Base interfaces for language models.\"\"\"\nfrom __future__ import annotations\n\nimport abc\nfrom collections.abc import Iterator, Sequence\nimport json\nfrom typing import Any, Mapping\n\nimport yaml\n\nfrom langextract.core import schema\nfrom langextract.core import types\n\n__all__ = ['BaseLanguageModel']\n\n\nclass BaseLanguageModel(abc.ABC):\n  \"\"\"An abstract inference class for managing LLM inference.\n\n  Attributes:\n    _constraint: A `Constraint` object specifying constraints for model output.\n  \"\"\"\n\n  def __init__(self, constraint: types.Constraint | None = None, **kwargs: Any):\n    \"\"\"Initializes the BaseLanguageModel with an optional constraint.\n\n    Args:\n      constraint: Applies constraints when decoding the output. Defaults to no\n        constraint.\n      **kwargs: Additional keyword arguments passed to the model.\n    \"\"\"\n...\n  @classmethod\n  def get_schema_class(cls) -> type[Any] | None:\n    \"\"\"Return the schema class this provider supports.\"\"\"\n...\n  def apply_schema(self, schema_instance: schema.BaseSchema | None) -> None:\n    \"\"\"Apply a schema instance to this provider.\n\n    Optional method that providers can override to store the schema instance\n    for runtime use. The default implementation stores it as _schema.\n\n    Args:\n      schema_instance: The schema instance to apply, or None to clear.\n    \"\"\"\n...\n  @property\n  def schema(self) -> schema.BaseSchema | None:\n    \"\"\"The current schema instance if one is configured.\n\n    Returns:\n      The schema instance or None if no schema is applied.\n    \"\"\"\n...\n  def set_fence_output(self, fence_output: bool | None) -> None:\n    \"\"\"Set explicit fence output preference.\n\n    Args:\n      fence_output: True to force fences, False to disable, None for auto.\n    \"\"\"\n...\n  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n...\n  def merge_kwargs(\n      self, runtime_kwargs: Mapping[str, Any] | None = None\n  ) -> dict[str, Any]:\n    \"\"\"Merge stored extra kwargs with runtime kwargs.\n\n    Runtime kwargs take precedence over stored kwargs.\n\n    Args:\n      runtime_kwargs: Kwargs provided at inference time, or None.\n\n    Returns:\n      Merged kwargs dictionary.\n    \"\"\"\n...\n  @abc.abstractmethod\n  def infer(\n      self, batch_prompts: Sequence[str], **kwargs\n  ) -> Iterator[Sequence[types.ScoredOutput]]:\n    \"\"\"Implements language model inference.\n\n    Args:\n      batch_prompts: Batch of inputs for inference. Single element list can be\n        used for a single input.\n      **kwargs: Additional arguments for inference, like temperature and\n        max_decode_steps.\n\n    Returns: Batch of Sequence of probable output text outputs, sorted by\n      descending score.\n    \"\"\"\n\n  def infer_batch(\n      self, prompts: Sequence[str], batch_size: int = 32  # pylint: disable=unused-argument\n  ) -> list[list[types.ScoredOutput]]:\n    \"\"\"Batch inference with configurable batch size.\n\n    This is a convenience method that collects all results from infer().\n\n    Args:\n      prompts: List of prompts to process.\n      batch_size: Batch size (currently unused, for future optimization).\n\n    Returns:\n      List of lists of ScoredOutput objects.\n    \"\"\"\n...\n  def parse_output(self, output: str) -> Any:\n    \"\"\"Parses model output as JSON or YAML.\n\n    Note: This expects raw JSON/YAML without code fences.\n    Code fence extraction is handled by resolver.py.\n\n    Args:\n      output: Raw output string from the model.\n\n    Returns:\n      Parsed Python object (dict or list).\n\n    Raises:\n      ValueError: If output cannot be parsed as JSON or YAML.\n    \"\"\"\n...\n```\n## Target Method\n```\n  @property\n  def requires_fence_output(self) -> bool:\n    \"\"\"Whether this model requires fence output for parsing.\n\n    Uses explicit override if set, otherwise computes from schema.\n    Returns True if no schema or schema doesn't require raw output.\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `requires_fence_output`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(lambda self, result: isinstance(result, bool))\n@icontract.ensure(lambda self, result: (not (hasattr(self, \"_fence_output\") and getattr(self, \"_fence_output\") is not None)) or (result == getattr(self, \"_fence_output\")))\n@icontract.ensure(lambda self, result: (not (hasattr(self, \"_requires_fence_output\") and getattr(self, \"_requires_fence_output\") is not None)) or (result == getattr(self, \"_requires_fence_output\")))\n@icontract.ensure(lambda self, result: (not (hasattr(self, \"_fence_output_override\") and getattr(self, \"_fence_output_override\") is not None)) or (result == getattr(self, \"_fence_output_override\")))\n@icontract.ensure(lambda self, result: (any(hasattr(self, n) and getattr(self, n) is not None for n in (\"_fence_output\", \"_requires_fence_output\", \"_fence_output_override\")) or (self.schema is not None) or result))\n@icontract.ensure(lambda self, result: (not ((not any(hasattr(self, n) and getattr(self, n) is not None for n in (\"_fence_output\", \"_requires_fence_output\", \"_fence_output_override\"))) and (self.schema is not None) and (getattr(self.schema, \"requires_raw_output\", None) is True))) or (result is False))\n@icontract.ensure(lambda self, result: (not ((not any(hasattr(self, n) and getattr(self, n) is not None for n in (\"_fence_output\", \"_requires_fence_output\", \"_fence_output_override\"))) and (self.schema is not None) and (getattr(self.schema, \"requires_raw_output\", None) is False))) or (result is True))",
+    "@icontract.snapshot(lambda self: getattr(self, \"_fence_output\", None), name=\"override\")\n@icontract.snapshot(lambda self: self.schema, name=\"schema\")\n@icontract.ensure(lambda result: isinstance(result, bool))\n@icontract.ensure(lambda result, override: (override is None) or (result == override))\n@icontract.ensure(lambda result, override, schema: not (override is None and schema is None) or (result is True))\n@icontract.ensure(lambda result, override, schema: not (override is None and schema is not None) or (result == (not getattr(schema, \"requires_raw_output\", False))))",
+    "@icontract.snapshot(lambda self: self.schema, name=\"old_schema\")\n@icontract.snapshot(lambda self: None if self.schema is None else (getattr(self.schema, \"requires_raw_output\", None)() if callable(getattr(self.schema, \"requires_raw_output\", None)) else getattr(self.schema, \"requires_raw_output\", None)), name=\"raw_req\")\n@icontract.ensure(lambda self, result: isinstance(result, bool))\n@icontract.ensure(lambda self, result, OLD: self.schema is OLD.old_schema)\n@icontract.ensure(lambda self, result: (self.schema is not None) or result)\n@icontract.ensure(lambda self, result, OLD: (not isinstance(OLD.raw_req, bool)) or (result == (not OLD.raw_req)))",
+    "@icontract.snapshot(lambda self: getattr(self, \"_fence_output\", None), name=\"override\")\n@icontract.snapshot(lambda self: self.schema, name=\"sch\")\n@icontract.snapshot(lambda self: (getattr(self.schema, \"requires_raw_output\", None) if self.schema is not None else None), name=\"requires_raw\")\n@icontract.ensure(lambda self, result, override, sch, requires_raw: result == (override if override is not None else (sch is None or not bool(requires_raw))))",
+    "@icontract.snapshot(lambda self: self.schema, name=\"schema_before\")\n@icontract.snapshot(lambda self: getattr(self, \"_fence_output\", None), name=\"fence_pref_before\")\n@icontract.ensure(lambda result: isinstance(result, bool))\n@icontract.ensure(lambda self, schema_before: self.schema is schema_before)\n@icontract.ensure(lambda self, fence_pref_before: getattr(self, \"_fence_output\", None) is fence_pref_before)\n@icontract.ensure(lambda self, result: getattr(self, \"_fence_output\", None) is None or result == getattr(self, \"_fence_output\", None))\n@icontract.ensure(lambda self, result: not (getattr(self, \"_fence_output\", None) is None and self.schema is None) or (result is True))\n@icontract.ensure(lambda self, result: not (getattr(self, \"_fence_output\", None) is None and self.schema is not None) or (result == (not getattr(self.schema, \"requires_raw_output\", False))))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "failed",
+    "icontract_fail",
+    "failed",
+    "icontract_fail"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 214
+}

@@ -1,0 +1,232 @@
+{
+  "rlid": "to_dict",
+  "github_url": "https://github.com/dynaconf/dynaconf/blob/09c10d1a91854894986da19fb70f1b54a47cd865/./dynaconf/nodes.py#L170-L187",
+  "name": "to_dict",
+  "line_cov": 0.9,
+  "lines": 18,
+  "stats": 8,
+  "cc": 5,
+  "content": "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict",
+  "header": "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"",
+  "file": "./dynaconf/nodes.py",
+  "start_line": 170,
+  "end_line": 187,
+  "body_start_line": 176,
+  "comment": "\"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"",
+  "test_time": 2.133108615875244,
+  "cover_tests": [
+    "tests/test_base.py::test_populate_obj_convert_to_dict",
+    "tests/test_base.py::test_dotted_set",
+    "tests/test_base.py::test_from_env_method",
+    "tests/test_base.py::test_clone_with_module_type",
+    "tests/test_cli.py::test_list",
+    "tests/test_cli.py::test_not_found_key_exit_error[list]",
+    "tests/test_cli.py::test_list_export_json",
+    "tests/test_cli.py::test_list_prints_json",
+    "tests/test_cli.py::test_list_with_all",
+    "tests/test_cli.py::test_list_with_env[default]",
+    "tests/test_cli.py::test_list_with_env[development]",
+    "tests/test_cli.py::test_list_with_instance",
+    "tests/test_cli.py::test_list_with_instance_from_env",
+    "tests/test_cli.py::test_list_with_key",
+    "tests/test_cli.py::test_list_with_invalid_key",
+    "tests/test_cli.py::test_list_with_key_export_json",
+    "tests/test_cli.py::test_list_with_missing_key",
+    "tests/test_cli.py::test_inspect_no_args",
+    "tests/test_cli.py::test_inspect_yaml_format",
+    "tests/test_cli.py::test_inspect_env_filter",
+    "tests/test_cli.py::test_inspect_limit",
+    "tests/test_endtoend.py::test_359_jinja_interpolation",
+    "tests/test_inspect.py::test_inspect_no_filter",
+    "tests/test_inspect.py::test_inspect_env_filter",
+    "tests/test_inspect.py::test_inspect_to_file",
+    "tests/test_inspect.py::test_inspect_empty_settings",
+    "tests/test_nodes.py::TestBoxCompatibility::test_dynabox",
+    "tests/test_nodes.py::TestBoxCompatibility::test_box_list"
+  ],
+  "repo": {
+    "github_path": "dynaconf/dynaconf",
+    "commit": "09c10d1a91854894986da19fb70f1b54a47cd865",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=42\", \"wheel\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"dynaconf\"\ndynamic = [ \"version\",]\ndescription = \"The dynamic configurator for your Python Project\"\nreadme = \"README.md\"\nrequires-python = \">=3.9,<3.14\"\nclassifiers = [ \"Development Status :: 5 - Production/Stable\", \"Framework :: Django\", \"Framework :: Flask\", \"Intended Audience :: Developers\", \"License :: OSI Approved :: MIT License\", \"Natural Language :: English\", \"Operating System :: OS Independent\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3 :: Only\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Topic :: Utilities\", \"Topic :: Software Development :: Libraries\", \"Topic :: Software Development :: Libraries :: Python Modules\",]\ndependencies = []\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Bruno Rocha\"\nemail = \"rochacbruno@gmail.com\"\n\n[project.license]\ntext = \"MIT\"\n\n[project.urls]\nHomepage = \"https://github.com/dynaconf/dynaconf\"\n\n[project.optional-dependencies]\nredis = [ \"redis\",]\nvault = [ \"hvac\",]\nyaml = [ \"ruamel.yaml\",]\ntoml = [ \"toml\",]\nini = [ \"configobj\",]\nconfigobj = [ \"configobj\",]\n\n[tool.pytest.ini_options]\nmarkers = [ \"integration: marks tests as integration (deselect with '-m \\\"not integration\\\"')\",]\ntestpaths = [ \"tests\",]\nnorecursedirs = [ \"tests_functional\",]\naddopts = \"--ignore=tests_functional\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nflask = \"^3.1.2\"\nhvac = \">=1.1.0\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nversion = \">=1.2.0\"\nmarkers = \"python_version >= \\\"3.10\\\"\"\n",
+    "failed_tests": [
+      "tests/test_base.py::test_load_file__validate_on_update_is_false[load-ini]",
+      "tests/test_base.py::test_load_file__validate_on_update_is_true[load-ini]",
+      "tests/test_base.py::test_load_file__validate_on_update_is_str_all[load-ini]",
+      "tests/test_cli.py::test_init_with_path[ini]",
+      "tests/test_cli.py::test_help_dont_require_instance",
+      "tests/test_cli.py::test_write[True-default-ini]",
+      "tests/test_cli.py::test_write[True-development-ini]",
+      "tests/test_cli.py::test_write[False-default-ini]",
+      "tests/test_cli.py::test_write[False-development-ini]",
+      "tests/test_django.py::test_djdt_382",
+      "tests/test_django.py::test_override_settings_596",
+      "tests/test_ini_loader.py::test_load_from_ini",
+      "tests/test_ini_loader.py::test_load_from_multiple_ini",
+      "tests/test_ini_loader.py::test_key_error_on_invalid_env",
+      "tests/test_ini_loader.py::test_load_single_key",
+      "tests/test_ini_loader.py::test_cleaner",
+      "tests/test_ini_loader.py::test_using_env",
+      "tests/test_ini_loader.py::test_load_dunder",
+      "tests/test_ini_loader.py::test_envless",
+      "tests/test_ini_loader.py::test_prefix",
+      "tests/test_loaders.py::test_loaders_raise_on_syntax_error[f.ini-True]",
+      "tests/test_loaders.py::test_loaders_raise_on_syntax_error[f.ini-False]",
+      "tests/test_nested_loading.py::test_load_nested_different_types[ini]",
+      "tests/test_nested_loading.py::test_load_nested_different_types_with_merge",
+      "tests/test_redis.py::test_write_redis_without_data",
+      "tests/test_redis.py::test_write_to_redis",
+      "tests/test_redis.py::test_load_from_redis_with_key",
+      "tests/test_redis.py::test_write_and_load_from_redis_without_key",
+      "tests/test_redis.py::test_delete_from_redis",
+      "tests/test_redis.py::test_delete_all_from_redis",
+      "tests/test_redis.py::test_redis_has_proper_source_metadata",
+      "tests/test_validators.py::test_no_reload_on_single_env",
+      "tests/test_vault.py::test_write_vault_without_data",
+      "tests/test_vault.py::test_list_envs_in_vault",
+      "tests/test_vault.py::test_write_to_vault",
+      "tests/test_vault.py::test_load_from_vault_with_key",
+      "tests/test_vault.py::test_write_and_load_from_vault_without_key",
+      "tests/test_vault.py::test_read_from_vault_kv2_with_different_environments",
+      "tests/test_vault.py::test_vault_has_proper_source_metadata"
+    ],
+    "test_time": 32.326640129089355
+  },
+  "mutants": [
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict()  # This initializes an empty dictionary, losing all data\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self.items())  # This results in a dictionary of items, losing DataDict structure\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = {k: v for k, v in self.items()}  # This does not include the core metadata\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is None:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is not self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is not self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict\n",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(None, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict\n",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = None\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict\n",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = None  # Setting the value to None instead of converting it\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v  # Assigning the DataList directly without conversion\n            elif isinstance(v, DataList):\n                out_dict[k] = v.to_list()\n        return out_dict",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = None\n        return out_dict\n",
+    "    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n        box_deprecation_warning(\n            \"to_dict\", \"DataDict\", \"Use dict(data_dict) instead.\"\n        )  # pragma: nocover\n        out_dict = dict(self)\n        for k, v in out_dict.items():\n            if v is self:\n                out_dict[k] = out_dict\n            elif isinstance(v, DataDict):\n                out_dict[k] = v.to_dict()\n            elif isinstance(v, DataList):\n                out_dict[k] = None  # Setting the value to None instead of converting the DataList\n        return out_dict"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda self: dict(self))\n@icontract.ensure(lambda result, self, OLD: isinstance(result, dict))\n@icontract.ensure(lambda result, self, OLD: set(result.keys()) == set(OLD.self.keys()))\n@icontract.ensure(lambda result, self, OLD: all((k in result) and (result[k] is result) for k in OLD.self if OLD.self[k] is self))\n@icontract.ensure(lambda result, self, OLD: all((k in result) and (result[k] is not result) for k in OLD.self if OLD.self[k] is not self))\n@icontract.ensure(lambda result, self, OLD: all(isinstance(result[k], dict) for k in OLD.self if isinstance(OLD.self[k], DataDict)))\n@icontract.ensure(lambda result, self, OLD: all(isinstance(result[k], list) for k in OLD.self if isinstance(OLD.self[k], DataList)))\n@icontract.ensure(lambda result, self, OLD: all(not isinstance(result[k], (DataDict, DataList)) for k in OLD.self))\n@icontract.ensure(lambda result, self: all((k in result) and not getattr(result[k], \"_dynaconf_lazy_format\", None) for k in self.keys() if getattr(self.get(k, bypass_eval=True), \"_dynaconf_lazy_format\", None)))\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "timeout",
+    "timeout",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"The nodes model for dynaconf.\n\nInternally, the user facing settings object are special data nodes that can store metadata about themselves.\nThese data nodes are DataDict and DataList, which replaces the Box-based objects of dynaconf<3.3.0.\nIn general, they behave like their dict and list counterparts, but they contain a single private\nentrypoint for that special metadata at `<node>.__meta__`.\n\nThe metadata stores the node's internal state and the global app state, which is a shared object called\n`DynaconfCore`. The internal/individual node state may be values like it's schema, associated hooks and\nlazy values. This global state is responsible for managing internal configurations and functionality, like\nthe legacy `Settings` attributes `._fresh, ._store, ._deleted, etc`.\n\"\"\"\n\nfrom __future__ import annotations\n\nimport copy\nimport inspect\nimport warnings\nfrom dataclasses import dataclass\nfrom typing import Optional\nfrom typing import Union\n\nimport dynaconf.utils as ut\nfrom dynaconf.utils.functional import empty\nfrom dynaconf.vendor.box import converters\n\n\nclass DynaconfNotInitialized(BaseException): ...\n\n\nclass AccessError(KeyError, AttributeError): ...\n\n\nclass DynaconfCore:\n    def __init__(self, id: str):\n        # NOTE: this is where all Dynaconf settings, hooks, validators and internal\n        # data should live. This is a proper 'isolated' object of users and it's safe\n        # to access internally without unwanted side-effects\n...\n@dataclass\nclass NodeMetadata:\n    \"\"\"\n    The namespace for any internal state of the data-node.\n    \"\"\"\n\n    core: Optional[DynaconfCore] = None\n    data_env: str = \"default\"\n\n\nclass DataDict(dict):\n    def __init__(self, *args, **kwargs):\n...\n    def update(self, data):\n...\n    def setdefault(self, k, v):\n...\n    def copy(self, bypass_eval=False):\n...\n    def get(self, item, default=None, bypass_eval=False):\n...\n    def __copy__(self):\n...\n    def __getitem__(self, item):\n...\n    def __getattr__(self, attr):\n...\n    def items(self, bypass_eval=False):\n...\n    def __setitem__(self, k, v):\n...\n    def __setattr__(self, k, v):\n        # NOTE: We shouldnt use setattr to store items. If an item was assigned with setatttr\n        # and it's lazy, we won't be able to intercept the call in getitem/getattr, which\n        # is required to trigger it's evaluation and not return an actual Lazy object.\n        # __getattr__ is not called because __getattribute__ find the key with the Lazy object,\n        # and really like avoiding overriding __getattribute__ here.\n...\n    def __delitem__(self, k):\n...\n    def __delattr__(self, name):\n...\n    def __repr__(self):\n        # NOTE: debatable choice: same representation of dict\n...\n    def __iter__(self):\n        # WARNING: this has some side-effect that triggerse lazy evaluation\n        # when calling dict(DataDict). If absence, it won't trigger, which\n        # is actually expected, as the output should be evaluated\n...\n    def __contains__(self, key):\n...\n    # Box compatibility. Remove in 4.0\n\n    def __dir__(self):\n...\n    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n...\n    def merge_update(self, __m=None, **kwargs):  # pragma: nocover\n        \"\"\"Merge update with another dict\"\"\"\n...\n    def to_json(\n        self, filename=None, encoding=\"utf-8\", errors=\"strict\", **json_kwargs\n    ):  # pragma: nocover\n        \"\"\"\n        Transform the DataDict object into a JSON string.\n\n        :param filename: If provided will save to file\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param json_kwargs: additional arguments to pass to json.dump(s)\n        :return: string of JSON (if no filename provided)\n        \"\"\"\n...\n    def to_yaml(\n        self,\n        filename=None,\n        default_flow_style=False,\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        **yaml_kwargs,\n    ):\n        \"\"\"\n        Transform the DataDict object into a YAML string.\n\n        :param filename:  If provided will save to file\n        :param default_flow_style: False will recursively dump dicts\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param yaml_kwargs: additional arguments to pass to yaml.dump\n        :return: string of YAML (if no filename provided)\n        \"\"\"\n...\n    def to_toml(\n        self, filename=None, encoding=\"utf-8\", errors=\"strict\"\n    ):  # pragma: nocover\n        \"\"\"\n        Transform the DataDict object into a toml string.\n\n        :param filename: File to write toml object too\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :return: string of TOML (if no filename provided)\n        \"\"\"\n...\n    @classmethod\n    def from_json(\n        cls,\n        json_string=None,\n        filename=None,\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        **kwargs,\n    ):  # pragma: nocover\n        \"\"\"\n        Transform a json object string into a DataDict object. If the incoming\n        json is a list, you must use DataList.from_json.\n\n        :param json_string: string to pass to `json.loads`\n        :param filename: filename to open and pass to `json.load`\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param kwargs: parameters to pass to `DataDict()` or `json.loads`\n        :return: DataDict object from json data\n        \"\"\"\n...\n    @classmethod\n    def from_yaml(\n        cls,\n        yaml_string=None,\n        filename=None,\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        **kwargs,\n    ):  # pragma: nocover\n        \"\"\"\n        Transform a yaml object string into a DataDict object. By default will use SafeLoader.\n\n        :param yaml_string: string to pass to `yaml.load`\n        :param filename: filename to open and pass to `yaml.load`\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param kwargs: parameters to pass to `DataDict()` or `yaml.load`\n        :return: DataDict object from yaml data\n        \"\"\"\n...\n    @classmethod\n    def from_toml(\n        cls,\n        toml_string=None,\n        filename=None,\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        **kwargs,\n    ):  # pragma: nocover\n        \"\"\"\n        Transforms a toml string or file into a DataDict object\n\n        :param toml_string: string to pass to `toml.load`\n        :param filename: filename to open and pass to `toml.load`\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param kwargs: parameters to pass to `DataDict()`\n        :return: DataDict object from toml data\n        \"\"\"\n...\nclass DataList(list):\n    def __init__(self, *args, **kwargs):\n...\n    def copy(self):\n...\n    def append(self, v):\n...\n    def insert(self, i, v):\n...\n    def extend(self, data):\n...\n    def __getitem__(self, index):\n...\n    def __setitem__(self, k, v):\n...\n    def __add__(self, v):\n...\n    def __iadd__(self, v):\n...\n    def __repr__(self):\n        # NOTE: debatable choice: same representation of list\n...\n    # Box compatibility. Remove in 4.0\n\n    def __copy__(self):  # pragma: nocover\n...\n    def __deepcopy__(self, memo=None):  # pragma: nocover\n...\n    def to_list(self):  # pragma: nocover\n        \"\"\"\n        Turn the DataList and sub DataLists back into a native python list.\n\n        :return: python list of this DataList\n        \"\"\"\n...\n    def to_json(\n        self,\n        filename=None,\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        multiline=False,\n        **json_kwargs,\n    ):  # pragma: nocover\n        \"\"\"\n        Transform the DataList object into a JSON string.\n\n        :param filename: If provided will save to file\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param multiline: Put each item in list onto it's own line\n        :param json_kwargs: additional arguments to pass to json.dump(s)\n        :return: string of JSON or return of `json.dump`\n        \"\"\"\n...\n    def to_yaml(\n        self,\n        filename=None,\n        default_flow_style=False,\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        **yaml_kwargs,\n    ):  # pragma: nocover\n        \"\"\"\n        Transform the DataList object into a YAML string.\n\n        :param filename:  If provided will save to file\n        :param default_flow_style: False will recursively dump dicts\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param yaml_kwargs: additional arguments to pass to yaml.dump\n        :return: string of YAML or return of `yaml.dump`\n        \"\"\"\n...\n    def to_toml(\n        self, filename=None, key_name=\"toml\", encoding=\"utf-8\", errors=\"strict\"\n    ):  # pragma: nocover\n        \"\"\"\n        Transform the DataList object into a toml string.\n\n        :param filename: File to write toml object too\n        :param key_name: Specify the name of the key to store the string under\n            (cannot directly convert to toml)\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :return: string of TOML (if no filename provided)\n        \"\"\"\n...\n    def to_csv(\n        self, filename, encoding=\"utf-8\", errors=\"strict\"\n    ):  # pragma: nocover\n        \"\"\"\n        Transform the DataList object into a CSV file.\n\n        :param filename: File to write CSV data to\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        \"\"\"\n...\n    @classmethod\n    def from_json(\n        cls,\n        json_string=None,\n        filename=None,\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        multiline=False,\n        **kwargs,\n    ):  # pragma: nocover\n        \"\"\"\n        Transform a json object string into a DataList object. If the incoming\n        json is a dict, you must use DataDict.from_json.\n\n        :param json_string: string to pass to `json.loads`\n        :param filename: filename to open and pass to `json.load`\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param multiline: One object per line\n        :param kwargs: parameters to pass to `DataList()` or `json.loads`\n        :return: DataList object from json data\n        \"\"\"\n...\n    @classmethod\n    def from_yaml(\n        cls,\n        yaml_string=None,\n        filename=None,\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        **kwargs,\n    ):  # pragma: nocover\n        \"\"\"\n        Transform a yaml object string into a DataList object.\n\n        :param yaml_string: string to pass to `yaml.load`\n        :param filename: filename to open and pass to `yaml.load`\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param kwargs: parameters to pass to `DataList()` or `yaml.load`\n        :return: DataList object from yaml data\n        \"\"\"\n...\n    @classmethod\n    def from_toml(\n        cls,\n        toml_string=None,\n        filename=None,\n        key_name=\"toml\",\n        encoding=\"utf-8\",\n        errors=\"strict\",\n        **kwargs,\n    ):  # pragma: nocover\n        \"\"\"\n        Transforms a toml string or file into a DataList object\n\n        :param toml_string: string to pass to `toml.load`\n        :param filename: filename to open and pass to `toml.load`\n        :param key_name: Specify the name of the key to pull the list from\n            (cannot directly convert from toml)\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :param kwargs: parameters to pass to `DataList()`\n        :return: DataList object from toml data\n        \"\"\"\n...\n    @classmethod\n    def from_csv(\n        cls, filename, encoding=\"utf-8\", errors=\"strict\"\n    ):  # pragma: nocover\n        \"\"\"\n        Transform a CSV file into a DataList object.\n\n        :param filename: CSV file to read from\n        :param encoding: File encoding\n        :param errors: How to handle encoding errors\n        :return: DataList object from CSV data\n        \"\"\"\n...\n################\n## NODE UTILS ##\n################\n\n# Utilities for manipulating Data nodes.\n# Adding those directly to the data nodes causes some overhead and clutters\n# the class namespace. It should be as close as possible to 'dict'.\n\nDataNode = Union[DataDict, DataList]\n\n\ndef init_core(node, dynaconf_core: DynaconfCore):\n...\ndef get_core(node, raises=True) -> DynaconfCore:\n...\ndef convert_containers(data: dict | list | DataNode, iter, core):\n...\n# NOTE: Moved here due to circular imports. Will sort it out later\ndef recursively_evaluate_lazy_format(value, settings):\n    \"\"\"Given a value as a data structure, traverse all its members\n    to find Lazy values and evaluate it.\n\n    For example: Evaluate values inside lists and dicts\n    \"\"\"\n...\ndef ensure_containers(data, core):\n    # NOTE: this is to ensure that the nodes nested dict and lists are always\n    # converted to DataDict and DataList. However, that change is not compatible\n    # with what we had with DynaBox/BoxList. Leaving here for awarenes.\n    #\n    # if data.__class__ is dict:\n    #     return DataDict(data, core=core)\n    # elif data.__class__ is list:\n    #     return DataList(data, core=core)\n...\ndef box_deprecation_warning(\n    method_name: str, class_name: str, alternative: Optional[str] = None\n):\n    \"\"\"Issue a deprecation warning for Box compatibility methods.\"\"\"\n...\n```\n## Target Method\n```\n    def to_dict(self):\n        \"\"\"\n        Turn the DataDict and sub DataDicts back into a native python dictionary.\n\n        :return: python dictionary of this DataDict\n        \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `to_dict`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: not isinstance(result, DataDict))\n@icontract.snapshot(lambda self: set(self.keys()), name=\"original_keys\")\n@icontract.ensure(lambda original_keys, result: set(result.keys()) == original_keys)\n@icontract.snapshot(lambda self: len(self), name=\"original_len\")\n@icontract.ensure(lambda original_len, result: len(result) == original_len)\n@icontract.ensure(lambda self, result: all(key in result for key in self.keys()))\n@icontract.ensure(lambda result: all(not isinstance(v, DataDict) for v in result.values()))\n@icontract.ensure(lambda result: all(not isinstance(v, DataList) for v in result.values()))",
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: type(result) is dict, \"Result must be a native dict, not DataDict\")\n@icontract.ensure(lambda self, result: set(result.keys()) == set(self.keys()), \"All keys must be preserved\")\n@icontract.ensure(lambda self, result: len(result) == len(self), \"Dictionary length must be preserved\")\n@icontract.ensure(lambda result: all(not isinstance(v, DataDict) for v in result.values()), \"No DataDict instances in top-level values\")\n@icontract.ensure(lambda result: all(not isinstance(v, DataList) for v in result.values()), \"No DataList instances in top-level values\")",
+    "@icontract.snapshot(lambda self: set(self.keys()), name=\"original_keys\")\n@icontract.snapshot(lambda self: len(self), name=\"original_len\")\n@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: not isinstance(result, DataDict))\n@icontract.ensure(lambda result, original_len: len(result) == original_len)\n@icontract.ensure(lambda result, original_keys: set(result.keys()) == original_keys)\n@icontract.ensure(lambda result: all(not isinstance(v, DataDict) for v in result.values()))\n@icontract.ensure(lambda result: all(not isinstance(v, DataList) for v in result.values()))",
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: not isinstance(result, DataDict))\n@icontract.ensure(lambda self, result: len(result) == len(self))\n@icontract.ensure(lambda self, result: set(result.keys()) == set(self.keys()))\n@icontract.ensure(lambda result: all(not isinstance(v, DataDict) for v in result.values() if isinstance(v, dict)))\n@icontract.ensure(lambda result: all(not isinstance(v, DataList) for v in result.values() if isinstance(v, list)))",
+    "@icontract.ensure(lambda result: isinstance(result, dict))\n@icontract.ensure(lambda result: not isinstance(result, DataDict))\n@icontract.ensure(lambda self, result: len(result) == len(self))\n@icontract.ensure(lambda self, result: set(result.keys()) == set(self.keys()))\n@icontract.ensure(lambda self, result: all(key in result for key in self.keys()))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "local_crash",
+    "passed",
+    "local_crash",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "icontract_fail",
+      "failed",
+      "failed"
+    ],
+    [],
+    [
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "icontract_fail",
+      "failed",
+      "failed"
+    ],
+    [
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "local_crash",
+      "local_crash",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 363
+}

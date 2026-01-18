@@ -1,0 +1,205 @@
+{
+  "rlid": "printIdenticals",
+  "github_url": "https://github.com/ashish-chopra/Structures/blob/ce0a8f131568368bec3110f4ffddcb74d0b9ca0f/./src/main/java/com/applications/Identicals.java#L28-L52",
+  "name": "printIdenticals",
+  "line_cov": 1.0,
+  "lines": 25,
+  "stats": 14,
+  "cc": 5,
+  "content": "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+  "header": "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { ",
+  "file": "./src/main/java/com/applications/Identicals.java",
+  "start_line": 28,
+  "end_line": 52,
+  "body_start_line": 35,
+  "comment": "/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */",
+  "test_time": 4.27265191078186,
+  "cover_tests": [
+    "com.applications.IdenticalsTest#testIdenticals"
+  ],
+  "repo": {
+    "github_path": "ashish-chopra/Structures",
+    "commit": "ce0a8f131568368bec3110f4ffddcb74d0b9ca0f",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.types.adt</groupId>\n  <artifactId>Structures</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <name>Structures</name>\n  <url>https://github.com/ashish-chopra/Structures</url>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    </properties>\n  <dependencies>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.11</version>\n      <scope>test</scope>\n      </dependency>\n    <dependency>\n      <groupId>com.googlecode.princeton-java-introduction</groupId>\n      <artifactId>stdlib</artifactId>\n      <version>1.0.1</version>\n      </dependency>\n    </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-javadoc-plugin</artifactId>\n        <version>2.10.3</version>\n        <configuration>\n        </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.3</version>\n        <configuration>\n          <source>10</source><target>10</target></configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          </configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            <configuration>\n              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n              <formats><format>XML</format></formats></configuration>\n            </execution>\n          </executions>\n        </plugin>\n      </plugins>\n    </build>\n  </project>",
+    "failed_tests": [
+      "com.graph.BFSTest#testBFSOperations",
+      "com.graph.ConnectedComponentsTest#testConnectedComponents",
+      "com.graph.CycleTest#testBasicCycleDetection",
+      "com.graph.DFSTest#testDFSQueries",
+      "com.graph.GraphTest#testBasicOperationsOfGraph",
+      "com.graph.GraphTest#testGraphAPI"
+    ],
+    "test_time": 2.620187997817993
+  },
+  "mutants": [
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length && first[i] != second[j]) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length && first[i] == second[j]) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length && i < j) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j >= second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i >= first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i] * 2, second[j]); // Incorrect scaling of first array element\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i] + 1, second[j]); // Off by one error in comparison\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j] * 2); // Incorrect scaling of second array element\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j] + 1); // Off by one error in comparison\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j] - 1); // Off by one error in comparison\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result != -1) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result != 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == -1) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0 || result == 1) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 1) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result != -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == 0)\n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == 1 && j < second.length)\n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == 1)\n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tlist += \"Identical numbers found: \" + list;\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tlist += \"Identicals: \" + first.length + \" found.\";\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tlist += \"Total identicals: \" + (i + j) + \"]\";\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tlist = list.replace(\",\", \";\");\n\t\treturn list;\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n\t\t// instead of printing, we return the list \n\t\t// to compare with expected values\n\t\tString list = \"[\";\t\n\t\tint i = 0, j = 0;\n\t\twhile (i < first.length && j < second.length) {\n\t\t\tint result = compare(first[i], second[j]);\n\t\t\tif (result == 0) {\n\t\t\t\tlist += first[i] + \",\";\n\t\t\t\ti++; j++;\n\t\t\t} else if (result == -1) \n\t\t\t\tj++;\n\t\t\telse \n\t\t\t\ti++;\n\t\t}\n\t\tlist +=  \"]\";\n\t\tSystem.out.println(list);\n\t\treturn null;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result != null;\n//@ ensures \\result.equals(\"[\" + java.util.stream.IntStream.range(0, first.length).filter(i -> java.util.stream.IntStream.range(0, i).noneMatch(k -> first[k] == first[i])).mapToObj(i -> { int v = first[i]; int c1 = (int) java.util.stream.IntStream.range(0, first.length).filter(k -> first[k] == v).count(); int c2 = (int) java.util.stream.IntStream.range(0, second.length).filter(k -> second[k] == v).count(); return java.util.stream.IntStream.range(0, Math.min(c1, c2)).mapToObj(x -> String.valueOf(v) + \",\").collect(java.util.stream.Collectors.joining(\"\")); }).collect(java.util.stream.Collectors.joining(\"\")) + \"]\");",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n/*\n *  File: Identicals.java\n *  Author: Ashish Chopra\n *  Date: 9 Apr, 2015\n *  --------------------------------------\n *  Identicals is an implementation of an algorithm to print \n *  identical integers in the given two sorted arrays of integers of size N.\n *  \n *  You are given two sorted arrays of integers, you need to print the \n *  integer present in both the arrays, in sorted order.\n *  \n *  The expectation is to perform this task at T(N) ~ N for worst case.\n *  \n */\npackage com.applications;\n\n\npublic class Identicals {\n\n\tprivate int[] first;   // first array to hold N integers\n\tprivate int[] second;  // second array to hold N integers\n\t\n\tIdenticals(int[] arr1, int[] arr2) {\n\t\tthis.first = arr1;\n\t\tthis.second = arr2;\n\t}\n\t\n\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n...\n\t/**\n\t * compares the two integers a and b\n\t * @param a Integer at first position\n\t * @param b Integer at second position\n\t * @return <code>0</code> when a and b are equal,\n\t *         <code>1</code> when b is greater than a,\n\t *         <code>-1</code> when a is greater than b\n\t */\n\tprivate int compare(int a, int b) {\n...\n}\n\n```\n## Target Method\n```\n\t/**\n\t * returns the identical numbers found in\n\t * both the sorted array of N integers in running\n\t * time of T(N) ~ N for worst case.\n\t * \n\t */\n\tpublic String printIdenticals() { \n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `printIdenticals`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "//@ ensures \\result instanceof String;\n//@ ensures \\result.contains(String.valueOf(i)) <==> (\\exists int j; 0 <= j < first.length; first[j] == i) && (\\exists int k; 0 <= k < second.length; second[k] == i);\n//@ ensures \\result.equals(\"\") || (\\forall String s; java.util.Arrays.asList(\\result.split(\", \")).contains(s); Integer.parseInt(s) >= Integer.MIN_VALUE && Integer.parseInt(s) <= Integer.MAX_VALUE);",
+    "//@ ensures \\result instanceof String;\n//@ ensures \\result.equals(\"\") || \\result.charAt(\\result.length() - 1) == '\\n';\n//@ ensures (\\forall int i; 0 <= i < \\result.length(); \\result.charAt(i) >= '0' && \\result.charAt(i) <= '9' || \\result.charAt(i) == '\\n');\n//@ ensures (\\forall int x; (\\exists int i; 0 <= i < first.length; first[i] == x) && (\\exists int j; 0 <= j < second.length; second[j] == x) ==> (\\exists int k; 0 <= k < \\result.length(); (\\forall int m; 0 <= m < k; \\result.charAt(m) < \\result.charAt(k)) && \\result.charAt(k) == (x + \"\").charAt(0)));",
+    "//@ ensures \\result instanceof String;\n//@ ensures \\result.contains(String.valueOf(x)) <==> (\\exists int i; 0 <= i && i < first.length; first[i] == x) && (\\exists int j; 0 <= j && j < second.length; second[j] == x);\n//@ ensures \\result.equals(\"\") || (\\forall int i; 0 <= i < \\result.length() - 1; \\result.charAt(i) <= \\result.charAt(i + 1));",
+    "//@ ensures \\result != null;\n//@ ensures \\result.length() == 0 ==> no element is present in both first and second;\n//@ ensures \\result.length() > 0 ==> all integers in \\result are present in both first and second;\n//@ ensures all integers in \\result are in sorted order;",
+    "//@ ensures \\result instanceof String;\n//@ ensures \\result.equals(\"\") || \\result.charAt(\\result.length() - 1) == '\\n';\n//@ ensures \\result.equals(\"\") || (\\result.length() > 0 && \\result.charAt(0) != '\\n');\n//@ ensures \\result.equals(\"\") || (\\result.length() > 0 && \\result.indexOf('\\n', \\result.length() - 2) == \\result.length() - 2);"
+  ],
+  "responses": [
+    "```jml\n//@ ensures \\result instanceof String;\n//@ ensures \\result.contains(String.valueOf(i)) <==> (\\exists int j; 0 <= j < first.length; first[j] == i) && (\\exists int k; 0 <= k < second.length; second[k] == i);\n//@ ensures \\result.equals(\"\") || (\\forall String s; java.util.Arrays.asList(\\result.split(\", \")).contains(s); Integer.parseInt(s) >= Integer.MIN_VALUE && Integer.parseInt(s) <= Integer.MAX_VALUE);\n```",
+    "```jml\n//@ ensures \\result instanceof String;\n//@ ensures \\result.equals(\"\") || \\result.charAt(\\result.length() - 1) == '\\n';\n//@ ensures (\\forall int i; 0 <= i < \\result.length(); \\result.charAt(i) >= '0' && \\result.charAt(i) <= '9' || \\result.charAt(i) == '\\n');\n//@ ensures (\\forall int x; (\\exists int i; 0 <= i < first.length; first[i] == x) && (\\exists int j; 0 <= j < second.length; second[j] == x) ==> (\\exists int k; 0 <= k < \\result.length(); (\\forall int m; 0 <= m < k; \\result.charAt(m) < \\result.charAt(k)) && \\result.charAt(k) == (x + \"\").charAt(0)));\n```",
+    "```jml\n//@ ensures \\result instanceof String;\n//@ ensures \\result.contains(String.valueOf(x)) <==> (\\exists int i; 0 <= i && i < first.length; first[i] == x) && (\\exists int j; 0 <= j && j < second.length; second[j] == x);\n//@ ensures \\result.equals(\"\") || (\\forall int i; 0 <= i < \\result.length() - 1; \\result.charAt(i) <= \\result.charAt(i + 1));\n```",
+    "```jml\n//@ ensures \\result != null;\n//@ ensures \\result.length() == 0 ==> no element is present in both first and second;\n//@ ensures \\result.length() > 0 ==> all integers in \\result are present in both first and second;\n//@ ensures all integers in \\result are in sorted order;\n```",
+    "```jml\n//@ ensures \\result instanceof String;\n//@ ensures \\result.equals(\"\") || \\result.charAt(\\result.length() - 1) == '\\n';\n//@ ensures \\result.equals(\"\") || (\\result.length() > 0 && \\result.charAt(0) != '\\n');\n//@ ensures \\result.equals(\"\") || (\\result.length() > 0 && \\result.indexOf('\\n', \\result.length() - 2) == \\result.length() - 2);\n```"
+  ],
+  "postcond_corr": [
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "compile_failure",
+    "jml_fail"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 24
+}

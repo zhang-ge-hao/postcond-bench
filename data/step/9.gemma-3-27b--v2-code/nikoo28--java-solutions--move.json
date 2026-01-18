@@ -1,0 +1,238 @@
+{
+  "rlid": "move",
+  "github_url": "https://github.com/nikoo28/java-solutions/blob/a7f282d36a96a486af2259f5fd15deb96b00667a/./src/main/java/leetcode/medium/TicTacToe.java#L50-L78",
+  "name": "move",
+  "line_cov": 1.0,
+  "lines": 29,
+  "stats": 10,
+  "cc": 3,
+  "content": "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+  "header": "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {",
+  "file": "./src/main/java/leetcode/medium/TicTacToe.java",
+  "start_line": 50,
+  "end_line": 78,
+  "body_start_line": 62,
+  "comment": "/**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */",
+  "test_time": 5.382791996002197,
+  "cover_tests": [
+    "leetcode.medium.TicTacToeTest#testGrid2",
+    "leetcode.medium.TicTacToeTest#testGrid3",
+    "leetcode.medium.TicTacToeTest#testGrid4"
+  ],
+  "repo": {
+    "github_path": "nikoo28/java-solutions",
+    "commit": "a7f282d36a96a486af2259f5fd15deb96b00667a",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.studyalgorithms.javasolutions</groupId>\n  <artifactId>java-solutions</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <name>java-solutions</name>\n  <url>http://www.studyalgorithms.com</url>\n  <dependencies>\n    <dependency>\n      <groupId>com.google.guava</groupId>\n      <artifactId>guava</artifactId>\n      <version>32.0.0-jre</version>\n    </dependency>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter-engine</artifactId>\n      <version>5.1.0</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>11</maven.compiler.source>\n    <maven.compiler.target>11</maven.compiler.target>\n  </properties>\n  <build>\n    <pluginManagement>\n      <plugins>\n        <plugin>\n          <artifactId>maven-clean-plugin</artifactId>\n          <version>3.1.0</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-resources-plugin</artifactId>\n          <version>3.0.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-compiler-plugin</artifactId>\n          <version>3.8.0</version>\n          <configuration>\n            <source>11</source>\n            <target>11</target>\n          </configuration>\n        </plugin>\n        <plugin>\n          <artifactId>maven-surefire-plugin</artifactId>\n          <version>2.22.1</version>\n        <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n        <plugin>\n          <artifactId>maven-jar-plugin</artifactId>\n          <version>3.0.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-install-plugin</artifactId>\n          <version>2.5.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-deploy-plugin</artifactId>\n          <version>2.8.2</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-site-plugin</artifactId>\n          <version>3.7.1</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-project-info-reports-plugin</artifactId>\n          <version>3.0.0</version>\n        </plugin>\n        <plugin>\n          <artifactId>maven-assembly-plugin</artifactId>\n          <configuration>\n            <descriptorRefs>\n              <descriptorRef>jar-with-dependencies</descriptorRef>\n            </descriptorRefs>\n          </configuration>\n        </plugin>\n      </plugins>\n    </pluginManagement>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <configuration>\n          <source>11</source>\n          <target>11</target>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>2.22.1</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.10</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <xml>true</xml>\n            </configuration>\n          </execution>\n        </executions>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 2.7155823707580566
+  },
+  "mutants": [
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = cols.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = new Tuple(0, false);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(col);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = rows.get(col); // Incorrectly retrieves a row instead of a column\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    \n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, 'O'); // Incorrectly processing as if player 2 is making the move\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, 'X'); // Always processing as if player 1 is making the move\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) \n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, 'O');\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, 'X');\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col != gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == 0) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize + 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 2) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row - col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row == col) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return 0;\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(3, gridSize); // Always checks for a non-existent player (3), leading to incorrect results\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, 0); // Always returns 0, indicating no winner regardless of the game state\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize + 1); // Incorrectly checks for one more than the grid size\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize - 1); // Incorrectly checks for one less than the grid size\n  }",
+    "  /**\n   * Player {player} makes a move at ({row}, {col}).\n   *\n   * @param row    The row of the board.\n   * @param col    The column of the board.\n   * @param player The player, can be either 1 or 2.\n   * @return The current winning condition, can be either:\n   * 0: No one wins.\n   * 1: Player 1 wins.\n   * 2: Player 2 wins.\n   */\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    // Handle left diagonal\n    if (row == col) processTuple(leftDiagonal, c);\n\n    // Handle right diagonal\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize / 2); // Incorrectly checks for half the grid size, which is not a winning condition\n  }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures rows.get(row).currentSize == \\old(rows.get(row).currentSize) + 1;\n//@ ensures cols.get(col).currentSize == \\old(cols.get(col).currentSize) + 1;\n//@ ensures row == col ==> leftDiagonal.currentSize == \\old(leftDiagonal.currentSize) + 1;\n//@ ensures row != col ==> leftDiagonal.currentSize == \\old(leftDiagonal.currentSize);\n//@ ensures row + col == gridSize - 1 ==> rightDiagonal.currentSize == \\old(rightDiagonal.currentSize) + 1;\n//@ ensures row + col != gridSize - 1 ==> rightDiagonal.currentSize == \\old(rightDiagonal.currentSize);\n//@ ensures \\old(rows.get(row).currentSize) == 0 ==> (rows.get(row).firstCharacter == (player == 1 ? 'X' : 'O') && rows.get(row).allSame);\n//@ ensures \\old(cols.get(col).currentSize) == 0 ==> (cols.get(col).firstCharacter == (player == 1 ? 'X' : 'O') && cols.get(col).allSame);\n//@ ensures row == col && \\old(leftDiagonal.currentSize) == 0 ==> (leftDiagonal.firstCharacter == (player == 1 ? 'X' : 'O') && leftDiagonal.allSame);\n//@ ensures row + col == gridSize - 1 && \\old(rightDiagonal.currentSize) == 0 ==> (rightDiagonal.firstCharacter == (player == 1 ? 'X' : 'O') && rightDiagonal.allSame);\n//@ ensures rows.get(row).currentSize == gridSize && rows.get(row).allSame ==> \\result == player;\n//@ ensures cols.get(col).currentSize == gridSize && cols.get(col).allSame ==> \\result == player;\n//@ ensures row == col && leftDiagonal.currentSize == gridSize && leftDiagonal.allSame ==> \\result == player;\n//@ ensures row + col == gridSize - 1 && rightDiagonal.currentSize == gridSize && rightDiagonal.allSame ==> \\result == player;\n//@ ensures !(rows.get(row).currentSize == gridSize && rows.get(row).allSame) && !(cols.get(col).currentSize == gridSize && cols.get(col).allSame) && !(row == col && leftDiagonal.currentSize == gridSize && leftDiagonal.allSame) && !(row + col == gridSize - 1 && rightDiagonal.currentSize == gridSize && rightDiagonal.allSame) ==> \\result == 0;",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage leetcode.medium;\n\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.stream.IntStream;\n\n\nclass Tuple {\n\n  int currentSize;\n  boolean allSame;\n  char firstCharacter;\n\n  Tuple(int current, boolean allSame) {\n    this.currentSize = current;\n    this.allSame = allSame;\n  }\n}\n\nclass TicTacToe {\n\n  private List<Tuple> rows;\n  private List<Tuple> cols;\n  private Tuple leftDiagonal;\n  private Tuple rightDiagonal;\n  private int gridSize;\n\n  TicTacToe(int n) {\n\n    rows = new ArrayList<>(n);\n    cols = new ArrayList<>(n);\n\n    IntStream.range(0, n).forEach(i -> {\n      rows.add(new Tuple(0, false));\n      cols.add(new Tuple(0, false));\n    });\n\n    leftDiagonal = new Tuple(0, false);\n    rightDiagonal = new Tuple(0, false);\n\n    gridSize = n;\n  }\n\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    if (row == col) processTuple(leftDiagonal, c);\n\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }\n\n  private void processTuple(Tuple tuple, char playedCharacter) {\n    tuple.currentSize++;\n    if (tuple.currentSize == 1) {\n      tuple.firstCharacter = playedCharacter;\n      tuple.allSame = true;\n    } else if (playedCharacter != tuple.firstCharacter) {\n      tuple.allSame = false;\n    }\n  }\n\n  private int checkResult(int player, int gridSize) {\n\n    for (Tuple row : rows) {\n      if (row.currentSize == gridSize && row.allSame) return player;\n    }\n\n    for (Tuple col : cols) {\n      if (col.currentSize == gridSize && col.allSame) return player;\n    }\n\n    if (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame) return player;\n\n    if (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame) return player;\n\n    return 0;\n  }\n}\n\n\n```\n## Target Method\n```\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    if (row == col) processTuple(leftDiagonal, c);\n\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `move`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    if (row == col) processTuple(leftDiagonal, c);\n\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }\n\n  //@ ensures \\result == 0 ==> rows.stream().noneMatch(r -> r.currentSize == gridSize && r.allSame) && cols.stream().noneMatch(c -> c.currentSize == gridSize && c.allSame) && (leftDiagonal.currentSize < gridSize || !leftDiagonal.allSame) && (rightDiagonal.currentSize < gridSize || !rightDiagonal.allSame);\n  //@ ensures \\result == player ==> rows.stream().anyMatch(r -> r.currentSize == gridSize && r.allSame) || cols.stream().anyMatch(c -> c.currentSize == gridSize && c.allSame) || (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame) || (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame);\n  //@ ensures rows.get(row).currentSize == \\old(rows.get(row).currentSize) + 1;\n  //@ ensures cols.get(col).currentSize == \\old(cols.get(col).currentSize) + 1;\n  //@ ensures (row == col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize) + 1) || (row != col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize));\n  //@ ensures (row + col == gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize) + 1) || (row + col != gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize));",
+    "//@ ensures \\result == 0 || \\result == player;\n//@ ensures rows.get(row).currentSize == \\old(rows.get(row).currentSize) + 1;\n//@ ensures cols.get(col).currentSize == \\old(cols.get(col).currentSize) + 1;\n//@ ensures (row == col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize) + 1) || (row != col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize));\n//@ ensures (row + col == gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize) + 1) || (row + col != gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize));",
+    "//@ ensures \\result == 0 || \\result == 1 || \\result == 2;\n//@ ensures \\result == 1 ==> rows.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> cols.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame && leftDiagonal.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame && rightDiagonal.firstCharacter == 'X');\n//@ ensures \\result == 2 ==> rows.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> cols.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame && leftDiagonal.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame && rightDiagonal.firstCharacter == 'O');\n//@ ensures \\result == 0 ==> rows.stream().noneMatch(t -> t.currentSize == gridSize && t.allSame);\n//@ ensures \\result == 0 ==> cols.stream().noneMatch(t -> t.currentSize == gridSize && t.allSame);\n//@ ensures \\result == 0 ==> !(leftDiagonal.currentSize == gridSize && leftDiagonal.allSame);\n//@ ensures \\result == 0 ==> !(rightDiagonal.currentSize == gridSize && rightDiagonal.allSame);",
+    "//@ ensures \\result == 0 || \\result == 1 || \\result == 2;\n//@ ensures \\result == 1 ==> rows.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> cols.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame && leftDiagonal.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame && rightDiagonal.firstCharacter == 'X');\n//@ ensures \\result == 2 ==> rows.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> cols.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame && leftDiagonal.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame && rightDiagonal.firstCharacter == 'O');\n//@ ensures \\result == 0 ==> rows.stream().noneMatch(t -> t.currentSize == gridSize && t.allSame);\n//@ ensures \\result == 0 ==> cols.stream().noneMatch(t -> t.currentSize == gridSize && t.allSame);\n//@ ensures \\result == 0 ==> !(leftDiagonal.currentSize == gridSize && leftDiagonal.allSame);\n//@ ensures \\result == 0 ==> !(rightDiagonal.currentSize == gridSize && rightDiagonal.allSame);",
+    "//@ ensures \\result == 0 || \\result == player;\n//@ ensures rows.get(row).currentSize == \\old(rows.get(row).currentSize) + 1;\n//@ ensures cols.get(col).currentSize == \\old(cols.get(col).currentSize) + 1;\n//@ ensures (row == col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize) + 1) || (row != col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize));\n//@ ensures (row + col == gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize) + 1) || (row + col != gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize));"
+  ],
+  "responses": [
+    "```java\n  int move(int row, int col, int player) {\n\n    char c = player == 1 ? 'X' : 'O';\n\n    Tuple rowNumber = rows.get(row);\n    Tuple colNumber = cols.get(col);\n\n    processTuple(rowNumber, c);\n    processTuple(colNumber, c);\n\n    if (row == col) processTuple(leftDiagonal, c);\n\n    if (row + col == gridSize - 1) processTuple(rightDiagonal, c);\n\n    return checkResult(player, gridSize);\n  }\n\n  //@ ensures \\result == 0 ==> rows.stream().noneMatch(r -> r.currentSize == gridSize && r.allSame) && cols.stream().noneMatch(c -> c.currentSize == gridSize && c.allSame) && (leftDiagonal.currentSize < gridSize || !leftDiagonal.allSame) && (rightDiagonal.currentSize < gridSize || !rightDiagonal.allSame);\n  //@ ensures \\result == player ==> rows.stream().anyMatch(r -> r.currentSize == gridSize && r.allSame) || cols.stream().anyMatch(c -> c.currentSize == gridSize && c.allSame) || (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame) || (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame);\n  //@ ensures rows.get(row).currentSize == \\old(rows.get(row).currentSize) + 1;\n  //@ ensures cols.get(col).currentSize == \\old(cols.get(col).currentSize) + 1;\n  //@ ensures (row == col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize) + 1) || (row != col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize));\n  //@ ensures (row + col == gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize) + 1) || (row + col != gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize));\n```",
+    "```jml\n//@ ensures \\result == 0 || \\result == player;\n//@ ensures rows.get(row).currentSize == \\old(rows.get(row).currentSize) + 1;\n//@ ensures cols.get(col).currentSize == \\old(cols.get(col).currentSize) + 1;\n//@ ensures (row == col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize) + 1) || (row != col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize));\n//@ ensures (row + col == gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize) + 1) || (row + col != gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize));\n```",
+    "```jml\n//@ ensures \\result == 0 || \\result == 1 || \\result == 2;\n//@ ensures \\result == 1 ==> rows.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> cols.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame && leftDiagonal.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame && rightDiagonal.firstCharacter == 'X');\n//@ ensures \\result == 2 ==> rows.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> cols.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame && leftDiagonal.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame && rightDiagonal.firstCharacter == 'O');\n//@ ensures \\result == 0 ==> rows.stream().noneMatch(t -> t.currentSize == gridSize && t.allSame);\n//@ ensures \\result == 0 ==> cols.stream().noneMatch(t -> t.currentSize == gridSize && t.allSame);\n//@ ensures \\result == 0 ==> !(leftDiagonal.currentSize == gridSize && leftDiagonal.allSame);\n//@ ensures \\result == 0 ==> !(rightDiagonal.currentSize == gridSize && rightDiagonal.allSame);\n```",
+    "```jml\n//@ ensures \\result == 0 || \\result == 1 || \\result == 2;\n//@ ensures \\result == 1 ==> rows.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> cols.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame && leftDiagonal.firstCharacter == 'X');\n//@ ensures \\result == 1 ==> (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame && rightDiagonal.firstCharacter == 'X');\n//@ ensures \\result == 2 ==> rows.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> cols.stream().anyMatch(t -> t.currentSize == gridSize && t.allSame && t.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> (leftDiagonal.currentSize == gridSize && leftDiagonal.allSame && leftDiagonal.firstCharacter == 'O');\n//@ ensures \\result == 2 ==> (rightDiagonal.currentSize == gridSize && rightDiagonal.allSame && rightDiagonal.firstCharacter == 'O');\n//@ ensures \\result == 0 ==> rows.stream().noneMatch(t -> t.currentSize == gridSize && t.allSame);\n//@ ensures \\result == 0 ==> cols.stream().noneMatch(t -> t.currentSize == gridSize && t.allSame);\n//@ ensures \\result == 0 ==> !(leftDiagonal.currentSize == gridSize && leftDiagonal.allSame);\n//@ ensures \\result == 0 ==> !(rightDiagonal.currentSize == gridSize && rightDiagonal.allSame);\n```",
+    "```jml\n//@ ensures \\result == 0 || \\result == player;\n//@ ensures rows.get(row).currentSize == \\old(rows.get(row).currentSize) + 1;\n//@ ensures cols.get(col).currentSize == \\old(cols.get(col).currentSize) + 1;\n//@ ensures (row == col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize) + 1) || (row != col && leftDiagonal.currentSize == \\old(leftDiagonal.currentSize));\n//@ ensures (row + col == gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize) + 1) || (row + col != gridSize - 1 && rightDiagonal.currentSize == \\old(rightDiagonal.currentSize));\n```"
+  ],
+  "postcond_corr": [
+    "compile_failure",
+    "passed",
+    "jml_fail",
+    "jml_fail",
+    "passed"
+  ],
+  "mutant_kill": [
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [],
+    [],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 207
+}

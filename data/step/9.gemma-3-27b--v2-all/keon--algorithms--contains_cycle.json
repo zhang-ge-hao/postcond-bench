@@ -1,0 +1,125 @@
+{
+  "rlid": "contains_cycle",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/graph/cycle_detection.py#L38-L55",
+  "name": "contains_cycle",
+  "line_cov": 1.0,
+  "lines": 18,
+  "stats": 5,
+  "cc": 4,
+  "content": "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+  "header": "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"",
+  "file": "./algorithms/graph/cycle_detection.py",
+  "start_line": 38,
+  "end_line": 55,
+  "body_start_line": 50,
+  "comment": "\"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"",
+  "test_time": 1.3611297607421875,
+  "cover_tests": [
+    "tests/test_graph.py::TestCycleDetection::test_cycle_detection_with_cycle",
+    "tests/test_graph.py::TestCycleDetection::test_cycle_detection_with_no_cycle"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state != TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False\n",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.BLACK and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.GRAY and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and not\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE or\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE or is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False\n",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return False\n    return False\n",
+    "def contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return True\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda graph: any((lambda f: f(f, v, v, {v}))(lambda self, u, t, vis: any(n == t or (n not in vis and self(self, n, t, vis | {n})) for n in graph.get(u, ())) ) for v in graph), name=\"HAS_CYCLE_RECURSIVE\")\n@icontract.snapshot(lambda graph: any(v in __import__('functools').reduce(lambda fr, _: set().union(*(graph.get(u, ()) for u in fr)), range(len(graph)), {v}) for v in graph), name=\"HAS_CYCLE_ITERATIVE\")\n@icontract.snapshot(lambda graph: any(v in graph.get(v, ()) for v in graph), name=\"HAS_SELF_LOOP\")\n@icontract.snapshot(lambda graph: all(len(graph.get(v, ())) == 0 for v in graph), name=\"ALL_OUT_EMPTY\")\n@icontract.ensure(lambda OLD, result: result == OLD.HAS_CYCLE_RECURSIVE)\n@icontract.ensure(lambda OLD, result: result == OLD.HAS_CYCLE_ITERATIVE)\n@icontract.ensure(lambda OLD, result: (not OLD.ALL_OUT_EMPTY) or (result is False))\n@icontract.ensure(lambda OLD, result: (not OLD.HAS_SELF_LOOP) or (result is True))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gemma-3-27b",
+  "port": "19990",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"\nGiven a directed graph, check whether it contains a cycle.\n\nReal-life scenario: deadlock detection in a system. Processes may be\nrepresented by vertices, then and an edge A -> B could mean that process A is\nwaiting for B to release its lock on a resource.\n\"\"\"\nfrom enum import Enum\n\n\nclass TraversalState(Enum):\n    \"\"\"\n    For a given node:\n        - WHITE: has not been visited yet\n        - GRAY: is currently being investigated for a cycle\n        - BLACK: is not part of a cycle\n    \"\"\"\n    WHITE = 0\n    GRAY = 1\n    BLACK = 2\n\ndef is_in_cycle(graph, traversal_states, vertex):\n    \"\"\"\n    Determines if the given vertex is in a cycle.\n\n    :param: traversal_states: for each vertex, the state it is in\n    \"\"\"\n    if traversal_states[vertex] == TraversalState.GRAY:\n        return True\n    traversal_states[vertex] = TraversalState.GRAY\n    for neighbor in graph[vertex]:\n        if is_in_cycle(graph, traversal_states, neighbor):\n            return True\n    traversal_states[vertex] = TraversalState.BLACK\n    return False\n\n\ndef contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False\n\n```\n## Target Method\n```\ndef contains_cycle(graph):\n    \"\"\"\n    Determines if there is a cycle in the given graph.\n    The graph should be given as a dictionary:\n\n        graph = {'A': ['B', 'C'],\n                 'B': ['D'],\n                 'C': ['F'],\n                 'D': ['E', 'F'],\n                 'E': ['B'],\n                 'F': []}\n    \"\"\"\n    traversal_states = {vertex: TraversalState.WHITE for vertex in graph}\n    for vertex, state in traversal_states.items():\n        if (state == TraversalState.WHITE and\n           is_in_cycle(graph, traversal_states, vertex)):\n            return True\n    return False\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `contains_cycle`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-all",
+  "postconds": [
+    "@icontract.ensure(\n    lambda graph: all(\n        isinstance(key, str) and all(isinstance(neighbor, str) for neighbor in value)\n        for key, value in graph.items()\n    )\n    if graph else True\n)\n@icontract.ensure(\n    lambda graph: all(\n        vertex in graph for vertex in [neighbor for key in graph for neighbor in graph[key]])\n    if graph else True\n)\n@icontract.ensure(\n    lambda graph: isinstance(contains_cycle(graph), bool)\n)\n@icontract.ensure(\n    lambda graph: not contains_cycle(graph) if len(graph) == 0 else True\n)\n@icontract.ensure(\n    lambda graph: not contains_cycle({'A': ['B'], 'B': ['A']}) if graph else True\n)\n@icontract.ensure(\n    lambda graph: not contains_cycle({'A': ['B'], 'B': ['C'], 'C': []}) if graph else True\n)\n@icontract.ensure(\n    lambda graph: contains_cycle({'A': ['B'], 'B': ['A']}) if graph else True\n)\n@icontract.ensure(\n    lambda graph: contains_cycle({'A': ['B'], 'B': ['C'], 'C': ['A']}) if graph else True\n)",
+    "@icontract.ensure(\n    lambda graph: all(\n        isinstance(v, str) for v in graph.keys()\n    ),\n    \"Graph keys must be strings.\"\n)\n@icontract.ensure(\n    lambda graph: all(\n        all(isinstance(neighbor, str) for neighbor in graph[vertex])\n        for vertex in graph\n    ),\n    \"Graph values (neighbors) must be strings.\"\n)\n@icontract.ensure(\n    lambda graph: isinstance(graph, dict),\n    \"Input must be a dictionary.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        not graph or \n        all(vertex in graph for vertex in graph[vertex] if graph[vertex])\n    ),\n    \"All neighbors must be valid vertices within the graph.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        not graph or\n        all(key in graph for key in graph)\n    ),\n    \"All vertices reachable from any vertex must exist in the graph.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        isinstance(contains_cycle(graph), bool)\n    ),\n    \"Return value must be a boolean\"\n)\n@icontract.ensure(\n    lambda graph: (\n        contains_cycle(graph) == contains_cycle(graph)\n    ),\n    \"The function should always return the same result for the same input.\"\n)",
+    "@icontract.ensure(\n    lambda graph: all(\n        isinstance(v, str) for v in graph.keys()\n    ),\n    \"Graph keys must be strings.\"\n)\n@icontract.ensure(\n    lambda graph: all(\n        all(isinstance(neighbor, str) for neighbor in neighbors)\n        for neighbors in graph.values()\n    ),\n    \"Graph values must be lists of strings.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        not graph or\n        all(vertex in graph for neighbors in graph.values() for vertex in neighbors)\n    ),\n    \"All referenced vertices must exist in the graph.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        all(isinstance(graph, dict))\n    ),\n    \"graph must be a dictionary\"\n)\n@icontract.ensure(\n    lambda graph: (\n        len(graph) == 0 or all(key in graph for key in [neighbor for node in graph for neighbor in graph[node]])\n    ),\n    \"All neighbors must be keys in the graph\"\n)\n@icontract.ensure(\n    lambda graph: (\n        graph == {} or (\n            all(\n                TraversalState.WHITE == traversal_states[v]\n                for v in graph\n            ) and\n            all(\n                TraversalState.GRAY == traversal_states[v] or\n                TraversalState.BLACK == traversal_states[v]\n                for v in graph\n            )\n        )\n    ),\n    \"Traversal states should be correctly initialized and updated.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        graph == {} or (\n            all(\n                TraversalState.WHITE == traversal_states[v] or\n                TraversalState.GRAY == traversal_states[v] or\n                TraversalState.BLACK == traversal_states[v]\n                for v in graph\n            )\n        )\n    ),\n    \"Traversal states should be valid after the function call\"\n)\n@icontract.ensure(\n    lambda graph: (\n        not graph or (\n            not contains_cycle(graph) or\n            any(\n                TraversalState.GRAY == traversal_states[v]\n                for v in graph\n            )\n        )\n    ),\n    \"If cycle exists, at least one node should be gray after execution.\"\n)\n@icontract.snapshot(\n    lambda graph: {vertex: TraversalState.WHITE for vertex in graph}\n)",
+    "@icontract.ensure(\n    lambda graph: all(\n        isinstance(vertex, str) and all(isinstance(neighbor, str) for neighbor in neighbors)\n        for vertex, neighbors in graph.items()\n    ) if graph else True\n)\n@icontract.ensure(\n    lambda graph: isinstance(graph, dict)\n)\n@icontract.ensure(\n    lambda graph: all(\n        is_in_cycle(graph, {v: TraversalState.WHITE for v in graph}, v) == (\n            any(\n                is_in_cycle(graph, {v: TraversalState.WHITE for v in graph}, w)\n                for w in graph[v]\n            )\n        )\n        for v in graph if graph[v]\n    ) if graph else True\n)\n@icontract.ensure(\n    lambda graph: isinstance(contains_cycle(graph), bool)\n)",
+    "@icontract.ensure(\n    lambda graph: all(\n        isinstance(key, str) and isinstance(value, list) for key, value in graph.items()\n    ),\n    \"Graph must be a dictionary with string keys and list values.\"\n)\n@icontract.ensure(\n    lambda graph: all(\n        all(isinstance(neighbor, str) for neighbor in neighbors)\n        for neighbors in graph.values()\n    ),\n    \"All neighbors in the graph must be strings.\"\n)\n@icontract.ensure(\n    lambda graph: all(neighbor in graph for neighbors in graph.values() for neighbor in neighbors),\n    \"All neighbors must be valid vertices in the graph.\"\n)\n@icontract.ensure(\n    lambda graph: isinstance(contains_cycle(graph), bool),\n    \"The method must return a boolean value.\"\n)\n@icontract.snapshot(graph)"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(\n    lambda graph: all(\n        isinstance(key, str) and all(isinstance(neighbor, str) for neighbor in value)\n        for key, value in graph.items()\n    )\n    if graph else True\n)\n@icontract.ensure(\n    lambda graph: all(\n        vertex in graph for vertex in [neighbor for key in graph for neighbor in graph[key]])\n    if graph else True\n)\n@icontract.ensure(\n    lambda graph: isinstance(contains_cycle(graph), bool)\n)\n@icontract.ensure(\n    lambda graph: not contains_cycle(graph) if len(graph) == 0 else True\n)\n@icontract.ensure(\n    lambda graph: not contains_cycle({'A': ['B'], 'B': ['A']}) if graph else True\n)\n@icontract.ensure(\n    lambda graph: not contains_cycle({'A': ['B'], 'B': ['C'], 'C': []}) if graph else True\n)\n@icontract.ensure(\n    lambda graph: contains_cycle({'A': ['B'], 'B': ['A']}) if graph else True\n)\n@icontract.ensure(\n    lambda graph: contains_cycle({'A': ['B'], 'B': ['C'], 'C': ['A']}) if graph else True\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda graph: all(\n        isinstance(v, str) for v in graph.keys()\n    ),\n    \"Graph keys must be strings.\"\n)\n@icontract.ensure(\n    lambda graph: all(\n        all(isinstance(neighbor, str) for neighbor in graph[vertex])\n        for vertex in graph\n    ),\n    \"Graph values (neighbors) must be strings.\"\n)\n@icontract.ensure(\n    lambda graph: isinstance(graph, dict),\n    \"Input must be a dictionary.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        not graph or \n        all(vertex in graph for vertex in graph[vertex] if graph[vertex])\n    ),\n    \"All neighbors must be valid vertices within the graph.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        not graph or\n        all(key in graph for key in graph)\n    ),\n    \"All vertices reachable from any vertex must exist in the graph.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        isinstance(contains_cycle(graph), bool)\n    ),\n    \"Return value must be a boolean\"\n)\n@icontract.ensure(\n    lambda graph: (\n        contains_cycle(graph) == contains_cycle(graph)\n    ),\n    \"The function should always return the same result for the same input.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda graph: all(\n        isinstance(v, str) for v in graph.keys()\n    ),\n    \"Graph keys must be strings.\"\n)\n@icontract.ensure(\n    lambda graph: all(\n        all(isinstance(neighbor, str) for neighbor in neighbors)\n        for neighbors in graph.values()\n    ),\n    \"Graph values must be lists of strings.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        not graph or\n        all(vertex in graph for neighbors in graph.values() for vertex in neighbors)\n    ),\n    \"All referenced vertices must exist in the graph.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        all(isinstance(graph, dict))\n    ),\n    \"graph must be a dictionary\"\n)\n@icontract.ensure(\n    lambda graph: (\n        len(graph) == 0 or all(key in graph for key in [neighbor for node in graph for neighbor in graph[node]])\n    ),\n    \"All neighbors must be keys in the graph\"\n)\n@icontract.ensure(\n    lambda graph: (\n        graph == {} or (\n            all(\n                TraversalState.WHITE == traversal_states[v]\n                for v in graph\n            ) and\n            all(\n                TraversalState.GRAY == traversal_states[v] or\n                TraversalState.BLACK == traversal_states[v]\n                for v in graph\n            )\n        )\n    ),\n    \"Traversal states should be correctly initialized and updated.\"\n)\n@icontract.ensure(\n    lambda graph: (\n        graph == {} or (\n            all(\n                TraversalState.WHITE == traversal_states[v] or\n                TraversalState.GRAY == traversal_states[v] or\n                TraversalState.BLACK == traversal_states[v]\n                for v in graph\n            )\n        )\n    ),\n    \"Traversal states should be valid after the function call\"\n)\n@icontract.ensure(\n    lambda graph: (\n        not graph or (\n            not contains_cycle(graph) or\n            any(\n                TraversalState.GRAY == traversal_states[v]\n                for v in graph\n            )\n        )\n    ),\n    \"If cycle exists, at least one node should be gray after execution.\"\n)\n@icontract.snapshot(\n    lambda graph: {vertex: TraversalState.WHITE for vertex in graph}\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda graph: all(\n        isinstance(vertex, str) and all(isinstance(neighbor, str) for neighbor in neighbors)\n        for vertex, neighbors in graph.items()\n    ) if graph else True\n)\n@icontract.ensure(\n    lambda graph: isinstance(graph, dict)\n)\n@icontract.ensure(\n    lambda graph: all(\n        is_in_cycle(graph, {v: TraversalState.WHITE for v in graph}, v) == (\n            any(\n                is_in_cycle(graph, {v: TraversalState.WHITE for v in graph}, w)\n                for w in graph[v]\n            )\n        )\n        for v in graph if graph[v]\n    ) if graph else True\n)\n@icontract.ensure(\n    lambda graph: isinstance(contains_cycle(graph), bool)\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda graph: all(\n        isinstance(key, str) and isinstance(value, list) for key, value in graph.items()\n    ),\n    \"Graph must be a dictionary with string keys and list values.\"\n)\n@icontract.ensure(\n    lambda graph: all(\n        all(isinstance(neighbor, str) for neighbor in neighbors)\n        for neighbors in graph.values()\n    ),\n    \"All neighbors in the graph must be strings.\"\n)\n@icontract.ensure(\n    lambda graph: all(neighbor in graph for neighbors in graph.values() for neighbor in neighbors),\n    \"All neighbors must be valid vertices in the graph.\"\n)\n@icontract.ensure(\n    lambda graph: isinstance(contains_cycle(graph), bool),\n    \"The method must return a boolean value.\"\n)\n@icontract.snapshot(graph)\n```##"
+  ],
+  "postcond_corr": [
+    "local_crash",
+    "local_crash",
+    "local_crash",
+    "passed",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    []
+  ],
+  "traversal_rank": 27
+}

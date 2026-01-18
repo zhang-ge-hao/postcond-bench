@@ -1,0 +1,284 @@
+{
+  "rlid": "get_longest_non_repeat_v2",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/arrays/longest_non_repeat.py#L71-L91",
+  "name": "get_longest_non_repeat_v2",
+  "line_cov": 0.9285714285714286,
+  "lines": 21,
+  "stats": 13,
+  "cc": 5,
+  "content": "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+  "header": "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"",
+  "file": "./algorithms/arrays/longest_non_repeat.py",
+  "start_line": 71,
+  "end_line": 91,
+  "body_start_line": 78,
+  "comment": "\"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"",
+  "test_time": 0.7974700927734375,
+  "cover_tests": [
+    "tests/test_array.py::TestLongestNonRepeat::test_get_longest_non_repeat_v2"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is not None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is not None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 1\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 1, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string[:-1]):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start < used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start < used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start == used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start >= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 2\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] - 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 < max_len:  # This will incorrectly update max_len only if the new length is less than the current max_len\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 == max_len:  # This will only update max_len if the new length is equal to the current max_len, missing longer substrings\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len + 1:  # This will incorrectly require the new length to be greater than max_len + 1 to update max_len\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start - 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index + start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 2\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start - 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = None\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 2]\n        used_char[char] = index\n    return max_len, sub_string\n",
+    "def get_longest_non_repeat_v2(string):\n    \"\"\"\n    Find the length of the longest substring\n    without repeating characters.\n    Uses alternative algorithm.\n    Return max_len and the substring as a tuple\n    \"\"\"\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index - 1]\n        used_char[char] = index\n    return max_len, sub_string\n"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda string: string, name=\"s\")\n@icontract.ensure(lambda OLD, result: (OLD.s is None and result == (0, '')) or (OLD.s is not None))\n@icontract.ensure(lambda string, result: string == '' and result == (0, '') or string != '')\n@icontract.ensure(lambda string, result: string is None or result[0] == len(result[1]))\n@icontract.ensure(lambda string, result: string is None or result[1] in string)\n@icontract.ensure(lambda string, result: string is None or len(set(result[1])) == len(result[1]))\n@icontract.ensure(lambda string, result: string is None or result[0] == max(((j - i) for i in range(len(string)) for j in range(i + 1, len(string) + 1) if len(set(string[i:j])) == (j - i)), default=0))\n@icontract.ensure(lambda string, result: string != 'abcabcbb' or result == (3, 'abc'))\n@icontract.ensure(lambda string, result: string != 'pwwkew' or result == (3, 'wke'))\n@icontract.ensure(lambda string, result: string != 'bbbbb' or result == (1, 'b'))\n@icontract.ensure(lambda string, result: string != 'abba' or result == (2, 'ab'))\n@icontract.ensure(lambda string, result: string != 'tmmzuxt' or result == (5, 'mzuxt'))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\n\ndef longest_non_repeat_v1(string):\n    if string is None:\n        return 0\n    dict = {}\n    max_length = 0\n    j = 0\n    for i in range(len(string)):\n        if string[i] in dict:\n            j = max(dict[string[i]], j)\n        dict[string[i]] = i + 1\n        max_length = max(max_length, i - j + 1)\n    return max_length\n\ndef longest_non_repeat_v2(string):\n    if string is None:\n        return 0\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            max_len = max(max_len, index - start + 1)\n        used_char[char] = index\n    return max_len\n\ndef get_longest_non_repeat_v1(string):\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    dict = {}\n    max_length = 0\n    j = 0\n    for i in range(len(string)):\n        if string[i] in dict:\n            j = max(dict[string[i]], j)\n        dict[string[i]] = i + 1\n        if i - j + 1 > max_length:\n            max_length = i - j + 1\n            sub_string = string[j: i + 1]\n    return max_length, sub_string\n\ndef get_longest_non_repeat_v2(string):\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n\ndef get_longest_non_repeat_v3(string):\n    longest_substring = ''\n    seen = set()\n    start_idx = 0\n    for i in range(len(string)):\n        while string[i] in seen:\n            seen.remove(string[start_idx])\n            start_idx += 1\n        seen.add(string[i])\n        longest_substring = max(longest_substring, string[start_idx: i+1], key=len)\n    return len(longest_substring), longest_substring\n\n```\n## Target Method\n```\ndef get_longest_non_repeat_v2(string):\n    if string is None:\n        return 0, ''\n    sub_string = ''\n    start, max_len = 0, 0\n    used_char = {}\n    for index, char in enumerate(string):\n        if char in used_char and start <= used_char[char]:\n            start = used_char[char] + 1\n        else:\n            if index - start + 1 > max_len:\n                max_len = index - start + 1\n                sub_string = string[start: index + 1]\n        used_char[char] = index\n    return max_len, sub_string\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `get_longest_non_repeat_v2`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.ensure(lambda result: result[0] == len(result[1]), \"Length matches substring length\")\n@icontract.ensure(lambda result: len(result[1]) == len(set(result[1])), \"Substring has no repeating characters\")\n@icontract.ensure(lambda string, result: string is None or result[1] == '' or result[1] in string, \"Substring is part of original string\")\n@icontract.ensure(lambda result: result[0] >= 0, \"Length is non-negative\")\n@icontract.ensure(lambda string, result: string is None or all(result[0] >= len(string[i:j+1]) for i in range(len(string)) for j in range(i, len(string)) if len(string[i:j+1]) == len(set(string[i:j+1]))), \"Returned length is maximal among all non-repeating substrings\")",
+    "@icontract.ensure(lambda result: result[0] == len(result[1]))\n@icontract.ensure(lambda result: len(result[1]) == len(set(result[1])))\n@icontract.ensure(lambda string, result: string is None or result[1] in string or result[1] == '')\n@icontract.ensure(lambda result: result[0] >= 0)\n@icontract.ensure(lambda string, result: string is None or result[0] <= len(string))\n@icontract.ensure(lambda string, result: not (string is None) or result == (0, ''))",
+    "@icontract.ensure(lambda result: result[0] == len(result[1]), \"Length should match substring length\")\n@icontract.ensure(lambda result: len(result[1]) == len(set(result[1])), \"Substring should have no repeating characters\")\n@icontract.ensure(lambda string, result: string is None or result[1] == '' or result[1] in string, \"Substring should be in original string\")\n@icontract.ensure(lambda result: result[0] >= 0, \"Length should be non-negative\")\n@icontract.ensure(lambda string, result: string is None or result[0] <= len(string), \"Length should not exceed string length\")\n@icontract.ensure(lambda string, result: string is not None or (result[0] == 0 and result[1] == ''), \"None input should return (0, '')\")",
+    "@icontract.ensure(lambda result: result[0] == len(result[1]))\n@icontract.ensure(lambda result: len(result[1]) == len(set(result[1])))\n@icontract.ensure(lambda string, result: string is not None or result == (0, ''))\n@icontract.ensure(lambda string, result: string is None or result[1] == '' or result[1] in string)\n@icontract.ensure(lambda result: isinstance(result, tuple) and len(result) == 2)\n@icontract.ensure(lambda result: isinstance(result[0], int) and isinstance(result[1], str))\n@icontract.ensure(lambda result: result[0] >= 0)",
+    "@icontract.ensure(lambda result: result[0] == len(result[1]), \"Length matches substring length\")\n@icontract.ensure(lambda result: len(result[1]) == len(set(result[1])), \"Substring has no repeating characters\")\n@icontract.ensure(lambda string, result: string is None or result[1] in string or result[1] == '', \"Substring is part of input string\")\n@icontract.ensure(lambda result: result[0] >= 0, \"Length is non-negative\")\n@icontract.ensure(lambda string, result: string is None or result[0] <= len(string), \"Length does not exceed input length\")\n@icontract.ensure(lambda string, result: string is not None or (result[0] == 0 and result[1] == ''), \"None input returns (0, '')\")\n@icontract.ensure(lambda string, result: string is None or len(string) == 0 or result[0] > 0, \"Non-empty string returns positive length\")"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "failed",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "icontract_fail"
+    ]
+  ],
+  "traversal_rank": 279
+}

@@ -1,0 +1,292 @@
+{
+  "rlid": "crc16",
+  "github_url": "https://github.com/mvallim/emv-qrcode/blob/328ae292cce8d0f40b071b4b8ccab64a63e2c3b2/./src/main/java/com/emv/qrcode/core/CRC.java#L25-L60",
+  "name": "crc16",
+  "line_cov": 1.0,
+  "lines": 36,
+  "stats": 13,
+  "cc": 4,
+  "content": "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+  "header": "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {",
+  "file": "./src/main/java/com/emv/qrcode/core/CRC.java",
+  "start_line": 25,
+  "end_line": 60,
+  "body_start_line": 40,
+  "comment": "/**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */",
+  "test_time": 1.7581415176391602,
+  "cover_tests": [
+    "com.emv.qrcode.core.CRCTest#testSuccessCrc16Sample1",
+    "com.emv.qrcode.decoder.mpm.MerchantPresentedModeDecoderTest#testeSuccessToString",
+    "com.emv.qrcode.decoder.mpm.MerchantPresentedModeDecoderTest#testeSuccessToStringWithoutCRC",
+    "com.emv.qrcode.model.mpm.MerchantPresentedModeTest#testSuccessToBase64",
+    "com.emv.qrcode.model.mpm.MerchantPresentedModeTest#testSuccessToHex",
+    "com.emv.qrcode.model.mpm.MerchantPresentedModeTest#testSuccessToString",
+    "com.emv.qrcode.validators.Crc16ValidatorTest#testFailValidateWhenIncomplete2CRCDecoded",
+    "com.emv.qrcode.validators.Crc16ValidatorTest#testFailValidateWhenIncompleteCRCDecoded",
+    "com.emv.qrcode.validators.Crc16ValidatorTest#testFailValidateWhenInvalidCRCDecoded",
+    "com.emv.qrcode.validators.Crc16ValidatorTest#testFailValidateWhenWithoutCRCDecoded",
+    "com.emv.qrcode.validators.Crc16ValidatorTest#testSuccessCrc16Sample1"
+  ],
+  "repo": {
+    "github_path": "mvallim/emv-qrcode",
+    "commit": "328ae292cce8d0f40b071b4b8ccab64a63e2c3b2",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.github.mvallim</groupId>\n  <artifactId>emv-qrcode</artifactId>\n  <version>0.1.3-SNAPSHOT</version>\n  <properties>\n    <java.version>11</java.version>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>\n    <lombok.version>1.18.30</lombok.version>\n  </properties>\n  <scm>\n    <url>scm:git:git@github.com:mvallim/emv-qrcode</url>\n    <connection>scm:git:git@github.com:mvallim/emv-qrcode</connection>\n    <developerConnection>scm:git:git@github.com:mvallim/emv-qrcode</developerConnection>\n    <tag>HEAD</tag>\n  </scm>\n  <name>emv-qrcode</name>\n  <description>EMV QR Code</description>\n  <url>https://github.com/mvallim/emv-qrcode</url>\n  <inceptionYear>2020</inceptionYear>\n  <organization>\n    <name>com.github.mvallim</name>\n    <url>https://github.com/mvallim</url>\n  </organization>\n  <developers>\n    <developer>\n      <name>Marcos Vallim</name>\n      <email>tischer@gmail.com</email>\n      <timezone>-3</timezone>\n    </developer>\n  </developers>\n  <licenses>\n    <license>\n      <name>Apache 2</name>\n      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>\n      <distribution>repo</distribution>\n      <comments>A business-friendly OSS license</comments>\n    </license>\n  </licenses>\n  <dependencies>\n    <dependency>\n      <groupId>org.projectlombok</groupId>\n      <artifactId>lombok</artifactId>\n      <optional>true</optional>\n      <version>${lombok.version}</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.12.0</version>\n    </dependency>\n    <dependency>\n      <groupId>commons-codec</groupId>\n      <artifactId>commons-codec</artifactId>\n      <version>1.14</version>\n    </dependency>\n    <dependency>\n      <groupId>com.github.mvallim</groupId>\n      <artifactId>java-fluent-validator</artifactId>\n      <version>1.9.3</version>\n    </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.13.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.hamcrest</groupId>\n      <artifactId>hamcrest</artifactId>\n      <version>2.2</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>3.24.2</version>\n      <scope>test</scope>\n    </dependency>\n  </dependencies>\n  <build>\n    <resources>\n      <resource>\n        <directory>${project.basedir}</directory>\n        <includes>\n          <include>NOTICE*</include>\n          <include>LICENSE*</include>\n        </includes>\n      </resource>\n      <resource>\n        <directory>${project.basedir}/src/main/resources</directory>\n        <includes>\n          <include>**/*</include>\n        </includes>\n      </resource>\n    </resources>\n    <plugins>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n          </execution>\n        </executions>\n        <configuration>\n          <xml>true</xml>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-clean-plugin</artifactId>\n        <version>2.5</version>\n        <inherited>true</inherited>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.11.0</version>\n        <configuration>\n          <encoding>${project.build.sourceEncoding}</encoding>\n          <debug>true</debug>\n          <showDeprecation>true</showDeprecation>\n          <showWarnings>true</showWarnings>\n          <annotationProcessorPaths>\n            <path>\n              <groupId>org.projectlombok</groupId>\n              <artifactId>lombok</artifactId>\n              <version>${lombok.version}</version>\n            </path>\n          </annotationProcessorPaths>\n          <release>${java.version}</release>\n          <fork>true</fork>\n          <executable>${java.home}/bin/javac</executable>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-resources-plugin</artifactId>\n        <version>3.0.2</version>\n        <configuration>\n          <downloadSources>true</downloadSources>\n          <downloadJavadocs>true</downloadJavadocs>\n          <encoding>${project.build.sourceEncoding}</encoding>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-source-plugin</artifactId>\n        <version>3.2.1</version>\n        <inherited>true</inherited>\n        <configuration>\n          <encoding>${project.build.sourceEncoding}</encoding>\n        </configuration>\n        <executions>\n          <execution>\n            <id>attach-source</id>\n            <goals>\n              <goal>jar</goal>\n            </goals>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-install-plugin</artifactId>\n        <version>3.1.0</version>\n        <inherited>true</inherited>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-deploy-plugin</artifactId>\n        <version>3.1.0</version>\n        <inherited>true</inherited>\n        <configuration>\n          <updateReleaseInfo>true</updateReleaseInfo>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-release-plugin</artifactId>\n        <configuration>\n          <localCheckout>true</localCheckout>\n          <pushChanges>false</pushChanges>\n          <mavenExecutorId>forked-path</mavenExecutorId>\n          <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n  <profiles>\n    <profile>\n      <id>release-sign-artifacts</id>\n      <activation>\n        <property>\n          <name>performRelease</name>\n          <value>true</value>\n        </property>\n      </activation>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>1.6</version>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n    <profile>\n      <id>nexus-release</id>\n      <distributionManagement>\n        <snapshotRepository>\n          <id>nexus-release</id>\n          <layout>default</layout>\n          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>\n        </snapshotRepository>\n        <repository>\n          <id>nexus-release</id>\n          <layout>default</layout>\n          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n        </repository>\n      </distributionManagement>\n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-source-plugin</artifactId>\n            <version>3.2.1</version>\n            <executions>\n              <execution>\n                <phase>package</phase>\n                <goals>\n                  <goal>jar-no-fork</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-javadoc-plugin</artifactId>\n            <version>3.5.0</version>\n            <executions>\n              <execution>\n                <phase>package</phase>\n                <goals>\n                  <goal>jar</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>1.6</version>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n  </profiles>\n</project>",
+    "failed_tests": [],
+    "test_time": 4.836420059204102
+  },
+  "mutants": [
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) { if (b < 0) continue;\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) { result ^= b;\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 7; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i += 2) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i <= 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i >= 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 1; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b << 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 + i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) != 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i | 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result << 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) != 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 | 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (!c15 && !bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 & bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 && bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 || bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }",
+    "  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return 0;\n  }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule",
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures value.length == 0 ==> \\result == 0xFFFF;\n//@ ensures value.length == 256 ==> \\result == 0xA13A;\n//@ ensures value.length == 1 && value[0] == (byte)0x00 ==> \\result == 0xE1F0;\n//@ ensures value.length == 1 && value[0] == (byte)0xFF ==> \\result == 0xFF00;\n//@ ensures value.length == 1 && value[0] == (byte)0x01 ==> \\result == 0xF1D1;\n//@ ensures value.length == 3 && value[0] == (byte)0x01 && value[1] == (byte)0x02 && value[2] == (byte)0x03 ==> \\result == 0xADAD;\n//@ ensures value.length == 5 && value[0] == (byte)'H' && value[1] == (byte)'e' && value[2] == (byte)'l' && value[3] == (byte)'l' && value[4] == (byte)'o' ==> \\result == 0xDADA;\n//@ ensures value.length == 4 && value[0] == (byte)'a' && value[1] == (byte)'b' && value[2] == (byte)'c' && value[3] == (byte)'d' ==> \\result == 0x2CF6;\n//@ ensures 0 <= \\result && \\result <= 0xFFFF;",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n/*\n * Copyright 2019 the original author or authors.\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      https://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\n\npackage com.emv.qrcode.core;\n\npublic final class CRC {\n\n  private CRC() {\n    super();\n  }\n\n  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }\n\n}\n\n```\n## Target Method\n```\n  /**\n   * Information technology\u2014Telecommunications and information exchange between\n   * systems\u2014High-level data link control (HDLC) procedures.\n   *\n   * The checksum shall be calculated according to [ISO/IEC 13239] using the\n   * polynomial '1021' (hex) and initial value 'FFFF' (hex).\n   *\n   * Implements CRC-16/CCITT-FALSE\n   *\n   * @see https://en.wikipedia.org/wiki/Cyclic_redundancy_check\n   *\n   * @param value\n   * @return CRC16 integer\n   */\n  public static int crc16(final byte[] value) {\n    final int polynomial = 0x1021; // 0001 0000 0010 0001 (0, 5, 12)\n\n    int result = 0xFFFF; // initial value\n\n    final byte[] bytes = value;\n\n    for (final byte b : bytes) {\n      for (int i = 0; i < 8; i++) {\n        final boolean bit = (b >> 7 - i & 1) == 1;\n        final boolean c15 = (result >> 15 & 1) == 1;\n        result <<= 1;\n        if (c15 ^ bit) {\n          result ^= polynomial;\n        }\n      }\n    }\n\n    result &= 0xffff;\n\n    return result;\n  }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `crc16`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-all",
+  "postconds": [
+    "//@ ensures \\result >= 0 && \\result <= 0xFFFF;\n//@ ensures value.length == 0 ==> \\result == 0xFFFF;\n//@ ensures value == \\old(value);\n//@ ensures java.util.Arrays.equals(value, \\old(value));",
+    "//@ ensures \\result >= 0 && \\result <= 0xFFFF;\n//@ ensures value.length == 0 ==> \\result == 0xFFFF;\n//@ ensures java.util.Arrays.equals(value, \\old(value.clone()));",
+    "//@ ensures \\result >= 0;\n//@ ensures \\result <= 0xFFFF;\n//@ ensures value != null ==> \\old(value.length) == value.length;",
+    "//@ ensures \\result >= 0 && \\result <= 0xFFFF;\n//@ ensures value != null ==> (\\result >= 0 && \\result <= 65535);\n//@ ensures value != null && value.length == 0 ==> \\result == 0xFFFF;\n//@ ensures value != null ==> java.util.Arrays.equals(value, \\old(value.clone()));",
+    "//@ ensures \\result >= 0 && \\result <= 0xFFFF;\n//@ ensures value.length == 0 ==> \\result == 0xFFFF;\n//@ ensures value.length == \\old(value.length);"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 105
+}

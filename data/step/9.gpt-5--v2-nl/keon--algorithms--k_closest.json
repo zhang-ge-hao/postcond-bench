@@ -1,0 +1,184 @@
+{
+  "rlid": "k_closest",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/heap/k_closest_points.py#L15-L43",
+  "name": "k_closest",
+  "line_cov": 1.0,
+  "lines": 29,
+  "stats": 6,
+  "cc": 4,
+  "content": "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+  "header": "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"",
+  "file": "./algorithms/heap/k_closest_points.py",
+  "start_line": 15,
+  "end_line": 43,
+  "body_start_line": 22,
+  "comment": "\"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"",
+  "test_time": 0.21878314018249512,
+  "cover_tests": [
+    "tests/test_heap.py::TestSuite::test_k_closest_points"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(+distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap\n",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap\n",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k-1]]  # One point missing\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]] * 2  # Duplicates points in heap\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]] + [(-1, (0, 0))]  # Invalid distance\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]] + [(0, (0, 0))]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]] + [(0, (1, 1))]  # Incorrect origin point\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heap = [(-distance(p, origin), p) for p in points[:k]]  # Reinitialize heap\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heap = [(-distance(p, origin), p) for p in points[:k]] + [(0, (0, 0))]  # Add an extra point to the heap\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heap = []  # Clear the heap instead of heapifying\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heap.sort()  # Sort the heap instead of heapifying\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points:  # Iterates over all points, which may lead to incorrect heap size\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[:k]:  # Iterates over the first k points again, causing incorrect behavior\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k+1:]:  # Skips the first k points and starts from k+1, missing some points\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k::-1]:  # Iterates backwards from k to 0, which is not the intended behavior\n        dist = distance(point, origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = -distance(point, origin)  # Negating the distance, which is incorrect\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(origin)\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap\n",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, (1, 1))  # Using a different origin point\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin) + 1  # Incorrectly adding 1 to the distance\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin) - 1  # Incorrectly subtracting 1 from the distance\n\n        heappushpop(heap, (-dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heap.append((-dist, point))  # Appends to the heap instead of maintaining heap properties\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (+dist, point))  # heappushpop does conditional check\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap\n",
+    "def k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n    heap = [(-distance(p, origin), p) for p in points[:k]]\n    heapify(heap)\n\n    \"\"\"\n    For every point p in points[k:],\n    check if p is smaller than the root of the max heap;\n    if it is, add p to heap and remove root. Reheapify.\n    \"\"\"\n    for point in points[k:]:\n        dist = distance(point, origin)\n\n        heappushpop(heap, (dist, point))  # Uses positive distance in heappushpop\n        \"\"\"Same as:\n            if d < -heap[0][0]:\n                heappush(heap, (-d,p))\n                heappop(heap)\n\n        Note: heappushpop is more efficient than separate push and pop calls.\n        Each heappushpop call takes O(logk) time.\n        \"\"\"\n\n    return [point for nd, point in heap]  # return points in heap"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda points: points[:], name=\"OLD_points\")\n@icontract.snapshot(lambda k: k, name=\"OLD_k\")\n@icontract.snapshot(lambda origin: origin, name=\"OLD_origin\")\n@icontract.ensure(\n    lambda result, points, OLD:\n        len(result) == min(OLD.OLD_k, len(points))\n)\n@icontract.ensure(\n    lambda result, points:\n        all(p in points for p in result)\n)\n@icontract.ensure(\n    lambda result, points:\n        all(result.count(p) <= points.count(p) for p in set(result))\n)\n@icontract.ensure(\n    lambda result, points, origin, OLD:\n        sorted(distance(p, origin) for p in result)\n        == sorted(\n            sorted(distance(p, origin) for p in points)\n            [:min(OLD.OLD_k, len(points))]\n        )\n)\n@icontract.ensure(\n    lambda result, points, origin:\n        all(\n            distance(p, origin) <= distance(q, origin)\n            for p in result\n            for q in points\n            if q not in result\n        )\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "failed",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "failed",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\"\"\"Given a list of points, find the k closest to the origin.\n\nIdea: Maintain a max heap of k elements.\nWe can iterate through all points.\nIf a point p has a smaller distance to the origin than the top element of a\nheap, we add point p to the heap and remove the top element.\nAfter iterating through all points, our heap contains the k closest points to\nthe origin.\n\"\"\"\n\n\nfrom heapq import heapify, heappushpop\n\n\ndef k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n...\ndef distance(point, origin=(0, 0)):\n    \"\"\" Calculates the distance for a point from origo\"\"\"\n...\n```\n## Target Method\n```\ndef k_closest(points, k, origin=(0, 0)):\n    # Time: O(k+(n-k)logk)\n    # Space: O(k)\n    \"\"\"Initialize max heap with first k points.\n    Python does not support a max heap; thus we can use the default min heap\n    where the keys (distance) are negated.\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `k_closest`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.snapshot(lambda points: tuple(points), name=\"points_snapshot\")\n@icontract.ensure(lambda k, points_snapshot, result: (k <= 0 and len(result) == 0) or (k > 0 and len(result) == min(k, len(points_snapshot))))\n@icontract.ensure(lambda result, points_snapshot: all(item in points_snapshot for item in result))\n@icontract.ensure(lambda result, points_snapshot: all(result.count(item) <= points_snapshot.count(item) for item in set(result)))\n@icontract.ensure(lambda points, points_snapshot: points == list(points_snapshot))\n@icontract.ensure(lambda k, points_snapshot, result: (k < len(points_snapshot)) or all(result.count(item) == points_snapshot.count(item) for item in set(points_snapshot)))\n@icontract.ensure(lambda origin, points_snapshot, result: len(result) == 0 or all(distance(p, origin) >= max(distance(r, origin) for r in result) for p in points_snapshot if p not in result))",
+    "@icontract.snapshot(lambda points: tuple(points), name=\"points_snap\")\n@icontract.ensure(lambda result, k, points_snap: (len(result) == 0) if k <= 0 else (len(result) == len(points_snap) if k >= len(points_snap) else len(result) == k))\n@icontract.ensure(lambda result, points_snap: all(x in points_snap for x in result))\n@icontract.ensure(lambda result, points_snap, origin: all(distance(x, origin) <= distance(y, origin) for x in result for y in points_snap if y not in result))",
+    "@icontract.snapshot(lambda points: list(points), name=\"points_snapshot\")\n@icontract.ensure(lambda points, points_snapshot: points == points_snapshot)\n@icontract.ensure(lambda result, k, points_snapshot: len(result) == (min(len(points_snapshot), k) if k >= 0 else 0))\n@icontract.ensure(lambda result, points_snapshot: all(r in points_snapshot for r in result))\n@icontract.ensure(lambda result, points_snapshot: all(result.count(p) <= points_snapshot.count(p) for p in set(result)))\n@icontract.ensure(lambda result, k, points_snapshot, origin: ((min(len(points_snapshot), k) if k >= 0 else 0) == 0) or all(distance(r, origin) <= sorted(distance(p, origin) for p in points_snapshot)[(min(len(points_snapshot), k) if k >= 0 else 0) - 1] for r in result))\n@icontract.ensure(lambda result, k, points_snapshot, origin: ((min(len(points_snapshot), k) if k >= 0 else 0) == 0) or (sum(1 for r in result if distance(r, origin) < sorted(distance(p, origin) for p in points_snapshot)[(min(len(points_snapshot), k) if k >= 0 else 0) - 1]) == sum(1 for p in points_snapshot if distance(p, origin) < sorted(distance(q, origin) for q in points_snapshot)[(min(len(points_snapshot), k) if k >= 0 else 0) - 1])))",
+    "@icontract.snapshot(lambda points: tuple(points), name=\"points_before\")\n@icontract.ensure(lambda points: tuple(points) == OLD.points_before)\n@icontract.ensure(lambda result, points, k: len(result) == min(max(k, 0), len(points)))\n@icontract.ensure(lambda result, points: all(result.count(p) <= points.count(p) for p in set(result)))\n@icontract.ensure(lambda result, points, k, origin: sorted([distance(p, origin) for p in result]) == sorted([distance(p, origin) for p in points])[:min(max(k, 0), len(points))])",
+    "@icontract.snapshot(\"orig_points\", lambda points, **_: tuple(points))\n@icontract.ensure(\n    lambda result, k, orig_points: len(result) == min(max(k, 0), len(orig_points)),\n    \"Result length equals min(max(k, 0), len(points)).\"\n)\n@icontract.ensure(\n    lambda result, orig_points: all(p in orig_points for p in result),\n    \"All returned points are from the input points.\"\n)\n@icontract.ensure(\n    lambda result, orig_points, origin: all(\n        distance(p, origin) <= distance(q, origin)\n        for p in result\n        for q in orig_points\n        if q not in result\n    ),\n    \"Every returned point is no farther from the origin than any excluded point.\"\n)"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "failed",
+    "failed",
+    "failed",
+    "local_crash",
+    "local_crash"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 85
+}

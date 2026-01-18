@@ -1,0 +1,202 @@
+{
+  "rlid": "decrypt-3",
+  "github_url": "https://github.com/TheAlgorithms/Java/blob/bb6385e756a0159a29655c745682e95ca7b41ada/./src/main/java/com/thealgorithms/ciphers/ColumnarTranspositionCipher.java#L69-L84",
+  "name": "decrypt",
+  "line_cov": 1.0,
+  "lines": 16,
+  "stats": 6,
+  "cc": 3,
+  "content": "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+  "header": "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {",
+  "file": "./src/main/java/com/thealgorithms/ciphers/ColumnarTranspositionCipher.java",
+  "start_line": 69,
+  "end_line": 84,
+  "body_start_line": 77,
+  "comment": "/**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */",
+  "test_time": 9.644587516784668,
+  "cover_tests": [
+    "com.thealgorithms.ciphers.ColumnarTranspositionCipherTest#testDecryption",
+    "com.thealgorithms.ciphers.ColumnarTranspositionCipherTest#testLongPlainText"
+  ],
+  "repo": {
+    "github_path": "TheAlgorithms/Java",
+    "commit": "bb6385e756a0159a29655c745682e95ca7b41ada",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.thealgorithms</groupId>\n  <artifactId>Java</artifactId>\n  <version>1.0-SNAPSHOT</version>\n  <packaging>jar</packaging>\n  <properties>\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n    <maven.compiler.source>21</maven.compiler.source>\n    <maven.compiler.target>21</maven.compiler.target>\n    <assertj.version>3.27.6</assertj.version>\n  </properties>\n  <dependencyManagement>\n    <dependencies>\n      <dependency>\n        <groupId>org.junit</groupId>\n        <artifactId>junit-bom</artifactId>\n        <version>6.0.0</version>\n        <type>pom</type>\n        <scope>import</scope>\n      </dependency>\n    </dependencies>\n  </dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.junit.jupiter</groupId>\n      <artifactId>junit-jupiter</artifactId>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.assertj</groupId>\n      <artifactId>assertj-core</artifactId>\n      <version>${assertj.version}</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.mockito</groupId>\n      <artifactId>mockito-core</artifactId>\n      <version>5.20.0</version>\n      <scope>test</scope>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.19.0</version>\n    </dependency>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-collections4</artifactId>\n      <version>4.5.0</version>\n    </dependency>\n  </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.5.4</version>\n        <configuration>\n          <forkNode implementation=\"org.apache.maven.plugin.surefire.extensions.SurefireForkNodeFactory\" />\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>\n          <disableXmlReport>false</disableXmlReport>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-compiler-plugin</artifactId>\n        <version>3.14.1</version>\n        <configuration>\n          <release>21</release>\n          <compilerArgs>\n            <arg>-Xlint:all</arg>\n            <arg>-Xlint:-auxiliaryclass</arg>\n            <arg>-Werror</arg>\n          </compilerArgs>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.14</version>\n        <executions>\n          <execution>\n            <goals>\n              <goal>prepare-agent</goal>\n            </goals>\n          </execution>\n          <execution>\n            <id>generate-code-coverage-report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n            </goals>\n            <configuration>\n              <reports>\n                <report>xml</report>\n              </reports>\n            <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory></configuration>\n          </execution>\n        </executions>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-checkstyle-plugin</artifactId>\n        <version>3.6.0</version>\n        <configuration>\n          <configLocation>checkstyle.xml</configLocation>\n          <consoleOutput>true</consoleOutput>\n          <includeTestSourceDirectory>true</includeTestSourceDirectory>\n          <violationSeverity>warning</violationSeverity>\n        </configuration>\n        <dependencies>\n          <dependency>\n            <groupId>com.puppycrawl.tools</groupId>\n            <artifactId>checkstyle</artifactId>\n            <version>12.1.1</version>\n          </dependency>\n        </dependencies>\n      </plugin>\n      <plugin>\n        <groupId>com.github.spotbugs</groupId>\n        <artifactId>spotbugs-maven-plugin</artifactId>\n        <version>4.9.8.1</version>\n        <configuration>\n          <excludeFilterFile>spotbugs-exclude.xml</excludeFilterFile>\n          <includeTests>true</includeTests>\n          <plugins>\n            <plugin>\n              <groupId>com.mebigfatguy.fb-contrib</groupId>\n              <artifactId>fb-contrib</artifactId>\n              <version>7.6.15</version>\n            </plugin>\n            <plugin>\n              <groupId>com.h3xstream.findsecbugs</groupId>\n              <artifactId>findsecbugs-plugin</artifactId>\n              <version>1.14.0</version>\n            </plugin>\n          </plugins>\n        </configuration>\n      </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-pmd-plugin</artifactId>\n        <version>3.28.0</version>\n        <configuration>\n          <rulesets>\n            <ruleset>/rulesets/java/maven-pmd-plugin-default.xml</ruleset>\n            <ruleset>/category/java/security.xml</ruleset>\n            <ruleset>file://${basedir}/pmd-custom_ruleset.xml</ruleset>\n          </rulesets>\n          <printFailingErrors>true</printFailingErrors>\n          <includeTests>true</includeTests>\n          <linkXRef>false</linkXRef>\n          <excludeFromFailureFile>pmd-exclude.properties</excludeFromFailureFile>\n        </configuration>\n      </plugin>\n    </plugins>\n  </build>\n</project>",
+    "failed_tests": [],
+    "test_time": 79.98077940940857
+  },
+  "mutants": [
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 0; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length - 1; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i += 2) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i >= table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 2; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[0]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                \n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(\"\"); // Appends an empty string\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append((char) 0); // Appends a null character\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(ENCRYPTION_FIELD);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item.toString().toUpperCase()); // Converts item to uppercase before appending\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return \"\";\n    }",
+    "    /**\n     * Decrypts a certain encrypted String with the Columnar Transposition\n     * Cipher Rule\n     *\n     * @return a String decrypted with the word encrypted by the Columnar\n     * Transposition Cipher Rule\n     */\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return null;\n    }"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result != null;\n//@ ensures !\\result.contains(ENCRYPTION_FIELD);\n//@ ensures \\result.equals(java.util.stream.IntStream.range(1, \\old(table).length).mapToObj(i -> java.util.stream.IntStream.range(0, \\old(table)[i].length).mapToObj(j -> String.valueOf(\\old(table)[i][j])).filter(s -> !s.equals(ENCRYPTION_FIELD)).collect(java.util.stream.Collectors.joining())).collect(java.util.stream.Collectors.joining()));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.thealgorithms.ciphers;\n\nimport java.util.Objects;\n\npublic final class ColumnarTranspositionCipher {\n    private ColumnarTranspositionCipher() {\n    }\n\n    private static String keyword;\n    private static Object[][] table;\n    private static String abecedarium;\n    public static final String ABECEDARIUM = \"abcdefghijklmnopqrstuvwxyzABCDEFG\"\n        + \"HIJKLMNOPQRSTUVWXYZ0123456789,.;:-@\";\n    private static final String ENCRYPTION_FIELD = \"\u2248\";\n    private static final char ENCRYPTION_FIELD_CHAR = '\u2248';\n\n    public static String encrypt(final String word, final String keyword) {\n        ColumnarTranspositionCipher.keyword = keyword;\n        abecedariumBuilder();\n        table = tableBuilder(word);\n        Object[][] sortedTable = sortTable(table);\n        StringBuilder wordEncrypted = new StringBuilder();\n        for (int i = 0; i < sortedTable[0].length; i++) {\n            for (int j = 1; j < sortedTable.length; j++) {\n                wordEncrypted.append(sortedTable[j][i]);\n            }\n        }\n        return wordEncrypted.toString();\n    }\n\n    public static String encrypt(String word, String keyword, String abecedarium) {\n        ColumnarTranspositionCipher.keyword = keyword;\n        ColumnarTranspositionCipher.abecedarium = Objects.requireNonNullElse(abecedarium, ABECEDARIUM);\n        table = tableBuilder(word);\n        Object[][] sortedTable = sortTable(table);\n\n        StringBuilder wordEncrypted = new StringBuilder();\n        for (int i = 0; i < sortedTable[0].length; i++) {\n            for (int j = 1; j < sortedTable.length; j++) {\n                wordEncrypted.append(sortedTable[j][i]);\n            }\n        }\n        return wordEncrypted.toString();\n    }\n\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }\n\n    private static Object[][] tableBuilder(String word) {\n        Object[][] table = new Object[numberOfRows(word) + 1][keyword.length()];\n        char[] wordInChars = word.toCharArray();\n        table[0] = findElements();\n        int charElement = 0;\n        for (int i = 1; i < table.length; i++) {\n            for (int j = 0; j < table[i].length; j++) {\n                if (charElement < wordInChars.length) {\n                    table[i][j] = wordInChars[charElement];\n                    charElement++;\n                } else {\n                    table[i][j] = ENCRYPTION_FIELD_CHAR;\n                }\n            }\n        }\n        return table;\n    }\n\n    private static int numberOfRows(String word) {\n        if (word.length() % keyword.length() != 0) {\n            return (word.length() / keyword.length()) + 1;\n        } else {\n            return word.length() / keyword.length();\n        }\n    }\n\n    private static Object[] findElements() {\n        Object[] charValues = new Object[keyword.length()];\n        for (int i = 0; i < charValues.length; i++) {\n            int charValueIndex = abecedarium.indexOf(keyword.charAt(i));\n            charValues[i] = charValueIndex > -1 ? charValueIndex : null;\n        }\n        return charValues;\n    }\n\n    private static Object[][] sortTable(Object[][] table) {\n        Object[][] tableSorted = new Object[table.length][table[0].length];\n        for (int i = 0; i < tableSorted.length; i++) {\n            System.arraycopy(table[i], 0, tableSorted[i], 0, tableSorted[i].length);\n        }\n        for (int i = 0; i < tableSorted[0].length; i++) {\n            for (int j = i + 1; j < tableSorted[0].length; j++) {\n                if ((int) tableSorted[0][i] > (int) table[0][j]) {\n                    Object[] column = getColumn(tableSorted, tableSorted.length, i);\n                    switchColumns(tableSorted, j, i, column);\n                }\n            }\n        }\n        return tableSorted;\n    }\n\n    private static Object[] getColumn(Object[][] table, int rows, int column) {\n        Object[] columnArray = new Object[rows];\n        for (int i = 0; i < rows; i++) {\n            columnArray[i] = table[i][column];\n        }\n        return columnArray;\n    }\n\n    private static void switchColumns(Object[][] table, int firstColumnIndex, int secondColumnIndex, Object[] columnToSwitch) {\n        for (int i = 0; i < table.length; i++) {\n            table[i][secondColumnIndex] = table[i][firstColumnIndex];\n            table[i][firstColumnIndex] = columnToSwitch[i];\n        }\n    }\n\n    private static void abecedariumBuilder() {\n        StringBuilder t = new StringBuilder();\n        for (int i = 0; i < 256; i++) {\n            t.append((char) i);\n        }\n        abecedarium = t.toString();\n    }\n}\n\n```\n## Target Method\n```\n    public static String decrypt() {\n        StringBuilder wordDecrypted = new StringBuilder();\n        for (int i = 1; i < table.length; i++) {\n            for (Object item : table[i]) {\n                wordDecrypted.append(item);\n            }\n        }\n        return wordDecrypted.toString().replaceAll(ENCRYPTION_FIELD, \"\");\n    }\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `decrypt`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "// @ ensures table == \\old(table);\n// @ ensures abecedarium == \\old(abecedarium);\n// @ ensures keyword == \\old(keyword);\n// @ ensures \\result != null;\n// @ ensures \\result.equals(java.util.Arrays.stream(table).skip(1).flatMap(row -> java.util.Arrays.stream(row)).map(String::valueOf).collect(java.util.stream.Collectors.joining()).replaceAll(ENCRYPTION_FIELD, \"\"));\n// @ ensures !\\result.contains(ENCRYPTION_FIELD);\n// @ ensures (!java.util.Arrays.stream(table).skip(1).flatMap(row -> java.util.Arrays.stream(row)).map(String::valueOf).anyMatch(s -> s.equals(ENCRYPTION_FIELD))) ==> \\result.equals(java.util.Arrays.stream(table).skip(1).flatMap(row -> java.util.Arrays.stream(row)).map(String::valueOf).collect(java.util.stream.Collectors.joining()));\n// @ ensures \\result.length() <= java.util.Arrays.stream(table).skip(1).flatMap(row -> java.util.Arrays.stream(row)).map(String::valueOf).collect(java.util.stream.Collectors.joining()).length();\n// @ ensures (table.length == 1) ==> (\\result.equals(\"\"));",
+    "// @ ensures table == \\old(table);\n// @ ensures keyword == \\old(keyword);\n// @ ensures abecedarium == \\old(abecedarium);\n// @ ensures !\\result.contains(ENCRYPTION_FIELD);\n// @ ensures table != null ==> \\result.equals(java.util.Arrays.stream(\\old(table)).skip(1L).map(row -> java.util.Arrays.stream((java.lang.Object[]) row).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining())).collect(java.util.stream.Collectors.joining()).replaceAll(\\old(ENCRYPTION_FIELD), \"\"));",
+    "// @ ensures \\result != null;\n// @ ensures \\result.indexOf(ENCRYPTION_FIELD) == -1;\n// @ ensures \\old(table) != null ==> \\result.equals(java.util.stream.IntStream.range(1, \\old(table).length).mapToObj(i -> java.util.Arrays.stream((java.lang.Object[]) \\old(table)[i]).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining())).collect(java.util.stream.Collectors.joining()).replaceAll(\\old(ENCRYPTION_FIELD), \"\"));",
+    "// @ ensures \\result != null;\n// @ ensures \\result.equals((java.util.Arrays.stream(\\old(table)).skip(1).flatMap(row -> java.util.Arrays.stream((java.lang.Object[]) row)).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining())).replaceAll(ENCRYPTION_FIELD, \"\"));\n// @ ensures \\result.indexOf(ENCRYPTION_FIELD) == -1;\n// @ ensures \\result.length() <= (java.util.Arrays.stream(\\old(table)).skip(1).flatMap(row -> java.util.Arrays.stream((java.lang.Object[]) row)).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining())).length();\n// @ ensures (!((java.util.Arrays.stream(\\old(table)).skip(1).flatMap(row -> java.util.Arrays.stream((java.lang.Object[]) row)).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining())).contains(ENCRYPTION_FIELD))) ==> \\result.equals(java.util.Arrays.stream(\\old(table)).skip(1).flatMap(row -> java.util.Arrays.stream((java.lang.Object[]) row)).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining()));",
+    "// @ ensures table != null ==> \\result.equals((java.util.Arrays.stream(\\old(table)).skip(1L).flatMap((java.lang.Object[] r) -> java.util.Arrays.stream(r)).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining())).replaceAll(\\old(ENCRYPTION_FIELD), \"\"));\n// @ ensures table != null ==> \\result.indexOf(\\old(ENCRYPTION_FIELD)) == -1;\n// @ ensures table != null && (java.util.Arrays.stream(\\old(table)).skip(1L).flatMap((java.lang.Object[] r) -> java.util.Arrays.stream(r)).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining())).indexOf(\\old(ENCRYPTION_FIELD)) == -1 ==> \\result.equals(java.util.Arrays.stream(\\old(table)).skip(1L).flatMap((java.lang.Object[] r) -> java.util.Arrays.stream(r)).map(java.lang.String::valueOf).collect(java.util.stream.Collectors.joining()));"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 104
+}

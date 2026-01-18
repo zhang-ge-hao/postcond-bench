@@ -1,0 +1,176 @@
+{
+  "rlid": "_stop_port_forwarding",
+  "github_url": "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/controllers/android_device_lib/snippet_client_v2.py#L722-L740",
+  "name": "_stop_port_forwarding",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 8,
+  "cc": 3,
+  "content": "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port}'])\n      self.host_port = None",
+  "header": "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"",
+  "file": "./mobly/controllers/android_device_lib/snippet_client_v2.py",
+  "start_line": 722,
+  "end_line": 740,
+  "body_start_line": 730,
+  "comment": "\"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"",
+  "test_time": 0.742196798324585,
+  "cover_tests": [
+    "tests/mobly/controllers/android_device_lib/snippet_client_v2_test.py::SnippetClientV2Test::test_close_connection_normally"
+  ],
+  "repo": {
+    "github_path": "google/mobly",
+    "commit": "6aa58093145669c99c1d6680ab2c1ace42f7f229",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"poetry-core>=1.0.0\",]\nbuild-backend = \"poetry.core.masonry.api\"\n\n[project]\nname = \"mobly\"\nversion = \"1.13\"\ndescription = \"Automation framework for special end-to-end test cases\"\nrequires-python = \">=3.11\"\ndependencies = [ \"portpicker\", \"pywin32; platform_system == \\\"Windows\\\"\", \"pyyaml\",]\n[[project.maintainers]]\nname = \"Ang Li\"\nemail = \"mobly-github@googlegroups.com\"\n\n[project.license]\ntext = \"Apache2.0\"\n\n[project.urls]\nHomepage = \"https://github.com/google/mobly\"\nDownload = \"https://github.com/google/mobly/tarball/1.13\"\n\n[project.optional-dependencies]\ntesting = [ \"mock\", \"pytest\", \"pytz\",]\n\n[tool.setuptools]\ninclude-package-data = false\nscript-files = [ \"tools/snippet_shell.py\",]\n\n[tool.pyink]\nline-length = 80\npreview = true\npyink-indentation = 2\npyink-use-majority-quotes = true\nextend-exclude = \".*\\\\/venv/.*|.*\\\\/\\\\.tox\\\\/.*\"\n\n[tool.pytest.ini_options]\npython_classes = [ \"*Test\",]\npython_files = [ \"*_test.py\",]\ntestpaths = [ \"tests/mobly\",]\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\npytest-env = \"^1.2.0\"\npytz = \"^2025.2\"\nmock = \"^5.2.0\"\n",
+    "failed_tests": [
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_exception",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_setup_test_fail_by_test_signal",
+      "tests/mobly/base_test_test.py::BaseTestTest::test_uncaught_exception",
+      "tests/mobly/records_test.py::RecordsTest::test_result_record_fail_stacktrace"
+    ],
+    "test_time": 13.185952425003052
+  },
+  "mutants": [
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port == 0:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port}'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port == 1:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port}'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = []  # Intentionally empty to simulate no occupied ports\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port}'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port in adb.list_occupied_adb_ports() and self.host_port != 0:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port}'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port}'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:0'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.device_port}'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port + 1}'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove-all', f'tcp:{self.host_port}'])\n      self.host_port = None",
+    "  def _stop_port_forwarding(self):\n    \"\"\"Stops the adb port forwarding used by this client.\n\n    Although we explicitly forward and track the host port, it can be unforwarded\n    unexpectedly due to flaky USB connections, adb restarts, or external tools\n    (e.g., `adb forward --remove-all`). To prevent unnecessary errors, this method\n    checks if the host port is still forwarded before attempting to remove it.\n    \"\"\"\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['tcp:{self.host_port}'])\n      self.host_port = None"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda self: self.host_port, name=\"old_host_port\")\n@icontract.snapshot(lambda self: adb.list_occupied_adb_ports(), name=\"old_occupied_ports\")\n@icontract.snapshot(lambda self: getattr(getattr(self._device, \"adb\", None), \"mock_forward_func\", None), name=\"old_mock_forward\")\n@icontract.ensure(lambda OLD, self: (not OLD.old_host_port) or self.host_port is None)\n@icontract.ensure(lambda OLD, self: (not OLD.old_host_port) or self.host_port is None)\n@icontract.ensure(\n    lambda OLD, self:\n    (\n        # If there was no host_port before, the method must not have changed it.\n        (not OLD.old_host_port) or self.host_port is None\n    )\n)\n@icontract.ensure(\n    lambda OLD, self:\n    (\n        # If there was a host_port and it was reported as forwarded before the call,\n        # then the adb forward mock must have been invoked exactly once with the\n        # expected remove command for that host port.\n        (not (OLD.old_host_port and OLD.old_host_port in OLD.old_occupied_ports))\n        or (\n            getattr(getattr(self._device, \"adb\", None), \"mock_forward_func\", None)\n            is not None\n            and getattr(self._device.adb.mock_forward_func, \"call_count\", 0) == 1\n            and getattr(self._device.adb.mock_forward_func, \"call_args_list\", [])[0][0]\n            == ([\"--remove\", f\"tcp:{OLD.old_host_port}\"],)\n        )\n    )\n)\n@icontract.ensure(\n    lambda OLD, self:\n    (\n        # If there was a host_port and it was NOT reported as forwarded before the\n        # call, then no adb forward call should have been made.\n        (not (OLD.old_host_port and OLD.old_host_port not in OLD.old_occupied_ports))\n        or (\n            getattr(getattr(self._device, \"adb\", None), \"mock_forward_func\", None)\n            is None\n            or getattr(self._device.adb.mock_forward_func, \"call_count\", 0) == 0\n        )\n    )\n)",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n\nimport dataclasses\nimport enum\nimport json\nimport re\nimport socket\nfrom typing import Dict, Union\n\nfrom mobly import utils\nfrom mobly.controllers.android_device_lib import adb\nfrom mobly.controllers.android_device_lib import callback_handler_v2\nfrom mobly.controllers.android_device_lib import errors as android_device_lib_errors\nfrom mobly.snippet import client_base\nfrom mobly.snippet import errors\n\n_INSTRUMENTATION_RUNNER_PACKAGE = (\n    'com.google.android.mobly.snippet.SnippetRunner'\n)\n\n_LAUNCH_CMD = (\n    '{shell_cmd} am instrument {user} -w -e action start'\n    ' {instrument_options}'\n    f' {{snippet_package}}/{_INSTRUMENTATION_RUNNER_PACKAGE}'\n)\n\n_SNIPPET_SERVER_START_ERROR_DEBUG_TIP = \"\"\"\nInvalid instrumentation result log received during snippet server start:\n{instrumentation_result}\n\nFor debugging, please check the following:\n1. Check the server process stdout attached below.\n2. The snippet server logs within the device's logcat file. Search for\n   \"SNIPPET START\" to locate the relevant process ID.\n\nServer process stdout:\n{server_start_stdout}\n\"\"\"\n\n_STOP_CMD = (\n    'am instrument {user} -w -e action stop {snippet_package}/'\n    f'{_INSTRUMENTATION_RUNNER_PACKAGE}'\n)\n\n_STOP_CMD_TIMEOUT_SEC = 30\n\n_PROTOCOL_MAJOR_VERSION = 1\n\n_PROTOCOL_MINOR_VERSION = 0\n\n_SETSID_COMMAND = 'setsid'\n\n_NOHUP_COMMAND = 'nohup'\n\nUNKNOWN_UID = -1\n\n_SOCKET_CONNECTION_TIMEOUT = 60\n\n_SOCKET_READ_TIMEOUT = 60 * 10\n\n_CALLBACK_DEFAULT_TIMEOUT_SEC = 60 * 2\n\n\n@dataclasses.dataclass\nclass Config:\n\n  am_instrument_options: Dict[str, str] = dataclasses.field(\n      default_factory=dict\n  )\n  user_id: Union[int, None] = None\n\n\nclass ConnectionHandshakeCommand(enum.Enum):\n\n  INIT = 'initiate'\n  CONTINUE = 'continue'\n\n\nclass SnippetClientV2(client_base.ClientBase):\n\n  def __init__(self, package, ad, config=None):\n    super().__init__(package=package, device=ad)\n    self.host_port = None\n    self.device_port = None\n    self.uid = UNKNOWN_UID\n    self._adb = ad.adb\n    self._user_id = None if config is None else config.user_id\n    self._proc = None\n    self._client = None  \n    self._conn = None\n    self._event_client = None\n    self._config = config or Config()\n    self._server_start_stdout = []\n\n  @property\n  def user_id(self):\n    if self._user_id is None:\n      self._user_id = self._adb.current_user_id\n    return self._user_id\n\n  @property\n  def is_alive(self):\n    return self._conn is not None\n\n  def before_starting_server(self):\n    self._validate_snippet_app_on_device()\n    self._disable_hidden_api_blocklist()\n\n  def _validate_snippet_app_on_device(self):\n    out = self._adb.shell(\n        f'pm list packages --user {self.user_id} {self.package}'\n    )\n    if not utils.grep(f'^package:{self.package}$', out):\n      raise errors.ServerStartPreCheckError(\n          self._device,\n          f'{self.package} is not installed for user {self.user_id}.',\n      )\n\n    out = self._adb.shell('pm list instrumentation')\n    matched_out = utils.grep(\n        f'^instrumentation:{self.package}/{_INSTRUMENTATION_RUNNER_PACKAGE}',\n        out,\n    )\n    if not matched_out:\n      raise errors.ServerStartPreCheckError(\n          self._device,\n          f'{self.package} is installed, but it is not instrumented.',\n      )\n    match = re.search(\n        r'^instrumentation:(.*)\\/(.*) \\(target=(.*)\\)$', matched_out[0]\n    )\n    target_name = match.group(3)\n    if target_name != self.package:\n      out = self._adb.shell(f'pm list package --user {self.user_id}')\n      if not utils.grep(f'^package:{target_name}$', out):\n        raise errors.ServerStartPreCheckError(\n            self._device,\n            f'Instrumentation target {target_name} is not installed for user '\n            f'{self.user_id}.',\n        )\n\n  def _disable_hidden_api_blocklist(self):\n    sdk_version = int(self._device.build_info['build_version_sdk'])\n    if self._device.is_rootable and sdk_version >= 28:\n      self._device.adb.shell(\n          'settings put global hidden_api_blacklist_exemptions \"*\"'\n      )\n\n  def start_server(self):\n    persists_shell_cmd = self._get_persisting_command()\n    self.log.debug(\n        'Snippet server for package %s is using protocol %d.%d',\n        self.package,\n        _PROTOCOL_MAJOR_VERSION,\n        _PROTOCOL_MINOR_VERSION,\n    )\n    option_str = self._get_instrument_options_str()\n    cmd = _LAUNCH_CMD.format(\n        shell_cmd=persists_shell_cmd,\n        user=self._get_user_command_string(),\n        snippet_package=self.package,\n        instrument_options=option_str,\n    )\n    self._proc = self._run_adb_cmd(cmd)\n\n    self._server_start_stdout = []\n    line = self._read_protocol_line()\n    match = re.match('^SNIPPET START, PROTOCOL ([0-9]+) ([0-9]+)$', line)\n    if not match or int(match.group(1)) != _PROTOCOL_MAJOR_VERSION:\n      raise errors.ServerStartProtocolError(self._device, line)\n\n    line = self._read_protocol_line()\n    match = re.match('^SNIPPET SERVING, PORT ([0-9]+)$', line)\n    if not match:\n      message = _SNIPPET_SERVER_START_ERROR_DEBUG_TIP.format(\n          instrumentation_result=line,\n          server_start_stdout='\\n'.join(self._server_start_stdout),\n      )\n      raise errors.ServerStartProtocolError(self._device, message)\n    self.device_port = int(match.group(1))\n\n  def _run_adb_cmd(self, cmd):\n    adb_cmd = [adb.ADB]\n    if self._adb.serial:\n      adb_cmd += ['-s', self._adb.serial]\n    adb_cmd += ['shell', cmd]\n    return utils.start_standing_subprocess(adb_cmd, shell=False)\n\n  def _get_persisting_command(self):\n    for command in [_SETSID_COMMAND, _NOHUP_COMMAND]:\n      try:\n        if command in self._adb.shell(['which', command]).decode('utf-8'):\n          return command\n      except adb.AdbError:\n        continue\n\n    self.log.warning(\n        'No %s and %s commands available to launch instrument '\n        'persistently, tests that depend on UiAutomator and '\n        'at the same time perform USB disconnections may fail.',\n        _SETSID_COMMAND,\n        _NOHUP_COMMAND,\n    )\n    return ''\n\n  def _get_instrument_options_str(self):\n    self.log.debug(\n        'Got am instrument options in snippet client for package %s: %s',\n        self.package,\n        self._config.am_instrument_options,\n    )\n    if not self._config.am_instrument_options:\n      return ''\n\n    return ' '.join(\n        f'-e {k} {v}' for k, v in self._config.am_instrument_options.items()\n    )\n\n  def _get_user_command_string(self):\n    sdk_version = int(self._device.build_info['build_version_sdk'])\n    if sdk_version < 24:\n      return ''\n    return f'--user {self.user_id}'\n\n  def _read_protocol_line(self):\n    self._server_start_stdout = []\n    while True:\n      line = self._proc.stdout.readline().decode('utf-8')\n      if not line:\n        raise errors.ServerStartError(\n            self._device, 'Unexpected EOF when waiting for server to start.'\n        )\n\n      line = line.strip()\n      if line.startswith('INSTRUMENTATION_RESULT:') or line.startswith(\n          'SNIPPET '\n      ):\n        self.log.debug('Accepted line from instrumentation output: \"%s\"', line)\n        return line\n\n      self._server_start_stdout.append(line)\n      self.log.debug('Discarded line from instrumentation output: \"%s\"', line)\n\n  def make_connection(self):\n    self._forward_device_port()\n    self.create_socket_connection()\n    self.send_handshake_request()\n\n  def _forward_device_port(self):\n    if self.host_port and self.host_port in adb.list_occupied_adb_ports():\n      raise errors.Error(\n          self._device,\n          f'Cannot forward to host port {self.host_port} because adb has'\n          ' forwarded another device port to it.',\n      )\n\n    host_port = self.host_port or 0\n    stdout = self._adb.forward([f'tcp:{host_port}', f'tcp:{self.device_port}'])\n    self.host_port = int(stdout.strip())\n\n  def create_socket_connection(self):\n    try:\n      self.log.debug(\n          'Snippet client is creating socket connection to the snippet server '\n          'of %s through host port %d.',\n          self.package,\n          self.host_port,\n      )\n      self._conn = socket.create_connection(\n          ('localhost', self.host_port), _SOCKET_CONNECTION_TIMEOUT\n      )\n    except ConnectionRefusedError as err:\n      self.log.debug(\n          'Failed to connect to localhost, trying 127.0.0.1: %s', str(err)\n      )\n      try:\n        self._conn = socket.create_connection(\n            ('127.0.0.1', self.host_port), _SOCKET_CONNECTION_TIMEOUT\n        )\n      except ConnectionRefusedError as err2:\n        ret, _, _ = utils.run_command(\n            f'netstat -tulpn | grep \":{self.host_port}\"', shell=True\n        )\n        if ret != 0:\n          raise errors.Error(\n              self._device,\n              'The Adb forward command execution did not take effect. Please'\n              ' check if there are other processes affecting adb forward on the'\n              ' host.',\n          ) from err2\n\n        raise errors.Error(\n            self._device,\n            'Failed to establish socket connection from host to snippet server'\n            ' running on Android device.',\n        ) from err2\n\n    self._conn.settimeout(_SOCKET_READ_TIMEOUT)\n    self._client = self._conn.makefile(mode='brw')\n\n  def send_handshake_request(\n      self, uid=UNKNOWN_UID, cmd=ConnectionHandshakeCommand.INIT\n  ):\n    request = json.dumps({'cmd': cmd.value, 'uid': uid})\n    self.log.debug('Sending handshake request %s.', request)\n    self._client_send(request)\n    response = self._client_receive()\n\n    if not response:\n      raise errors.ProtocolError(\n          self._device, errors.ProtocolError.NO_RESPONSE_FROM_HANDSHAKE\n      )\n\n    response = self._decode_socket_response_bytes(response)\n\n    result = json.loads(response)\n    if result['status']:\n      self.uid = result['uid']\n    else:\n      self.uid = UNKNOWN_UID\n\n  def check_server_proc_running(self):\n\n  def send_rpc_request(self, request):\n    self._client_send(request)\n    response = self._client_receive()\n    if not response:\n      raise errors.ProtocolError(\n          self._device, errors.ProtocolError.NO_RESPONSE_FROM_SERVER\n      )\n    return self._decode_socket_response_bytes(response)\n\n  def _client_send(self, message):\n    try:\n      self._client.write(f'{message}\\n'.encode('utf8'))\n      self._client.flush()\n    except socket.error as e:\n      raise errors.Error(\n          self._device,\n          f'Encountered socket error \"{e}\" sending RPC message \"{message}\"',\n      ) from e\n\n  def _client_receive(self):\n    try:\n      return self._client.readline()\n    except socket.error as e:\n      raise errors.Error(\n          self._device, f'Encountered socket error \"{e}\" reading RPC response'\n      ) from e\n\n  def _decode_socket_response_bytes(self, response):\n    try:\n      return str(response, encoding='utf8')\n    except UnicodeError:\n      self.log.error(\n          'Failed to decode socket response bytes using encoding utf8: %s',\n          response,\n      )\n      raise\n\n  def handle_callback(self, callback_id, ret_value, rpc_func_name):\n    if self._event_client is None:\n      self._create_event_client()\n    return callback_handler_v2.CallbackHandlerV2(\n        callback_id=callback_id,\n        event_client=self._event_client,\n        ret_value=ret_value,\n        method_name=rpc_func_name,\n        device=self._device,\n        rpc_max_timeout_sec=_SOCKET_READ_TIMEOUT,\n        default_timeout_sec=_CALLBACK_DEFAULT_TIMEOUT_SEC,\n    )\n\n  def _create_event_client(self):\n    self._event_client = SnippetClientV2(package=self.package, ad=self._device)\n    self._event_client.make_connection_with_forwarded_port(\n        self.host_port,\n        self.device_port,\n        self.uid,\n        ConnectionHandshakeCommand.CONTINUE,\n    )\n\n  def make_connection_with_forwarded_port(\n      self,\n      host_port,\n      device_port,\n      uid=UNKNOWN_UID,\n      cmd=ConnectionHandshakeCommand.INIT,\n  ):\n    self.host_port = host_port\n    self.device_port = device_port\n    self._counter = self._id_counter()\n    self.create_socket_connection()\n    self.send_handshake_request(uid, cmd)\n\n  def stop(self):\n    self.log.debug('Stopping snippet package %s.', self.package)\n    self.close_connection()\n    self._stop_server()\n    self._destroy_event_client()\n    self.log.debug('Snippet package %s stopped.', self.package)\n\n  def close_connection(self):\n    try:\n      if self._conn:\n        self._conn.close()\n        self._conn = None\n    finally:\n      self._stop_port_forwarding()\n\n  def _stop_port_forwarding(self):\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port}'])\n      self.host_port = None\n\n  def _stop_server(self):\n\n    if self._proc:\n      utils.stop_standing_subprocess(self._proc)\n      self._proc = None\n\n    out = self._adb.shell(\n        _STOP_CMD.format(\n            snippet_package=self.package, user=self._get_user_command_string()\n        ),\n        timeout=_STOP_CMD_TIMEOUT_SEC,\n    ).decode('utf-8')\n\n    if 'OK (0 tests)' not in out:\n      raise android_device_lib_errors.DeviceError(\n          self._device,\n          f'Failed to stop existing apk. Unexpected output: {out}.',\n      )\n\n  def _destroy_event_client(self):\n    if self._event_client:\n      self._event_client.host_port = None\n      self._event_client.device_port = None\n      self._event_client.close_connection()\n      self._event_client = None\n\n  def restore_server_connection(self, port=None):\n    try:\n      self.host_port = port\n      self._make_connection()\n    except Exception as e:\n      self.log.error('Failed to re-connect to the server.')\n      raise errors.ServerRestoreConnectionError(\n          self._device,\n          (\n              f'Failed to restore server connection for {self.package} at '\n              f'host port {self.host_port}, device port {self.device_port}.'\n          ),\n      ) from e\n\n    self._proc = None\n    self._restore_event_client()\n\n  def _restore_event_client(self):\n    if self._event_client:\n      self._event_client.make_connection_with_forwarded_port(\n          self.host_port, self.device_port\n      )\n\n  def help(self, print_output=True):\n    help_text = self._rpc('help')\n    if print_output:\n      print(help_text)\n    else:\n      return help_text\n\n```\n## Target Method\n```\n  def _stop_port_forwarding(self):\n    if self.host_port:\n      occupied_ports = adb.list_occupied_adb_ports()\n      if self.host_port not in occupied_ports:\n        self.log.debug(\n            'Host port %s is not currently forwarded by adb, skipping removal.',\n            self.host_port,\n        )\n        self.host_port = None\n        return\n      self._device.adb.forward(['--remove', f'tcp:{self.host_port}'])\n      self.host_port = None\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `_stop_port_forwarding`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.snapshot(lambda self: self.host_port, name=\"old_host_port\")\n@icontract.ensure(lambda self: self.host_port is None, \"host_port must be None after stopping port forwarding\")",
+    "@icontract.ensure(lambda self: self.host_port is None, \"host_port must be None after stopping port forwarding\")",
+    "@icontract.ensure(lambda self: self.host_port is None, \"host_port must be None after stopping port forwarding\")",
+    "@icontract.ensure(lambda self: self.host_port is None, \"host_port must be None after stopping port forwarding\")",
+    "@icontract.snapshot(lambda self: self.host_port, name=\"old_host_port\")\n@icontract.ensure(lambda self: self.host_port is None, \"host_port must be None after stopping port forwarding\")"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 175
+}

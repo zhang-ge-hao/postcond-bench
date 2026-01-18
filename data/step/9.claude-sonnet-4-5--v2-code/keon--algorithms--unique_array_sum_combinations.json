@@ -1,0 +1,464 @@
+{
+  "rlid": "unique_array_sum_combinations",
+  "github_url": "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/backtrack/array_sum_combinations.py#L59-L84",
+  "name": "unique_array_sum_combinations",
+  "line_cov": 1.0,
+  "lines": 26,
+  "stats": 11,
+  "cc": 5,
+  "content": "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+  "header": "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"",
+  "file": "./algorithms/backtrack/array_sum_combinations.py",
+  "start_line": 59,
+  "end_line": 84,
+  "body_start_line": 69,
+  "comment": "\"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"",
+  "test_time": 2.8039445877075195,
+  "cover_tests": [
+    "tests/test_backtrack.py::TestArrayCombinationSum::test_unique_array_sum_combinations"
+  ],
+  "repo": {
+    "github_path": "keon/algorithms",
+    "commit": "5b63e90624bebb371949fbe49bbf20aa3c8e14d0",
+    "language": "python",
+    "env_config": "[project]\nname = \"my-project\"\nversion = \"0.1.0\"\n\n[tool.poetry]\nname = \"my-project\"\nversion = \"0.1.0\"\npackage-mode = false\nauthors = [ \"you <you@example.com>\",]\ndescription = \"\"\n\n[tool.poetry.dependencies]\npython = \">=3.10,<4.0\"\nicontract = \"^2.7.1\"\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\npytest-env = \"^1.2.0\"\n",
+    "failed_tests": [
+      "tests/test_array.py::TestRemoveDuplicate::test_remove_duplicates",
+      "tests/test_array.py::TestSummaryRanges::test_summarize_ranges"
+    ],
+    "test_time": 14.883306503295898
+  },
+  "mutants": [
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) != n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) != n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) < n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n + 1:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n - 1:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) > n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (False, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (True, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.combinations(A, 2)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.permutations(A, 3)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, )\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, repeat=2)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, )\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, None)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target * 2)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target + 1)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target - 1)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target, *A)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target, 0)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.product(A, B, C))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] and s[1] in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is False and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is False:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and len(res) < 5:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True or s[1] not in res:\n            res.add(s[1])\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True or s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is not True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[1] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(None)\n\n    return list(res)\n",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1] * 2)  # This will duplicate the combination, leading to incorrect results due to redundancy.\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1][:2])  # This will only add the first two elements of the combination, missing one.\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1][::-1])  # This will add the reversed list, which is not the intended combination.\n\n    return list(res)",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return [list(r) for r in res if r[0] > 0]",
+    "def unique_array_sum_combinations(A, B, C, target):\n    \"\"\"\n    1. Sort all the arrays - a,b,c. - This improves average time complexity.\n    2. If c[i] < Sum, then look for Sum - c[i] in array a and b.\n       When pair found, insert c[i], a[j] & b[k] into the result list.\n       This can be done in O(n).\n    3. Keep on doing the above procedure while going through complete c array.\n\n    Complexity: O(n(m+p))\n    \"\"\"\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return res.pop() if res else []"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.ensure(\n    lambda result, A, B, C, target:\n        isinstance(result, list)\n        and all(\n            isinstance(triple, tuple) and len(triple) == 3\n            for triple in result\n        )\n        and set(result)\n        ==\n        {\n            (a, b, c)\n            for a in A\n            for b in B\n            for c in C\n            if a + b + c == target\n        }\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "claude-sonnet-4-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport itertools\nfrom functools import partial\n\n\ndef array_sum_combinations(A, B, C, target):\n\n    def over(constructed_sofar):\n        sum = 0\n        to_stop, reached_target = False, False\n        for elem in constructed_sofar:\n            sum += elem\n        if sum >= target or len(constructed_sofar) >= 3:\n            to_stop = True\n            if sum == target and 3 == len(constructed_sofar):\n                reached_target = True\n        return to_stop, reached_target\n\n    def construct_candidates(constructed_sofar):\n        array = A\n        if 1 == len(constructed_sofar):\n            array = B\n        elif 2 == len(constructed_sofar):\n            array = C\n        return array\n\n    def backtrack(constructed_sofar=[], res=[]):\n        to_stop, reached_target = over(constructed_sofar)\n        if to_stop:\n            if reached_target:\n                res.append(constructed_sofar)\n            return\n        candidates = construct_candidates(constructed_sofar)\n\n        for candidate in candidates:\n            constructed_sofar.append(candidate)\n            backtrack(constructed_sofar[:], res)\n            constructed_sofar.pop()\n\n    res = []\n    backtrack([], res)\n    return res\n\n\ndef unique_array_sum_combinations(A, B, C, target):\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n\n```\n## Target Method\n```\ndef unique_array_sum_combinations(A, B, C, target):\n    def check_sum(n, *nums):\n        if sum(x for x in nums) == n:\n            return (True, nums)\n        else:\n            return (False, nums)\n\n    pro = itertools.product(A, B, C)\n    func = partial(check_sum, target)\n    sums = list(itertools.starmap(func, pro))\n\n    res = set()\n    for s in sums:\n        if s[0] is True and s[1] not in res:\n            res.add(s[1])\n\n    return list(res)\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `unique_array_sum_combinations`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-code",
+  "postconds": [
+    "@icontract.ensure(lambda result: all(len(combo) == 3 for combo in result))\n@icontract.ensure(lambda result, target: all(sum(combo) == target for combo in result))\n@icontract.ensure(lambda result, A: all(combo[0] in A for combo in result))\n@icontract.ensure(lambda result, B: all(combo[1] in B for combo in result))\n@icontract.ensure(lambda result, C: all(combo[2] in C for combo in result))\n@icontract.ensure(lambda result: len(result) == len(set(result)))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(item, tuple) for item in result))\n@icontract.ensure(lambda result: all(len(item) == 3 for item in result))\n@icontract.ensure(lambda result, target: all(sum(item) == target for item in result))\n@icontract.ensure(lambda result, A: all(item[0] in A for item in result))\n@icontract.ensure(lambda result, B: all(item[1] in B for item in result))\n@icontract.ensure(lambda result, C: all(item[2] in C for item in result))\n@icontract.ensure(lambda result: len(result) == len(set(result)))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(item, tuple) for item in result))\n@icontract.ensure(lambda result: all(len(item) == 3 for item in result))\n@icontract.ensure(lambda result, target: all(sum(item) == target for item in result))\n@icontract.ensure(lambda result, A: all(item[0] in A for item in result))\n@icontract.ensure(lambda result, B: all(item[1] in B for item in result))\n@icontract.ensure(lambda result, C: all(item[2] in C for item in result))\n@icontract.ensure(lambda result: len(result) == len(set(result)))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(t, tuple) and len(t) == 3 for t in result))\n@icontract.ensure(lambda result, target: all(sum(t) == target for t in result))\n@icontract.ensure(lambda result, A: all(t[0] in A for t in result))\n@icontract.ensure(lambda result, B: all(t[1] in B for t in result))\n@icontract.ensure(lambda result, C: all(t[2] in C for t in result))\n@icontract.ensure(lambda result: len(result) == len(set(result)))",
+    "@icontract.ensure(lambda result: isinstance(result, list))\n@icontract.ensure(lambda result: all(isinstance(item, tuple) for item in result))\n@icontract.ensure(lambda result: all(len(item) == 3 for item in result))\n@icontract.ensure(lambda result, target: all(sum(item) == target for item in result))\n@icontract.ensure(lambda result, A: all(item[0] in A for item in result))\n@icontract.ensure(lambda result, B: all(item[1] in B for item in result))\n@icontract.ensure(lambda result, C: all(item[2] in C for item in result))\n@icontract.ensure(lambda result: len(result) == len(set(result)))"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ],
+    [
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "local_crash",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "failed",
+      "failed",
+      "icontract_fail",
+      "icontract_fail",
+      "icontract_fail",
+      "failed",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail",
+      "local_crash",
+      "icontract_fail"
+    ]
+  ],
+  "traversal_rank": 269
+}

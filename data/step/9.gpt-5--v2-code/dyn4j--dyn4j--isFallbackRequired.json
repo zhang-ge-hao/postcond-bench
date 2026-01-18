@@ -1,0 +1,221 @@
+{
+  "rlid": "isFallbackRequired",
+  "github_url": "https://github.com/dyn4j/dyn4j/blob/1a3a5872dca5bc65fd9a2376100e33bed5d3cde6/./src/main/java/org/dyn4j/collision/narrowphase/FallbackNarrowphaseDetector.java#L149-L165",
+  "name": "isFallbackRequired",
+  "line_cov": 1.0,
+  "lines": 17,
+  "stats": 7,
+  "cc": 4,
+  "content": "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+  "header": "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {",
+  "file": "./src/main/java/org/dyn4j/collision/narrowphase/FallbackNarrowphaseDetector.java",
+  "start_line": 149,
+  "end_line": 165,
+  "body_start_line": 157,
+  "comment": "/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */",
+  "test_time": 4.51093864440918,
+  "cover_tests": [
+    "org.dyn4j.collision.narrowphase.FallbackNarrowphaseDetectorTest#detect",
+    "org.dyn4j.collision.narrowphase.FallbackNarrowphaseDetectorTest#noConditions",
+    "org.dyn4j.collision.narrowphase.FallbackNarrowphaseDetectorTest#pairwiseTypedCondition",
+    "org.dyn4j.collision.narrowphase.FallbackNarrowphaseDetectorTest#pairwiseTypedConditionStrict",
+    "org.dyn4j.collision.narrowphase.FallbackNarrowphaseDetectorTest#pairwiseTypedConditionStrictOne",
+    "org.dyn4j.collision.narrowphase.FallbackNarrowphaseDetectorTest#singleTypedCondition",
+    "org.dyn4j.collision.narrowphase.FallbackNarrowphaseDetectorTest#singleTypedConditionOrder",
+    "org.dyn4j.collision.narrowphase.FallbackNarrowphaseDetectorTest#singleTypedConditionStrict",
+    "org.junit.runner.manipulation.Filter#initializationError"
+  ],
+  "repo": {
+    "github_path": "dyn4j/dyn4j",
+    "commit": "1a3a5872dca5bc65fd9a2376100e33bed5d3cde6",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n\n  <groupId>org.dyn4j</groupId>\n  <artifactId>dyn4j</artifactId>\n  <version>5.0.2</version>\n\n  <name>dyn4j</name>\n  <url>http://www.dyn4j.org</url>\n  <description>Java Collision Detection and Physics Engine</description>\n  <inceptionYear>2010</inceptionYear>\n  <packaging>bundle</packaging>\n\n  <properties>\n\t<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\n\n    \n\n    <dyn4j.maven-clean-plugin.version>3.2.0</dyn4j.maven-clean-plugin.version>\n    <dyn4j.maven-resources-plugin.version>3.3.0</dyn4j.maven-resources-plugin.version>\n    <dyn4j.maven-deploy-plugin.version>3.0.0</dyn4j.maven-deploy-plugin.version>\n    <dyn4j.maven-install-plugin.version>3.1.0</dyn4j.maven-install-plugin.version>\n    <dyn4j.maven-compiler-plugin.version>3.10.1</dyn4j.maven-compiler-plugin.version>\n    <dyn4j.maven-surefire-plugin.version>3.0.0-M7</dyn4j.maven-surefire-plugin.version>\n    <dyn4j.maven-source-plugin.version>3.2.1</dyn4j.maven-source-plugin.version>\n    <dyn4j.maven-bundle-plugin.version>5.1.8</dyn4j.maven-bundle-plugin.version>\n    <dyn4j.maven-javadoc-plugin.version>3.4.1</dyn4j.maven-javadoc-plugin.version>\n    <dyn4j.nexus-staging-maven-plugin.version>1.6.13</dyn4j.nexus-staging-maven-plugin.version>\n    <dyn4j.maven-gpg-plugin.version>3.0.1</dyn4j.maven-gpg-plugin.version>\n    <dyn4j.maven-enforcer-plugin.version>3.1.0</dyn4j.maven-enforcer-plugin.version>\n  </properties>\n\n  <organization>\n  \t<url>http://www.dyn4j.org</url>\n  \t<name>dyn4j</name>\n  </organization>\n  <scm>\n  \t<url>https://github.com/dyn4j/dyn4j</url>\n  \t<connection>scm:git:https://github.com/dyn4j/dyn4j</connection>\n  \t<developerConnection>scm:git:https://github.com/wnbittle</developerConnection>\n  </scm>\n  <issueManagement>\n  \t<system>GitHub Issues</system>\n  \t<url>https://github.com/dyn4j/dyn4j/issues</url>\n  </issueManagement>\n  <licenses>\n    <license>\n      <name>BSD-3 License</name>\n      <url>http://www.opensource.org/licenses/BSD-3-Clause</url>\n    </license>\n  </licenses>\n    <developers>\n    <developer>\n      <id>wnbittle</id>\n      <name>William Bittle</name>\n      <email>wjbittle@gmail.com</email>\n      <url>http://www.dyn4j.org</url>\n    </developer>\n  </developers>\n  <distributionManagement>\n    <site>\n      <id>GitHub</id>\n      <name>GitHub</name>\n      <url>https://github.com/dyn4j/dyn4j</url>\n    </site>\n  </distributionManagement>\n  \n  <build>\n    <pluginManagement>\n      <plugins>\n        \n\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-clean-plugin</artifactId>\n          <version>${dyn4j.maven-clean-plugin.version}</version>\n        </plugin>\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-install-plugin</artifactId>\n          <version>${dyn4j.maven-install-plugin.version}</version>\n        </plugin>\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-resources-plugin</artifactId>\n          <version>${dyn4j.maven-resources-plugin.version}</version>\n        </plugin>\n\n        \n\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-enforcer-plugin</artifactId>\n          <version>${dyn4j.maven-enforcer-plugin.version}</version>\n        </plugin>\n\n        \n\n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-compiler-plugin</artifactId>\n          <version>${dyn4j.maven-compiler-plugin.version}</version>\n          <executions>\n\n            \n\n            <execution>\n              <id>default-compile</id>\n              <configuration>\n                <release>10</release>\n              </configuration>\n            </execution>\n\n            \n\n            </executions>\n\n          \n          <configuration>\n            <release>10</release>\n          </configuration>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-surefire-plugin</artifactId>\n          <version>${dyn4j.maven-surefire-plugin.version}</version>\n          <configuration>\n            <redirectTestOutputToFile>true</redirectTestOutputToFile>\n          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-source-plugin</artifactId>\n          <version>${dyn4j.maven-source-plugin.version}</version>\n          <executions>\n            <execution>\n              <phase>package</phase>\n              <goals>\n                <goal>jar-no-fork</goal>\n              </goals>\n              <configuration>\n                <archive>\n                  <manifestEntries>\n                    <Specification-Title>${project.name}</Specification-Title>\n                    <Specification-Version>${project.version}</Specification-Version>\n                    <Specification-Vendor>dyn4j.org</Specification-Vendor>\n                    <Implementation-Title>${project.name}</Implementation-Title>\n                    <Implementation-Version>${project.version}</Implementation-Version>\n                    <Implementation-Vendor>dyn4j.org</Implementation-Vendor>\n                    <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>\n                  </manifestEntries>\n                </archive>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.apache.felix</groupId>\n          <artifactId>maven-bundle-plugin</artifactId>\n          <version>${dyn4j.maven-bundle-plugin.version}</version>\n          <extensions>true</extensions>\n          <configuration>\n          \t<archive>\n          \t\t<addMavenDescriptor>false</addMavenDescriptor>\n          \t\t<compress>true</compress>\n          \t\t<manifest>\n          \t\t\t<addDefaultImplementationEntries>true</addDefaultImplementationEntries>\n          \t\t\t<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>\n          \t\t\t\n          \t\t\t<addExtensions>false</addExtensions>\n          \t\t\t<mainClass>org.dyn4j.Version</mainClass>\n          \t\t</manifest>\n          \t\t<manifestEntries>\n          \t\t\t<Built-By>William Bittle</Built-By>\n          \t\t</manifestEntries>\n          \t</archive>\n            <instructions>\n              <Specification-Title>${project.name}</Specification-Title>\n              <Specification-Version>${project.version}</Specification-Version>\n              <Specification-Vendor>dyn4j.org</Specification-Vendor>\n              <Implementation-Title>${project.name}</Implementation-Title>\n              <Implementation-Version>${project.version}</Implementation-Version>\n              <Implementation-Vendor>dyn4j.org</Implementation-Vendor>\n              <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>\n              <Bundle-DocURL>${project.url}</Bundle-DocURL>\n              \n              <Require-Capability>osgi.ee;filter:=\"(&amp;(osgi.ee=JavaSE)(version=1.6))\"</Require-Capability>\n            </instructions>\n          </configuration>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.apache.maven.plugins</groupId>\n          <artifactId>maven-javadoc-plugin</artifactId>\n          <version>${dyn4j.maven-javadoc-plugin.version}</version>\n          <executions>\n            <execution>\n              <id>attach-javadocs</id>\n              <phase>package</phase>\n              <goals>\n                <goal>jar</goal>\n              </goals>\n              <configuration>\n                <sourceFileExcludes>\n                \t<sourceFileExclude>module-info.java</sourceFileExclude>\n                </sourceFileExcludes>\n                <overview>${basedir}/overview.html</overview>\n                <doctitle>dyn4j v${project.version}</doctitle>\n                <show>protected</show>\n                <doclint>all</doclint>\n                <noqualifier>all</noqualifier>\n                <excludePackageNames>org.dyn4j.resources</excludePackageNames>\n                <archive>\n                  <manifestEntries>\n                    <Specification-Title>${project.name}</Specification-Title>\n                    <Specification-Version>${project.version}</Specification-Version>\n                    <Specification-Vendor>dyn4j.org</Specification-Vendor>\n                    <Implementation-Title>${project.name}</Implementation-Title>\n                    <Implementation-Version>${project.version}</Implementation-Version>\n                    <Implementation-Vendor>dyn4j.org</Implementation-Vendor>\n                    <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>\n                  </manifestEntries>\n                </archive>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n\n        \n        <plugin>\n          <groupId>org.sonatype.plugins</groupId>\n          <artifactId>nexus-staging-maven-plugin</artifactId>\n          <version>${dyn4j.nexus-staging-maven-plugin.version}</version>\n          <extensions>true</extensions>\n          <configuration>\n            <serverId>ossrh</serverId>\n            <nexusUrl>https://oss.sonatype.org/</nexusUrl>\n            <autoReleaseAfterClose>true</autoReleaseAfterClose>\n          </configuration>\n        </plugin>\n      </plugins>\n    </pluginManagement>\n\n    <plugins>\n\n      \n      <plugin>\n        <artifactId>maven-enforcer-plugin</artifactId>\n        <executions>\n          <execution>\n          <id>enforce-rules</id>\n          <phase>validate</phase>\n          <goals>\n            <goal>enforce</goal>\n          </goals>\n          <configuration>\n            <rules><requireJavaVersion><version>[10,)</version></requireJavaVersion></rules></configuration>\n          </execution>\n        </executions>\n      </plugin>\n\n      \n      <plugin>\n        <artifactId>maven-source-plugin</artifactId>\n      </plugin>\n\n      \n      <plugin>\n        <artifactId>maven-javadoc-plugin</artifactId>\n      </plugin>\n\n      \n      <plugin>\n        <artifactId>maven-surefire-plugin</artifactId>\n      <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration></plugin>\n\n      \n      <plugin>\n        <groupId>org.apache.felix</groupId>\n        <artifactId>maven-bundle-plugin</artifactId>\n      </plugin>\n    <plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.8.9</version><executions><execution><id>prepare-agent</id><phase>initialize</phase><goals><goal>prepare-agent</goal></goals></execution><execution><id>report</id><phase>test</phase><goals><goal>report</goal></goals><configuration><outputDirectory>${project.build.directory}/site/jacoco</outputDirectory><reports><xml>true</xml></reports></configuration></execution></executions></plugin></plugins>\n  </build>\n\n  <profiles>\n\n    \n    <profile>\n      <id>dyn4j-release-central</id>\n      \n\t  <distributionManagement>\n\t\t<repository>\n\t\t  <id>sonatype-nexus-staging</id>\n\t\t  <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>\n\t\t</repository>\n\t\t<snapshotRepository>\n\t\t  <id>ossrh</id>\n\t\t  <url>https://oss.sonatype.org/content/repositories/snapshots/</url>\n\t\t</snapshotRepository>\n\t  </distributionManagement>\n\t  \n      <build>\n        <plugins>\n        \n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-deploy-plugin</artifactId>\n            <version>${dyn4j.maven-deploy-plugin.version}</version>\n            <configuration>\n              <skip>true</skip>\n            </configuration>\n          </plugin>\n        \n          \n\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-gpg-plugin</artifactId>\n            <version>${dyn4j.maven-gpg-plugin.version}</version>\n            <executions>\n              <execution>\n                <id>sign-artifacts</id>\n                <phase>verify</phase>\n                <configuration>\n                \t<gpgArguments>\n                \t\t<arg>--pinentry-mode</arg>\n                \t\t<arg>loopback</arg>\n                \t</gpgArguments>\n              \t</configuration>\n                <goals>\n                  <goal>sign</goal>\n                </goals>\n              </execution>\n            </executions>\n          </plugin>\n        \n          <plugin>\n            <groupId>org.sonatype.plugins</groupId>\n            <artifactId>nexus-staging-maven-plugin</artifactId>\n            <extensions>true</extensions>\n            <executions>\n              <execution>\n                <id>deploy-packages</id>\n                <phase>deploy</phase>\n                <goals>\n                  <goal>deploy</goal>\n                </goals>\n                <configuration>\n                \t<serverId>ossrh</serverId>\n                \t<nexusUrl>https://oss.sonatype.org/</nexusUrl>\n                \t<autoReleaseAfterClose>true</autoReleaseAfterClose>\n                </configuration>\n              </execution>\n            </executions>\n          </plugin>\n        </plugins>\n      </build>\n    </profile>\n    \n    <profile>\n      <id>dyn4j-release-github</id>\n      \n      <build>\n        <plugins>\n          <plugin>\n            <groupId>org.apache.maven.plugins</groupId>\n            <artifactId>maven-deploy-plugin</artifactId>\n            <version>${dyn4j.maven-deploy-plugin.version}</version>\n          </plugin>\n        </plugins>\n      </build>\n      \n\t  <distributionManagement>\n\t\t<repository>\n\t\t  <id>github</id>\n\t\t  <name>GitHub dyn4j Apache Maven Packages</name>\n\t\t  <url>https://maven.pkg.github.com/dyn4j/dyn4j</url>\n\t\t</repository>\n\t  </distributionManagement>\n      \n    </profile>\n  </profiles>\n  <dependencies>\n  \t<dependency>\n  \t\t<groupId>junit</groupId>\n  \t\t<artifactId>junit</artifactId>\n  \t\t<version>4.13.1</version>\n  \t\t<scope>test</scope>\n  \t</dependency>\n  </dependencies>\n</project>",
+    "failed_tests": [
+      "org.junit.runner.manipulation.Filter#initializationError"
+    ],
+    "test_time": 5.833406209945679
+  },
+  "mutants": [
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = 0; // Always evaluates to zero, causing no conditions to be checked\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size() - 1; // Off-by-one error\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size() / 2; // Incorrectly halves the size\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size - 1; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i += 2) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 1; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = null; // This will always evaluate to false\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(0); // Always uses the first condition, ignoring the rest\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(size - 1); // Always checks the last condition, ignoring others\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && !condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex1)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition == null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}",
+    "\t/**\n\t * Returns true if the fallback {@link NarrowphaseDetector} should be used rather\n\t * than the primary.\n\t * @param convex1 the first convex\n\t * @param convex2 the second convex\n\t * @return boolean\n\t */\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "//@ ensures \\result <==> \\old(this.fallbackConditions).stream().anyMatch(c -> c != null && c.isMatch(convex1, convex2));",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage org.dyn4j.collision.narrowphase;\n\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.List;\n\nimport org.dyn4j.exception.ArgumentNullException;\nimport org.dyn4j.geometry.Convex;\nimport org.dyn4j.geometry.Transform;\n\npublic class FallbackNarrowphaseDetector implements NarrowphaseDetector {\n\tprotected final NarrowphaseDetector primaryNarrowphaseDetector;\n\t\n\tprotected final NarrowphaseDetector fallbackNarrowphaseDetector;\n\t\n\tprotected final List<FallbackCondition> fallbackConditions;\n\t\n\tpublic FallbackNarrowphaseDetector(NarrowphaseDetector primaryNarrowphaseDetector, NarrowphaseDetector fallbackNarrowphaseDetector) {\n\t\tthis(primaryNarrowphaseDetector, fallbackNarrowphaseDetector, null);\n\t}\n\t\n\tpublic FallbackNarrowphaseDetector(NarrowphaseDetector primaryNarrowphaseDetector, NarrowphaseDetector fallbackNarrowphaseDetector, List<FallbackCondition> conditions) {\n\t\tif (primaryNarrowphaseDetector == null) \n\t\t\tthrow new ArgumentNullException(\"primaryNarrowphaseDetector\");\n\t\t\n\t\tif (fallbackNarrowphaseDetector == null) \n\t\t\tthrow new ArgumentNullException(\"fallbackNarrowphaseDetector\");\n\t\t\n\t\tthis.primaryNarrowphaseDetector = primaryNarrowphaseDetector;\n\t\tthis.fallbackNarrowphaseDetector = fallbackNarrowphaseDetector;\n\t\tif (conditions != null) {\n\t\t\tthis.fallbackConditions = conditions;\n\t\t} else {\n\t\t\tthis.fallbackConditions = new ArrayList<FallbackCondition>();\n\t\t}\n\t}\n\t\n\tpublic void addCondition(FallbackCondition condition) {\n\t\tthis.fallbackConditions.add(condition);\n\t\tCollections.sort(this.fallbackConditions);\n\t}\n\t\n\tpublic boolean removeCondition(FallbackCondition condition) {\n\t\treturn this.fallbackConditions.remove(condition);\n\t}\n\t\n\tpublic boolean containsCondition(FallbackCondition condition) {\n\t\treturn this.fallbackConditions.contains(condition);\n\t}\n\t\n\tpublic int getConditionCount() {\n\t\treturn this.fallbackConditions.size();\n\t}\n\t\n\tpublic FallbackCondition getCondition(int index) {\n\t\treturn this.fallbackConditions.get(index);\n\t}\n\t\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n\t\n\t@Override\n\tpublic boolean detect(Convex convex1, Transform transform1, Convex convex2, Transform transform2) {\n\t\tif (this.isFallbackRequired(convex1, convex2)) {\n\t\t\treturn this.fallbackNarrowphaseDetector.detect(convex1, transform1, convex2, transform2);\n\t\t}\n\t\treturn this.primaryNarrowphaseDetector.detect(convex1, transform1, convex2, transform2);\n\t}\n\t\n\t@Override\n\tpublic boolean detect(Convex convex1, Transform transform1, Convex convex2, Transform transform2, Penetration penetration) {\n\t\tif (this.isFallbackRequired(convex1, convex2)) {\n\t\t\treturn this.fallbackNarrowphaseDetector.detect(convex1, transform1, convex2, transform2, penetration);\n\t\t}\n\t\treturn this.primaryNarrowphaseDetector.detect(convex1, transform1, convex2, transform2, penetration);\n\t}\n\t\n\tpublic NarrowphaseDetector getPrimaryNarrowphaseDetector() {\n\t\treturn this.primaryNarrowphaseDetector;\n\t}\n\t\n\tpublic NarrowphaseDetector getFallbackNarrowphaseDetector() {\n\t\treturn this.fallbackNarrowphaseDetector;\n\t}\n}\n\n```\n## Target Method\n```\n\tpublic boolean isFallbackRequired(Convex convex1, Convex convex2) {\n\t\tint size = this.fallbackConditions.size();\n\t\tfor (int i = 0; i < size; i++) {\n\t\t\tFallbackCondition condition = this.fallbackConditions.get(i);\n\t\t\tif (condition != null && condition.isMatch(convex1, convex2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `isFallbackRequired`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-code",
+  "postconds": [
+    "// @ ensures \\result <==> this.fallbackConditions.stream().anyMatch(c -> c != null && c.isMatch(convex1, convex2));\n// @ ensures this.fallbackConditions.isEmpty() ==> !\\result;",
+    "// @ ensures \\result <==> \\old(this.fallbackConditions.stream().filter(c -> c != null).anyMatch(c -> c.isMatch(convex1, convex2)));\n// @ ensures this.fallbackConditions == \\old(this.fallbackConditions);\n// @ ensures this.fallbackConditions.size() == \\old(this.fallbackConditions.size());\n// @ ensures this.primaryNarrowphaseDetector == \\old(this.primaryNarrowphaseDetector);\n// @ ensures this.fallbackNarrowphaseDetector == \\old(this.fallbackNarrowphaseDetector);\n// @ ensures \\old(this.fallbackConditions.isEmpty()) ==> !\\result;",
+    "// @ ensures \\result <==> \\old(this.fallbackConditions.stream().anyMatch(c -> c != null && c.isMatch(convex1, convex2)));\n// @ ensures this.fallbackConditions == \\old(this.fallbackConditions);\n// @ ensures this.getConditionCount() == \\old(this.getConditionCount());\n// @ ensures this.getPrimaryNarrowphaseDetector() == \\old(this.getPrimaryNarrowphaseDetector()) && this.getFallbackNarrowphaseDetector() == \\old(this.getFallbackNarrowphaseDetector());",
+    "// @ ensures \\result <==> this.fallbackConditions.stream().filter(c -> c != null).anyMatch(c -> c.isMatch(convex1, convex2));\n// @ ensures this.fallbackConditions == \\old(this.fallbackConditions);\n// @ ensures this.fallbackConditions.size() == \\old(this.fallbackConditions.size());",
+    "// @ ensures \\result <==> this.fallbackConditions.stream().filter(c -> c != null).anyMatch(c -> c.isMatch(convex1, convex2));\n// @ ensures \\old(this.fallbackConditions) == this.fallbackConditions;\n// @ ensures \\old(this.getConditionCount()) == this.getConditionCount();\n// @ ensures \\old(this.primaryNarrowphaseDetector) == this.primaryNarrowphaseDetector;\n// @ ensures \\old(this.fallbackNarrowphaseDetector) == this.fallbackNarrowphaseDetector;"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ]
+  ],
+  "traversal_rank": 263
+}

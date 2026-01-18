@@ -1,0 +1,256 @@
+{
+  "rlid": "childKey",
+  "github_url": "https://github.com/jcbvm/i18n-editor/blob/2c8b7b5afbf2a8963cad9400bf0954340a0accd3/./src/main/java/com/jvms/i18neditor/util/ResourceKeys.java#L127-L145",
+  "name": "childKey",
+  "line_cov": 1.0,
+  "lines": 19,
+  "stats": 8,
+  "cc": 6,
+  "content": "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+  "header": "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {",
+  "file": "./src/main/java/com/jvms/i18neditor/util/ResourceKeys.java",
+  "start_line": 127,
+  "end_line": 145,
+  "body_start_line": 140,
+  "comment": "/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */",
+  "test_time": 2.705652952194214,
+  "cover_tests": [
+    "com.jvms.i18neditor.ResourceTest#duplicateTranslationToExistingKeyTest",
+    "com.jvms.i18neditor.ResourceTest#duplicateTranslationToUniqueKeyTest",
+    "com.jvms.i18neditor.ResourceTest#renameTranslationToExistingKeyTest",
+    "com.jvms.i18neditor.ResourceTest#renameTranslationToUniqueKeyTest",
+    "com.jvms.i18neditor.util.ResourceKeysTest#childKeyTest",
+    "com.jvms.i18neditor.util.ResourceKeysTest#extractChildKeysTest"
+  ],
+  "repo": {
+    "github_path": "jcbvm/i18n-editor",
+    "commit": "2c8b7b5afbf2a8963cad9400bf0954340a0accd3",
+    "language": "java",
+    "env_config": "<?xml version='1.0' encoding='utf-8'?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n  <modelVersion>4.0.0</modelVersion>\n  <groupId>com.jvms</groupId>\n  <artifactId>i18n-editor</artifactId>\n  <version>2.0.0-beta.1</version>\n  <packaging>jar</packaging>\n  <dependencies>\n    <dependency>\n      <groupId>org.apache.commons</groupId>\n      <artifactId>commons-lang3</artifactId>\n      <version>3.5</version>\n      </dependency>\n    <dependency>\n      <groupId>com.google.code.gson</groupId>\n      <artifactId>gson</artifactId>\n      <version>2.8.0</version>\n      </dependency>\n    <dependency>\n      <groupId>com.google.guava</groupId>\n      <artifactId>guava</artifactId>\n      <version>21.0</version>\n      </dependency>\n    <dependency>\n      <groupId>org.slf4j</groupId>\n      <artifactId>slf4j-simple</artifactId>\n      <version>1.7.22</version>\n      </dependency>\n    <dependency>\n      <groupId>junit</groupId>\n      <artifactId>junit</artifactId>\n      <version>4.12</version>\n      <scope>test</scope>\n      </dependency>\n    </dependencies>\n  <build>\n    <plugins>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-assembly-plugin</artifactId>\n        <version>2.6</version>\n        <executions>\n          <execution>\n            <phase>package</phase>\n            <goals>\n              <goal>single</goal>\n              </goals>\n            <configuration>\n              <archive>\n                <manifest>\n                  <mainClass>com.jvms.i18neditor.Main</mainClass>\n                  </manifest>\n                </archive>\n              <descriptorRefs>\n                <descriptorRef>jar-with-dependencies</descriptorRef>\n                </descriptorRefs>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>sh.tak.appbundler</groupId>\n        <artifactId>appbundle-maven-plugin</artifactId>\n        <version>1.2.0</version>\n        <executions>\n          <execution>\n            <phase>package</phase>\n            <goals>\n              <goal>bundle</goal>\n              </goals>\n            <configuration>\n              <mainClass>com.jvms.i18neditor.Main</mainClass>\n              <iconFile>images/icons.icns</iconFile>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>com.akathist.maven.plugins.launch4j</groupId>\n        <artifactId>launch4j-maven-plugin</artifactId>\n        <version>1.7.7</version>\n        <executions>\n          <execution>\n            <phase>package</phase>\n            <goals>\n              <goal>launch4j</goal>\n              </goals>\n            <configuration>\n              <headerType>gui</headerType>\n              <outfile>${project.build.directory}/${project.artifactId}-${project.version}/${project.artifactId}.exe</outfile>\n              <jar>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</jar>\n              <errTitle>i18n Editor</errTitle>\n              <classPath>\n                <mainClass>com.jvms.i18neditor.Main</mainClass>\n                </classPath>\n              <jre>\n                <minVersion>1.8.0</minVersion>\n                </jre>\n              <icon>${project.build.outputDirectory}/images/icon.ico</icon>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-antrun-plugin</artifactId>\n        <version>1.8</version>\n        <executions>\n          <execution>\n            <phase>install</phase>\n            <goals>\n              <goal>run</goal>\n              </goals>\n            <configuration>\n              <target>\n                <copy file=\"${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar\" toFile=\"${project.build.directory}/${project.artifactId}-${project.version}/${project.artifactId}.jar\" />\n                </target>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin>\n        <groupId>org.apache.maven.plugins</groupId>\n        <artifactId>maven-surefire-plugin</artifactId>\n        <version>3.0.0-M7</version>\n        <configuration><reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory></configuration>\n        </plugin>\n      <plugin>\n        <groupId>org.jacoco</groupId>\n        <artifactId>jacoco-maven-plugin</artifactId>\n        <version>0.8.8</version>\n        <executions>\n          <execution>\n            <id>prepare-agent</id>\n            <goals>\n              <goal>prepare-agent</goal>\n              </goals>\n            </execution>\n          <execution>\n            <id>report</id>\n            <phase>test</phase>\n            <goals>\n              <goal>report</goal>\n              </goals>\n            <configuration>\n              <xml>true<enabled>true</enabled><destFile>${project.build.directory}/site/jacoco/jacoco.xml</destFile></xml>\n              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>\n              </configuration>\n            </execution>\n          </executions>\n        </plugin>\n      <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.10.1</version><configuration><release>8</release></configuration></plugin></plugins>\n    </build>\n  <properties>\n    <maven.compiler.release>11</maven.compiler.release>\n    </properties>\n  </project>",
+    "failed_tests": [],
+    "test_time": 1.0993378162384033
+  },
+  "mutants": [
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key != null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return null;\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key.length() == 0) return null;\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (key.equals(parentKey)) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (key.startsWith(parentKey)) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey != null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey.length() < 3) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceAll(parentKey + \"\\\\.\", \"\"); // This will replace all occurrences instead of just the first one.\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \" \"); // This replaces the parent key with a space instead of removing it.\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey, \"\"); // This will not account for the dot, leading to incorrect results.\n\t\tif (result.equals(key)) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(\"\")) return result;\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return null;\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(parentKey)) return parentKey;\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.isEmpty()) return key;\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.length() == 0) return parentKey;\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.startsWith(\".\")) return \"\";\n\t\treturn result;\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn \"\";\n\t}",
+    "\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n\t\tif (key == null || key.isEmpty()) return \"\";\n\t\tif (parentKey == null || parentKey.isEmpty()) return key;\n\t\tString result = key.replaceFirst(parentKey + \"\\\\.\", \"\");\n\t\tif (result.equals(key)) return \"\";\n\t\treturn null;\n\t}"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "//@ ensures \\result != null;\n//@ ensures (key == null || key.isEmpty()) ==> \"\".equals(\\result);\n//@ ensures key != null && !key.isEmpty() && (parentKey == null || parentKey.isEmpty()) ==> key.equals(\\result);\n//@ ensures key != null && !key.isEmpty() && parentKey != null && !parentKey.isEmpty() && key.indexOf(parentKey + \".\") == -1 ==> \"\".equals(\\result);\n//@ ensures key != null && !key.isEmpty() && parentKey != null && !parentKey.isEmpty() && key.indexOf(parentKey + \".\") != -1 ==> (key.substring(0, key.indexOf(parentKey + \".\")) + key.substring(key.indexOf(parentKey + \".\") + (parentKey + \".\").length())).equals(\\result);\n",
+  "ref_mutant_kill": [
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail",
+    "jml_fail"
+  ],
+  "model_name": "gpt-5",
+  "port": null,
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\npackage com.jvms.i18neditor.util;\n\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Collectors;\n\nimport com.google.common.collect.Lists;\nimport com.jvms.i18neditor.Resource;\n\n/**\n * This class provides translation key utility functions for a {@link Resource}.\n * \n * <p>A translation key is a {@code String} consisting of one or more parts separated by a dot.<br>\n * A key starting or ending with a dot or a key containing white spaces is considered to be invalid.<p> \n * \n * @author Jacob van Mourik\n */\npublic final class ResourceKeys {\n\t\n\t/**\n\t * See {@link #create(List)}.\n\t */\n\tpublic static String create(String... parts) {\n...\n\t/**\n\t * Creates a key by joining the given parts.\n\t * \n\t * @param \tparts the parts of the key.\n\t * @return \tthe created key.\n\t */\n\tpublic static String create(List<String> parts) {\n...\n\t/**\n\t * Checks whether the given key is a valid key.\n\t * A key starting or ending with a dot or a key containing white spaces is considered to be invalid.\n\t * \n\t * @param \tkey the key to validate.\n\t * @return\twhether the key is valid or not.\n\t */\n\tpublic static boolean isValid(String key) {\n...\n\t/**\n\t * Returns the size of a key. \n\t * The size is the number of parts the key consists of.\n\t * \n\t * @param \tkey the key.\n\t * @return\tthe number of parts the key consists of.\n\t */\n\tpublic static int size(String key) {\n...\n\t/**\n\t * Returns the parts of a key.\n\t * \n\t * @param \tkey the key.\n\t * @return\tthe parts of the key.\n\t */\n\tpublic static String[] parts(String key) {\n...\n\t/**\n\t * Returns the last parts of a key with a given offset.\n\t * The offset must lie between zero and the total number of parts, inclusive.\n\t * \n\t * @param \tkey the key.\n\t * @param \toffset the number of parts to skip from the beginning.\n\t * @return\tthe last sub parts.\n\t */\n\tpublic static String[] subParts(String key, int offset) {\n...\n\t/**\n\t * Returns the first part of a key.\n\t * \n\t * @param \tkey the key.\n\t * @return \tthe first part.\n\t */\n\tpublic static String firstPart(String key) {\n...\n\t/**\n\t * Returns the last part of a key.\n\t * \n\t * @param \tkey the key.\n\t * @return \tthe last part.\n\t */\n\tpublic static String lastPart(String key) {\n...\n\t/**\n\t * Creates a new key consisting of all but the first part.\n\t * If the key has only one part, an empty key will be returned.\n\t * \n\t * @param \tkey the key.\n\t * @return\tthe key without the first part.\n\t */\n\tpublic static String withoutFirstPart(String key) {\n...\n\t/**\n\t * Creates a new key consisting of all but the last part.\n\t * If the key has only one part, an empty key will be returned.\n\t * \n\t * @param \tkey the key.\n\t * @return\tthe key without the last part.\n\t */\n\tpublic static String withoutLastPart(String key) {\n...\n\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n...\n\t/**\n\t * Checks whether the given key is a child key of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey the possible parent key of the original key.\n\t * @return\twhether the given key is a child of the given parent key.\n\t */\n\tpublic static boolean isChildKeyOf(String key, String parentKey) {\n...\n\t/**\n\t * Gets the unique root keys of a list of keys. A root key is the first part of a key.\n\t * \n\t * @param \tkeys the keys to retrieve the unique root keys from.\n\t * @return \tthe unique root keys.\n\t */\n\tpublic static List<String> uniqueRootKeys(List<String> keys) {\n...\n\t/**\n\t * Gets all keys from the given key list which are a child of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * \n\t * @param \tkeys the keys to retrieve the child keys from.\n\t * @param \tparentKey the parent key.\n\t * @return\tthe keys of the given key list which are a child of the given parent key.\n\t */\n\tpublic static List<String> extractChildKeys(List<String> keys, String parentKey) {\n...\n}\n\n```\n## Target Method\n```\n\t/**\n\t * Retrieve the part of the given key which is a child part of the given parent key.\n\t * A key is a child of another key if it has the same parts at the beginning as the other key.\n\t * This function will only return the child parts, so without the beginning parent parts.\n\t * \n\t * <p>If the resulting key is the same as the given key, the key is considered not to be a child \n\t * of the given parent key, so an empty key will be returned.</p>\n\t * \n\t * @param \tkey the original key.\n\t * @param \tparentKey a possible parent key of the original key.\n\t * @return \tthe part of the given key which is a child of the given parent key.\n\t */\n\tpublic static String childKey(String key, String parentKey) {\n```\n## Guideline\nAbove is the java code context and target method. You should generate JML format postconditions for this method `childKey`.\nNote that you are only allowed to use the subset of JML grammar:\n- `//@ ensures <jml-expression>`\n- `\\result`\n- `\\old(<expression>)`\n- `==>`, `<==>` and `<=!=>`\n\nDo NOT use JML quantified expressions, like `\\forall` or `\\exists`. You can use Java native grammars, like Java Streams, to replace them.\nTry to generate correct and complete postconditions.\nNote that your response should only contain JML `ensures` lines with leading `//@ ensures`.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "// @ ensures \\result != null;\n// @ ensures (key != null && parentKey != null && !parentKey.isEmpty() && key.startsWith(parentKey + \".\")) ==> \\result.equals(key.substring(parentKey.length() + 1));\n// @ ensures (key != null && parentKey != null && !parentKey.isEmpty() && key.startsWith(parentKey + \".\")) ==> key.equals(parentKey + \".\" + \\result);\n// @ ensures \\result.isEmpty() <==> !(key != null && parentKey != null && !parentKey.isEmpty() && key.startsWith(parentKey + \".\"));",
+    "// @ ensures \\result != null;\n// @ ensures (key != null && parentKey != null && key.startsWith(parentKey + \".\")) ==> \\result.equals(key.substring(parentKey.length() + 1));\n// @ ensures !(key != null && parentKey != null && key.startsWith(parentKey + \".\")) ==> \\result.equals(\"\");\n// @ ensures (key == null || parentKey == null) ==> \\result.equals(\"\");\n// @ ensures (\\result.length() > 0) ==> (key != null && parentKey != null && key.equals(parentKey + \".\" + \\result));\n// @ ensures (key != null && parentKey != null && key.equals(parentKey)) ==> \\result.equals(\"\");",
+    "// @ ensures \\result != null;\n// @ ensures key != null && parentKey != null && ResourceKeys.isChildKeyOf(key, parentKey) ==> \\result.equals(ResourceKeys.create(ResourceKeys.subParts(key, ResourceKeys.size(parentKey))));\n// @ ensures key != null && parentKey != null && !ResourceKeys.isChildKeyOf(key, parentKey) ==> \\result.equals(\"\");\n// @ ensures key != null && parentKey != null && ResourceKeys.isChildKeyOf(key, parentKey) ==> ResourceKeys.size(\\result) == ResourceKeys.size(key) - ResourceKeys.size(parentKey);\n// @ ensures key != null && parentKey != null && \\result.equals(\"\") && ResourceKeys.isChildKeyOf(key, parentKey) ==> key.equals(parentKey);\n// @ ensures \\result.equals(key) ==> \\result.equals(\"\");",
+    "// @ ensures \\result != null;\n// @ ensures ResourceKeys.isChildKeyOf(key, parentKey) ==> \\result.equals(ResourceKeys.create(ResourceKeys.subParts(key, ResourceKeys.size(parentKey))));\n// @ ensures !ResourceKeys.isChildKeyOf(key, parentKey) ==> \\result.equals(\"\");\n// @ ensures ResourceKeys.isChildKeyOf(key, parentKey) ==> ResourceKeys.size(\\result) == ResourceKeys.size(key) - ResourceKeys.size(parentKey);\n// @ ensures \\result.equals(\"\") <==> (!ResourceKeys.isChildKeyOf(key, parentKey) || (key != null && parentKey != null && key.equals(parentKey)));",
+    "// @ ensures key != null && parentKey != null && key.startsWith(parentKey + \".\") ==> \\result.equals(key.substring(parentKey.length() + 1));\n// @ ensures key != null && parentKey != null && key.startsWith(parentKey + \".\") ==> \\result.length() == key.length() - parentKey.length() - 1;\n// @ ensures key != null && parentKey != null ==> (\\result.equals(\"\") <==> (!key.startsWith(parentKey + \".\") || key.equals(parentKey)));"
+  ],
+  "responses": null,
+  "postcond_corr": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "mutant_kill": [
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail"
+    ],
+    [
+      "jml_fail",
+      "failed",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "jml_fail",
+      "failed"
+    ]
+  ],
+  "traversal_rank": 305
+}

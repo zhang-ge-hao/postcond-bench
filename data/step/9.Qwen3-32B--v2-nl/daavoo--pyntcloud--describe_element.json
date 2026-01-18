@@ -1,0 +1,264 @@
+{
+  "rlid": "describe_element",
+  "github_url": "https://github.com/daavoo/pyntcloud/blob/8368c6a22f8060aeafacf2964276e8704d732145/./src/pyntcloud/io/ply.py#L258-L282",
+  "name": "describe_element",
+  "line_cov": 1.0,
+  "lines": 25,
+  "stats": 8,
+  "cc": 3,
+  "content": "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+  "header": "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"",
+  "file": "./src/pyntcloud/io/ply.py",
+  "start_line": 258,
+  "end_line": 282,
+  "body_start_line": 270,
+  "comment": "\"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"",
+  "test_time": 4.6217358112335205,
+  "cover_tests": [
+    "tests/integration/io/test_to_file.py::test_to_file[.ply-True-True-False]",
+    "tests/integration/io/test_to_file.py::test_to_file[_ascii.ply-True-True-True]",
+    "tests/integration/io/test_to_file.py::test_write_ply_with_bool",
+    "tests/integration/test_core_class.py::test_split_on"
+  ],
+  "repo": {
+    "github_path": "daavoo/pyntcloud",
+    "commit": "8368c6a22f8060aeafacf2964276e8704d732145",
+    "language": "python",
+    "env_config": "[build-system]\nrequires = [ \"setuptools>=48\", \"setuptools_scm[toml]>=6.3.1\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"pyntcloud\"\ndynamic = [ \"version\",]\ndescription = \"Python library for working with 3D point clouds.\"\nreadme = \"README.md\"\nrequires-python = \">=3.11\"\nclassifiers = [ \"Programming Language :: Python :: 3\", \"License :: OSI Approved :: MIT License\", \"Operating System :: OS Independent\",]\ndependencies = [ \"numpy\", \"scipy>=1.6.0\", \"pandas\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"David de la Iglesia Castro\"\nemail = \"daviddelaiglesiacastro@gmail.com\"\n\n[project.license]\ntext = \"The MIT License\"\n\n[project.optional-dependencies]\nlas = [ \"laspy\", \"lazrs\",]\nplot = [ \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\",]\nnumba = [ \"numba\",]\nall = [ \"laspy\", \"lazrs\", \"ipython\", \"matplotlib\", \"pyvista>=0.32.0\", \"numba\", \"open3d\",]\n\n[project.urls]\nrepository = \"https://github.com/daavoo/pyntcloud\"\n\n[tool.setuptools_scm]\n\n[tool.pytest.ini_options]\npythonpath = [ \"tests/integration/io\",]\naddopts = \"--import-mode=importlib\"\n\n[tool.setuptools.packages.find]\nexclude = [ \"tests\", \"tests.*\",]\nwhere = [ \"src\",]\nnamespaces = false\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nicontract = \"^2.7.1\"\nlaspy = \"^2.6.1\"\nlazrs = \"^0.8.0\"\n",
+    "failed_tests": [
+      "tests/integration/samplers/test_mesh_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_points_samplers.py::test_mesh_random_sampling_return_type",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centers]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_centroids]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_sampling_return_type[voxelgrid_nearest]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/integration/samplers/test_voxelgrid_samplers.py::test_voxelgrid_highest_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/integration/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.1-6-expected_in0-expected_not_in0]",
+      "tests/unit/samplers/test_voxelgrid_samplers.py::test_VoxelgridHighestSampler_expected_values[0.2-4-expected_in1-expected_not_in1]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-1-1-expected_voxel_n4]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-5-1-expected_voxel_n5]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[1-1-5-expected_voxel_n6]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-5-expected_voxel_n7]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-5-expected_voxel_n8]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[2-5-2-expected_voxel_n9]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-2-5-expected_voxel_n10]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_expected_voxel_n_for_different_number_of_voxels_per_axis[5-5-2-expected_voxel_n11]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_sizes_override_number_of_voxels_per_axis",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_mean]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[x_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[y_max]",
+      "tests/unit/structures/test_voxelgrid_structures.py::test_output_shape_of_all_feature_vector_modes[z_max]"
+    ],
+    "test_time": 7.65758204460144
+  },
+  "mutants": [
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"FLOAT\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"XXfloatXX\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"UCHAR\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"XXucharXX\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"BOOL\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"XXboolXX\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"ELEMENT \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"XXelement XX\" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(None)]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df) * 2)]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df) + 1)]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df) - 1)]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \"XX XX\" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name != \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"vertex\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"PROPERTY LIST UCHAR INT VERTEX_INDICES\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list int uchar vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar float vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices int\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(None)\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(0, len(df.columns), 2):  # Iterates over every second column, missing alternate columns\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(1, len(df.columns)):  # Starts from 1, skipping the first column\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns) - 1):  # Off-by-one error, skips the last column\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns) // 2):  # Only iterates over half of the columns\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i])\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"PROPERTY \" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"XXproperty XX\" + f + \" \" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + df.columns[i] + \" \" + f)\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + df.columns.values[i].upper())\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \" \" + str(i))\n\n    return element",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(\"property \" + f + \"XX XX\" + df.columns.values[i])\n\n    return element\n",
+    "def describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n    property_formats = {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}\n    element = [\"element \" + name + \" \" + str(len(df))]\n\n    if name == \"face\":\n        element.append(\"property list uchar int vertex_indices\")\n\n    else:\n        for i in range(len(df.columns)):\n            # get first letter of dtype to infer format\n            f = property_formats[str(df.dtypes[i])[0]]\n            element.append(None)\n\n    return element\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "auto",
+  "ref_postcond": "@icontract.snapshot(lambda df: df.columns.values[:], name=\"cols\")\n@icontract.snapshot(lambda df: df.dtypes.copy(), name=\"dtypes\")\n@icontract.snapshot(lambda df: len(df), name=\"nrows\")\n@icontract.ensure(lambda OLD, result, name: result[0] == \"element \" + name + \" \" + str(OLD.nrows))\n@icontract.ensure(lambda OLD, result, name: (name != \"face\") or (len(result) == 2 and result[1] == \"property list uchar int vertex_indices\"))\n@icontract.ensure(lambda OLD, result, name: (name == \"face\") or (len(result) == 1 + len(OLD.cols) and all(result[1 + i] == \"property \" + {\"f\": \"float\", \"u\": \"uchar\", \"i\": \"int\", \"b\": \"bool\"}[str(OLD.dtypes[i])[0]] + \" \" + OLD.cols[i] for i in range(len(OLD.cols)))))",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\n#       HAKUNA MATATA\n\nimport sys\nimport numpy as np\nimport pandas as pd\nfrom collections import defaultdict\n\nsys_byteorder = (\">\", \"<\")[sys.byteorder == \"little\"]\n\nply_dtypes = dict(\n    [\n        (b\"int8\", \"i1\"),\n        (b\"char\", \"i1\"),\n        (b\"uint8\", \"u1\"),\n        (b\"uchar\", \"b1\"),\n        (b\"uchar\", \"u1\"),\n        (b\"int16\", \"i2\"),\n        (b\"short\", \"i2\"),\n        (b\"uint16\", \"u2\"),\n        (b\"ushort\", \"u2\"),\n        (b\"int32\", \"i4\"),\n        (b\"int\", \"i4\"),\n        (b\"uint32\", \"u4\"),\n        (b\"uint\", \"u4\"),\n        (b\"float32\", \"f4\"),\n        (b\"float\", \"f4\"),\n        (b\"float64\", \"f8\"),\n        (b\"double\", \"f8\"),\n    ]\n)\n\nvalid_formats = {\"ascii\": \"\", \"binary_big_endian\": \">\", \"binary_little_endian\": \"<\"}\n\n\ndef read_ply(filename, allow_bool=False):\n    \"\"\"Read a .ply (binary or ascii) file and store the elements in pandas DataFrame.\n\n    Parameters\n    ----------\n    filename: str\n        Path to the filename\n    allow_bool: bool\n        flag to allow bool as a valid PLY dtype. False by default to mirror original PLY specification.\n\n    Returns\n    -------\n    data: dict\n        Elements as pandas DataFrames; comments and ob_info as list of string\n    \"\"\"\n...\ndef write_ply(filename, points=None, mesh=None, as_text=False, comments=None):\n    \"\"\"Write a PLY file populated with the given fields.\n\n    Parameters\n    ----------\n    filename: str\n        The created file will be named with this\n    points: ndarray\n    mesh: ndarray\n    as_text: boolean\n        Set the write mode of the file. Default: binary\n    comments: list of string\n\n    Returns\n    -------\n    boolean\n        True if no problems\n\n    \"\"\"\n...\ndef describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n...\n```\n## Target Method\n```\ndef describe_element(name, df):\n    \"\"\"Takes the columns of the dataframe and builds a ply-like description\n\n    Parameters\n    ----------\n    name: str\n    df: pandas DataFrame\n\n    Returns\n    -------\n    element: list[str]\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `describe_element`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(\n    lambda result: all(isinstance(line, str) for line in result),\n    \"All lines in the returned element description must be strings.\"\n)\n@icontract.ensure(\n    lambda result: len(result) >= 1,\n    \"The element description must contain at least one line.\"\n)\n@icontract.ensure(\n    lambda result: result[0].startswith(f\"element {name}\"),\n    \"The first line must start with 'element' followed by the provided name.\"\n)\n@icontract.ensure(\n    lambda result: any(\"property\" in line for line in result),\n    \"At least one line in the element description must contain a property.\"\n)\n@icontract.snapshot(\n    df.columns.tolist(),\n    name=\"original_columns\",\n    description=\"Snapshot of the original DataFrame columns.\"\n)\n@icontract.ensure(\n    lambda original_columns, result: all(\n        any(col in line for col in original_columns) for line in result if \"property\" in line\n    ),\n    \"Each property line must correspond to a column in the original DataFrame.\"\n)",
+    "@icontract.ensure(\n    lambda result: all(isinstance(line, str) for line in result),\n    \"All elements in the returned list must be strings.\"\n)\n@icontract.ensure(\n    lambda name, result: result[0].startswith(f\"element {name}\"),\n    \"The first line of the result must start with 'element' followed by the provided name.\"\n)\n@icontract.ensure(\n    lambda result: len(result) >= 1,\n    \"The result must contain at least one line (the element declaration).\"\n)\n@icontract.snapshot(\n    lambda df: df.shape[0],\n    name=\"num_rows\"\n)\n@icontract.ensure(\n    lambda result, snapshot: result[0].endswith(str(snapshot[\"num_rows\"])),\n    \"The first line must include the number of rows from the DataFrame.\"\n)\n@icontract.ensure(\n    lambda result: all(line.startswith(\"property \") for line in result[1:]),\n    \"All lines after the first must start with 'property '.\"\n)",
+    "@icontract.ensure(\n    lambda result: len(result) > 0,\n    \"The returned element description list should not be empty.\"\n)\n@icontract.ensure(\n    lambda result: all(isinstance(line, str) for line in result),\n    \"Each item in the returned element description list should be a string.\"\n)\n@icontract.ensure(\n    lambda name, result: result[0].startswith(f\"element {name}\"),\n    \"The first line of the element description should start with 'element' followed by the element name.\"\n)\n@icontract.ensure(\n    lambda name, df, result: int(result[0].split()[2]) == len(df),\n    \"The number of elements in the description should match the number of rows in the DataFrame.\"\n)\n@icontract.ensure(\n    lambda df, result: all(col in result[1:] for col in df.columns),\n    \"Each column in the DataFrame should be described in the element description list.\"\n)\n@icontract.snapshot(\n    lambda name, df: name,\n    \"name\"\n)\n@icontract.snapshot(\n    lambda name, df: df.columns.tolist(),\n    \"df_columns\"\n)",
+    "@icontract.ensure(\n    lambda result: len(result) > 0,\n    \"The returned element description must not be empty.\"\n)\n@icontract.ensure(\n    lambda result: all(isinstance(line, str) for line in result),\n    \"Each line in the returned element description must be a string.\"\n)\n@icontract.ensure(\n    lambda result: result[0].startswith(f\"element {name}\"),\n    \"The first line must describe the element with the given name.\"\n)\n@icontract.ensure(\n    lambda result: all(line.startswith(\"property\") for line in result[1:]),\n    \"All lines after the first must describe properties.\"\n)\n@icontract.snapshot(\n    df.columns.tolist(),\n    name=\"original_columns\"\n)\n@icontract.ensure(\n    lambda original_columns, result: all(\n        \"property\" in line and any(col in line for col in original_columns) for line in result[1:]\n    ),\n    \"Each property line must correspond to a column in the original DataFrame.\"\n)\n@icontract.ensure(\n    lambda result: result[-1].startswith(\"end_header\"),\n    \"The last line of the element description must be 'end_header'.\"\n)",
+    "@icontract.ensure(\n    lambda result: all(line.startswith(b\"element \") or line.startswith(b\"property \") for line in result),\n    \"All lines in the result should start with 'element ' or 'property '\"\n)\n@icontract.ensure(\n    lambda result: any(line.startswith(b\"element \") and line.endswith(name.encode()) for line in result),\n    \"The result should contain an 'element' line with the given name\"\n)\n@icontract.ensure(\n    lambda result: all(isinstance(line, bytes) for line in result),\n    \"All lines in the result should be of type bytes\"\n)\n@icontract.snapshot(\n    df.columns.tolist(),\n    name=\"original_columns\"\n)\n@icontract.ensure(\n    lambda result, original_columns: len([line for line in result if line.startswith(b\"property \")])\n    == len(original_columns),\n    \"The number of 'property' lines should match the number of columns in the input DataFrame\"\n)"
+  ],
+  "responses": [
+    "```python\n@icontract.ensure(\n    lambda result: all(isinstance(line, str) for line in result),\n    \"All lines in the returned element description must be strings.\"\n)\n@icontract.ensure(\n    lambda result: len(result) >= 1,\n    \"The element description must contain at least one line.\"\n)\n@icontract.ensure(\n    lambda result: result[0].startswith(f\"element {name}\"),\n    \"The first line must start with 'element' followed by the provided name.\"\n)\n@icontract.ensure(\n    lambda result: any(\"property\" in line for line in result),\n    \"At least one line in the element description must contain a property.\"\n)\n@icontract.snapshot(\n    df.columns.tolist(),\n    name=\"original_columns\",\n    description=\"Snapshot of the original DataFrame columns.\"\n)\n@icontract.ensure(\n    lambda original_columns, result: all(\n        any(col in line for col in original_columns) for line in result if \"property\" in line\n    ),\n    \"Each property line must correspond to a column in the original DataFrame.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: all(isinstance(line, str) for line in result),\n    \"All elements in the returned list must be strings.\"\n)\n@icontract.ensure(\n    lambda name, result: result[0].startswith(f\"element {name}\"),\n    \"The first line of the result must start with 'element' followed by the provided name.\"\n)\n@icontract.ensure(\n    lambda result: len(result) >= 1,\n    \"The result must contain at least one line (the element declaration).\"\n)\n@icontract.snapshot(\n    lambda df: df.shape[0],\n    name=\"num_rows\"\n)\n@icontract.ensure(\n    lambda result, snapshot: result[0].endswith(str(snapshot[\"num_rows\"])),\n    \"The first line must include the number of rows from the DataFrame.\"\n)\n@icontract.ensure(\n    lambda result: all(line.startswith(\"property \") for line in result[1:]),\n    \"All lines after the first must start with 'property '.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: len(result) > 0,\n    \"The returned element description list should not be empty.\"\n)\n@icontract.ensure(\n    lambda result: all(isinstance(line, str) for line in result),\n    \"Each item in the returned element description list should be a string.\"\n)\n@icontract.ensure(\n    lambda name, result: result[0].startswith(f\"element {name}\"),\n    \"The first line of the element description should start with 'element' followed by the element name.\"\n)\n@icontract.ensure(\n    lambda name, df, result: int(result[0].split()[2]) == len(df),\n    \"The number of elements in the description should match the number of rows in the DataFrame.\"\n)\n@icontract.ensure(\n    lambda df, result: all(col in result[1:] for col in df.columns),\n    \"Each column in the DataFrame should be described in the element description list.\"\n)\n@icontract.snapshot(\n    lambda name, df: name,\n    \"name\"\n)\n@icontract.snapshot(\n    lambda name, df: df.columns.tolist(),\n    \"df_columns\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: len(result) > 0,\n    \"The returned element description must not be empty.\"\n)\n@icontract.ensure(\n    lambda result: all(isinstance(line, str) for line in result),\n    \"Each line in the returned element description must be a string.\"\n)\n@icontract.ensure(\n    lambda result: result[0].startswith(f\"element {name}\"),\n    \"The first line must describe the element with the given name.\"\n)\n@icontract.ensure(\n    lambda result: all(line.startswith(\"property\") for line in result[1:]),\n    \"All lines after the first must describe properties.\"\n)\n@icontract.snapshot(\n    df.columns.tolist(),\n    name=\"original_columns\"\n)\n@icontract.ensure(\n    lambda original_columns, result: all(\n        \"property\" in line and any(col in line for col in original_columns) for line in result[1:]\n    ),\n    \"Each property line must correspond to a column in the original DataFrame.\"\n)\n@icontract.ensure(\n    lambda result: result[-1].startswith(\"end_header\"),\n    \"The last line of the element description must be 'end_header'.\"\n)\n```",
+    "```python\n@icontract.ensure(\n    lambda result: all(line.startswith(b\"element \") or line.startswith(b\"property \") for line in result),\n    \"All lines in the result should start with 'element ' or 'property '\"\n)\n@icontract.ensure(\n    lambda result: any(line.startswith(b\"element \") and line.endswith(name.encode()) for line in result),\n    \"The result should contain an 'element' line with the given name\"\n)\n@icontract.ensure(\n    lambda result: all(isinstance(line, bytes) for line in result),\n    \"All lines in the result should be of type bytes\"\n)\n@icontract.snapshot(\n    df.columns.tolist(),\n    name=\"original_columns\"\n)\n@icontract.ensure(\n    lambda result, original_columns: len([line for line in result if line.startswith(b\"property \")])\n    == len(original_columns),\n    \"The number of 'property' lines should match the number of columns in the input DataFrame\"\n)\n```"
+  ],
+  "postcond_corr": [
+    "reports_not_exist",
+    "local_crash",
+    "reports_not_exist",
+    "reports_not_exist",
+    "reports_not_exist"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 230
+}

@@ -1,0 +1,205 @@
+{
+  "rlid": "skip_initial_comment",
+  "github_url": "https://github.com/dbcli/pgcli/blob/f46d8446a34084cc2532041619d1f08bda7213e7/./pgcli/config.py#L76-L98",
+  "name": "skip_initial_comment",
+  "line_cov": 1.0,
+  "lines": 23,
+  "stats": 13,
+  "cc": 4,
+  "content": "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+  "header": "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"",
+  "file": "./pgcli/config.py",
+  "start_line": 76,
+  "end_line": 98,
+  "body_start_line": 85,
+  "comment": "\"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"",
+  "test_time": 1.5273010730743408,
+  "cover_tests": [
+    "tests/test_config.py::test_skip_initial_comment[abc\\n-1]",
+    "tests/test_config.py::test_skip_initial_comment[#[section]\\ndef\\n[section]-2]",
+    "tests/test_config.py::test_skip_initial_comment[[section]-0]",
+    "tests/test_main.py::test_pg_service_file"
+  ],
+  "repo": {
+    "github_path": "dbcli/pgcli",
+    "commit": "f46d8446a34084cc2532041619d1f08bda7213e7",
+    "language": "python",
+    "env_config": "[project]\nname = \"pgcli\"\ndescription = \"CLI for Postgres Database. With auto-completion and syntax highlighting.\"\nreadme = \"README.rst\"\nclassifiers = [ \"Intended Audience :: Developers\", \"License :: OSI Approved :: BSD License\", \"Operating System :: Unix\", \"Programming Language :: Python\", \"Programming Language :: Python :: 3\", \"Programming Language :: Python :: 3.9\", \"Programming Language :: Python :: 3.10\", \"Programming Language :: Python :: 3.11\", \"Programming Language :: Python :: 3.12\", \"Programming Language :: Python :: 3.13\", \"Programming Language :: SQL\", \"Topic :: Database\", \"Topic :: Database :: Front-Ends\", \"Topic :: Software Development\", \"Topic :: Software Development :: Libraries :: Python Modules\",]\nrequires-python = \">=3.9\"\ndependencies = [ \"pgspecial>=2.0.0\", \"click >= 4.1,<8.1.8\", \"Pygments>=2.0\", \"prompt_toolkit>=2.0.6,<4.0.0\", \"psycopg-binary (>=3.0.14) ; sys_platform != \\\"win32\\\"\", \"sqlparse >=0.3.0,<0.6\", \"configobj >= 5.0.6\", \"cli_helpers[styles] >= 2.4.0\", \"setproctitle >= 1.1.9; sys_platform != 'win32' and 'CYGWIN' not in sys_platform\", \"tzlocal >= 5.2\", \"icontract (>=2.7.1,<3.0.0)\",]\ndynamic = [ \"version\",]\nversion = \"0.1.0\"\n[[project.authors]]\nname = \"Pgcli Core Team\"\nemail = \"pgcli-dev@googlegroups.com\"\n\n[build-system]\nrequires = [ \"setuptools>=64.0\", \"setuptools-scm>=8\",]\nbuild-backend = \"setuptools.build_meta\"\n\n[project.license]\ntext = \"BSD\"\n\n[project.urls]\nHomepage = \"https://pgcli.com\"\n\n[project.scripts]\npgcli = \"pgcli.main:cli\"\n\n[project.optional-dependencies]\nkeyring = [ \"keyring >= 12.2.0\",]\nsshtunnel = [ \"sshtunnel >= 0.4.0\",]\ndev = [ \"behave>=1.2.4\", \"coverage>=7.2.7\", \"docutils>=0.13.1\", \"keyrings.alt>=3.1\", \"pexpect>=4.9.0; platform_system != 'Windows'\", \"pytest>=7.4.4\", \"pytest-cov>=4.1.0\", \"ruff>=0.11.7\", \"sshtunnel>=0.4.0\", \"tox>=1.9.2\",]\n\n[tool.setuptools_scm]\n\n[tool.setuptools]\ninclude-package-data = false\n\n[tool.ruff]\ntarget-version = \"py39\"\nline-length = 140\n\n[tool.setuptools.package-data]\npgcli = [ \"pgclirc\", \"packages/pgliterals/pgliterals.json\",]\n\n[tool.ruff.lint]\nselect = [ \"A\", \"E\", \"W\", \"F\", \"C4\", \"PIE\", \"TID\",]\nignore = [ \"E401\", \"E402\", \"PIE808\", \"E111\", \"E114\", \"E117\", \"W191\", \"E741\", \"PIE796\",]\nexclude = [ \"pgcli/magic.py\", \"pgcli/pyev.py\",]\n\n[tool.ruff.format]\npreview = true\nquote-style = \"preserve\"\nexclude = [ \"build\",]\n\n[tool.pytest.ini_options]\nminversion = \"6.0\"\naddopts = \"--capture=sys --showlocals -rxs\"\ntestpaths = [ \"tests\",]\n\n[tool.setuptools.dynamic.version]\nattr = \"pgcli.__version__\"\n\n[tool.setuptools.packages.find]\nnamespaces = false\n\n[tool.ruff.lint.isort]\nforce-sort-within-sections = true\nknown-first-party = [ \"pgcli\", \"tests\",]\n\n[tool.poetry.group.dev.dependencies]\npytest = \"^8.4.2\"\npytest-cov = \"^7.0.0\"\npytest-reportlog = \"^0.4.0\"\nsshtunnel = \"^0.4.0\"\n\n[tool.poetry.group.dev.dependencies.pytest-env]\nversion = \">=1.2.0\"\nmarkers = \"python_version >= \\\"3.10\\\"\"\n",
+    "failed_tests": [],
+    "test_time": 26.918570041656494
+  },
+  "mutants": [
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"XX\\s*\\[XX\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.read()  # Reads the entire stream, causing pos to be a string instead of an integer\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 1\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while False:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while lines_skipped == 0:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.read()  # Reads the entire file at once, which will not allow for line-by-line processing\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.read(1)  # Reads only one character at a time instead of a full line\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if len(line) > 0:\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line != \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line != \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            return\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if line.startswith(\"[\"):  # This line only checks for the start of the line, missing whitespace\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if line.strip() == \"\":  # This line skips empty lines, which may not be intended\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if not re.match(section_regex, line):  # This line will skip valid sections\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.search(section_regex, line):  # This line uses search instead of match, which can lead to false positives\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.readline()  # Reads the next line instead of seeking to the correct position\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(0)  # Resets the stream to the beginning, causing it to re-read from the start\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            return\n        else:\n            pos += len(line)\n            lines_skipped += 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += 1\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos = 0\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos = len(line)\n            lines_skipped += 1\n    return lines_skipped",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos = len(line)\n            lines_skipped += 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped += 2\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped -= 1\n    return lines_skipped\n",
+    "def skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n    section_regex = r\"\\s*\\[\"\n    pos = f_stream.tell()\n    lines_skipped = 0\n    while True:\n        line = f_stream.readline()\n        if line == \"\":\n            break\n        if re.match(section_regex, line) is not None:\n            f_stream.seek(pos)\n            break\n        else:\n            pos += len(line)\n            lines_skipped = 1\n    return lines_skipped\n"
+  ],
+  "mutant_tags": [
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "llm"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ],
+    [
+      "rule"
+    ]
+  ],
+  "ref_source": "human",
+  "ref_postcond": "@icontract.snapshot(lambda f_stream: f_stream.tell(), name=\"start_pos\")\n@icontract.ensure(\n    lambda f_stream, result, OLD:\n        (lambda start_pos, end_pos:\n            (lambda tail:\n                (lambda lines:\n                    (lambda skip_count:\n                        (lambda expected_pos:\n                            result == skip_count\n                            and end_pos == expected_pos\n                            and bool(f_stream.seek(end_pos) or True)\n                        )(start_pos + sum(len(line) for line in lines[:skip_count]))\n                    )(\n                        next(\n                            (\n                                i\n                                for i, line in enumerate(lines)\n                                if re.match(r\"\\s*\\[\", line)\n                            ),\n                            len(lines),\n                        )\n                    )\n                )(tail.splitlines(True))\n            )((f_stream.seek(start_pos), f_stream.read())[1])\n        )(OLD.start_pos, f_stream.tell())\n)\n",
+  "ref_mutant_kill": [
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail",
+    "icontract_fail"
+  ],
+  "model_name": "Qwen3-32B",
+  "port": "19991",
+  "generate_num": 5,
+  "task_version": "v2",
+  "w_code": null,
+  "prompt": "## Code Context\n```\nimport shutil\nimport os\nimport platform\nfrom os.path import expanduser, exists, dirname\nimport re\nfrom typing import TextIO\nfrom configobj import ConfigObj\n\n\ndef config_location():\n...\ndef load_config(usr_cfg, def_cfg=None):\n    # avoid config merges when possible. For writing, we need an umerged config instance.\n    # see https://github.com/dbcli/pgcli/issues/1240 and https://github.com/DiffSK/configobj/issues/171\n...\ndef ensure_dir_exists(path):\n...\ndef write_default_config(source, destination, overwrite=False):\n...\ndef upgrade_config(config, def_config):\n...\ndef get_config_filename(pgclirc_file=None):\n...\ndef get_config(pgclirc_file=None):\n...\ndef get_casing_file(config):\n...\ndef skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n...\n```\n## Target Method\n```\ndef skip_initial_comment(f_stream: TextIO) -> int:\n    \"\"\"\n    Initial comment in ~/.pg_service.conf is not always marked with '#'\n    which crashes the parser. This function takes a file object and\n    \"rewinds\" it to the beginning of the first section,\n    from where on it can be parsed safely\n\n    :return: number of skipped lines\n    \"\"\"\n```\n## Guideline\nAbove is the python code context and target method. You should generate icontract format postconditions for this method `skip_initial_comment`.\nTry to generate correct and complete postconditions.\nNote that your response should only contain `@icontract.ensure` and `@icontract.snapshot` lines.",
+  "prompting": "v2-nl",
+  "postconds": [
+    "@icontract.ensure(lambda result, f_stream: result >= 0, \"The number of skipped lines must be non-negative.\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() <= os.path.getsize(f_stream.name), \"The file pointer must not exceed the file size.\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() == 0 or f_stream.read(1) not in (' ', '\\t', '\\n'), \"The file pointer should be at the start of the first non-comment line or at the end of the file.\")",
+    "@icontract.ensure(lambda result, f_stream: result >= 0, \"Number of skipped lines must be non-negative\")\n@icontract.ensure(\n    lambda result, f_stream: f_stream.tell() == f_stream.seek(0, os.SEEK_CUR),\n    \"File stream position should remain at the start of the first section\"\n)\n@icontract.snapshot(lambda f_stream: f_stream.tell(), name=\"initial_position\")\n@icontract.snapshot(lambda f_stream: f_stream.read(), name=\"file_contents\")\n@icontract.ensure(\n    lambda result, initial_position, file_contents, f_stream: f_stream.seek(0, os.SEEK_CUR) == initial_position,\n    \"File stream position should not change from the original position after processing\"\n)",
+    "@icontract.ensure(lambda result, f_stream: result >= 0, \"Number of skipped lines must be non-negative.\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() >= result, \"File pointer must be at least at the position after the skipped lines.\")\n@icontract.snapshot(lambda f_stream: f_stream.tell(), name=\"initial_position\")\n@icontract.ensure(lambda result, f_stream, initial_position: f_stream.tell() == initial_position + result, \"File pointer should move exactly by the number of skipped lines.\")",
+    "@icontract.ensure(lambda result, f_stream: result >= 0, \"Number of skipped lines must be non-negative.\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() <= os.fstat(f_stream.fileno()).st_size, \"File pointer must not exceed file size.\")\n@icontract.snapshot(lambda f_stream: f_stream.tell(), \"initial_file_position\")\n@icontract.ensure(lambda result, f_stream, initial_file_position: f_stream.tell() == initial_file_position + result, \"File pointer should move forward by the number of skipped lines.\")\n@icontract.ensure(lambda result, f_stream: all(line.strip() == '' or line.strip()[0] == '#' for line in f_stream.readlines()[:result]), \"All skipped lines should be comments or empty.\")",
+    "@icontract.ensure(lambda result, f_stream: result >= 0, \"Number of skipped lines must be non-negative\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() == 0, \"File stream must be rewound to the beginning after processing\")\n@icontract.snapshot(lambda f_stream: f_stream.read(), name=\"original_content\")\n@icontract.ensure(\n    lambda result, original_content, f_stream: f_stream.read() == original_content[result:],\n    \"The remaining content in the file stream should match the original content starting from the first non-comment line\"\n)"
+  ],
+  "responses": [
+    "@icontract.ensure(lambda result, f_stream: result >= 0, \"The number of skipped lines must be non-negative.\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() <= os.path.getsize(f_stream.name), \"The file pointer must not exceed the file size.\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() == 0 or f_stream.read(1) not in (' ', '\\t', '\\n'), \"The file pointer should be at the start of the first non-comment line or at the end of the file.\")",
+    "```python\n@icontract.ensure(lambda result, f_stream: result >= 0, \"Number of skipped lines must be non-negative\")\n@icontract.ensure(\n    lambda result, f_stream: f_stream.tell() == f_stream.seek(0, os.SEEK_CUR),\n    \"File stream position should remain at the start of the first section\"\n)\n@icontract.snapshot(lambda f_stream: f_stream.tell(), name=\"initial_position\")\n@icontract.snapshot(lambda f_stream: f_stream.read(), name=\"file_contents\")\n@icontract.ensure(\n    lambda result, initial_position, file_contents, f_stream: f_stream.seek(0, os.SEEK_CUR) == initial_position,\n    \"File stream position should not change from the original position after processing\"\n)\n```",
+    "@icontract.ensure(lambda result, f_stream: result >= 0, \"Number of skipped lines must be non-negative.\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() >= result, \"File pointer must be at least at the position after the skipped lines.\")\n@icontract.snapshot(lambda f_stream: f_stream.tell(), name=\"initial_position\")\n@icontract.ensure(lambda result, f_stream, initial_position: f_stream.tell() == initial_position + result, \"File pointer should move exactly by the number of skipped lines.\")",
+    "```python\n@icontract.ensure(lambda result, f_stream: result >= 0, \"Number of skipped lines must be non-negative.\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() <= os.fstat(f_stream.fileno()).st_size, \"File pointer must not exceed file size.\")\n@icontract.snapshot(lambda f_stream: f_stream.tell(), \"initial_file_position\")\n@icontract.ensure(lambda result, f_stream, initial_file_position: f_stream.tell() == initial_file_position + result, \"File pointer should move forward by the number of skipped lines.\")\n@icontract.ensure(lambda result, f_stream: all(line.strip() == '' or line.strip()[0] == '#' for line in f_stream.readlines()[:result]), \"All skipped lines should be comments or empty.\")\n```",
+    "@icontract.ensure(lambda result, f_stream: result >= 0, \"Number of skipped lines must be non-negative\")\n@icontract.ensure(lambda result, f_stream: f_stream.tell() == 0, \"File stream must be rewound to the beginning after processing\")\n@icontract.snapshot(lambda f_stream: f_stream.read(), name=\"original_content\")\n@icontract.ensure(\n    lambda result, original_content, f_stream: f_stream.read() == original_content[result:],\n    \"The remaining content in the file stream should match the original content starting from the first non-comment line\"\n)"
+  ],
+  "postcond_corr": [
+    "icontract_fail",
+    "failed",
+    "failed",
+    "icontract_fail",
+    "failed"
+  ],
+  "mutant_kill": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "traversal_rank": 344
+}
