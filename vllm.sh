@@ -37,7 +37,8 @@ if [[ "$MODEL_NAME" == *Qwen3* ]]; then
     --port "1999$TASK_IDX" \
     "${TP_ARGS[@]}" \
     --rope-scaling '{"rope_type":"yarn","factor":4.0,"original_max_position_embeddings":32768}' \
-    --max-model-len 131072
+    --max-model-len 131072 \
+    --reasoning-parser qwen3
 else
   # 其他模型：保持原来的启动方式 + 自动 TP
   vllm serve "$MODEL_NAME" \
