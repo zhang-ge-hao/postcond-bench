@@ -73,7 +73,11 @@ def model_generate(model_name: str, prompt, n, port=None):
             model=model_name,
             messages=[{"role": "user", "content": prompt},],
             n=n, temperature=0.7, top_p=0.8,
-            extra_body={"chat_template_kwargs": {"enable_thinking": False}},
+            extra_body={
+                "chat_template_kwargs": {"enable_thinking": False},
+                "top_k": 20,
+                "min_p": 0,
+            },
             max_tokens=2048,
         )
         postconditions = [choice.message.content for choice in response.choices]
