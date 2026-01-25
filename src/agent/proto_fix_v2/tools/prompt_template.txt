@@ -1,0 +1,90 @@
+You are given:
+(1) A Python method source code.
+(2) Exactly ONE icontract postcondition decorator: @icontract.ensure(...).
+    Optional @icontract.snapshot(...) may also be included.
+
+Goal:
+Output a JSON object that describes a Horn-rule state machine skeleton suitable to be compiled into Z3Py Fixedpoint (Spacer) rules.
+You MUST NOT output any Z3Py code. You MUST output JSON only.
+
+Key semantics:
+- We check the postcondition ONLY over executions that return normally (no exceptions).
+- If normal return requires preconditions (e.g., bounds for indexing, non-None assumptions), encode them as assumptions in init/entry rules.
+- Model control flow with relations and rules (Init, Loop if needed, Final).
+- Encode a counterexample predicate Bad() by deriving it from Final with the NEGATION of the postcondition.
+  IMPORTANT: Do NOT declare Bad as a relation in JSON; assume the harness already defines Bad() with no arguments.
+
+JSON schema (STRICT):
+
+{{
+  "relations": [
+    {{ "name": "Init",  "args": [ {{"name":"x","sort":"Int"}}, {{"name":"b","sort":"Bool"}}, ... ] }},
+    {{ "name": "Loop",  "args": [ ... ] }},                // optional
+    {{ "name": "Final", "args": [ ... ] }}                 // required
+  ],
+
+  "vars": [
+    {{"name":"x","sort":"Int"}},
+    {{"name":"b","sort":"Bool"}},
+    ...
+  ],
+
+  "rules": [
+    {{
+      "head": {{ "rel":"Init", "args":[ <term>, <term>, ... ] }},
+      "body": [ <atom>, <atom>, ... ]   // empty body means True
+    }},
+    ...,
+    {{
+      "head": {{ "rel":"Bad", "args":[] }},
+      "body": [ <atom>, ... ]           // MUST include a Final(...) atom and the negated postcondition
+    }}
+  ]
+}}
+
+Where:
+- A <term> is one of:
+  - {{"var":"x"}}
+  - {{"int": 0}}
+  - {{"bool": true}}
+
+- An <atom> is either:
+  (A) a predicate application:
+      {{"pred": {{"rel":"Init", "args":[<term>, ...]}}}}
+      {{"pred": {{"rel":"Loop", "args":[<term>, ...]}}}}
+      {{"pred": {{"rel":"Final","args":[<term>, ...]}}}}
+      {{"pred": {{"rel":"Bad",  "args":[]}}}}   // only allowed as head, not recommended in body
+
+  (B) a boolean expression:
+      {{"op":"And", "args":[<atom_or_expr>, ...]}}
+      {{"op":"Or",  "args":[...]}}
+      {{"op":"Not", "args":[<atom_or_expr>]}}
+      {{"op":"Implies","args":[A,B]}}
+      {{"op":"Ite","args":[C,T,E]}}      // returns a term-like value; use only inside Eq/Ne
+      {{"op":"Eq", "args":[<term_or_expr>, <term_or_expr>]}}
+      {{"op":"Ne", "args":[...]}}
+      {{"op":"Lt","args":[...]}}  {{"op":"Le","args":[...]}}  {{"op":"Gt","args":[...]}}  {{"op":"Ge","args":[...]}}
+      {{"op":"Add","args":[...]}} {{"op":"Sub","args":[...]}} {{"op":"Mul","args":[...]}} // integer arithmetic only
+
+Notes / Constraints (MUST FOLLOW):
+1) Output MUST be valid JSON. Output ONLY JSON. No prose.
+2) You MUST include a relation named "Final".
+3) The last rule MUST have head {{"rel":"Bad","args":[]}} and derive Bad from Final plus NOT(postcondition).
+4) Every predicate atom in any body MUST refer to a relation listed in "relations" (except "Bad" in the Bad head).
+5) Every variable used anywhere MUST be listed in "vars".
+6) Keep sorts minimal: use only "Int" and "Bool" unless absolutely necessary.
+7) Prefer simple abstractions:
+   - You may represent complex Python values (dict/str/Any) using Bool flags (e.g., "hit_key", "node_is_none", "result_eq_fallback").
+   - You may abstract return values using Int if you only need equality/inequality.
+8) The FIRST rule MUST derive Init(...) and must not depend on any other relation.
+   Concretely, the first rule’s head MUST be Init(...), and its body MUST either be empty ([]) or contain only pure constraints (no "pred" atoms).
+
+Input:
+
+METHOD_SOURCE_BEGIN
+{method_source}
+METHOD_SOURCE_END
+
+POSTCONDITION_BEGIN
+{postcondition}
+POSTCONDITION_END

@@ -65,23 +65,22 @@ if __name__ == "__main__":
 
     expected_postcond_count = expected_method_count * postcond_pre_method
 
+    methods = read_benchmark("data/step/9.Qwen3-32B-agent--v2-all")
+
+    python_methods = [m for m in methods if m.repo.language == "python"]
+
+    python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    print(f"{python_corr_count / len(python_methods):.3f}")
+    print(f"{python_comp_count / len(python_methods):.3f}")
+    print(f"{python_corr_count / expected_postcond_count:.3f}")
+    print(f"{python_comp_count / expected_postcond_count:.3f}")
+
     methods = read_benchmark("data/step/9.Qwen3-32B-reason--v2-all")
 
     python_methods = [m for m in methods if m.repo.language == "python"]
-    java_methods = [m for m in methods if m.repo.language == "java"]
 
     python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    print(f"{python_corr_count / len(python_methods):.3f}")
+    print(f"{python_comp_count / len(python_methods):.3f}")
     print(f"{python_corr_count / expected_postcond_count:.3f}")
     print(f"{python_comp_count / expected_postcond_count:.3f}")
-    java_corr_count, java_comp_count = cal_corr_and_comp_counts(java_methods)
-    print(f"{java_corr_count / expected_postcond_count:.3f}")
-    print(f"{java_comp_count / expected_postcond_count:.3f}")
-
-    python_incorr_postconds = get_incorr_postconds(python_methods)
-    java_incorr_postconds = get_incorr_postconds(java_methods)
-    random.shuffle(python_incorr_postconds)
-    random.shuffle(java_incorr_postconds)
-
-    output_dir = "data/anno"
-    print_incorr_postconds(python_incorr_postconds, f"{output_dir}/python_incorr.txt")
-    print_incorr_postconds(java_incorr_postconds, f"{output_dir}/java_incorr.txt")

@@ -400,108 +400,293 @@ def _split_top_level(expr: str, ops: List[str]) -> Tuple[List[str], List[str]]:
     return tokens, seps
 
 
-def _paren_wrap(x: str) -> str:
-    x = x.strip()
-    if not x:
-        return x
-    return f"({x})"
+
+# def transform_inference_ops(expr: str) -> str:
+#     """Transform JML's ==> / <==> / <=!=> into Java boolean logic.
+
+#     Rules:
+#       a ==> b      => (!a) || (b)                      (right associative)
+#       a <==> b     => (a == b)                         (left associative; add parens to preserve JML precedence)
+#       a <=!=> b    => (a != b)                         (left associative; add parens to preserve JML precedence)
+#     """
+#     expr = expr.strip()
+
+#     def has_wrapping_parens(s: str) -> bool:
+#         # whether the whole string is enclosed by a single matching pair of parentheses
+#         i, n = 0, len(s)
+#         while i < n and s[i].isspace():
+#             i += 1
+#         if i >= n or s[i] != '(':
+#             return False
+#         j = n - 1
+#         while j >= 0 and s[j].isspace():
+#             j -= 1
+#         if j < 0 or s[j] != ')':
+#             return False
+
+#         depth = 0
+#         k = i
+#         in_str = in_chr = False
+#         esc = False
+#         while k <= j:
+#             ch = s[k]
+#             if in_str:
+#                 if ch == '"' and not esc:
+#                     in_str = False
+#                 esc = (ch == '\\' and not esc)
+#             elif in_chr:
+#                 if ch == "'" and not esc:
+#                     in_chr = False
+#                 esc = (ch == '\\' and not esc)
+#             else:
+#                 if ch == '"':
+#                     in_str = True
+#                 elif ch == "'":
+#                     in_chr = True
+#                 elif ch == '(':
+#                     depth += 1
+#                 elif ch == ')':
+#                     depth -= 1
+#                     if depth == 0 and k != j:
+#                         return False
+#             k += 1
+#         return True
+
+#     def _paren_wrap(x: str) -> str:
+#         x = x.strip()
+#         return f"({x})" if x and not (x.startswith("(") and x.endswith(")")) else x
+
+#     def parse_equiv(s: str) -> str:
+#         # <==> 和 <=!=>（较低优先级），左结合
+#         toks, ops = _split_top_level(s, [EQUIV_OP, INEQUIV_OP])
+#         if ops:
+#             res = parse_impl(toks[0])
+#             for idx, op in enumerate(ops):
+#                 right = parse_impl(toks[idx + 1])
+#                 L = _paren_wrap(res)
+#                 R = _paren_wrap(right)
+#                 if op == EQUIV_OP:
+#                     # 直接使用 Java 的布尔相等；加括号保证优先级与 JML 一致
+#                     res = f"({L} == {R})"
+#                 else:  # INEQUIV_OP
+#                     res = f"({L} != {R})"
+#             return res
+#         return parse_impl(s)
+
+#     def parse_impl(s: str) -> str:
+#         # ==>（高于 <==>/<=!=>），右结合
+#         toks, ops = _split_top_level(s, [IMPL_OP])
+#         if ops:
+#             acc = parse_term(toks[-1])
+#             for i in range(len(toks) - 2, -1, -1):
+#                 left = parse_term(toks[i])
+#                 L = _paren_wrap(left)
+#                 R = _paren_wrap(acc)
+#                 acc = f"(!{L} || {R})"
+#             return acc
+#         return parse_term(s)
+
+#     def parse_term(s: str) -> str:
+#         s = s.strip()
+#         # 去除一层最外括号后递归，让括号内的 ==> / <==> / <=!=> 也能被继续解析
+#         while s and has_wrapping_parens(s):
+#             s = s[1:-1].strip()
+#         # 再走一遍等价层，确保嵌套里的运算符被吃掉
+#         return parse_equiv(s) if any(op in s for op in (IMPL_OP, EQUIV_OP, INEQUIV_OP)) else s
+
+#     return parse_equiv(expr)
+
 
 
 def transform_inference_ops(expr: str) -> str:
     """Transform JML's ==> / <==> / <=!=> into Java boolean logic.
-
-    Rules:
-      a ==> b      => (!a) || (b)                      (right associative)
-      a <==> b     => (a == b)                         (left associative; add parens to preserve JML precedence)
-      a <=!=> b    => (a != b)                         (left associative; add parens to preserve JML precedence)
+    Try to keep the SAME parenthesis style as the old buggy version, but without recursion blow-ups.
     """
     expr = expr.strip()
 
-    def has_wrapping_parens(s: str) -> bool:
-        # whether the whole string is enclosed by a single matching pair of parentheses
-        i, n = 0, len(s)
-        while i < n and s[i].isspace():
-            i += 1
-        if i >= n or s[i] != '(':
+    def fully_wrapped(s: str) -> bool:
+        """True iff the whole string is enclosed by one matching outer (...) pair."""
+        s = s.strip()
+        if len(s) < 2 or s[0] != "(" or s[-1] != ")":
             return False
-        j = n - 1
-        while j >= 0 and s[j].isspace():
-            j -= 1
-        if j < 0 or s[j] != ')':
-            return False
-
         depth = 0
-        k = i
         in_str = in_chr = False
         esc = False
-        while k <= j:
-            ch = s[k]
+        for i, ch in enumerate(s):
             if in_str:
                 if ch == '"' and not esc:
                     in_str = False
-                esc = (ch == '\\' and not esc)
-            elif in_chr:
+                esc = (ch == "\\" and not esc)
+                continue
+            if in_chr:
                 if ch == "'" and not esc:
                     in_chr = False
-                esc = (ch == '\\' and not esc)
-            else:
-                if ch == '"':
-                    in_str = True
-                elif ch == "'":
-                    in_chr = True
-                elif ch == '(':
-                    depth += 1
-                elif ch == ')':
-                    depth -= 1
-                    if depth == 0 and k != j:
-                        return False
-            k += 1
-        return True
+                esc = (ch == "\\" and not esc)
+                continue
 
-    def _paren_wrap(x: str) -> str:
+            if ch == '"':
+                in_str = True
+                continue
+            if ch == "'":
+                in_chr = True
+                continue
+
+            if ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth -= 1
+                # outer parens close before the end => not fully wrapped
+                if depth == 0 and i != len(s) - 1:
+                    return False
+        return depth == 0
+
+    def paren_wrap(x: str) -> str:
         x = x.strip()
-        return f"({x})" if x and not (x.startswith("(") and x.endswith(")")) else x
+        return x if (x and fully_wrapped(x)) else (f"({x})" if x else x)
 
-    def parse_equiv(s: str) -> str:
-        # <==> 和 <=!=>（较低优先级），左结合
-        toks, ops = _split_top_level(s, [EQUIV_OP, INEQUIV_OP])
-        if ops:
-            res = parse_impl(toks[0])
-            for idx, op in enumerate(ops):
-                right = parse_impl(toks[idx + 1])
-                L = _paren_wrap(res)
-                R = _paren_wrap(right)
-                if op == EQUIV_OP:
-                    # 直接使用 Java 的布尔相等；加括号保证优先级与 JML 一致
-                    res = f"({L} == {R})"
-                else:  # INEQUIV_OP
-                    res = f"({L} != {R})"
-            return res
-        return parse_impl(s)
+    # --- optional: recursively transform inside parentheses to handle "(a ==> b) && (...)" cases ---
+    # IMPORTANT: do NOT rewrite inside \old( ... ) to avoid messing with later \old-placeholder pass.
+    def rewrite_inside_parens(s: str) -> str:
+        out = []
+        n = len(s)
+        i = 0
 
-    def parse_impl(s: str) -> str:
-        # ==>（高于 <==>/<=!=>），右结合
-        toks, ops = _split_top_level(s, [IMPL_OP])
-        if ops:
-            acc = parse_term(toks[-1])
-            for i in range(len(toks) - 2, -1, -1):
-                left = parse_term(toks[i])
-                L = _paren_wrap(left)
-                R = _paren_wrap(acc)
-                acc = f"(!{L} || {R})"
-            return acc
-        return parse_term(s)
+        in_str = False
+        in_chr = False
+        esc = False
+
+        while i < n:
+            ch = s[i]
+
+            # string/char handling
+            if in_str:
+                out.append(ch)
+                if ch == '"' and not esc:
+                    in_str = False
+                esc = (ch == "\\" and not esc)
+                i += 1
+                continue
+            if in_chr:
+                out.append(ch)
+                if ch == "'" and not esc:
+                    in_chr = False
+                esc = (ch == "\\" and not esc)
+                i += 1
+                continue
+            if ch == '"':
+                in_str = True
+                out.append(ch)
+                i += 1
+                continue
+            if ch == "'":
+                in_chr = True
+                out.append(ch)
+                i += 1
+                continue
+
+            if ch != "(":
+                out.append(ch)
+                i += 1
+                continue
+
+            # we see a '(' at s[i]
+            # check if this '(' is immediately after "\old" (allow whitespace between)
+            j = i - 1
+            while j >= 0 and s[j].isspace():
+                j -= 1
+            is_old_call = False
+            if j >= 3 and s[j-3:j+1] == r"\old":
+                is_old_call = True
+
+            # find matching ')'
+            start = i
+            depth = 1
+            i += 1
+            inner_start = i
+
+            in_str2 = False
+            in_chr2 = False
+            esc2 = False
+
+            while i < n and depth > 0:
+                c = s[i]
+                if in_str2:
+                    if c == '"' and not esc2:
+                        in_str2 = False
+                    esc2 = (c == "\\" and not esc2)
+                elif in_chr2:
+                    if c == "'" and not esc2:
+                        in_chr2 = False
+                    esc2 = (c == "\\" and not esc2)
+                else:
+                    if c == '"':
+                        in_str2 = True
+                    elif c == "'":
+                        in_chr2 = True
+                    elif c == "(":
+                        depth += 1
+                    elif c == ")":
+                        depth -= 1
+                        if depth == 0:
+                            break
+                i += 1
+
+            if depth != 0:
+                # unmatched, emit rest as-is
+                out.append(s[start:])
+                return "".join(out)
+
+            inner = s[inner_start:i]  # content inside (...)
+            if is_old_call:
+                # keep \old(...) untouched
+                out.append("(" + inner + ")")
+            else:
+                inner_t = transform_inference_ops(inner)
+                # We are replacing the whole "(inner)" group.
+                # To match buggy style, if inner_t already fully wrapped, reuse it; else keep one layer of parens.
+                out.append(inner_t if fully_wrapped(inner_t) else "(" + inner_t + ")")
+
+            i += 1  # skip ')'
+
+        return "".join(out)
 
     def parse_term(s: str) -> str:
         s = s.strip()
-        # 去除一层最外括号后递归，让括号内的 ==> / <==> / <=!=> 也能被继续解析
-        while s and has_wrapping_parens(s):
+        stripped_any = False
+        while s and fully_wrapped(s):
             s = s[1:-1].strip()
-        # 再走一遍等价层，确保嵌套里的运算符被吃掉
-        return parse_equiv(s) if any(op in s for op in (IMPL_OP, EQUIV_OP, INEQUIV_OP)) else s
+            stripped_any = True
+        # Only re-parse if we actually stripped outer parens (this guarantees progress).
+        return parse_equiv(s) if stripped_any else s
 
-    return parse_equiv(expr)
+    def parse_impl(s: str) -> str:
+        toks, ops = _split_top_level(s, [IMPL_OP])
+        if not ops:
+            return parse_term(s)
+        acc = parse_term(toks[-1])
+        for k in range(len(toks) - 2, -1, -1):
+            left = parse_term(toks[k])
+            # match buggy style: (! (left) || (acc))
+            acc = f"(!{paren_wrap(left)} || {paren_wrap(acc)})"
+        return acc
 
+    def parse_equiv(s: str) -> str:
+        toks, ops = _split_top_level(s, [EQUIV_OP, INEQUIV_OP])
+        if not ops:
+            return parse_impl(s)
+        res = parse_impl(toks[0])
+        for idx, op in enumerate(ops):
+            right = parse_impl(toks[idx + 1])
+            L = paren_wrap(res)
+            R = paren_wrap(right)
+            # IMPORTANT: wrap the WHOLE equality/inequality, matching buggy output and fixing "! (a==b)" binding
+            res = f"({L} {'==' if op == EQUIV_OP else '!='} {R})"
+        return res
+
+    # 1) first rewrite inside parentheses (handles "(a ==> b) && (...)" safely; ignores \old(...) and strings)
+    expr2 = rewrite_inside_parens(expr)
+    # 2) then parse top-level inference operators
+    return parse_equiv(expr2).strip()
 
 # -----------------------------------------------------------------------------
 # \old & \result helpers
@@ -717,9 +902,9 @@ def main():
         print(out)
 
 
-    with open("data/TestFramework.java") as file:
-        src0 = file.read()
-    run_case("implication", src0)
+    # with open("data/TestFramework.java") as file:
+    #     src0 = file.read()
+    # run_case("implication", src0)
 
 
     # 1) 基础蕴含 ==> : assert (!a) || (b)
@@ -804,6 +989,14 @@ class C8 {
 }
 """
     run_case("equivalence chain left-assoc", src8)
+
+    src9 = r"""
+class C9 {
+    //@ ensures (((a ==> b))) && (a && c);
+    public void u(boolean a, boolean b, boolean c) { }
+}
+"""
+    run_case("implication not in the first layer", src9)
 
 
 if __name__ == "__main__":

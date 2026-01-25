@@ -88,7 +88,8 @@ def postcond_inj(
     if lang == "java":
         try:
             inj_code = rewrite_java_source(inj_code)
-        except:
+        except Exception as e:
+            print(e)
             inj_code = None
 
     if need_hot_range:
