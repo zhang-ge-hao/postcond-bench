@@ -240,6 +240,20 @@ def _keyword_str_value(call: ast.Call, key: str) -> Optional[str]:
     return None
 
 
+def _loaded_names(node: ast.AST) -> Set[str]:
+    """
+    Collect all identifiers used in Load context in the given AST node.
+    (We intentionally do *not* try to resolve globals/imports; we only use this
+    to detect missing bindings for *function parameters* referenced in lambda bodies.)
+    """
+    out: Set[str] = set()
+    for sub in ast.walk(node):
+        if isinstance(sub, ast.Name) and isinstance(sub.ctx, ast.Load):
+            out.add(sub.id)
+    return out
+
+
+
 # -----------------------------
 # Main checker
 # -----------------------------
@@ -392,6 +406,31 @@ def check_icontract_postconditions(method_src: str, postconditions_src: str) -> 
                 caret=caret
             ))
 
+        # --- NEW Rule IC006: lambda body must not reference function params that are not bound in lambda signature ---
+        # icontract snapshots/capture functions are called with arguments of the original function,
+        # so referencing a function parameter without binding it in the lambda signature is almost always a mistake.
+        used = _loaded_names(lam.body)
+        missing = (used & func_params) - set(lam_names)
+        if missing:
+            line, col = _node_span(lam)
+            snippet, caret = _make_snippet(lines, line, col)
+            missing_list = ", ".join(sorted(missing))
+            issues.append(Issue(
+                code="IC006",
+                rule="Bind referenced parameters",
+                message=(
+                    f"snapshot capture lambda references function parameter(s) [{missing_list}] in its body, "
+                    f"but does not declare them in the lambda signature. "
+                    f"In icontract, snapshot capture functions receive the original function arguments via their parameters; "
+                    f"declare the needed parameters explicitly (e.g., lambda {missing_list}: ...)."
+                ),
+                line=line,
+                col=col,
+                snippet=snippet,
+                caret=caret
+            ))
+
+
         # Derive snapshot property name (name=... or omitted with single argument)
         explicit_name = _keyword_str_value(call, "name")
         if explicit_name is not None:
@@ -524,6 +563,65 @@ def check_icontract_postconditions(method_src: str, postconditions_src: str) -> 
                         snippet=snippet,
                         caret=caret
                     ))
+
+        # --- NEW Rule IC006: lambda body must not reference function params that are not bound in lambda signature ---
+        used = _loaded_names(lam.body)
+        missing = (used & func_params) - set(lam_names) - allowed_special
+        if missing:
+            line, col = _node_span(lam)
+            snippet, caret = _make_snippet(lines, line, col)
+            missing_list = ", ".join(sorted(missing))
+            issues.append(Issue(
+                code="IC006",
+                rule="Bind referenced parameters",
+                message=(
+                    f"ensure lambda references function parameter(s) [{missing_list}] in its body, "
+                    f"but does not declare them in the lambda signature. "
+                    f"In icontract, postcondition functions receive the original function arguments via their parameters; "
+                    f"declare the needed parameters explicitly (e.g., lambda result, {missing_list}: ...)."
+                ),
+                line=line,
+                col=col,
+                snippet=snippet,
+                caret=caret
+            ))
+
+        # Optional extra hint: varargs/kwargs referenced in body should use placeholders
+        # (Your existing IC005 checks binding the *name* in the signature; this catches using it in the body.)
+        if fn_vararg is not None and fn_vararg in used and "_ARGS" not in set(lam_names):
+            line, col = _node_span(lam)
+            snippet, caret = _make_snippet(lines, line, col)
+            issues.append(Issue(
+                code="IC006",
+                rule="Bind referenced parameters",
+                message=(
+                    f"ensure lambda references '*{fn_vararg}' in its body. "
+                    f"When the function defines *{fn_vararg}, prefer binding the placeholder '_ARGS' "
+                    f"and refer to positional call arguments via _ARGS[...]."
+                ),
+                line=line,
+                col=col,
+                snippet=snippet,
+                caret=caret
+            ))
+        if fn_kwarg is not None and fn_kwarg in used and "_KWARGS" not in set(lam_names):
+            line, col = _node_span(lam)
+            snippet, caret = _make_snippet(lines, line, col)
+            issues.append(Issue(
+                code="IC006",
+                rule="Bind referenced parameters",
+                message=(
+                    f"ensure lambda references '**{fn_kwarg}' in its body. "
+                    f"When the function defines **{fn_kwarg}, prefer binding the placeholder '_KWARGS' "
+                    f"and refer to keyword call arguments via _KWARGS[...]."
+                ),
+                line=line,
+                col=col,
+                snippet=snippet,
+                caret=caret
+            ))
+
+
 
         # Also: if snapshots exist AND ensure tries to use snapshot property but forgets OLD entirely,
         # the IC002 above already covers (since it flags the param). But we add an extra hint if snapshots exist
@@ -845,5 +943,54 @@ def f(x):
         method="""
 def f(a, b):
     return a + b
+""",
+    )
+
+    run_case(
+        "CASE 21 — IC006: lambda body must not reference function params that are not bound in lambda signature",
+        post="""
+@icontract.ensure(
+    lambda result: len(result) == sum(1 for part in parts if isinstance(part.root, FilePart)),
+    "The length of the result should match the number of FilePart objects in the input list."
+)
+""",
+        method="""
+def get_file_parts(parts: list[Part]) -> list[FileWithBytes | FileWithUri]:
+    return [part.root.file for part in parts if isinstance(part.root, FilePart)]
+""",
+    )
+
+    run_case(
+        "CASE 22 — IC006: fixed -- lambda body must not reference function params that are not bound in lambda signature",
+        post="""
+@icontract.ensure(
+    lambda result, parts: len(result) == sum(1 for part in parts if isinstance(part.root, FilePart)),
+    "The length of the result should match the number of FilePart objects in the input list."
+)
+""",
+        method="""
+def get_file_parts(parts: list[Part]) -> list[FileWithBytes | FileWithUri]:
+    return [part.root.file for part in parts if isinstance(part.root, FilePart)]
+""",
+    )
+
+    run_case(
+        "CASE 23 — Regression testing",
+        post="""
+@icontract.snapshot(lambda self: self.environ.get('HTTP_AUTHORIZATION', ''), name='http_authorization')  
+@icontract.snapshot(lambda self: self.environ.get('REMOTE_USER'), name='remote_user')  
+@icontract.ensure(lambda result: result is None or (isinstance(result, tuple) and len(result) == 2))  
+@icontract.ensure(lambda result: result is None or (isinstance(result[0], str) and (result[1] is None or isinstance(result[1], str))))  
+@icontract.ensure(lambda result, remote_user: result is None or not (isinstance(result, tuple) and result[1] is None and (remote_user is None or result[0] != remote_user)))  
+@icontract.ensure(lambda result, http_authorization: result is None or not (isinstance(result, tuple) and result[1] is not None and http_authorization == ''))
+""",
+        method="""
+    @property
+    def auth(self):
+        basic = parse_auth(self.environ.get('HTTP_AUTHORIZATION', ''))
+        if basic: return basic
+        ruser = self.environ.get('REMOTE_USER')
+        if ruser: return (ruser, None)
+        return None
 """,
     )

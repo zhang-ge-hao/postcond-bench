@@ -15,6 +15,7 @@ class SplitPostcondition:
     def to_decorator_block(self) -> str:
         """Render as decorators-only block (no def)."""
         parts = [*self.snapshot_srcs, self.ensure_src]
+        parts = ["@" + p for p in parts]
         return "\n".join(parts).rstrip() + "\n"
 
 

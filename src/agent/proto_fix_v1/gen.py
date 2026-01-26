@@ -14,7 +14,7 @@ from src.inject import postcond_inj
 from src.clone import repository_reproduct
 from src.pool import run_with_pool_file_monitor
 
-from src.agent.proto_fix_v1.tools.icontract_grammar import grammar_verify
+from src.agent.tools.grammar.icontract_lint import grammar_verify
 
 
 def response_post_process(response: str) -> str:
@@ -171,7 +171,8 @@ def postcond_generation_v2(
     lang = method.repo.language
     excluded_tests = method.repo.failed_tests
     with repository_reproduct(method.repo) as repo_dir:
-        assert method.postconds is not None and len(method.postconds) == method.generate_num
+        assert method.postconds is not None and \
+            len(method.postconds) == method.generate_num
         for p_idx in range(method.generate_num):
 
             attempt_postcond = method.postconds[p_idx]

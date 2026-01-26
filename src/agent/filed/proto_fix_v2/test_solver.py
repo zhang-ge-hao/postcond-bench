@@ -5,18 +5,44 @@ from openai import OpenAI
 
 from src.agent.proto_fix_v2.tools.splitter import split_icontract_postconditions
 
-if __name__ == "__main__":
-    method_path = "data/step/9.Qwen3-32B-agent--v2-all/z3z1ma--dbt-osmosis--_get_setting_for_node.json"
+import os, json
+from src.ds import *
+from typing import *
+import random
+from src.curator.eval_postcond import eval_postcond
 
-    with open(method_path) as file:
-        method = Method.from_dict(json.load(file))
+
+KFS = ["jml_fail", "icontract_fail"]
+
+def read_benchmark(p, save_mem=False) -> List[Method]:
+    print(f"Reading {p}.")
+    methods: List[Method] = []
+    for fn in os.listdir(p):
+        with open(f"{p}/{fn}") as f:
+            method = Method.from_dict(json.load(f))
+            if save_mem:
+                method.repo.env_config = None
+                method.repo.failed_tests = None
+                method.cover_tests = None
+                method.mutants = None
+                method.postconds = None
+                method.responses = None
+            methods.append(method)
+    return methods
+
+
+if __name__ == "__main__":
+    github_url = "https://github.com/roboflow/maestro/blob/f394fce0b2c2fe98b3f457ad5abb61a9c7e88c7b/./maestro/trainer/common/datasets/roboflow.py#L10-L41"
+
+    methods = read_benchmark("data/step/9.Qwen3-32B-agent--v2-all")
+    method = [m for m in methods if m.github_url == github_url][0]
     
     method_content = method.content
     postcond_set = method.postconds[0]
 
     postconds = split_icontract_postconditions(postcond_set)
 
-    postcond = postconds[0].to_decorator_block()
+    postcond = postconds[-1].to_decorator_block()
 
     # print(method_content)
     # print(postcond)

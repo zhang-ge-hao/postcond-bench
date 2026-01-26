@@ -299,42 +299,90 @@ def compile_json_text_to_sections(json_text: str) -> Tuple[str, str]:
 if __name__ == "__main__":
     example_ir = {
   "relations": [
-    { "name": "Init",  "args": [ {"name":"node_is_none","sort":"Bool"} ] },
-    { "name": "Final", "args": [ {"name":"result_eq_fallback","sort":"Bool"}, {"name":"node_is_none","sort":"Bool"} ] }
+    { "name": "Init", "args": [ { "name": "tokens_length", "sort": "Int" } ] },
+    { "name": "Final", "args": [ 
+      { "name": "tokens_length", "sort": "Int" }, 
+      { "name": "result_is_none", "sort": "Bool" }, 
+      { "name": "version_valid", "sort": "Bool" } 
+    ] }
   ],
   "vars": [
-    {"name": "node_is_none", "sort": "Bool"},
-    {"name": "result_eq_fallback", "sort": "Bool"}
+    { "name": "tokens_length", "sort": "Int", "description": "length of tokens list after removing domain and protocol" },
+    { "name": "result_is_none", "sort": "Bool", "description": "flag indicating if the return value is None" },
+    { "name": "version_valid", "sort": "Bool", "description": "whether the third token is a valid integer (dataset version)" }
   ],
   "rules": [
     {
-      "head": { "rel": "Init", "args": [ {"var": "node_is_none"} ] },
+      "description": "entry assumptions: snapshot of tokens list after processing identifier",
+      "head": { "rel": "Init", "args": [ { "var": "tokens_length" } ] },
       "body": []
     },
     {
-      "head": { "rel": "Final", "args": [ {"var": "result_eq_fallback"}, {"var": "node_is_none"} ] },
+      "description": "return None if tokens_length < 2",
+      "head": { "rel": "Final", "args": [ { "var": "tokens_length" }, { "bool": True }, { "bool": False } ] },
       "body": [
-        { "pred": { "rel": "Init", "args": [ {"var": "node_is_none"} ] } },
-        {
-          "op": "Implies",
-          "args": [
-            { "op": "Eq", "args": [ { "var": "node_is_none" }, { "bool": True } ] },
-            { "op": "Eq", "args": [ { "var": "result_eq_fallback" }, { "bool": True } ] }
-          ]
-        }
+        { "pred": { "rel": "Init", "args": [ { "var": "tokens_length" } ] } },
+        { "op": "Le", "args": [ { "var": "tokens_length" }, { "int": 2 } ] }
       ]
     },
     {
+      "description": "return None if tokens_length > 3",
+      "head": { "rel": "Final", "args": [ { "var": "tokens_length" }, { "bool": True }, { "bool": False } ] },
+      "body": [
+        { "pred": { "rel": "Init", "args": [ { "var": "tokens_length" } ] } },
+        { "op": "Gt", "args": [ { "var": "tokens_length" }, { "int": 3 } ] }
+      ]
+    },
+    {
+      "description": "return (workspace, project, None) if tokens_length == 2",
+      "head": { "rel": "Final", "args": [ { "int": 2 }, { "bool": False }, { "bool": False } ] },
+      "body": [
+        { "pred": { "rel": "Init", "args": [ { "int": 2 } ] } }
+      ]
+    },
+    {
+      "description": "return (workspace, project, version) if tokens_length == 3 and version is valid",
+      "head": { "rel": "Final", "args": [ { "int": 3 }, { "bool": False }, { "bool": True } ] },
+      "body": [
+        { "pred": { "rel": "Init", "args": [ { "int": 3 } ] } }
+      ]
+    },
+    {
+      "description": "return None if tokens_length == 3 and version is invalid",
+      "head": { "rel": "Final", "args": [ { "int": 3 }, { "bool": True }, { "bool": False } ] },
+      "body": [
+        { "pred": { "rel": "Init", "args": [ { "int": 3 } ] } },
+        { "op": "Not", "args": [ { "var": "version_valid" } ] }
+      ]
+    },
+    {
+      "description": "derive Bad when Final holds but postcondition is violated",
       "head": { "rel": "Bad", "args": [] },
       "body": [
-        { "pred": { "rel": "Final", "args": [ {"var": "result_eq_fallback"}, {"var": "node_is_none"} ] }},
-        { "op": "Eq", "args": [ {"var": "node_is_none"}, {"bool": True} ] },
-        { "op": "Ne", "args": [ {"var": "result_eq_fallback"}, {"bool": True} ] }
+        { "pred": { "rel": "Final", "args": [ { "var": "tokens_length" }, { "bool": False }, { "var": "version_valid" } ] }},
+        {
+          "op": "Or",
+          "args": [
+            {
+              "op": "And",
+              "args": [
+                { "op": "Eq", "args": [ { "var": "tokens_length" }, { "int": 2 } ] },
+                { "op": "Eq", "args": [ { "var": "version_valid" }, { "bool": True } ] }
+              ]
+            },
+            {
+              "op": "And",
+              "args": [
+                { "op": "Eq", "args": [ { "var": "tokens_length" }, { "int": 3 } ] },
+                { "op": "Eq", "args": [ { "var": "version_valid" }, { "bool": False } ] }
+              ]
+            }
+          ]
+        }
       ]
     }
   ]
 }
-
 
     decls, rules = compile_horn_ir_to_z3py_sections(example_ir)
     print("BEGIN_DECLS")
