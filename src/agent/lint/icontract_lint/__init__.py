@@ -1,4 +1,8 @@
-from src.agent.tools.grammar.icontract_lint.checker import check_icontract_postconditions, format_issues, grammar_verify
+from src.agent.lint.icontract_lint.checker import (
+    check_icontract_postconditions, 
+    format_issues, 
+    grammar_verify
+)
 
 __all__ = ["check_icontract_postconditions", "format_issues", "grammar_verify"]
 

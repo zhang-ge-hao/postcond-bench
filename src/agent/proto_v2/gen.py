@@ -4,6 +4,7 @@ import os
 import re
 from src.ds import *
 
+import asyncio
 from copy import deepcopy
 
 from openai import OpenAI
@@ -14,51 +15,7 @@ from src.inject import postcond_inj
 from src.clone import repository_reproduct
 from src.pool import run_with_pool_file_monitor
 
-from src.agent.lint.icontract_lint import grammar_verify
-
-
-def response_post_process(response: str) -> str:
-    if "</think>" in response:
-        response = response.split("</think>")[1]
-    quote_mark_count = 0
-    for line in response.split("\n"):
-        if line.strip().startswith("```"):
-            quote_mark_count += 1
-    if quote_mark_count == 0:
-        return response
-    met_quote_mark = False
-    lines = []
-    for line in reversed(response.split("\n")):
-        if not met_quote_mark and line.strip().startswith("```"):
-            met_quote_mark = True
-        elif met_quote_mark and line.strip().startswith("```"):
-            break
-        elif met_quote_mark:
-            lines.insert(0, line)
-    return "\n".join(lines)
-
-
-def is_local_crash(
-        stdout: str, 
-        hot_range: Tuple[int, int], 
-        file_path: str) -> bool:
-    if not stdout or hot_range is None:
-        return False
-
-    file_path = file_path.strip()
-    if file_path.startswith("./"):
-        file_path = file_path[2: ]
-    hot_line_start, hot_line_end = hot_range
-
-    for line in stdout.split():
-        pattern = rf"{re.escape(file_path)}:(\d+)"
-        match = re.search(pattern, line)
-        if match:
-            crash_line_number = int(match.group(1))
-            if hot_line_start <= crash_line_number <= hot_line_end:
-                return True
-    return False
-
+from src.agent.proto_v2.agent import run_agent
 
 def postcond_checking(method: Method, postcond: str) -> bool:
     """
@@ -72,95 +29,13 @@ def postcond_checking(method: Method, postcond: str) -> bool:
                 return False
     return True
 
-def read_benchmark(p, save_mem=False) -> List[Method]:
-    print(f"Reading {p}.")
-    methods: List[Method] = []
-    for fn in os.listdir(p):
-        with open(f"{p}/{fn}") as f:
-            method = Method.from_dict(json.load(f))
-            if save_mem:
-                method.repo.env_config = None
-                method.repo.failed_tests = None
-                method.cover_tests = None
-                method.mutants = None
-                method.postconds = None
-                method.responses = None
-            methods.append(method)
-    return methods
-
-
-def call_model_for_fix(
-        method_content: str, 
-        attempt_postcond: str, 
-        messages: list,
-        verify_log: str) -> str:
-
-    if len(messages) == 0:
-        prompt = f"""
-Here is a Python method:
-```
-{method_content}
-```
-
-Here is a set of icontract postconditions (including @icontract.ensure and @icontract.snapshot lines):
-```
-{attempt_postcond}
-```
-
-However, we found icontract API usage or grammar mistake inside the postconditions.
-Here is the error message:
-```
-{verify_log}
-```
-
-Based on the message above, try to fix the postcondition set. Note that you should keep the intended semantics the same, only update the icontract API usage or grammar.
-Your response should only include @icontract.ensure and @icontract.snapshot lines.
-"""
-    else:
-        prompt = f"""
-Your attempt after the fix is still mistaken.
-Here is the error message:
-```
-{verify_log}
-```
-
-Based on the message above, try to fix the postcondition set.
-Your response should only include @icontract.ensure and @icontract.snapshot lines.
-"""
-
-    prompt = prompt.strip()
-    messages.append({"role": "user", "content": prompt})
-
-    model_name = "Qwen/Qwen3-32B"
-    client = OpenAI(api_key="EMPTY", base_url=f"http://localhost:19990/v1")
-
-    response = client.chat.completions.create(
-        model=model_name,
-        messages=messages,
-        temperature=0.7,
-        top_p=0.8,
-        extra_body={
-            "chat_template_kwargs": {"enable_thinking": False},
-            "top_k": 20,
-            "min_p": 0,
-        },
-    )
-    response: str = [c.message.content for c in response.choices][0]
-    postcond = response_post_process(response)
-    messages.append({"role": "assistant", "content": postcond})
-    return postcond
-
 
 def postcond_generation_v2(
         method: Method, 
         output_path: str=None,
         methods: List[Method]=None,
         max_round=20) -> Method:
-    assert method.task_version == "v2"
-    assert method.model_name is not None
     assert method.generate_num is not None
-    assert method.w_code is None
-    assert method.prompting is not None and method.prompting.startswith("v2")
 
     lang = method.repo.language
 
@@ -171,25 +46,12 @@ def postcond_generation_v2(
     lang = method.repo.language
     excluded_tests = method.repo.failed_tests
     with repository_reproduct(method.repo) as repo_dir:
-        assert method.postconds is not None and \
-            len(method.postconds) == method.generate_num
+        assert method.postconds is None and method.responses is None
+        method.postconds = [None] * method.generate_num
+        method.responses = [None] * method.generate_num
+
         for p_idx in range(method.generate_num):
-
-            attempt_postcond = method.postconds[p_idx]
-            method_content = method.content
-
-            logging.info(f"{method.rlid} generation start.")
-            
-            messages = []
-            for r_idx in range(max_round):
-                verify_log = grammar_verify(method_content, attempt_postcond)
-                if "No issues found" in verify_log:
-                    break
-                attempt_postcond = call_model_for_fix(
-                    method_content, attempt_postcond, messages, verify_log)
-
-            logging.info(f"{method.rlid}-{p_idx} generated.")
-
+            attempt_postcond, messages = asyncio.run(run_agent(method))
             method.postconds[p_idx] = attempt_postcond
             method.responses[p_idx] = messages
 
@@ -294,6 +156,9 @@ def postcond_generation_v2_pool(
             with open(f"{input_dir}/{file_name}") as file:
                 methods.append(Method.from_dict(json.load(file)))
     all_methods = [m for m in methods]
+
+    for m in methods:
+        m.generate_num = 1
 
     methods.sort(key=lambda m: (-m.test_time * len(m.mutants), 
                                 m.repo.github_path, 

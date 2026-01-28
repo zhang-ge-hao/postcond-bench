@@ -54,15 +54,36 @@ def observe():
     print(counts)
 
 def eval():
-    github_url = "https://github.com/google/mobly/blob/6aa58093145669c99c1d6680ab2c1ace42f7f229/./mobly/base_test.py#L183-L217"
+    github_url = "https://github.com/a2aproject/a2a-python/blob/aa159f3e1076ae6eaad5576119d7857c2a9b2448/./src/a2a/utils/helpers.py#L51-L110"
     p_idx = 0
 
-    methods = read_benchmark("data/step/9.Qwen3-32B-agent--v2-all")
+    methods = read_benchmark("data/step/8.benchmark")
 
     method = [m for m in methods if m.github_url == github_url][0]
-    postcond = method.postconds[p_idx]
+    # postcond = method.postconds[p_idx]
 
-    # postcond = """"""
+    postcond = """
+@icontract.snapshot(lambda task: task.artifacts, name="original_artifacts")
+@icontract.ensure(lambda task: isinstance(task.artifacts, list))
+@icontract.ensure(lambda OLD, task, event: not event.append or event.artifact in task.artifacts)
+@icontract.ensure(
+    lambda OLD, task, event: not event.append or (
+        (OLD.original_artifacts is None and not any(art.artifact_id == event.artifact.artifact_id for art in task.artifacts)) 
+        or (OLD.original_artifacts is not None and any(art.artifact_id == event.artifact.artifact_id for art in OLD.original_artifacts) == any(art.artifact_id == event.artifact.artifact_id for art in task.artifacts))
+    )
+)
+@icontract.ensure(
+    lambda OLD, task, event: not event.append or (
+        (OLD.original_artifacts is None or not any(art.artifact_id == event.artifact.artifact_id for art in OLD.original_artifacts)) 
+        or (
+            (next((a for a in task.artifacts if a.artifact_id == event.artifact.artifact_id), None) is not None) 
+            and (next((a for a in OLD.original_artifacts if a.artifact_id == event.artifact.artifact_id), None) is not None) 
+            and (next(a for a in task.artifacts if a.artifact_id == event.artifact.artifact_id).parts == (
+                next(a for a in OLD.original_artifacts if a.artifact_id == event.artifact.artifact_id).parts + event.artifact.parts
+            ))
+        )
+    )
+)"""
 
     print(postcond)
 
@@ -74,5 +95,5 @@ def eval():
     print(results)
 
 if __name__ == "__main__":
-    observe()
-    # eval()
+    # observe()
+    eval()
