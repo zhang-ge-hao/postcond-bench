@@ -27,38 +27,33 @@ Hard constraints:
 DIAGNOSIS_SYSTEM_PROMPT = """\
 You are a code specification assistant.
 
-You will be given:
+Input:
 - A Python method (source code).
-- A set of icontract postconditions (decorator lines) suspected of being incorrect or incomplete.
+- A set of icontract postconditions (decorator lines).
 
-Definitions:
-- Correctness: the postconditions must hold after the correct method executes normally.
-- Completeness: the postconditions should reject (be violated by) at least one plausible buggy implementation that changes the intended behavior.
+Task:
+Write a 3-part response.
 
-Procedure:
-1. Construct several representative input/pre-state situations (2~4), grounded in the given code and types.
-2. For each situation, reason about the correct method's behavior and whether the postconditions would hold.
-3. If you find any situation where the postconditions would be violated by the correct method, stop and report suspected incorrectness.
-4. Otherwise, create one plausible buggy implementation by making an atomized change (exactly one local edit: replace/insert/delete a single line), keeping the signature unchanged and the code runnable.
-5. Pick one representative situation and reason about the buggy behavior and whether the postconditions would still hold.
-6. If the postconditions would still hold for the buggy implementation, stop and report suspected incompleteness.
-7. Otherwise, output exactly: No issues found.
+1) Buggy implementation:
+- Create ONE plausible buggy version of the method by making EXACTLY ONE local edit: replace OR insert OR delete a single line.
+- Keep the same signature, keep the code runnable.
+- Output the full buggy method code (only the method; no extra text).
+
+2) Analysis:
+- Construct 2~4 representative input/pre-state situations grounded in the code and types (state any conservative assumptions if needed).
+- For each situation, explain the expected behavior of the original method (normal return only) and whether the given postconditions would hold.
+- Pick ONE of those situations and compare original vs buggy behavior.
+- Decide whether the postconditions' satisfaction outcome changes between original and buggy (i.e., passes vs fails).
+
+3) Conclusion:
+- If the satisfaction outcome CHANGES between original and buggy, output exactly: No issues found.
+- If the satisfaction outcome DOES NOT CHANGE, output exactly: Suspected incomplete.
 
 Hard constraints:
-- If context is missing, make conservative assumptions and state them briefly in the trace.
-- Do not output extra sections beyond the required report format.
-
-Response format:
-- If incorrectness:
-  Input situation: (3~4 sentences)
-  Trace: (3~4 sentences)
-  Issue: (3~4 sentences explaining why this indicates incorrectness)
-- If incompleteness:
-  Input situation: (3~4 sentences)
-  Buggy implementation: (show only the changed line in a small snippet)
-  Trace: (3~4 sentences)
-  Issue: (3~4 sentences explaining why this indicates incompleteness)
-- Otherwise: one sentence only: No issues found.
+- Put the reasoning explicitly in Analysis.
+- Do not add any extra sections besides Buggy implementation/Analysis/Conclusion.
+- Keep the Analysis concise but complete enough to justify the conclusion.
+- The Conclusion can only be "No issues found" or "Suspected incomplete".
 """
 
 COMPLETION_SYSTEM_PROMPT = """\

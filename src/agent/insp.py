@@ -27,22 +27,23 @@ def read_benchmark(p, save_mem=False) -> List[Method]:
     return methods
 
 def observe():
-    input_dir = "data/step/9.Qwen3-32B-agent--v2-all"
+    input_dir = "data/step/9.Qwen3-32B-reason--v2-all"
 
     methods = read_benchmark(input_dir)
+    methods = [m for m in methods if m.repo.language == "java"]
 
     counts = [0, 0, 0, 0]
     for m in methods:
-        if m.postcond_corr[0] != "passed" and m.postcond_corr[0] != "icontract_fail":
+        if m.postcond_corr[0] != "passed" and m.postcond_corr[0] != "jml_fail":
             counts[0] += 1
+        if m.postcond_corr[0] == "jml_fail":
+            counts[1] += 1
             print(m.github_url)
             print("-" * 30)
             print(m.content)
             print("-" * 30)
             print(m.postconds[0])
             print("=" * 30)
-        if m.postcond_corr[0] == "icontract_fail":
-            counts[1] += 1
         if m.postcond_corr[0] == "passed":
             ref_kill = m.ref_mutant_kill
             kill = m.mutant_kill[0]
@@ -54,43 +55,31 @@ def observe():
     print(counts)
 
 def eval():
-    github_url = "https://github.com/a2aproject/a2a-python/blob/aa159f3e1076ae6eaad5576119d7857c2a9b2448/./src/a2a/utils/helpers.py#L51-L110"
+    github_url = "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/compression/huffman_coding.py#L87-L102"
     p_idx = 0
 
-    methods = read_benchmark("data/step/8.benchmark")
+    methods = read_benchmark("data/step/9.Qwen3-32B-reason--v2-all")
 
     method = [m for m in methods if m.github_url == github_url][0]
-    # postcond = method.postconds[p_idx]
+    postcond = method.postconds[p_idx]
 
-    postcond = """
-@icontract.snapshot(lambda task: task.artifacts, name="original_artifacts")
-@icontract.ensure(lambda task: isinstance(task.artifacts, list))
-@icontract.ensure(lambda OLD, task, event: not event.append or event.artifact in task.artifacts)
-@icontract.ensure(
-    lambda OLD, task, event: not event.append or (
-        (OLD.original_artifacts is None and not any(art.artifact_id == event.artifact.artifact_id for art in task.artifacts)) 
-        or (OLD.original_artifacts is not None and any(art.artifact_id == event.artifact.artifact_id for art in OLD.original_artifacts) == any(art.artifact_id == event.artifact.artifact_id for art in task.artifacts))
-    )
-)
-@icontract.ensure(
-    lambda OLD, task, event: not event.append or (
-        (OLD.original_artifacts is None or not any(art.artifact_id == event.artifact.artifact_id for art in OLD.original_artifacts)) 
-        or (
-            (next((a for a in task.artifacts if a.artifact_id == event.artifact.artifact_id), None) is not None) 
-            and (next((a for a in OLD.original_artifacts if a.artifact_id == event.artifact.artifact_id), None) is not None) 
-            and (next(a for a in task.artifacts if a.artifact_id == event.artifact.artifact_id).parts == (
-                next(a for a in OLD.original_artifacts if a.artifact_id == event.artifact.artifact_id).parts + event.artifact.parts
-            ))
-        )
-    )
-)"""
+    postcond = r"""
+@icontract.snapshot(lambda self: list(self.buffer), name="old_buffer")
+@icontract.snapshot(lambda self: len(self.buffer), name="old_len")
+@icontract.snapshot(lambda self: self.file.tell(), name="old_pos")
+@icontract.snapshot(lambda self: (len(self.file.getbuffer()) - self.file.tell()) if hasattr(self.file, "getbuffer") else None, name="old_remaining")
+@icontract.ensure(lambda self, result, OLD: (not result) <= (self.buffer == OLD.old_buffer))
+@icontract.ensure(lambda self, result, OLD, buff_limit: result <= ((OLD.old_len > buff_limit and len(self.buffer) == OLD.old_len) or (OLD.old_len <= buff_limit and len(self.buffer) == OLD.old_len + 8)))
+@icontract.ensure(lambda self, result, OLD: (not result) <= (self.file.tell() == OLD.old_pos))
+@icontract.ensure(lambda self, result, OLD, buff_limit: (OLD.old_remaining is None) or (OLD.old_remaining == 0) or (OLD.old_len > buff_limit) or result)
+@icontract.ensure(lambda self: all(bit in ("0", "1") for bit in self.buffer))
+"""
 
     print(postcond)
 
     results = eval_postcond(method, postcond, 
-                            mutant_idxs=[], 
-                            ban_mutant_idxs=None, 
-                            early_stop=True)
+                            mutant_idxs=[]
+                            )
 
     print(results)
 

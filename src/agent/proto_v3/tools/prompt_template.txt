@@ -1,0 +1,138 @@
+You are given:
+(1) A Python method source code.
+(2) Exactly ONE icontract postcondition decorator: @icontract.ensure(...).
+    Optional @icontract.snapshot(...) may also be included.
+
+Goal:
+Output a JSON object that describes a Horn-rule **control-flow state machine** skeleton suitable to be compiled into Z3Py Fixedpoint (Spacer) rules.
+You MUST NOT output any Z3Py code. You MUST output JSON only.
+
+Key semantics:
+- We check the postcondition ONLY over executions that return normally (no exceptions).
+- If normal return requires preconditions (e.g., bounds for indexing, non-None assumptions), encode them as assumptions in early rules.
+- Model control flow with relations and rules. **DO NOT compress multiple source-level branches into a few “path rules”.**
+  Instead, introduce intermediate states so that rules correspond closely to source code statements / branch conditions.
+- Encode a counterexample predicate Bad() by deriving it from Final with the NEGATION of the postcondition.
+  IMPORTANT: Do NOT declare Bad as a relation in JSON; assume the harness already defines Bad() with no arguments.
+
+High-level modeling requirements (IMPORTANT):
+A) **Control-flow faithful (no path compression):**
+   - Each rule should correspond to a small step: a statement block, a single `if`/`elif` test, a single `return`, or a single loop iteration.
+   - Avoid “one rule = one full path from Init to Final”. If the code has multiple branches, create multiple intermediate relations (states).
+   - In particular, for an `if / elif / else` chain, prefer:
+       - One state before the chain,
+       - One rule per condition to a branch state,
+       - One rule from each branch state to its successor state.
+B) **State naming:**
+   - You may create additional relations beyond Init/Loop/Final (e.g., S0, S1, AfterSplit, CheckLen, BranchLen2, ParseVersion, ReturnTuple, ReturnNone).
+   - Relation names must be unique strings and appear in "relations".
+C) **Rule granularity:**
+   - Each branch condition from the source should appear as its own constraint in the rule that models that branch decision.
+   - Do not merge distinct branch conditions into a single large Or/And unless it directly matches a single source-level boolean test.
+D) **Descriptions required:**
+   - Every var must include "description" (1–2 sentences) explaining what it abstracts and where it comes from in the source.
+   - Every rule must include "description" (1–2 sentences) mapping it to a source region (e.g., “models `if len(tokens) < 2: return None`”).
+E) **Final semantics:**
+   - Use Final(...) to represent “normal return happened” with an abstracted return value (e.g., result_is_none flag, result_version_is_int flag, etc.).
+   - Do NOT put postcondition checks into Final rules. Postcondition is only used in the Bad rule as NOT(postcondition).
+F) **Abstraction guidance:**
+   - Use Int/Bool only unless absolutely necessary.
+   - Represent complex values using Bool flags and Int summaries (e.g., tokens_len, has_version_token, version_parse_ok).
+   - If needed, use additional flags to reflect outcomes (e.g., took_return_none, took_return_tuple, version_is_int).
+
+JSON schema (STRICT):
+
+{{
+  "relations": [
+    {{ "name": "Init",  "args": [ {{"name":"...","sort":"Int/Bool"}}, ... ] }},
+    {{ "name": "S1",    "args": [ ... ] }},                  // optional intermediate states
+    {{ "name": "S2",    "args": [ ... ] }},
+    {{ "name": "Loop",  "args": [ ... ] }},                  // optional
+    {{ "name": "Final", "args": [ ... ] }}                   // required
+  ],
+
+  "vars": [
+    {{"name":"x","sort":"Int","description":"<1–2 sentences: meaning + source-code origin>"}},
+    {{"name":"b","sort":"Bool","description":"<1–2 sentences: meaning + source-code origin>"}},
+    ...
+  ],
+
+  "rules": [
+    {{
+      "description":"<1–2 sentences: which statement/branch this rule corresponds to>",
+      "head": {{ "rel":"Init", "args":[ <term>, <term>, ... ] }},
+      "body": [ <atom>, <atom>, ... ]   // empty body means True; ONLY constraints allowed in the FIRST rule
+    }},
+    {{
+      "description":"<...>",
+      "head": {{ "rel":"S1", "args":[ ... ] }},
+      "body": [ <atom>, ... ]           // may include exactly one predecessor predicate + constraints
+    }},
+    ...,
+    {{
+      "description":"<models a specific return statement/block>",
+      "head": {{ "rel":"Final", "args":[ ... ] }},
+      "body": [ <atom>, ... ]
+    }},
+    {{
+      "description":"<derives Bad when Final holds but postcondition is violated>",
+      "head": {{ "rel":"Bad", "args":[] }},
+      "body": [
+        {{ "pred": {{ "rel":"Final", "args":[ ... ] }} }},
+        {{ "op":"Not", "args":[ <postcondition_expr_in_JSON_AST> ] }}
+      ]
+    }}
+  ]
+}}
+
+Where:
+- A <term> is one of:
+  - {{"var":"x"}}
+  - {{"int": 0}}
+  - {{"bool": true}}
+
+- An <atom> is either:
+  (A) a predicate application:
+      {{"pred": {{"rel":"Init", "args":[<term>, ...]}}}}
+      {{"pred": {{"rel":"S1",   "args":[<term>, ...]}}}}
+      {{"pred": {{"rel":"Loop", "args":[<term>, ...]}}}}
+      {{"pred": {{"rel":"Final","args":[<term>, ...]}}}}
+      {{"pred": {{"rel":"Bad",  "args":[]}}}}   // only allowed as head; avoid in bodies
+
+  (B) a boolean expression:
+      {{"op":"And", "args":[<atom_or_expr>, ...]}}
+      {{"op":"Or",  "args":[...]}}
+      {{"op":"Not", "args":[<atom_or_expr>]}}
+      {{"op":"Implies","args":[A,B]}}
+      {{"op":"Ite","args":[C,T,E]}}      // term-like; use only inside Eq/Ne
+      {{"op":"Eq", "args":[<term_or_expr>, <term_or_expr>]}}
+      {{"op":"Ne", "args":[...]}}
+      {{"op":"Lt","args":[...]}}  {{"op":"Le","args":[...]}}  {{"op":"Gt","args":[...]}}  {{"op":"Ge","args":[...]}}
+      {{"op":"Add","args":[...]}} {{"op":"Sub","args":[...]}} {{"op":"Mul","args":[...]}} // integer arithmetic only
+
+Mandatory constraints (MUST FOLLOW):
+1) Output MUST be valid JSON. Output ONLY JSON. No prose.
+2) You MUST include a relation named "Final".
+3) The last rule MUST have head {{"rel":"Bad","args":[]}} and derive Bad from:
+   - a Final(...) predicate atom, AND
+   - NOT(postcondition) expressed in the JSON AST.
+4) Every predicate atom in any body MUST refer to a relation listed in "relations" (except Bad in the Bad head).
+5) Every variable used anywhere MUST be listed in "vars" and MUST include "description".
+6) Every rule object in "rules" MUST include a "description".
+7) Keep sorts minimal: only "Int" and "Bool" unless absolutely necessary.
+8) The FIRST rule MUST derive Init(...) and must not depend on any other relation.
+   Its body MUST be empty ([]) or contain only pure constraints (no "pred" atoms).
+9) Prefer **fine-grained CFG**:
+   - Create intermediate relations so each `if` test is represented by separate rules (one per branch).
+   - Create separate rules for each `return` site.
+   - Do not collapse multiple source-level branches into a single rule via big Or/And when that does not match source syntax.
+
+Input:
+
+METHOD_SOURCE_BEGIN
+{method_source}
+METHOD_SOURCE_END
+
+POSTCONDITION_BEGIN
+{postcondition}
+POSTCONDITION_END

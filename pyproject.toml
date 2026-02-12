@@ -32,7 +32,10 @@ dependencies = [
     "z3-solver (>=4.15.4.0,<5.0.0.0)",
     "reportlab (>=4.4.9,<5.0.0)",
     "autogen-agentchat (>=0.7.5,<0.8.0)",
-    "autogen-ext[openai] (>=0.7.5,<0.8.0)"
+    "autogen-ext[openai] (>=0.7.5,<0.8.0)",
+    "openpyxl (>=3.1.5,<4.0.0)",
+    "crosshair-tool (>=0.0.102,<0.0.103)",
+    "icontract (>=2.7.3,<3.0.0)"
 ]
 
 

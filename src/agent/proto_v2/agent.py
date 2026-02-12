@@ -344,8 +344,8 @@ async def run_agent(
     model = "Qwen/Qwen3-32B"
 
     generation = get_llm_based_agent("generation_assistant", model=model, thinking=True)
-    diagnosis = get_llm_based_agent("diagnosis_assistant", model=model, thinking=True)
-    completion = get_llm_based_agent("completion_assistant", model=model, thinking=True)
+    diagnosis = get_llm_based_agent("diagnosis_assistant", model=model, thinking=False)
+    completion = get_llm_based_agent("completion_assistant", model=model, thinking=False)
     grammar = get_llm_based_agent("grammar_assistant", model=model, thinking=False)
 
     lint = IcontractLintAgent(

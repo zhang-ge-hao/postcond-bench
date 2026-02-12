@@ -60,16 +60,22 @@ class Method:
     ref_postcond: str = None
     ref_mutant_kill: List[str] = None
 
+    # Optional. Only for some exp settings
     model_name: str = None
-    port: str = None
     generate_num: int = None
-
+    port: str = None
     task_version: int = None
-
     w_code: bool = None
-
     prompt: str = None
     prompting: str = None
+
+    # Optional. Only for some exp settings
+    file_content: str = None
+    mutants_4a: List[str] = None
+    mut_files_4a: List[str] = None
+    mut_lines_4a: List[Tuple[int, int]] = None
+
+    # Optional end.
 
     postconds: List[str] = None
     responses: List[str] = None

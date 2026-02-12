@@ -1,0 +1,234 @@
+You are given:
+(1) A Python method source code.
+(2) Exactly ONE icontract postcondition decorator: @icontract.ensure(...). It is possible that some relied snapshot decorators (@icontract.snapshot(...)) are also included.
+
+Goal:
+Generate the Z3Py code needed to fill a pre-defined Z3 Fixedpoint (Spacer) harness.
+You must model the method semantics as Horn rules and encode a counterexample predicate Bad().
+
+Important semantics:
+- We check the postcondition ONLY over executions that return normally (no exceptions).
+- If normal return requires preconditions (e.g., bounds for indexing), encode them as assumptions in the init rule(s).
+- Use Z3 Fixedpoint rules fp.rule(...) to model initialization, transitions (loops/branches), and a normal-return final state.
+- Encode the NEGATION of the postcondition as a rule that derives Bad() from a final state.
+- Then the harness will run fp.query(Bad()).
+
+You do NOT need to output the full harness. Only output the two code sections below.
+
+Hard requirements:
+- Use z3py only (Function, IntSort, BoolSort, And, Or, Exists/ForAll if needed, fp.rule, etc.).
+- MUST call fp.register_relation(...) for every relation you introduce (except built-in sorts).
+- MUST call fp.declare_var(...) for every rule variable used in fp.rule heads/bodies.
+- MUST define a final-state relation (e.g., Final(...)) and derive Bad() from it.
+- The harness already defines:
+    Bad = Function("Bad", BoolSort())
+    fp.register_relation(Bad)
+
+Guidance for DECLS and RULES:
+
+You must generate ONLY Z3Py statements inside BEGIN_DECLS/BEGIN_RULES. No explanations. No markdown. No backticks.
+
+This task: given a Python method and exactly ONE icontract.ensure postcondition (plus optional snapshots), generate Z3Py Fixedpoint (Spacer) Horn rules that model NORMAL returns and derive Bad() when the NEGATION of the postcondition holds.
+
+HARD OUTPUT RESTRICTIONS (MUST FOLLOW)
+
+1. Output must contain EXACTLY TWO sections:
+   BEGIN_DECLS ... END_DECLS
+   BEGIN_RULES ... END_RULES
+   Each section must contain ONLY Z3Py statements.
+2. Do NOT output any Python control flow: no if/for/while/def/class/return/import/print.
+3. Do NOT redefine or re-register Bad:
+
+   * The harness ALREADY defines: Bad = Function("Bad", BoolSort()); fp.register_relation(Bad)
+   * You MUST NOT declare Bad again in BEGIN_DECLS.
+   * You MUST NOT call fp.register_relation(Bad) again.
+   * You MUST NOT call fp.declare_var(Bad()).
+   * You may ONLY reference Bad() in fp.rule(...) bodies/heads.
+
+A. BEGIN_DECLS: WHAT YOU MUST WRITE
+
+In BEGIN_DECLS you MUST include, at minimum, all of the following:
+
+A1) Declare all relations (Horn predicates) with Function(...)
+
+* A relation is declared as:
+  R = Function("R", S1, S2, ..., Sk, BoolSort())
+  where (S1..Sk) are argument sorts and the LAST sort is BoolSort() (the return sort).
+* Relations represent program states (Init/Loop/Final) and any auxiliary states.
+
+A2) Register every relation you introduce
+
+* For each declared relation R (except Bad), you MUST call:
+  fp.register_relation(R)
+
+A3) Declare every rule variable and bind them using fp.declare_var(...)
+
+* Any variable used in ANY fp.rule head/body MUST be declared as a Z3 Const:
+  x = Int("x"), b = Bool("b"), etc.
+* Then ALL such variables MUST be bound:
+  fp.declare_var(x, b, ...)
+* declare_var accepts ONLY variables (Consts). DO NOT pass expressions like Bad() or x+1.
+
+A4) Optional: helper uninterpreted functions (UFs)
+
+* Use Function("f", ...) (non-Bool return) only if necessary.
+* Keep helper UFs minimal.
+
+B. BEGIN_RULES: WHAT YOU MUST WRITE
+
+In BEGIN_RULES you MUST encode:
+
+* Initialization (input assumptions, preconditions for normal return)
+* Transitions (branches/loops) as Horn rules
+* A final normal-return state relation Final(...)
+* A rule deriving Bad() from Final(...) using the NEGATION of the postcondition
+
+B1) fp.rule syntax
+You may use either style (both are valid Z3Py Fixedpoint rule forms):
+
+* Single Bool body:
+  fp.rule(Head, And(...))
+* List-of-premises body (recommended when many premises):
+  fp.rule(Head, [Premise1, Premise2, ...])
+
+B2) Normal-return only
+
+* Only derive Final(...) for executions that return normally.
+* If normal return requires preconditions (e.g., bounds checks, non-None fields, etc.), encode them as assumptions in Init/entry rules.
+* You do NOT need to model exception paths; you must exclude them by only deriving Final when preconditions hold.
+
+B3) Must have a Final relation
+
+* You MUST define at least one relation named Final (or equivalently a final-state predicate).
+* Bad() MUST be derived from this Final relation (not from Init/Loop directly).
+
+B4) Bad rule must encode NEGATION(postcondition)
+
+* If postcondition is P, encode Not(P) in the Bad rule:
+  fp.rule(Bad(), And(Final(...), Not(P_encoded)))
+* If P has conditionals like (A if C else B), encode it as:
+  (C -> A) AND (Not(C) -> B)
+  Then negate the whole formula for Bad.
+
+C. CRITICAL TYPE/ARITY RULES (COMMON CRASHES) — MUST FOLLOW EXACTLY
+
+C1) Function arity MUST match calls (avoids runtime 'index out of bounds')
+
+* If you declare:
+  R = Function("R", S1, S2, ..., Sk, BoolSort())
+  then EVERY occurrence of R(...) MUST be called with EXACTLY k arguments:
+  R(a1, a2, ..., ak)
+* Passing more/less arguments will cause a runtime exception (often 'index out of bounds').
+
+C2) Sort consistency MUST hold
+
+* If R expects IntSort at position i, the i-th argument must be an Int expression (Int/IntVal/arithmetic).
+* If R expects BoolSort at position i, the i-th argument must be a Bool expression.
+* DO NOT compare Bool flags to value variables incorrectly:
+
+  * If you use a Bool flag result_eq_fallback to mean (result == fallback), then use the flag directly.
+  * Do NOT write result_eq_fallback == fallback unless fallback is also a Bool flag with the same meaning.
+
+C3) declare_var ONLY takes variables (Consts)
+
+* Valid:
+  x = Int("x"); fp.declare_var(x)
+* Invalid:
+  fp.declare_var(Bad())
+  fp.declare_var(x + 1)
+
+C4) Do NOT redeclare Bad
+
+* Bad is already defined by the harness. Use it only in rules:
+  fp.rule(Bad(), And(...))
+
+D. MODELING GUIDELINES (TO HELP SMALL MODELS)
+
+D1) Use state relations to represent program points
+Typical minimal pattern:
+
+* Init(...)  : input assumptions / entry
+* Loop(...)  : loop head state (if any)
+* Final(...) : normal return state
+
+D2) Branches
+If the method has an if/else that affects return:
+
+* Create separate rules into Final(...) (or into intermediate relations) guarded by branch conditions.
+
+D3) Loops
+For a loop, introduce Loop(...) relation:
+
+* Entry rule: Init(...) -> Loop(...)
+* Iteration rule: Loop(...) -> Loop(...) with updated variables
+* Exit rule: Loop(...) -> Final(...)
+
+D4) Keep abstractions simple and consistent
+
+* You may abstract complex Python values (dict/str/Any) using:
+
+  * Bool flags indicating membership/conditions, or
+  * Uninterpreted sorts/functions if necessary.
+* Always ensure the postcondition can be expressed over your chosen abstractions.
+
+E. MINI TEMPLATE (STRUCTURE ONLY; DO NOT COPY LITERALLY)
+
+BEGIN_DECLS must contain:
+
+* Relation declarations:
+  Init = Function("Init", <arg_sorts...>, BoolSort())
+  Final = Function("Final", <arg_sorts...>, BoolSort())
+  (Optional) Loop = Function("Loop", <arg_sorts...>, BoolSort())
+* Registration:
+  fp.register_relation(Init)
+  fp.register_relation(Final)
+  (Optional) fp.register_relation(Loop)
+* Variable declarations:
+  x = Int("x"); b = Bool("b"); ...
+* Variable binding:
+  fp.declare_var(x, b, ...)
+
+BEGIN_RULES must contain:
+
+* Init rule(s):
+  fp.rule(Init(...), True)   OR   fp.rule(Init(...), And(<assumptions>))
+* Transition rules:
+  fp.rule(Loop(...), [Init(...), ...])  etc.
+* Final rule(s):
+  fp.rule(Final(...), [Init/Loop(...), <return_condition>, <result_constraints>])
+* Bad rule:
+  fp.rule(Bad(), And(Final(...), <negated_postcondition_over_Final_vars>))
+
+F. FINAL CHECKLIST (MUST PASS)
+
+Before outputting:
+
+* Every relation you introduced (except Bad) is registered with fp.register_relation.
+* Every variable appearing in any fp.rule is declared and included in fp.declare_var.
+* Every relation call matches its declared arity exactly.
+* You did NOT redeclare/register Bad, and did NOT declare_var(Bad()).
+* There is at least one Final(...) rule for normal returns.
+* Bad() is derived from Final(...) using NOT(postcondition).
+
+
+Output format (STRICT):
+Return exactly the following structure, with exactly two sections, each delimited by markers.
+Do NOT use markdown fences. Do NOT use backticks.
+
+BEGIN_DECLS
+<z3py statements only: declare relations, register_relation, declare_var, helper UFs>
+END_DECLS
+
+BEGIN_RULES
+<z3py statements only: fp.rule(...) clauses including init, transitions, final, and fp.rule(Bad(), ...)>
+END_RULES
+
+Inputs:
+
+METHOD_SOURCE_BEGIN
+{method_source}
+METHOD_SOURCE_END
+
+POSTCONDITION_BEGIN
+{postcondition}
+POSTCONDITION_END

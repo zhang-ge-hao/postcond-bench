@@ -1,13 +1,9 @@
 
-
-import os
-import re
-from src.ds import *
-
+import os, re
 import asyncio
-from copy import deepcopy
-
-from openai import OpenAI
+from src.ds import *
+from src.agent.proto_v4.agent import run_agent
+from src.clone import repository_reproduct
 
 from src.runner import testsuite_run
 from src.util import get_uuid7, read_code
@@ -15,7 +11,6 @@ from src.inject import postcond_inj
 from src.clone import repository_reproduct
 from src.pool import run_with_pool_file_monitor
 
-from src.agent.proto_v2.agent import run_agent
 
 def postcond_checking(method: Method, postcond: str) -> bool:
     """
@@ -28,6 +23,7 @@ def postcond_checking(method: Method, postcond: str) -> bool:
             if line.strip().startswith("def "):
                 return False
     return True
+
 
 def is_local_crash(
         stdout: str, 
@@ -50,31 +46,41 @@ def is_local_crash(
                 return True
     return False
 
+
 def postcond_generation_v2(
         method: Method, 
         output_path: str=None,
-        methods: List[Method]=None,
-        max_round=20) -> Method:
-    assert method.generate_num is not None
-
-    lang = method.repo.language
-
-    import logging
-
-    logging.info(f"{method.rlid} started.")
-
+        model: str="gpt-5-mini",
+        max_rounds: int=20):
     lang = method.repo.language
     excluded_tests = method.repo.failed_tests
+    
+    import logging
+
     with repository_reproduct(method.repo) as repo_dir:
-        assert method.postconds is None and method.responses is None
-        method.postconds = [None] * method.generate_num
-        method.responses = [None] * method.generate_num
 
-        for p_idx in range(method.generate_num):
-            attempt_postcond, messages = asyncio.run(run_agent(method))
-            method.postconds[p_idx] = attempt_postcond
-            method.responses[p_idx] = messages
+        agent_res, history = asyncio.run(
+            run_agent(method, model, max_rounds=max_rounds))
 
+        lint_loop_broke = False
+        corr_loop_broke = False
+        for round, item in enumerate(history):
+            if round == 0:
+                non_agent_res = item["postcond"]
+            if not lint_loop_broke:
+                lint_only_res = item["postcond"]
+            if not corr_loop_broke:
+                corr_only_res = item["postcond"]
+
+            if item["next_agent"] == "inputs_builder_assistant":
+                lint_loop_broke = True
+            if item["next_agent"] == "judge_mutant_assistant":
+                corr_loop_broke = True
+            
+        method.postconds = [non_agent_res, lint_only_res, corr_only_res, agent_res]
+        method.responses = history
+
+        # ===== eval start =====
         code_str, code_bytes = read_code(method.file)
         method.postcond_corr = []
         method.mutant_kill = []
@@ -151,16 +157,16 @@ def postcond_generation_v2(
                 logging.info(f"{method.rlid} postcond {p_idx} mutant {mut_idx} is {comp_flag}.")
 
                 mutant_kill.append(comp_flag)
-            pass
+            # ===== eval end =====
     if output_path is not None:
         with open(output_path, "w") as file:
             json.dump(method.to_dict(), file, indent=2)
-    return method
 
 
 def postcond_generation_v2_pool(
         input_dir=None, output_dir=None, 
-        task_num=None, task_idx=None, lang=None):
+        task_num=None, task_idx=None, lang=None, github_path=None,
+        model="gpt-5-mini"):
     task_name = "postcond_gen"
 
     pi_workdir = os.getenv("PI_WORKDIR")
@@ -175,7 +181,6 @@ def postcond_generation_v2_pool(
         if file_name.endswith(".json"):
             with open(f"{input_dir}/{file_name}") as file:
                 methods.append(Method.from_dict(json.load(file)))
-    all_methods = [m for m in methods]
 
     for m in methods:
         m.generate_num = 1
@@ -188,6 +193,9 @@ def postcond_generation_v2_pool(
                    if i % task_num == task_idx]
     if lang is not None:
         methods = [m for m in methods if m.repo.language == lang]
+    
+    if github_path is not None:
+        methods = [m for m in methods if m.repo.github_path == github_path]
 
     params_list = []
     task_names = []
@@ -201,7 +209,7 @@ def postcond_generation_v2_pool(
                 m = Method.from_dict(json.load(file))
             if m.postcond_corr is not None:
                 continue
-        params_list.append((m, out_path, all_methods))
+        params_list.append((m, out_path, model)) # NOTE: removed all_methods; add model
         task_names.append(tn)
         # log_paths.append(None)
         log_paths.append(f"{log_dir}/{rn}.log")
@@ -219,3 +227,17 @@ def postcond_generation_v2_pool(
         refresh_interval=1,
     )
 
+
+if __name__ == "__main__":
+    input_dir = "data/step/8.benchmark"
+    model = "gpt-4o-mini"
+    output_dir = f"data/step/9.{model}--proto_v4"
+    os.makedirs(output_dir, exist_ok=True)
+
+    postcond_generation_v2_pool(
+        input_dir=input_dir,
+        output_dir=output_dir,
+        task_num=1, task_idx=0,
+        github_path="keon/algorithms",
+        model=model
+    )

@@ -17,7 +17,7 @@ KFS = ["jml_fail", "icontract_fail"]
 
 def eval_postcond(method: Method, postcond, 
                   mutant_idxs=None, ban_mutant_idxs=None, 
-                  early_stop=False):
+                  early_stop=False, eval_corr_only=False):
     with repository_reproduct(method.repo) as repo_dir:
         lang = method.repo.language
         excluded_tests = method.repo.failed_tests
@@ -42,6 +42,8 @@ def eval_postcond(method: Method, postcond,
                 need_coverage=False,
                 timeout=30)
             corr_flag = run_result.to_flag()
+            if eval_corr_only:
+                return corr_flag
             if corr_flag != "passed":
                 # print("===== Corr Debug Start =====")
                 # print(run_result.stdout)

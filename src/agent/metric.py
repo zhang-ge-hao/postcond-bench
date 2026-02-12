@@ -65,37 +65,47 @@ if __name__ == "__main__":
     postcond_pre_method = 5
     expected_postcond_count = expected_method_count * postcond_pre_method
 
-    methods = read_benchmark("data/step/9.claude-sonnet-4-5--v2-all")
+    # methods = read_benchmark("data/step/9.claude-sonnet-4-5--v2-all")
 
-    python_methods = [m for m in methods if m.repo.language == "python"]
+    # python_methods = [m for m in methods if m.repo.language == "python"]
 
-    python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
-    print(f"{python_corr_count / expected_postcond_count:.3f}")
-    print(f"{python_comp_count / expected_postcond_count:.3f}")
+    # python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    # print(f"{python_corr_count / expected_postcond_count:.3f}")
+    # print(f"{python_comp_count / expected_postcond_count:.3f}")
 
     methods = read_benchmark("data/step/9.gpt-5--v2-all")
 
     python_methods = [m for m in methods if m.repo.language == "python"]
+    python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
 
     python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    print(len(python_methods))
     print(f"{python_corr_count / expected_postcond_count:.3f}")
     print(f"{python_comp_count / expected_postcond_count:.3f}")
 
-    postcond_pre_method = 1
-    expected_postcond_count = expected_method_count * postcond_pre_method
+    # postcond_pre_method = 1
+    # expected_postcond_count = expected_method_count * postcond_pre_method
 
-    methods = read_benchmark("data/step/9.Qwen3-32B-agent--v2-all")
+    # methods = read_benchmark("data/step/9.Qwen3-32B-autogen1--v2-all")
 
-    python_methods = [m for m in methods if m.repo.language == "python"]
+    # python_methods = [m for m in methods if m.repo.language == "python"]
 
-    python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
-    print(f"{python_corr_count / expected_postcond_count:.3f}")
-    print(f"{python_comp_count / expected_postcond_count:.3f}")
+    # python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    # print(f"{python_corr_count / expected_postcond_count:.3f}")
+    # print(f"{python_comp_count / expected_postcond_count:.3f}")
 
-    methods = read_benchmark("data/step/9.Qwen3-32B-reason--v2-all")
+    # methods = read_benchmark("data/step/9.Qwen3-32B-agent--v2-all")
 
-    python_methods = [m for m in methods if m.repo.language == "python"]
+    # python_methods = [m for m in methods if m.repo.language == "python"]
 
-    python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
-    print(f"{python_corr_count / expected_postcond_count:.3f}")
-    print(f"{python_comp_count / expected_postcond_count:.3f}")
+    # python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    # print(f"{python_corr_count / expected_postcond_count:.3f}")
+    # print(f"{python_comp_count / expected_postcond_count:.3f}")
+
+    # methods = read_benchmark("data/step/9.Qwen3-32B-reason--v2-all")
+
+    # python_methods = [m for m in methods if m.repo.language == "python"]
+
+    # python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    # print(f"{python_corr_count / expected_postcond_count:.3f}")
+    # print(f"{python_comp_count / expected_postcond_count:.3f}")
