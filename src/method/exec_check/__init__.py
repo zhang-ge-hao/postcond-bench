@@ -131,7 +131,7 @@ def exec_check_pool(
         rn = m.repo.github_path.replace("/", "--")
         tn = f"{rn}--{m.rlid}"
         task_names.append(tn)
-        log_paths.append(f"{log_dir}/{rn}.log")
+        log_paths.append(f"{log_dir}/{tn}.log")
 
     summary_path = f"{log_dir}/__summary.md"
     _, ret = run_with_pool_file_monitor(
