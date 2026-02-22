@@ -10,6 +10,14 @@ import pygit2
 import tarfile
 from typing import *
 
+def _resolve_pi_workdir(default: str = "/tmp") -> str:
+    pi_workdir = os.getenv("PI_WORKDIR") or default
+    try:
+        os.makedirs(pi_workdir, exist_ok=True)
+    except OSError as e:
+        raise RuntimeError(f"Failed to prepare PI_WORKDIR base directory: {pi_workdir}") from e
+    return pi_workdir
+
 
 class RepoClone:
     def __init__(self, base_dir: str, github_path: str, commit: Optional[str] = None,
@@ -20,7 +28,7 @@ class RepoClone:
         self.cache_base = cache_base
 
         if cache_base is None:
-            pi_workdir = os.getenv("PI_WORKDIR")
+            pi_workdir = _resolve_pi_workdir()
             self.cache_base = os.path.join(pi_workdir, "sb_tmp__repos")
             os.makedirs(self.cache_base, exist_ok=True)
 
