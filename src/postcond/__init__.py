@@ -18,6 +18,12 @@ from src.clone import repository_reproduct
 from src.pool import run_with_pool_file_monitor
 from src.postcond.model import model_generate
 
+def _resolve_log_base() -> str:
+    pi_workdir = os.getenv("PI_WORKDIR") or "/tmp"
+    os.makedirs(pi_workdir, exist_ok=True)
+    return os.path.join(pi_workdir, "sb_tmp__log")
+
+
 def response_post_process(response: str):
     quote_mark_count = 0
     for line in response.split("\n"):
@@ -235,8 +241,7 @@ def postcond_generation_pool(
         prompting=None):
     task_name = "postcond_gen"
 
-    pi_workdir = os.getenv("PI_WORKDIR")
-    log_base = os.path.join(pi_workdir, "sb_tmp__log")
+    log_base = _resolve_log_base()
 
     log_dir = f"{log_base}/{task_name}--{get_uuid7()}"
     output_dir = os.path.abspath(output_dir)
@@ -283,7 +288,7 @@ def postcond_generation_pool(
         params_list.append((m, out_path, all_methods))
         task_names.append(tn)
         # log_paths.append(None)
-        log_paths.append(f"{log_dir}/{rn}.log")
+        log_paths.append(f"{log_dir}/{tn}.log")
     
     print(len(params_list))
 
@@ -319,8 +324,7 @@ def rerun_eval_pool(
         bench_dir, result_dirs, method_fns, task_num=None, task_idx=None):
     
     task_name = "postcond_gen"
-    pi_workdir = os.getenv("PI_WORKDIR")
-    log_base = os.path.join(pi_workdir, "sb_tmp__log")
+    log_base = _resolve_log_base()
     log_dir = f"{log_base}/{task_name}--{get_uuid7()}"
 
     bench_methods = read_benchmark(bench_dir)
@@ -370,7 +374,7 @@ def rerun_eval_pool(
         params_list.append((m, out_path, bench_methods))
         task_names.append(tn)
         # log_paths.append(None)
-        log_paths.append(f"{log_dir}/{rn}.log")
+        log_paths.append(f"{log_dir}/{rn}--{m.rlid}.log")
     
     print(len(params_list))
 
@@ -516,8 +520,7 @@ def postcond_generation_v2_pool(
         task_num=None, task_idx=None, lang=None, port=None):
     task_name = "postcond_gen"
 
-    pi_workdir = os.getenv("PI_WORKDIR")
-    log_base = os.path.join(pi_workdir, "sb_tmp__log")
+    log_base = _resolve_log_base()
 
     log_dir = f"{log_base}/{task_name}--{get_uuid7()}"
     output_dir = os.path.abspath(output_dir)
@@ -565,7 +568,7 @@ def postcond_generation_v2_pool(
         params_list.append((m, out_path, all_methods))
         task_names.append(tn)
         # log_paths.append(None)
-        log_paths.append(f"{log_dir}/{rn}.log")
+        log_paths.append(f"{log_dir}/{tn}.log")
     
     print(len(params_list))
 

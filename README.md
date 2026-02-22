@@ -46,7 +46,7 @@ port=<YOUR_PORT>
 #   3. v2-all (F2P in our paper)
 prompting=<v2-code|v2-nl|v2-all>
 
-model_name=<gpt-5|claude-sonnet-4-5|llama-4-maverick|Qwen3-32B|gemma-3-27b>
+model_name=<gpt-5|claude-sonnet-4|llama-4-maverick|Qwen3-32B|gemma-3-27b>
 generate_num=5
 
 poetry run python src/job/postcond_generation_v2.py \
