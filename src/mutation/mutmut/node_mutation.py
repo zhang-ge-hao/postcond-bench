@@ -285,4 +285,53 @@ def _simple_mutation_mapping(
         yield mutated_node_type()
 
 
+# --- Mutator naming & descriptions (exported) ---
+# Key for these maps: operator function name string, e.g. "operator_number"
+
+MUTATOR_SHORT_NAME: dict[str, str] = {
+    "operator_number": "numeric_increments",
+    "operator_string": "string_perturbation",
+    "operator_name": "boolean_constant_flip",
+    "operator_assignment": "assignment_nullification",
+    "operator_augmented_assignment": "augassign_to_assign",
+    "operator_remove_unary_ops": "unary_op_removal",
+    "operator_dict_arguments": "dict_key_rename",
+    "operator_arg_removal": "arg_removal",
+    "operator_symmetric_string_methods_swap": "symmetric_str_method_swap",
+    "operator_unsymmetrical_string_methods_swap": "asymmetric_str_method_swap",
+    "operator_lambda": "lambda_constant_toggle",
+    "operator_keywords": "keyword_rewrite",
+    "operator_swap_op": "operator_replacement",
+    "operator_match": "match_case_removal",
+}
+
+MUTATOR_DESC: dict[str, str] = {
+    "operator_number": "Numeric literal mutation: increment numbers (int/float -> +1, imaginary -> +1j).",
+    "operator_string": "String literal mutation: wrap with 'XX', lowercase/uppercase non-escape segments; skip triple-quoted strings.",
+    "operator_name": "Identifier swap: True<->False, deepcopy->copy (limited mapping).",
+    "operator_assignment": "Assignment value toggle: a=b -> a=None; a=None -> a=\"\" (skip AnnAssign without value).",
+    "operator_augmented_assignment": "Augmented assignment rewrite: x += y (etc.) -> x = y.",
+    "operator_remove_unary_ops": "Unary operator removal: drop 'not' and '~' to keep only the inner expression.",
+    "operator_dict_arguments": "dict() keyword mutation: dict(a=b) -> dict(aXX=b) (rename one keyword arg).",
+    "operator_arg_removal": "Call argument mutation: replace one arg with None; or drop one arg when >1 args.",
+    "operator_symmetric_string_methods_swap": "Symmetric string method swap: lower<->upper, lstrip<->rstrip, find<->rfind, etc.",
+    "operator_unsymmetrical_string_methods_swap": "Asymmetric string method swap: split<->rsplit under specific arg patterns (sep/maxsplit).",
+    "operator_lambda": "Lambda body toggle: lambda: None <-> lambda: 0.",
+    "operator_keywords": "Keyword mapping mutations: is<->is not, in<->not in, break->return, continue->break, etc.",
+    "operator_swap_op": "Operator swap mutations: arithmetic/comparison/boolean/augassign substitutions (e.g., +<->-, ==<->!=, and<->or).",
+    "operator_match": "Match-case mutation: drop one case branch when multiple cases exist.",
+}
+
+# Convenient lookup by short name (what generate_mutants_for_method returns as the mutator name)
+MUTATOR_SHORT_DESC: dict[str, str] = {
+    MUTATOR_SHORT_NAME[k]: v for k, v in MUTATOR_DESC.items()
+}
+
+# Include fallback mutator used by __init__.py when no operator succeeds.
+# Short name chosen to be extremely compact.
+MUTATOR_SHORT_DESC["fb"] = (
+    "Fallback literal mutation (used when all operators fail on a node): "
+    "int/float +1 and simple string wrap/case mutations."
+)
+
 # TODO: detect regexes and mutate them in nasty ways? Maybe mutate all strings as if they are regexes

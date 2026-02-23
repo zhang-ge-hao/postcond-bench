@@ -6,10 +6,14 @@ import re
 import libcst as cst
 
 # 改成你的实际导入路径
-from src.mutation.mutmut.node_mutation import mutation_operators
+from src.mutation.mutmut.node_mutation import (
+    mutation_operators,
+    MUTATOR_SHORT_NAME,
+    MUTATOR_DESC,
+    MUTATOR_SHORT_DESC,
+)
 
-
-# ---------- 兼容补丁：operator_* 崩了时，数字/字符串做兜底突变 ----------
+# ---------- 兜底突变（operator_* 崩了时，数字/字符串做兜底突变） ----------
 def _fallback_mutations(node: cst.CSTNode):
     # 数字：+1
     if isinstance(node, cst.Integer):
@@ -49,15 +53,18 @@ class _OneChange(cst.CSTTransformer):
 
 class _CollectAll(cst.CSTVisitor):
     def __init__(self):
-        self.mutations: list[tuple[cst.CSTNode, cst.CSTNode]] = []
+        # (orig_node, new_node, mut_short_name)
+        self.mutations: list[tuple[cst.CSTNode, cst.CSTNode, str]] = []
 
     def on_visit(self, node: cst.CSTNode):
         any_success = False
         for node_type, op in mutation_operators:
             if isinstance(node, node_type):
                 try:
+                    op_name = getattr(op, "__name__", "unknown")
+                    mut_short = MUTATOR_SHORT_NAME.get(op_name, op_name)
                     for new_node in op(node):
-                        self.mutations.append((node, new_node))
+                        self.mutations.append((node, new_node, mut_short))
                         any_success = True
                 except Exception:
                     # 老版本差异导致的异常：继续尝试其他 operator
@@ -66,7 +73,7 @@ class _CollectAll(cst.CSTVisitor):
         if not any_success:
             try:
                 for new_node in _fallback_mutations(node):
-                    self.mutations.append((node, new_node))
+                    self.mutations.append((node, new_node, "fb"))
             except Exception:
                 pass
         return True
@@ -86,11 +93,7 @@ def _func_to_code(func_node: cst.FunctionDef) -> str:
     return mod.code
 
 
-def generate_mutants_for_method(source: str) -> List[str]:
-    """
-    输入：只包含一个函数/方法定义（可带缩进/装饰器/async）的源码字符串。
-    输出：List[str]，每个元素是一份只改一处的突变体源码；会保留原始缩进前缀。
-    """
+def generate_mutants_for_method(source: str, w_mut_name: bool = False):
     # 1) 记录原始前导缩进（第一行非空行的前导空白）
     orig = source.rstrip("\n") + "\n"
     indent_prefix = ""
@@ -108,7 +111,9 @@ def generate_mutants_for_method(source: str) -> List[str]:
     mod.visit(collector)
 
     mutants: List[str] = []
-    for orig_node, new_node in collector.mutations:
+    mut_names: List[str] = []
+
+    for orig_node, new_node, mut_short in collector.mutations:
         try:
             mutated_mod: cst.Module = mod.visit(_OneChange(orig_node, new_node))
             # 取突变后的第一个函数定义
@@ -130,10 +135,12 @@ def generate_mutants_for_method(source: str) -> List[str]:
             indented_code = textwrap.indent(base_code, indent_prefix)
 
             mutants.append(indented_code)
+            if w_mut_name:
+                mut_names.append(mut_short)
         except Exception:
             # 个别突变可能导致不合法代码，直接跳过
             continue
 
-    # 可选：去重，防止不同 operator 产生相同源码
-    # mutants = list(dict.fromkeys(mutants))
+    if w_mut_name:
+        return mutants, mut_names
     return mutants

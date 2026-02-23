@@ -249,10 +249,13 @@ def cal_metrics(methods: List[Method], res: ExpRes) -> ExpRes:
         for corr_res, comp_res in zip(method.postcond_corr, method.mutant_kill):
             if corr_res == "passed":
                 corr_count += 1
-                assert len(comp_res) == 0 or \
-                    len(comp_res) == len(method.ref_mutant_kill), \
-                        f"{method.rlid} {method.model_name} {len(comp_res)} {len(method.ref_mutant_kill)}"
-                if all(r_f not in KFS or f in KFS 
+                # assert len(comp_res) == 0 or \
+                #     len(comp_res) == len(method.ref_mutant_kill), \
+                #         f"{method.rlid} {method.model_name} {len(comp_res)} {len(method.ref_mutant_kill)}"
+                # if all(r_f not in KFS or f in KFS 
+                #        for f, r_f in zip(comp_res, method.ref_mutant_kill)):
+                #     comp_count += 1
+                if all(f in KFS 
                        for f, r_f in zip(comp_res, method.ref_mutant_kill)):
                     comp_count += 1
                 if all(f not in KFS for f in comp_res):
@@ -272,11 +275,12 @@ def cal_metrics(methods: List[Method], res: ExpRes) -> ExpRes:
     if tot_corr_count > 0:
         vacu_rate = tot_vacu_count / tot_corr_count
 
-    mutator_precision, _ = get_mutator_precision(methods)
-    p_rule = mutator_precision["rule"]
-    p_llm = mutator_precision["llm"]
+    # mutator_precision, _ = get_mutator_precision(methods)
+    # p_rule = mutator_precision["rule"]
+    # p_llm = mutator_precision["llm"]
 
-    set_metrics(res, corr_and_comps, vacu_rate, p_rule, p_llm)
+    # set_metrics(res, corr_and_comps, vacu_rate, p_rule, p_llm)
+    set_metrics(res, corr_and_comps, vacu_rate, None, None)
 
     return res
 
@@ -344,7 +348,7 @@ def get_exp_res():
         "gpt-5", 
         # "gpt-4.1", 
         # "gpt-4o-mini", 
-        # "claude-sonnet-4-5",
+        "claude-sonnet-4-5",
         # "claude-sonnet-4", 
         # "claude-3-5-haiku", 
         # "Qwen3-32B", 

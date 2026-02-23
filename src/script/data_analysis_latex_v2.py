@@ -240,6 +240,9 @@ def check_method(method: Method, config: ExpRes) -> bool:
             elif method_range_title == "cc":
                 if not (range_l <= method.cc < range_r):
                     return False
+        if method_range_title == "ref":
+            ref_source = config.method_range.split("__")[1]
+            return method.ref_source == ref_source
     return True
 
 def get_mutator_precision(methods: List[Method]):
@@ -365,7 +368,9 @@ def get_exp_res_list(model_name: str) -> List[ExpRes]:
                      "line__40_inf",
                      "cc__00_05", 
                      "cc__05_10", 
-                     "cc__10_inf"]
+                     "cc__10_inf",
+                     "ref__human",
+                     "ref__auto"]
 
     __config_iter = product(
         [model_name], LANGUAGES, promptings)
@@ -390,7 +395,7 @@ def get_exp_res_list(model_name: str) -> List[ExpRes]:
     for folder_name in os.listdir(step_dir):
         if not folder_name.startswith("9."):
             continue
-        if folder_name.startswith(f"9.{model_name}"):
+        if folder_name.startswith(f"9.{model_name}--"):
             all_methods.extend(read_benchmark(
                 f"{step_dir}/{folder_name}", save_mem=True))
 
@@ -2282,5 +2287,5 @@ if __name__ == "__main__":
     # main_res_main(1)
     # main_res_main(3)
     # main_res_main(5)
-    main_res_app_1()
+    # main_res_app_1()
     print("done")
