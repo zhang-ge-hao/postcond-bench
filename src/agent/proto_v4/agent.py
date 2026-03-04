@@ -714,8 +714,9 @@ async def run_agent(
     model: str = "gpt-5-mini",
     max_rounds: int = 20,
     print_stdout: bool = False,
-    mutant_sample_num: int = 5
-) -> Tuple[str, List[dict]]:
+    mutant_sample_num: int = 5,
+    collect_logs: bool = False,
+) -> Tuple[str, List[dict], Optional[str]]:
     
     load_mutation(method) # many mutants are loaded
 
@@ -760,6 +761,8 @@ async def run_agent(
     selected_mut_indexs = selected_mut_indexs[: mutant_sample_num]
     banned_mut_indexs: List[int] = []
 
+    log_lines: List[str] = []
+
     def _simplify_prompt_for_print(prompt: str) -> str:
         if not prompt or not prompt.startswith("Code context"):
             return prompt
@@ -770,26 +773,39 @@ async def run_agent(
         return prompt
 
     def _print(title: str, agent: str, round_id: int, content: str) -> None:
-        if not print_stdout:
-            return
-        print(f"===== {title} for AGENT: {agent} (round {round_id}) =====")
-        print(content or "")
+        header = f"===== {title} for AGENT: {agent} (round {round_id}) ====="
+        body = content or ""
+        msg = header + "\n" + body
+
+        if print_stdout:
+            print(header)
+            print(body)
+
+        if collect_logs:
+            log_lines.append(msg)
 
     def _print_execution(round_id: int, pc: str, ib: str, log_dict: Dict[str, str]) -> None:
-        if not print_stdout:
-            return
-        print(f"===== EXECUTION postconditions (round {round_id}) =====")
-        print(pc or "")
-        print(f"===== EXECUTION inputs_builder_code (round {round_id}) =====")
-        print(ib or "")
-        print(f"===== EXECUTION stdout r1 (round {round_id}) =====")
-        print((log_dict or {}).get("r1_stdout") or "")
-        print(f"===== EXECUTION stdout r2 (round {round_id}) =====")
-        print((log_dict or {}).get("r2_stdout") or "")
-        print(f"===== EXECUTION mutant r3 (round {round_id}) =====")
-        print((log_dict or {}).get("r3_mutant") or "")
-        print(f"===== EXECUTION stdout r3 (round {round_id}) =====")
-        print((log_dict or {}).get("r3_stdout") or "")
+        parts = [
+            f"===== EXECUTION postconditions (round {round_id}) =====",
+            pc or "",
+            f"===== EXECUTION inputs_builder_code (round {round_id}) =====",
+            ib or "",
+            f"===== EXECUTION stdout r1 (round {round_id}) =====",
+            (log_dict or {}).get("r1_stdout") or "",
+            f"===== EXECUTION stdout r2 (round {round_id}) =====",
+            (log_dict or {}).get("r2_stdout") or "",
+            f"===== EXECUTION mutant r3 (round {round_id}) =====",
+            (log_dict or {}).get("r3_mutant") or "",
+            f"===== EXECUTION stdout r3 (round {round_id}) =====",
+            (log_dict or {}).get("r3_stdout") or "",
+        ]
+        msg = "\n".join(parts)
+
+        if print_stdout:
+            print(msg)
+
+        if collect_logs:
+            log_lines.append(msg)
 
     def _run_execution():
         nonlocal next_agent, next_prompt, log_dict, last_corr_passed
@@ -916,6 +932,12 @@ async def run_agent(
 
     res = last_corr_passed if last_corr_passed else (
         last_lint_passed if last_lint_passed else postconditions)
+    
+    logs_str = "\n".join(log_lines)
+
+    if collect_logs:
+        return res, history, logs_str
+
     return res, history
 
 

@@ -59,8 +59,8 @@ def postcond_generation_v2(
 
     with repository_reproduct(method.repo) as repo_dir:
 
-        agent_res, history = asyncio.run(
-            run_agent(method, model, max_rounds=max_rounds))
+        agent_res, history, log = asyncio.run(
+            run_agent(method, model, max_rounds=max_rounds, collect_logs=True))
 
         lint_loop_broke = False
         corr_loop_broke = False
@@ -79,6 +79,7 @@ def postcond_generation_v2(
             
         method.postconds = [non_agent_res, lint_only_res, corr_only_res, agent_res]
         method.responses = history
+        method.log = log
 
         # ===== eval start =====
         code_str, code_bytes = read_code(method.file)
@@ -230,7 +231,7 @@ def postcond_generation_v2_pool(
 
 if __name__ == "__main__":
     input_dir = "data/step/8.benchmark"
-    model = "gpt-4o-mini"
+    model = "gpt-5-mini"
     output_dir = f"data/step/9.{model}--proto_v4"
     os.makedirs(output_dir, exist_ok=True)
 
@@ -238,6 +239,6 @@ if __name__ == "__main__":
         input_dir=input_dir,
         output_dir=output_dir,
         task_num=1, task_idx=0,
-        github_path="keon/algorithms",
+        lang="python",
         model=model
     )

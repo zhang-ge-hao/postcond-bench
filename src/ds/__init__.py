@@ -74,6 +74,7 @@ class Method:
     mutants_4a: List[str] = None
     mut_files_4a: List[str] = None
     mut_lines_4a: List[Tuple[int, int]] = None
+    log: str = None
 
     # Optional end.
 

@@ -60,7 +60,7 @@ def print_incorr_postconds(postconds: List[Tuple[int, Method]], file_path):
 
 
 if __name__ == "__main__":
-    expected_method_count = 31
+    expected_method_count = 210
 
     random.seed(42)
 
@@ -70,7 +70,22 @@ if __name__ == "__main__":
     methods = read_benchmark("data/step/9.gpt-5-mini--proto_v4")
 
     python_methods = [m for m in methods if m.repo.language == "python"]
-    python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
+    # python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
+
+    # def _pass_til_r2(m: Method) -> bool:
+    #     has_r2_passed = False
+    #     for item in m.responses:
+    #         if item["next_agent"] == "yield":
+    #             return False
+    #         if item["next_agent"] == "judge_mutant_assistant":
+    #             has_r2_passed = True
+    #     return has_r2_passed
+    
+    # for m in python_methods:
+    #     if _pass_til_r2(m):
+    #         m.postcond_corr[-1] = m.postcond_corr[-2]
+    #         m.postconds[-1] = m.postconds[-2]
+    #         m.mutant_kill[-1] = m.mutant_kill[-2]
 
     for p_idx in range(4):
         python_corr_count, python_comp_count = cal_corr_and_comp_counts(
@@ -81,38 +96,38 @@ if __name__ == "__main__":
 
 
 
-    methods = read_benchmark("data/step/9.gpt-4o-mini--proto_v4")
+    # methods = read_benchmark("data/step/9.gpt-4o-mini--proto_v4")
 
-    python_methods = [m for m in methods if m.repo.language == "python"]
-    python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
+    # python_methods = [m for m in methods if m.repo.language == "python"]
+    # # python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
 
-    for p_idx in range(4):
-        python_corr_count, python_comp_count = cal_corr_and_comp_counts(
-            python_methods, selected_p_idx=p_idx)
-        print(f"{p_idx}")
-        print(f"{python_corr_count / expected_postcond_count:.3f}")
-        print(f"{python_comp_count / expected_postcond_count:.3f}")
+    # for p_idx in range(4):
+    #     python_corr_count, python_comp_count = cal_corr_and_comp_counts(
+    #         python_methods, selected_p_idx=p_idx)
+    #     print(f"{p_idx}")
+    #     print(f"{python_corr_count / expected_postcond_count:.3f}")
+    #     print(f"{python_comp_count / expected_postcond_count:.3f}")
 
 
 
-    postcond_pre_method = 5
-    expected_postcond_count = expected_method_count * postcond_pre_method
+    # postcond_pre_method = 5
+    # expected_postcond_count = expected_method_count * postcond_pre_method
 
-    methods = read_benchmark("data/step/9.claude-sonnet-4-5--v2-all")
+    # methods = read_benchmark("data/step/9.claude-sonnet-4-5--v2-all")
 
-    python_methods = [m for m in methods if m.repo.language == "python"]
-    python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
+    # python_methods = [m for m in methods if m.repo.language == "python"]
+    # # python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
 
-    python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
-    print(f"{python_corr_count / expected_postcond_count:.3f}")
-    print(f"{python_comp_count / expected_postcond_count:.3f}")
+    # python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    # print(f"{python_corr_count / expected_postcond_count:.3f}")
+    # print(f"{python_comp_count / expected_postcond_count:.3f}")
 
-    methods = read_benchmark("data/step/9.gpt-5--v2-all")
+    # methods = read_benchmark("data/step/9.gpt-5--v2-all")
 
-    python_methods = [m for m in methods if m.repo.language == "python"]
-    python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
+    # python_methods = [m for m in methods if m.repo.language == "python"]
+    # # python_methods = [m for m in methods if m.repo.github_path == "keon/algorithms"]
 
-    python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
-    print(len(python_methods))
-    print(f"{python_corr_count / expected_postcond_count:.3f}")
-    print(f"{python_comp_count / expected_postcond_count:.3f}")
+    # python_corr_count, python_comp_count = cal_corr_and_comp_counts(python_methods)
+    # print(len(python_methods))
+    # print(f"{python_corr_count / expected_postcond_count:.3f}")
+    # print(f"{python_comp_count / expected_postcond_count:.3f}")
