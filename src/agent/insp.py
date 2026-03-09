@@ -55,30 +55,34 @@ def observe():
     print(counts)
 
 def eval():
-    github_url = "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/compression/huffman_coding.py#L87-L102"
+    github_url = "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/maths/hailstone.py#L8-L21"
     p_idx = 0
 
-    methods = read_benchmark("data/step/9.Qwen3-32B-reason--v2-all")
+    methods = read_benchmark("data/step/8.benchmark")
 
     method = [m for m in methods if m.github_url == github_url][0]
-    postcond = method.postconds[p_idx]
+    # postcond = method.postconds[p_idx]
 
     postcond = r"""
-@icontract.snapshot(lambda self: list(self.buffer), name="old_buffer")
-@icontract.snapshot(lambda self: len(self.buffer), name="old_len")
-@icontract.snapshot(lambda self: self.file.tell(), name="old_pos")
-@icontract.snapshot(lambda self: (len(self.file.getbuffer()) - self.file.tell()) if hasattr(self.file, "getbuffer") else None, name="old_remaining")
-@icontract.ensure(lambda self, result, OLD: (not result) <= (self.buffer == OLD.old_buffer))
-@icontract.ensure(lambda self, result, OLD, buff_limit: result <= ((OLD.old_len > buff_limit and len(self.buffer) == OLD.old_len) or (OLD.old_len <= buff_limit and len(self.buffer) == OLD.old_len + 8)))
-@icontract.ensure(lambda self, result, OLD: (not result) <= (self.file.tell() == OLD.old_pos))
-@icontract.ensure(lambda self, result, OLD, buff_limit: (OLD.old_remaining is None) or (OLD.old_remaining == 0) or (OLD.old_len > buff_limit) or result)
-@icontract.ensure(lambda self: all(bit in ("0", "1") for bit in self.buffer))
+@icontract.ensure(lambda result: isinstance(result, list))
+@icontract.ensure(lambda result: len(result) >= 1)
+@icontract.snapshot(lambda n: n, name="start")
+@icontract.ensure(lambda result, OLD: result[0] == OLD.start)
+@icontract.ensure(lambda result, OLD: (not (isinstance(OLD.start, int) and OLD.start > 1)) or (result[-1] == 1))
+@icontract.ensure(
+    lambda result: all(
+        ((a % 2 != 0) and (b == 3 * a + 1))
+        or ((a % 2 == 0) and (b == int(a / 2)))
+        for a, b in zip(result, result[1:])
+    )
+)
+@icontract.ensure(lambda result, OLD: (not (isinstance(OLD.start, int) and OLD.start >= 1)) or all(isinstance(x, int) and x >= 1 for x in result))
 """
 
     print(postcond)
 
     results = eval_postcond(method, postcond, 
-                            mutant_idxs=[]
+                            # mutant_idxs=[]
                             )
 
     print(results)

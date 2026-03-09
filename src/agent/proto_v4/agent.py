@@ -581,6 +581,12 @@ def run_execution(method: Method,
     # round 1 is passed; parse the coverage
     code_coverage, coverage_report = _parse_code_coverage(first_round_stdout)
 
+    # prepone the coverage checking
+    if code_coverage < code_coverage_threshold:
+        next_prompt = _inputs_build_increase_coverage_prompt(
+            method, inputs_builder_code, first_round_stdout, code_coverage_threshold)
+        return "inputs_builder_assistant", next_prompt, log_dict
+
     second_round_stdout = _run_execution_r2(inputs_builder_code, 
                                             inputs_builder_path, 
                                             postconditions, 
@@ -614,11 +620,6 @@ def run_execution(method: Method,
                                        third_round_stdout,
                                        coverage_report)
         return "judge_mutant_assistant", next_prompt, log_dict
-
-    if code_coverage < code_coverage_threshold:
-        next_prompt = _inputs_build_increase_coverage_prompt(
-            method, inputs_builder_code, first_round_stdout, code_coverage_threshold)
-        return "inputs_builder_assistant", next_prompt, log_dict
 
     return "yield", None, log_dict
 
