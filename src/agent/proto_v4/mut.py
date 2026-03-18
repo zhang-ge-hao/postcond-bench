@@ -77,7 +77,8 @@ def load_mutation(method: Method) -> None:
     src_lines = method.content.split("\n")[: ignore_line_num]
     for mut_idx in reversed(list(range(len(mutants)))):
         tgt_lines = mutants[mut_idx].split("\n")[: ignore_line_num]
-        if src_lines != tgt_lines:
+        if any(src_li.strip() != tgt_li.strip() 
+               for src_li, tgt_li in zip(src_lines, tgt_lines)):
             mutants.pop(mut_idx)
 
     start_line = method.start_line
@@ -107,3 +108,33 @@ def load_mutation(method: Method) -> None:
     method.mutants_4a = mutants
     method.mut_files_4a = mut_file_contents
     method.mut_lines_4a = mut_line_ranges
+
+
+if __name__ == "__main__":
+    import json
+    import os
+    from src.clone import repository_reproduct
+
+    def read_benchmark(p, save_mem=False) -> List[Method]:
+        print(f"Reading {p}.")
+        methods: List[Method] = []
+        for fn in os.listdir(p):
+            with open(f"{p}/{fn}") as f:
+                method = Method.from_dict(json.load(f))
+                if save_mem:
+                    method.repo.env_config = None
+                    method.repo.failed_tests = None
+                    method.cover_tests = None
+                    method.mutants = None
+                    method.postconds = None
+                    method.responses = None
+                methods.append(method)
+        return methods
+
+    methods = read_benchmark("data/step/8.benchmark")
+    methods = [m for m in methods if m.repo.language == "python"]
+
+    for m_idx, method in enumerate(methods):
+        with repository_reproduct(method.repo) as repo_dir:
+            load_mutation(method)
+        print(m_idx, len(method.mutants_4a))

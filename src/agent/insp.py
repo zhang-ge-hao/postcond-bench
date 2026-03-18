@@ -55,7 +55,7 @@ def observe():
     print(counts)
 
 def eval():
-    github_url = "https://github.com/keon/algorithms/blob/5b63e90624bebb371949fbe49bbf20aa3c8e14d0/./algorithms/maths/hailstone.py#L8-L21"
+    github_url = "https://github.com/aiogram/aiogram/blob/4caf56814e22af63248e78c25c9755c7ba51c60d/./aiogram/utils/web_app.py#L111-L140"
     p_idx = 0
 
     methods = read_benchmark("data/step/8.benchmark")
@@ -64,19 +64,8 @@ def eval():
     # postcond = method.postconds[p_idx]
 
     postcond = r"""
-@icontract.ensure(lambda result: isinstance(result, list))
-@icontract.ensure(lambda result: len(result) >= 1)
-@icontract.snapshot(lambda n: n, name="start")
-@icontract.ensure(lambda result, OLD: result[0] == OLD.start)
-@icontract.ensure(lambda result, OLD: (not (isinstance(OLD.start, int) and OLD.start > 1)) or (result[-1] == 1))
-@icontract.ensure(
-    lambda result: all(
-        ((a % 2 != 0) and (b == 3 * a + 1))
-        or ((a % 2 == 0) and (b == int(a / 2)))
-        for a, b in zip(result, result[1:])
-    )
-)
-@icontract.ensure(lambda result, OLD: (not (isinstance(OLD.start, int) and OLD.start >= 1)) or all(isinstance(x, int) and x >= 1 for x in result))
+@icontract.ensure(lambda token, init_data, result: isinstance(result, bool))
+@icontract.ensure(lambda token, init_data, result: (not result) or ("hash=" in init_data))
 """
 
     print(postcond)

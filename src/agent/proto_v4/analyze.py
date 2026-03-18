@@ -160,6 +160,23 @@ def observe_judge():
                 file.write(f"{judge_log}\n\n\n")
     
 
+def observe_corr_decrease():
+    input_dir = "data/step/9.gpt-5-mini--proto_v4"
+
+    output_dir = "data/anno/corr_decrease"
+
+    methods = read_benchmark(input_dir)
+    methods = [m for m in methods if m.repo.language == "python"]
+
+    for m in methods:
+        m_id = m.repo.github_path.replace("/", "--") + "--" + m.rlid
+        log = m.log
+        if m.postcond_corr[-2] == "passed" and m.postcond_corr[-1] != "passed":
+            with open(f"{output_dir}/{m_id}.txt", "w") as file:
+                file.write(m.github_url)
+                file.write("\n\n")
+                file.write(log)
+
 
 if __name__ == "__main__":
-    observe_judge()
+    observe_corr_decrease()
