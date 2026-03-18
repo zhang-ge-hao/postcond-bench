@@ -612,7 +612,7 @@ def run_execution(method: Method,
     log_dict["r3_mutant"] = third_round_mutant
     log_dict["r3_mut_idx"] = third_round_mut_idx
 
-    if "icontract.errors.ViolationError" not in third_round_stdout:
+    if third_round_stdout and "icontract.errors.ViolationError" not in third_round_stdout:
         next_prompt = _judge_prompt_r3(method,
                                        postconditions, 
                                        inputs_builder_code,

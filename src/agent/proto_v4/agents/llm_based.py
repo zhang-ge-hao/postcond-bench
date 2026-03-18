@@ -70,6 +70,8 @@ Hard constraints:
 - The function MUST NOT print, log, or write any output.
   (No print(), no logging, no stdout/stderr writes.)
 - The function MUST NOT introduce any exception (No assertion, no raise exception).
+- The function MUST NOT mock any unnecessary code context. I.e., if you have evidence that some method/class/module that you need could be imported, you MUST NOT self-define it. 
+- If you see some previous version of construct_inputs_and_run() does unreasonable things, e.g., overly mock code context, does not call our target method (zero code coverage), you should not modify based on the previous construct_inputs_and_run() but re-construct one.
 """
 
 JUDGE_SYSTEM_PROMPT = """\
