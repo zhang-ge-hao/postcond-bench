@@ -1,8 +1,67 @@
 from openai import OpenAI
-import anthropic
 import os
 import time
 import boto3
+from dataclasses import dataclass
+
+
+@dataclass
+class ModelGeneration:
+    response: str
+    thought: str = None
+    input_tokens: int = None
+    output_tokens: int = None
+    reasoning_tokens: int = None
+    cost_usd: float = None
+
+
+def _safe_getattr(obj, attr: str, default=None):
+    if obj is None:
+        return default
+    return getattr(obj, attr, default)
+
+
+def model_generate_structured(model_name: str, prompt: str, n: int, port=None):
+    if model_name == "deepseek-reasoner":
+        client = OpenAI(
+            api_key=os.getenv("DEEPSEEK_API_KEY"),
+            base_url="https://api.deepseek.com",
+        )
+        generations = []
+        for _ in range(n):
+            response = None
+            while response is None:
+                try:
+                    response = client.chat.completions.create(
+                        model="deepseek-reasoner",
+                        messages=[{"role": "user", "content": prompt}],
+                        max_tokens=4096,
+                        timeout=600,
+                    )
+                except:
+                    time.sleep(20)
+            choice = response.choices[0]
+            message = choice.message
+            usage = _safe_getattr(response, "usage")
+            completion_details = _safe_getattr(usage, "completion_tokens_details")
+            generations.append(ModelGeneration(
+                response=_safe_getattr(message, "content", "") or "",
+                thought=_safe_getattr(message, "reasoning_content"),
+                input_tokens=_safe_getattr(usage, "prompt_tokens"),
+                output_tokens=_safe_getattr(usage, "completion_tokens"),
+                reasoning_tokens=_safe_getattr(completion_details, "reasoning_tokens"),
+            ))
+        return generations
+
+    return [
+        ModelGeneration(response=response)
+        for response in model_generate(
+            model_name=model_name,
+            prompt=prompt,
+            n=n,
+            port=port,
+        )
+    ]
 
 def model_generate(model_name: str, prompt, n, port=None):
     if model_name == "gpt-5":
@@ -133,69 +192,6 @@ def model_generate(model_name: str, prompt, n, port=None):
                 except:
                     time.sleep(20)
             postconditions.append(response.choices[0].message.content)
-    elif model_name == "claude-sonnet-4":
-        client = anthropic.Anthropic()
-        postconditions = []
-        for _ in range(n):
-            message = None
-            while message is None:
-                try:
-                    message = client.messages.create(
-                        model="claude-sonnet-4-20250514",
-                        messages=[{"role": "user", "content": prompt}],
-                        max_tokens=2048
-                    )
-                except:
-                    time.sleep(20)
-            postconditions.append(message.content[0].text)
-        # # 1. 选择你开通 Bedrock 的 region
-        # REGION = "us-east-1"  # 按你的实际 region 改
-        # # 2. 选择 Claude 模型 ID（按你在 Bedrock 里开的模型改）
-        # MODEL_ID = "us.anthropic.claude-sonnet-4-20250514-v1:0"
-        # # 3. 创建 Bedrock Runtime 客户端
-        # client = boto3.client(service_name="bedrock-runtime", region_name=REGION,)
-        # postconditions = []
-        # for _ in range(n):
-        #     message_text = None
-        #     while message_text is None:
-        #         try:
-        #             response = client.converse(
-        #                 modelId=MODEL_ID,
-        #                 messages=[{"role": "user","content": [{"text": prompt}],}],
-        #                 inferenceConfig={"maxTokens": 2048},
-        #             )
-        #             # 从 Bedrock 返回结构里拿出文本
-        #             out_msg = response["output"]["message"]
-        #             # Claude 返回的 content 是一个 list，每个元素可能包含 text / 其它类型
-        #             for item in out_msg["content"]:
-        #                 if "text" in item:
-        #                     message_text = item["text"]
-        #                     break
-        #         except Exception as e:
-        #             # 你原来的代码是直接 except: 然后 sleep
-        #             import logging, random
-        #             error_str = str(e)
-        #             if "ThrottlingException" in error_str and "Too many requests" in error_str:
-        #                 logging.error("Too many requests.")
-        #             else:
-        #                 logging.error(error_str)
-        #             time.sleep(20)
-        #     postconditions.append(message_text)
-    elif model_name == "claude-3-5-haiku":
-        client = anthropic.Anthropic()
-        postconditions = []
-        for _ in range(n):
-            message = None
-            while message is None:
-                try:
-                    message = client.messages.create(
-                        model="claude-3-5-haiku-20241022",
-                        messages=[{"role": "user", "content": prompt}],
-                        max_tokens=2048
-                    )
-                except:
-                    time.sleep(20)
-            postconditions.append(message.content[0].text)
     else:
         raise NotImplementedError()
     return postconditions

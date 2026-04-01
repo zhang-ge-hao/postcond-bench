@@ -217,6 +217,7 @@ def run_with_pool_file_monitor(
     )
     writer_thread.start()
     print(f"[INFO] Writing live summary to: {os.path.abspath(summary_path)} (every {refresh_interval:.1f}s)")
+    print(f"[INFO] Tasks: {len(task_names)}")
 
     # Build args with index to preserve ordering
     args_iter = [
