@@ -76,6 +76,14 @@ class Method:
     mut_lines_4a: List[Tuple[int, int]] = None
     log: str = None
 
+    # Optional. Only for some exp settings
+    thoughts: List[str] = None
+    incorr_msgs: List[str] = None
+    request_input_tokens: List[int] = None
+    request_output_tokens: List[int] = None
+    request_reasoning_tokens: List[int] = None
+    request_costs: List[float] = None
+
     # Optional end.
 
     postconds: List[str] = None
