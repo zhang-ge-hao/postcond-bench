@@ -76,8 +76,8 @@ if __name__ == "__main__":
     python_corr_count, python_comp_count = cal_corr_and_comp_counts(
         python_methods, selected_p_idx=p_idx)
     print(f"Now")
-    print(f"{python_corr_count / expected_method_count:.3f}")
-    print(f"{python_comp_count / expected_method_count:.3f}")
+    print(f"{python_corr_count / len(methods):.3f}")
+    print(f"{python_comp_count / len(methods):.3f}")
 
 
     methods_prev = read_benchmark("data/step/9.gpt-5-mini--proto_v4")
