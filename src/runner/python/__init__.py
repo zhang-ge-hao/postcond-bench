@@ -157,7 +157,9 @@ def _get_env():
         "/sbin",
         "/bin",
     ]
-    env["PATH"] = ":".join(extra_paths)
+    # env["PATH"] = ":".join(extra_paths)
+    current_path = env.get("PATH", "")
+    env["PATH"] = ":".join(extra_paths + ([current_path] if current_path else []))
     env["SSL_CERT_FILE"] = "/etc/ssl/certs/ca-certificates.crt"
     env["PYTHONPATH"] = "."
 
